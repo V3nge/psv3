@@ -25,8 +25,35 @@ body {
 }
 
 .topbar {
-    width: 100%;
-    background-color: var(--light-steel-blue);
+    padding: 3%;
+    width: 90%;
+    background-color: var(--black);
     padding: 0px;
     border-radius: 100px;
+}
+
+.glowing-border {
+  padding: 20px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.glowing-border::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: -4px;
+  right: -4px; bottom: -4px;
+  background: linear-gradient(45deg, cyan, magenta, blue, cyan);
+  z-index: -1;
+  filter: blur(8px);
+  animation: glowing 2s linear infinite;
+}
+
+@keyframes glowing {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
 }
