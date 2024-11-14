@@ -1,3 +1,15 @@
+:root {
+    --black: #040112;
+    --white: white;
+    --violet: #df9aff;
+    --blue-violet: #6825f5;
+    --light-steel-blue: #a4abec;
+    --opacity-text: rgba(255, 255, 255, .6);
+    --midnight-blue: #1a1048;
+    --dark-pink-gradient: #401048;
+    --transparent: rgba(255, 255, 255, 0);
+}
+
 .icon {
     width: 5%;
     border-radius: 100%;
@@ -9,4 +21,6 @@
 
 .topbar {
     width: 100%;
+    background-color: black;
+    padding: 0px;
 }
