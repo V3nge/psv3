@@ -17,6 +17,7 @@ body {
 .icon {
     width: 5%;
     border-radius: 100%;
+    background-color: var(--dark-pink-gradient);
 }
 
 .centered {
@@ -25,6 +26,7 @@ body {
 
 .topbar {
     width: 100%;
-    background-color: black;
+    background-color: var(--light-steel-blue);
     padding: 0px;
+    border-radius: 100px;
 }
