@@ -5,6 +5,10 @@
         <link rel="icon" href="milkers.ico">
     </head>
     <body>
+        <!-- <div class="banner centered">
+            <h1>Live chat coming soon...<h1>
+        </div>
+        <br> -->
         <div class="topbar glowing-border">
             <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
             <input id="search" class="search" placeholder="Search here"></input>
@@ -12,10 +16,13 @@
         </div>
         <dialog id="settingsDialog" class="menu">
             <h1>Settings</h1>
-            
+            <div id="settingsList">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="settingsInput">
+                <label for="vehicle1"> <text>I have a bike</text></label><br>
+            </div>
             <div class="menu-bottom-bar centered">
-                <br><button onclick="document.getElementById('settingsDialog').close()">Cancel</button>
-                <button onclick="document.getElementById('settingsDialog').close()">Save and Continue</button>
+                <br><button onclick="document.getElementById('settingsDialog').close();clearSettingsMenu();">Cancel</button>
+                <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and Continue</button>
             </div>        
         </dialog>
         <br><div class="embedding">

@@ -1,3 +1,4 @@
+var settingsList = document.getElementById("settingsList");
 var sfxTime = +Date.now();
 
 function animeGirl() {
@@ -7,6 +8,18 @@ function animeGirl() {
         var effect = sfx[Math.round(Math.random()*(sfx.length-1))];
         (new Audio(`/sfx/${effect}`)).play();
     }
+}
+
+function saveSettings(save) {
+    var settingsElements = Array.prototype.slice.call(document.getElementsByClassName("settingsInput"));
+    settingsElements.forEach(settingElement => {
+        if(settingElement.type == "checkbox") {
+            console.log(settingElement.name, settingElement.checked);
+            localStorage.setItem(`psv3_settings_${settingElement.name}`, settingElement.checked);
+        } else {
+            console.log(`Unknown type: ${settingElement.type}, not saving this data.`);
+        }
+    });
 }
 
 var backgroundDegrees = 0;
