@@ -32,25 +32,14 @@ body {
 }
 
 .glowing-border {
+  padding: 20px;
+  border-radius: 10px;
   border: 2px solid transparent;
   position: relative;
   z-index: 0;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
-/* .glowing-border::before {
-  content: '';
-  position: absolute;
-  top: -4px; left: -4px;
-  right: -4px; bottom: -4px;
-  background: linear-gradient(45deg, cyan, magenta, blue, cyan);
-  z-index: -1;
-  filter: blur(8px);
-  animation: glowing 2s linear infinite;
+p {
+    color: white;
 }
-
-@keyframes glowing {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
-} */
