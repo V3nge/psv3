@@ -41,8 +41,6 @@ body {
 }
 
 .glowing-border {
-  padding: 20px;
-  border-radius: 10px;
   border: 2px solid transparent;
   position: relative;
   z-index: 0;
