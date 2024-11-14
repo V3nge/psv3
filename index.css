@@ -1,3 +1,12 @@
+@font-face {
+    font-family: 'Satoshi';
+    src: url('/Satoshi_Complete/Satoshi_Complete/Fonts/TTF/Satoshi-Variable.ttf') format('truetype');
+}
+
+* {
+    font-family: 'Satoshi', Helvetica, sans-serif, Arial;
+}
+
 :root {
     --black: #040112;
     --white: white;
@@ -40,6 +49,6 @@ body {
   overflow: hidden;
 }
 
-p {
+h1, h2, h3, h4, h5, h6, p, text {
     color: white;
 }
