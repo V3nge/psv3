@@ -6,9 +6,19 @@
     </head>
     <body>
         <div class="topbar glowing-border">
-            <img src="milkers.png" class="icon"></img>
-        </div><br>
-        <div class="embedding">
+            <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
+            <input id="search" class="search" placeholder="Search here"></input>
+            <input onclick="document.getElementById('settingsDialog').showModal()" class="settings-button" type="button" value="Open Settings"></input>
+        </div>
+        <dialog id="settingsDialog" class="menu">
+            <h1>Settings</h1>
+            
+            <div class="menu-bottom-bar centered">
+                <br><button onclick="document.getElementById('settingsDialog').close()">Cancel</button>
+                <button onclick="document.getElementById('settingsDialog').close()">Save and Continue</button>
+            </div>        
+        </dialog>
+        <br><div class="embedding">
             <h1 class="centered">Recently Added Games</h1>
             <div id="recentlyAddedCarousel" class="carousel">
                 <div class="carousel-element-preload"></div>
@@ -27,6 +37,33 @@
                 <div class="carousel-element-preload"></div>
                 <div class="carousel-element-preload"></div>
                 <div class="carousel-element-preload"></div>
+            </div>
+        </div><br>
+        <div class="embedding">
+            <h1 class="centered">Most Played</h1>
+            <div id="mostPlayCarousel" class="carousel">
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+            </div>
+        </div><br>
+        <div class="embedding">
+            <h1 class="centered">All Games</h1>
+            <div class="all-games-list" id="allGames">
+                <div class="game-icon"></div>
             </div>
         </div>
     </body>
