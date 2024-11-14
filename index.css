@@ -10,6 +10,10 @@
     --transparent: rgba(255, 255, 255, 0);
 }
 
+body {
+    background-color: var(--black);
+}
+
 .icon {
     width: 5%;
     border-radius: 100%;
