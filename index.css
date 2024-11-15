@@ -167,12 +167,11 @@ h1, h2, h3, h4, h5, h6, p, text {
 }
 
 .game-icon:hover {
-    transition: 0.1s;
+    transition: 0.07s;
     background-color: #120a31;
     color: white;
     font-size: large;
     transform: scale(1.2);
-    z-index: 9999;
     box-shadow: 10px 5px 5px rgba(128,71,154,0.5);
 }
 
