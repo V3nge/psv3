@@ -3,7 +3,7 @@ var sfxTime = +Date.now();
 const allGamesList = document.getElementById('allGames');
 
 function loadAllGames() {
-    const games = Array.from({ length: 100 }, (_, i) => i);
+    const games = Array.from({ length: 10000 }, (_, i) => i);
     const built = games.map(game => `<div class="game-icon centered">${game}</div>`).join('');
     allGamesList.innerHTML = built;
 }
