@@ -1,5 +1,13 @@
 var settingsList = document.getElementById("settingsList");
 var sfxTime = +Date.now();
+const allGamesList = document.getElementById('allGames');
+
+function loadAllGames() {
+    const games = Array.from({ length: 100 }, (_, i) => i);
+    const built = games.map(game => `<div class="game-icon centered">${game}</div>`).join('');
+    allGamesList.innerHTML = built;
+}
+
 
 function animeGirl() {
     if((+Date.now() - sfxTime) > 1000) {
@@ -36,3 +44,4 @@ function update() {
 }
 
 requestAnimationFrame(update);
+loadAllGames();
