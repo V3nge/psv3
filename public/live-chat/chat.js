@@ -1,6 +1,25 @@
 const messagesContainer = document.getElementById("messages");
 var ws = new WebSocket("/live-chat-ws");
 
+function createTextShadow(c) { 
+    return `${c} -2px -2px, ${c} -2px -1px, ${c} -2px 0px, ${c} -2px 1px, ${c} -2px 2px, ${c} -1px -2px, ${c} -1px -1px, ${c} -1px 0px, ${c} -1px 1px, ${c} -1px 2px, ${c} 0px -2px, ${c} 0px -1px, ${c} 0px 0px, ${c} 0px 1px, ${c} 0px 2px, ${c} 1px -2px, ${c} 1px -1px, ${c} 1px 0px, ${c} 1px 1px, ${c} 1px 2px, ${c} 2px -2px, ${c} 2px -1px, ${c} 2px 0px, ${c} 2px 1px, ${c} 2px 2px`;
+}
+
+function stringToRGB(input) {
+    function hashString(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = (hash * 31 + str.charCodeAt(i)) & 0xffffffff;
+        }
+        return hash;
+    }
+    const hash = Math.abs(hashString(input));
+    const r = (hash >> 16) & 0xff;
+    const g = (hash >> 8) & 0xff; 
+    const b = hash & 0xff;
+    return `rgb(${r/2}, ${g/2}, ${b/2})`;
+}
+
 const joinMessages = [
     "Lo, I hath entered thy presence!",
     "I have arrived.",
@@ -71,7 +90,7 @@ ws.onopen = function () {
     ws.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo }));
 }
 
-function createMessage(value, userMessage = true) {
+function createMessage(name, value, userMessage = true) {
     var message = document.createElement("div");
     if (userMessage) {
         message.classList = ["message"];
@@ -85,6 +104,7 @@ function createMessage(value, userMessage = true) {
         var messagePTag = document.createElement("p");
         messagePTag.innerHTML = value;
     }
+    messagePTag.style.textShadow = createTextShadow(stringToRGB(name));
     message.appendChild(messagePTag);
     messagesContainer.appendChild(message);
 }
@@ -117,13 +137,13 @@ ws.onmessage = function (a) {
         }
         var senderer = hashes.indexOf(response.sender);
         if (senderer == 0) {
-            createMessage(`You: ${decodeURIComponent(response.msg)}`);
+            createMessage(response.sender, `You: ${decodeURIComponent(response.msg)}`);
         } else {
-            createMessage(`Person ${hashes.indexOf(response.sender)}: ${decodeURIComponent(response.msg)}`);
+            createMessage(response.sender, `Person ${hashes.indexOf(response.sender)}: ${decodeURIComponent(response.msg)}`);
         }
     } else if (response.type == "pri") {
         var url = `${window.location.origin}/live-chat?c=${response.msg}`;
-        createMessage(`<a href="${url}">Your private chat: ${response.msg}</a>`, false);
+        createMessage("System", `<a href="${url}">Your private chat: ${response.msg}</a>`, false);
         liveChatDialogLink.href = url;
         liveChatDialogLink.innerText = url;
     } else {
