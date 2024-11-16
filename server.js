@@ -22,7 +22,7 @@ constructGamesListJSON();
 
 setInterval(() => constructGamesListJSON, 100000);
 
-app.get('/', (req, res) => {
+app.get('/games/', (req, res) => {
     if(constructedGamesListJSON != null) {
         res.send(JSON.stringify([]));
     } else {
