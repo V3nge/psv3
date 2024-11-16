@@ -3,6 +3,7 @@ import json
 import hashlib
 from flask import Flask, send_from_directory, request, jsonify, render_template_string
 from flask_socketio import SocketIO, emit
+import urllib.parse
 
 app = Flask(__name__)
 socketio = SocketIO(app)
@@ -76,6 +77,9 @@ users = []
 websockets = []
 rooms = []
 
+def encodeURIComponent(value):
+    return urllib.parse.quote(value)
+
 def create_private_room(name):
     rooms.append(name)
     return encodeURIComponent(name)
@@ -107,9 +111,17 @@ async def handle_message(message):
     else:
         emit('message', {"type": "unknowntype", "value": msg_type})
 
-@app.route('/public/<path:filename>')
+@app.route('/<path:filename>')
 def static_files(filename):
     return send_from_directory(os.path.join(BASE_DIR, 'public'), filename)
+
+@app.route("/")
+def mainPath():
+    return send_from_directory(os.path.join(BASE_DIR, 'public'), "index.html")
+
+@app.route("/live-chat/")
+def liveChat():
+    return send_from_directory(os.path.join(BASE_DIR, 'public'), "live-chat/index.html")
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=8000)
