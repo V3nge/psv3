@@ -1,6 +1,67 @@
 const messagesContainer = document.getElementById("messages");
 var ws = new WebSocket("/live-chat-ws");
 
+const joinMessages = [
+    "Lo, I hath entered thy presence!",
+    "I have arrived.",
+    "By decree of fate, I am here!",
+    "Hark! A new soul graces this hall.",
+    "I cometh bearing tidings and wit!",
+    "Thy ally hath arrived upon the field.",
+    "Let it be known, I have joined thy ranks.",
+    "By the stars above, I stand amongst thee.",
+    "Sound the horns, for I have come!",
+    "The gates are opened, and I step within.",
+    "Behold, for I have graced this gathering.",
+    "Prepare thy ears, for my voice is now among thee!",
+    "I am summoned, and here I stand.",
+    "A wanderer no more, I join thy company.",
+    "From lands afar, I make my way to thee.",
+    "The fates hath led me to this noble assembly.",
+    "A knight of words and deeds arrives!",
+    "Lo and behold, a kindred soul joins the fray.",
+    "Fear not, for I come in peace and purpose.",
+    "The hour is nigh, and I am here at last.",
+    "Rejoice, for thy comrade is at thy side!",
+    "My quest bringeth me to thy hallowed halls.",
+    "With courage in heart, I step into thy midst.",
+    "The heralds of time hath delivered me hence.",
+    "Raise thy goblets; I am now among thee.",
+    "Through trials and tribulations, I find myself here.",
+    "A shadow no longer, I stand in thy light.",
+    "Mark this day; I hath joined thy noble cause.",
+    "By the grace of the heavens, I am arrived.",
+    "Gather round, for I bring wisdom and mirth!",
+    "Thy fellowship welcomes a new companion this day.",
+    "Hide thy mead, for I have entered!",
+    "Fear not, peasants, 'tis only I.",
+    "I have arrived, and yes, my horse parked itself.",
+    "Aye, 'tis I, the hero of legends… and bad decisions.",
+    "The prophecy spoke of my arrival. They weren’t wrong.",
+    "Make way! Or don’t. I’m already here.",
+    "Lo, I cometh… mostly for the food.",
+    "Gather round! I bring wit, wisdom, and snacks!",
+    "I hath joined… but where art the dragons?",
+    "Rejoice! For I bring tales of glory and debt!",
+    "Tarry no longer! I am here to spice thy lives!",
+    "I hath journeyed far… mostly to avoid chores.",
+    "A wild knight appears! What shall ye do?",
+    "Behold, thy favorite fool hath arrived!",
+    "Worry not; I only bite when provoked.",
+    "Dust off thy banquet table—I come hungry and uninvited!",
+    "I hath arrived… but forgot why I came.",
+    "Lo, a jester in armor joins the fray!",
+    "I enter with courage in heart and ale on breath.",
+    "Announce me properly, lest I cry!",
+    "By my troth, I hath finally figured out the door.",
+    "Aha! Thy merry mischief-maker is among thee now!",
+    "Fear not! I bring neither harm nor unpaid debts.",
+    "I have come bearing… well, just myself. Deal with it.",
+    "At long last, the true star of this gathering arrives!",
+    "Verily, I am here! Where art the snacks?",
+    "The legends were true—I hath arrived, fashionably late as always!"
+];
+
 var uid = JSON.stringify(Math.round(Math.random() * 999999999999));
 
 var urlParams = new URLSearchParams(window.location.search);
@@ -35,9 +96,10 @@ ws.onmessage = function (a) {
     var response = JSON.parse(a.data);
     if (response.type == "ok_tempacc") {
         console.log("ok tempacc")
+        const randomMsg = Math.floor(Math.random() * joinMessages.length);
         ws.send(JSON.stringify({
             "type": "tempacc_gsend",
-            "msg": encodeURIComponent("Hello!"),
+            "msg": encodeURIComponent(joinMessages[randomMsg]),
             "sender": uid,
             "channel": channelToSendTo
         }));
