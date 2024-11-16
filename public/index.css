@@ -7,7 +7,6 @@
     font-family: 'Satoshi', Helvetica, sans-serif, Arial;
 }
 
-
 :root {
     --black: #040112;
     --white: white;
@@ -69,7 +68,7 @@ h1, h2, h3, h4, h5, h6, p, text {
     background-color: var(--black);
     border-radius: 10px;
     padding: 10px;
-    gap: 10px;
+    gap: 2px;
     scroll-snap-type: x mandatory;
     overflow: hidden;
 }
@@ -190,11 +189,10 @@ h1, h2, h3, h4, h5, h6, p, text {
 .game-icon:hover {
     transition: 0.1s;
     background-color: #120a31;
-    font-size: large;
     transform: scale(1.2) rotate(5deg);
     box-shadow: 10px 5px 5px var(--light-steel-blue);
     z-index: 99;
-    border: 1px var(--white) solid;
+    outline: 1px var(--white) solid;
 }
 
 .game-icon:active {
@@ -348,14 +346,12 @@ iframe {
     right: 8%;
     top: 50%;
     transform: translate(-50%, -50%)
-    
 }
 
 .live-chat-button:hover {
     transform: translate(-50%, -50%) scale(1.05);
 }
 
-<<<<<<< HEAD
 pre {
     color: white;
 }
@@ -363,10 +359,7 @@ pre {
 .live-chat-submit {
     position: absolute;
     bottom: 10px;
-    width: 80%;
+    width: 80%; 
     height: 8%;
     left: 10%;
 }
-=======
-
->>>>>>> 7c57864ede75cd109755c9b4c9a85a6d408fe8b0

@@ -37,7 +37,7 @@ async function loadAllGames() {
     var example = {
         src: "images/minecraft.jpg", 
         text: "minecraft",
-        opens: `data:text/html,Hello user! Your game has loaded! Although, it has no content.`
+        opens: `/games/snek`
     };
     games = Array.from({ length: 1000 }, (_, i) => example);
     built = games.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="min-img"></img></a></div>`).join('');
@@ -56,6 +56,8 @@ function loadGame(source) {
     gameIframe = document.createElement("iframe");
     gameIframe.src = source;
     document.body.appendChild(gameIframe);
+    history.pushState({}, "", source);
+    gameIframe.contentWindow.focus();
 }
 
 loadAllGames();
