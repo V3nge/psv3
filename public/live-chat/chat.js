@@ -112,10 +112,10 @@ ws.onmessage = function (a) {
             "channel": channelToSendTo
         }));
     } else if (response.type == "gsend_r") {
-        var senderer = hashes.indexOf(response.sender);
         if (!hashes.includes(response.sender)) {
             hashes.push(response.sender);
         }
+        var senderer = hashes.indexOf(response.sender);
         if (senderer == 0) {
             createMessage(`You: ${decodeURIComponent(response.msg)}`);
         } else {
