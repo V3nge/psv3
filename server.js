@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const nocache = require('nocache');
 const express = require("express");
 const path = require('path');
