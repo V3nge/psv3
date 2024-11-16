@@ -140,7 +140,7 @@ app.ws('/live-chat-ws', function(ws, req) {
             case "tempacc_gsend":
                 if(accs.includes(message.sender)) {
                     var decodedMessage = decodeURIComponent(message.msg);
-                    if(decodedMessage.trim() == "") {
+                    if(decodedMessage.trim() == "" || decodedMessage.trim().length > 2001) {
                         ws.send(JSON.stringify({"type": "nuh uh"}));
                         break;
                     }

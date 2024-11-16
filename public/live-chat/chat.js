@@ -159,7 +159,7 @@ function send() {
     var inputBox = document.getElementById("input-box");
     var messageText = inputBox.value;
     inputBox.value = "";
-    if (messageText.trim() != "") {
+    if (messageText.trim() != "" && messageText.length < 2001) {
     if (messageText == "!np") {
         createPrivate(encodeURIComponent(prompt("code > ")));
     } else if(messageText == "!jp") {
