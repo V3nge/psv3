@@ -36,14 +36,14 @@ async function loadAllGames() {
 
     recentlyAddedCarousel.innerHTML = built;    
 
-    // var example = {
-    //     src: "images/minecraft.jpg", 
-    //     text: "minecraft",
-    //     opens: `data:text/html,Hello user! Your game has loaded! Although, it has no content.`
-    // };
-    // games = Array.from({ length: 1000 }, (_, i) => example);
-    // built = games.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="min-img"></img></a></div>`).join('');
-    // allGamesList.innerHTML = built;
+    var example = {
+        src: "images/minecraft.jpg", 
+        text: "minecraft",
+        opens: `data:text/html,Hello user! Your game has loaded! Although, it has no content.`
+    };
+    games = Array.from({ length: 1000 }, (_, i) => example);
+    built = games.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="min-img"></img></a></div>`).join('');
+    allGamesList.innerHTML = built;
 }
 
 function loadGame(source) {
