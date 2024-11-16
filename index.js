@@ -1,22 +1,15 @@
+// var click = new Audio("sfx/click.mp3");
+// click.volume = 0.1;
+
 var settingsList = document.getElementById("settingsList");
 var sfxTime = +Date.now();
-const allGamesList = document.getElementById('allGames');
-
-function loadAllGames() {
-    var example = {
-        src: "images/minecraft.jpg", 
-        text: "minecraft"
-    };
-    const games = Array.from({ length: 10000 }, (_, i) => example);
-    const built = games.map(game => `<div class="game-icon centered"><img src="${game.src}" class="min-img"></img></div>`).join('');
-    allGamesList.innerHTML = built;
-}
-
+var inGame = false;
+var gameIframe = null;
 
 function animeGirl() {
     if((+Date.now() - sfxTime) > 1000) {
         sfxTime = +Date.now();
-        var sfx = ["cute-uwu.mp3", "anime-wow-sound-effect.mp3", "yes-daddy_CKEAffI.mp3"];
+        var sfx = ["anime-wow-sound-effect.mp3", "cute-uwu.mp3", "yes-daddy_CKEAffI.mp3"];
         var effect = sfx[Math.round(Math.random()*(sfx.length-1))];
         (new Audio(`/sfx/${effect}`)).play();
     }
@@ -48,4 +41,3 @@ function update() {
 }
 
 requestAnimationFrame(update);
-loadAllGames();
