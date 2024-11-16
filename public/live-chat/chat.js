@@ -85,7 +85,7 @@ async function joinCode() {
     if(await (await fetch(`/check_room?id=${encodeURIComponent(codeInput.value)}`)).json()) {
         window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
     } else {
-        createCode();
+        createPrivate(codeInput.value);
         setInterval(function() {
             window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
         }, 1000);
