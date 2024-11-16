@@ -69,8 +69,10 @@ function send() {
     var inputBox = document.getElementById("input-box");
     var messageText = inputBox.value;
     inputBox.value = "";
-    if (messageText == "!private") {
-        createPrivate(prompt("code > "));
+    if (messageText == "!np") {
+        createPrivate(encodeURIComponent(prompt("code > ")));
+    } else if(messageText == "!jp") {
+        window.location.href = `/live-chat/?c=${encodeURIComponent(prompt("code > "))}`;
     } else {
         ws.send(JSON.stringify({
             "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
