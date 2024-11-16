@@ -2,6 +2,7 @@ const express = require("express");
 const path = require('path');
 const fs = require('node:fs');
 const app = express();
+var expressWs = require('express-ws')(app);
 
 const hostname = "127.0.0.1";
 const port = 8000;
@@ -15,8 +16,6 @@ function constructGamesListJSON() {
             return console.log('Unable to scan directory: ' + err);
         } else {
             constructedGamesListJSON = files;
-            console.log(constructedGamesListJSON);
-            console.log("I like kids...!");
         }
     });
 }
@@ -25,6 +24,13 @@ constructGamesListJSON();
 app.get('/games/', (req, res) => {
     res.setHeader('content-type', 'application/json');
     res.send(JSON.stringify(constructedGamesListJSON));
+});
+
+app.ws('/live-chat-ws', function(ws, req) {
+    ws.on('message', function(msg) {
+        console.log(msg);
+    });
+    console.log('socket', req.testing);
 });
 
 app.use(express.static("public"));

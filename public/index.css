@@ -293,3 +293,39 @@ iframe {
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+.message {
+    padding: 10px;
+    background-color: var(--dark-pink-gradient);
+    width: max-content;
+    height: 7%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.input-box {
+    transition: 0.1s;
+    min-width: 140px;
+    min-height: 50px;
+    border-radius: 10px;
+    box-shadow: #040112;
+    border: #1f1452 solid;
+    background-color: #120a31;
+    color: white;
+    font-size: larger;
+    width: 90%;
+    position: absolute;
+    bottom: 10%;
+    left: 5%;
+}
+
+.message-container {
+    width: 90%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    top: 5%;
+    overflow-y: scroll;
+    height: 70%;
+    background-color: var(--black);
+    border-radius: 10px;
+}
