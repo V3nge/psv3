@@ -3,11 +3,19 @@
         <link rel="stylesheet" href="/index.css">
     </head>
     <body>
-        <dialog class="live-chat-dialog" id="live-chat-dialog"></dialog>
+        <dialog class="live-chat-dialog centered" id="live-chat-dialog">
+            <button onclick="document.getElementById('live-chat-dialog').close();">Close</button><br><br><br><br>
+            <input id="code-input"><p>Enter your code here<p></input>
+            <br>
+            <button onclick="joinCode();">Join</button>
+            <button onclick="createCode();">Create</button>
+            <br><br><br>
+            <a id="live-chat-dialog-link"></a>
+        </dialog>
         <div id="messages" class="message-container"></div>
         <input class="input-box" id="input-box" placeholder=" Type Message Here"></input>
         <button onclick="send();" class="live-chat-submit">Submit</button>
-        <button onclick="document.getElementById('live-chat-submit').showModal();" class="live-chat-private">Private Chat</button>
+        <button onclick="document.getElementById('live-chat-dialog').showModal();" class="live-chat-private">Private Chat</button>
     </body>
     <footer>
         <script src="chat.js"></script>

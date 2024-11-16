@@ -26,6 +26,7 @@ function createMessage(value, userMessage=true) {
 }
 
 var hashes = [];
+var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
 ws.onmessage = function(a) {
     var response = JSON.parse(a.data);
@@ -49,6 +50,8 @@ ws.onmessage = function(a) {
     } else if(response.type == "pri") {
         var url = `${window.location.origin}/live-chat?c=${response.msg}`;
         createMessage(`<a href="${url}">Your private chat</a>`, false);
+        liveChatDialogLink.href = url;
+        liveChatDialogLink.innerText = url;
     } else {
         console.log(response);
     }
@@ -67,4 +70,14 @@ function send() {
     } else {
         ws.send(JSON.stringify({"type":"tempacc_gsend","msg":encodeURIComponent(messageText),"sender":uid}));
     }
+}
+
+var codeInput = document.getElementById("code-input");
+
+function joinCode() {
+    window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
+}
+
+function createCode() {
+    createPrivate(codeInput.value);
 }
