@@ -15,6 +15,21 @@ var report = fs.readFileSync(path.join(__dirname, `private/report.js`));
 
 var constructedGamesListJSON = null;
 
+function getCurrentTime() {
+    const now = new Date();
+
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+    return ` (${hours}:${formattedMinutes} ${ampm})`;
+}
+
 function constructGamesListJSON() {
     report = fs.readFileSync(path.join(__dirname, `private/report.js`));
     const directoryPath = path.join(__dirname, 'Public/games');
@@ -135,7 +150,7 @@ app.ws('/live-chat-ws', function(ws, req) {
                         if(person.channel == message.channel) {
                             person.socket.send(JSON.stringify({
                                 "type": "gsend_r",
-                                "msg": encodeURIComponent(decodedMessage.trim()),
+                                "msg": encodeURIComponent(decodedMessage.trim() + getCurrentTime()),
                                 "sender": senderHash
                             }));
                         }
