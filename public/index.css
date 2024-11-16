@@ -230,7 +230,6 @@ button {
 
 button:hover {
     transform: scale(1.05);
-    filter: contrast(1.1);
 }
 
 .settings-button {
@@ -313,7 +312,7 @@ iframe {
     background-color: #120a31;
     color: white;
     font-size: larger;
-    width: 90%;
+    width: 80%;
     position: absolute;
     bottom: 10%;
     left: 5%;
@@ -358,8 +357,8 @@ pre {
 
 .live-chat-submit {
     position: absolute;
-    bottom: 10px;
-    width: 80%; 
-    height: 8%;
-    left: 10%;
+    bottom: 10%;
+    width: 12%; 
+    height: 5%;
+    right: 2%;
 }
