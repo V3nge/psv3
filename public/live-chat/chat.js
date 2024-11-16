@@ -49,7 +49,7 @@ ws.onmessage = function(a) {
         }
     } else if(response.type == "pri") {
         var url = `${window.location.origin}/live-chat?c=${response.msg}`;
-        createMessage(`<a href="${url}">Your private chat</a>`, false);
+        createMessage(`<a href="${url}">Your private chat: ${response.msg}</a>`, false);
         liveChatDialogLink.href = url;
         liveChatDialogLink.innerText = url;
     } else {
