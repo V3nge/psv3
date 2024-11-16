@@ -363,3 +363,15 @@ pre {
     height: 8%;
     left: 10%;
 }
+
+.system-message {
+    padding: 10px;
+    background-color: var(--blue-violet);
+    width: max-content;
+    height: 7%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+a {
+    color: white;
+}

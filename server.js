@@ -86,6 +86,12 @@ async function sha256(message) {
 
 var accs = [];
 var websockets = [];
+var rooms = [];
+
+function createPrivateRoom(name) {
+    rooms.push(name);
+    return `${encodeURIComponent(name)}`;
+}
 
 app.ws('/live-chat-ws', function(ws, req) {
     ws.on('message', async function(msg) {
@@ -106,6 +112,9 @@ app.ws('/live-chat-ws', function(ws, req) {
                 } else {
                     ws.send(JSON.stringify({"type":"nuh uh"}));
                 }
+            break;
+            case "newpri":
+                ws.send(JSON.stringify({"type":"pri","msg":createPrivateRoom("apple-tree"),"sender":senderHash}));
             break;
             default:
                 ws.send(JSON.stringify({"type":"unknowntype","value":message.type}))
