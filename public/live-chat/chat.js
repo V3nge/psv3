@@ -92,6 +92,14 @@ function createMessage(value, userMessage = true) {
 var hashes = [];
 var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
+ws.onclose = function() {
+    alert("Uh oh! Your websocket disconnected... 😦");
+}
+
+ws.onerror = function() {
+    alert("OH SHOOT! There was an error... 😦😦😦");
+}
+
 ws.onmessage = function (a) {
     var response = JSON.parse(a.data);
     if (response.type == "ok_tempacc") {
