@@ -99,6 +99,20 @@ app.get('/check_room', (req, res) => {
     res.send(rooms.includes(req.query.id));
 });
 
+app.get('/search', (req, res) => {
+    res.setHeader('content-type', 'application/json');
+
+    var filtered = [];
+
+    constructedGamesListJSON.forEach(game => {
+        if(game.toLowerCase().includes(req.query.search.toLowerCase())) {
+            filtered.push(game);
+        }
+    });
+
+    res.send(JSON.stringify(filtered));
+});
+
 app.ws('/live-chat-ws', function(ws, req) {
     ws.on('message', async function(msg) {
         const message = JSON.parse(msg);
@@ -110,6 +124,10 @@ app.ws('/live-chat-ws', function(ws, req) {
                 break;
             case "tempacc_gsend":
                 if(accs.includes(message.sender)) {
+                    if(message.msg.trim() == "") {
+                        ws.send(JSON.stringify({"type": "nuh uh"}));
+                        break;
+                    }
                     ws.send(JSON.stringify({"type": "ok"}));
                     const senderHash = await sha256(message.sender);
                     websockets.forEach(person => {
