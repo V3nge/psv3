@@ -114,7 +114,7 @@ app.ws('/live-chat-ws', function(ws, req) {
                 }
             break;
             case "newpri":
-                ws.send(JSON.stringify({"type":"pri","msg":createPrivateRoom("apple-tree"),"sender":senderHash}));
+                ws.send(JSON.stringify({"type":"pri","msg":createPrivateRoom(message.code),"sender":senderHash}));
             break;
             default:
                 ws.send(JSON.stringify({"type":"unknowntype","value":message.type}))

@@ -218,7 +218,7 @@ h1, h2, h3, h4, h5, h6, p, text {
 
 button {
     transition: 0.1s;
-    min-width: 140px;
+    min-width: 100px;
     min-height: 50px;
     border-radius: 10px;
     box-shadow: #040112;
@@ -358,9 +358,17 @@ pre {
 .live-chat-submit {
     position: absolute;
     bottom: 10%;
-    width: 12%; 
+    width: 5%; 
     height: 5%;
-    right: 2%;
+    right: 7%;
+}
+
+.live-chat-private {
+    position: absolute;
+    bottom: 10%;
+    width: 5%; 
+    height: 5%;
+    right: 0.5%;
 }
 
 .system-message {
