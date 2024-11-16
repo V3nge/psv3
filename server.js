@@ -151,7 +151,6 @@ app.ws('/live-chat-ws', function(ws, req) {
                 ws.send(JSON.stringify({"type": "unknowntype", "value":message.type}));
         }
     });
-    console.log('socket', req.testing);
 });
 
 app.use(express.static("public"));
