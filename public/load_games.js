@@ -19,6 +19,14 @@ async function search(query) {
     return (await (await fetch(`/search?search=${encodeURIComponent(query)}`)).json());
 }
 
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
 async function loadAllGames() {
     var listing;
 
@@ -51,10 +59,10 @@ async function loadAllGames() {
         recentlyAddedCarousel.innerHTML = built;    
     }
 
-    if(ToSearch != null) {
-        built = games.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="min-img"></img></a></div>`).join('');
-        allGamesList.innerHTML = built;
-    }
+    games = shuffleArray(games);
+
+    built = games.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="min-img"></img></a></div>`).join('');
+    allGamesList.innerHTML = built;
 }
 
 function loadGame(source) {
