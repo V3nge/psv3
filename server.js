@@ -124,7 +124,8 @@ app.ws('/live-chat-ws', function(ws, req) {
                 break;
             case "tempacc_gsend":
                 if(accs.includes(message.sender)) {
-                    if(message.msg.trim() == "") {
+                    var decodedMessage = decodeURIComponent(message.msg);
+                    if(decodedMessage.trim() == "") {
                         ws.send(JSON.stringify({"type": "nuh uh"}));
                         break;
                     }
@@ -134,7 +135,7 @@ app.ws('/live-chat-ws', function(ws, req) {
                         if(person.channel == message.channel) {
                             person.socket.send(JSON.stringify({
                                 "type": "gsend_r",
-                                "msg": message.msg.trim(),
+                                "msg": encodeURIComponent(decodedMessage.trim()),
                                 "sender": senderHash
                             }));
                         }
