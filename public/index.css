@@ -352,3 +352,15 @@ iframe {
 .live-chat-button:hover {
     transform: translate(-50%, -50%) scale(1.05);
 }
+
+pre {
+    color: white;
+}
+
+.live-chat-submit {
+    position: absolute;
+    bottom: 10px;
+    width: 80%;
+    height: 8%;
+    left: 10%;
+}

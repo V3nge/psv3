@@ -8,7 +8,12 @@ ws.onopen = function() {
 }
 
 function createMessage(value) {
-    messagesContainer.innerHTML += `<div id="message" class="message"><p>${value}</p></div>`;
+    var message = document.createElement("div");
+    message.classList = ["message"];
+    var messagePTag = document.createElement("pre");
+    messagePTag.innerText = value;
+    message.appendChild(messagePTag);
+    messagesContainer.appendChild(message);
 }
 
 var hashes = [];
@@ -17,7 +22,11 @@ ws.onmessage = function(a) {
     var response = JSON.parse(a.data);
     if(response.type == "ok_tempacc") {
         console.log("ok tempacc")
-        ws.send(JSON.stringify({"type":"tempacc_gsend","msg":encodeURIComponent("Hello!"),"sender":uid}));
+        ws.send(JSON.stringify({
+            "type": "tempacc_gsend",
+            "msg": encodeURIComponent("Hello!"),
+            "sender": uid
+        }));
     } else if(response.type == "gsend_r") {
         var senderer = hashes.indexOf(response.sender);
         if(!hashes.includes(response.sender)) {

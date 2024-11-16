@@ -1,9 +1,11 @@
+const nocache = require('nocache');
 const express = require("express");
 const path = require('path');
 const fs = require('node:fs');
-const { json } = require("body-parser");
 const app = express();
 var expressWs = require('express-ws')(app);
+
+app.use(nocache());
 
 const hostname = "127.0.0.1";
 const port = 8000;
