@@ -374,3 +374,8 @@ pre {
 a {
     color: white;
 }
+
+.live-chat-dialog {
+    width: 100%;
+    height: 100%;
+}

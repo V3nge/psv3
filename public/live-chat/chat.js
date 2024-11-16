@@ -54,8 +54,8 @@ ws.onmessage = function(a) {
     }
 }
 
-function createPrivate() {
-    ws.send(JSON.stringify({"type":"newpri"}));
+function createPrivate(name) {
+    ws.send(JSON.stringify({"type":"newpri","code":name}));
 }
 
 function send() {
@@ -63,7 +63,7 @@ function send() {
     var messageText = inputBox.value;
     inputBox.value = "";
     if(messageText == "!private") {
-        createPrivate();
+        createPrivate(prompt("code > "));
     } else {
         ws.send(JSON.stringify({"type":"tempacc_gsend","msg":encodeURIComponent(messageText),"sender":uid}));
     }
