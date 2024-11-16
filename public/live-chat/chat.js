@@ -129,7 +129,8 @@ ws.onmessage = function (a) {
             "type": "tempacc_gsend",
             "msg": encodeURIComponent(joinMessages[randomMsg]),
             "sender": uid,
-            "channel": channelToSendTo
+            "channel": channelToSendTo,
+            "vanity": prompt("> ")
         }));
     } else if (response.type == "gsend_r") {
         if (!hashes.includes(response.sender)) {
@@ -139,7 +140,7 @@ ws.onmessage = function (a) {
         if (senderer == 0) {
             createMessage(response.sender, `You: ${decodeURIComponent(response.msg)}`);
         } else {
-            createMessage(response.sender, `Person ${hashes.indexOf(response.sender)}: ${decodeURIComponent(response.msg)}`);
+            createMessage(response.sender, `${hashes.indexOf(response.vanity)}: ${decodeURIComponent(response.msg)}`);
         }
     } else if (response.type == "pri") {
         var url = `${window.location.origin}/live-chat?c=${response.msg}`;
