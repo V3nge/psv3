@@ -87,7 +87,7 @@ var urlParams = new URLSearchParams(window.location.search);
 var channelToSendTo = urlParams.get('c');
 
 ws.onopen = function () {
-    ws.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo }));
+    ws.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo, "vanity": playNameClient }));
 }
 
 function createMessage(name, value, userMessage = true) {
@@ -120,6 +120,8 @@ ws.onerror = function() {
     alert("OH SHOOT! There was an error... 😦😦😦");
 }
 
+var playNameClient = prompt("> ");
+
 ws.onmessage = function (a) {
     var response = JSON.parse(a.data);
     if (response.type == "ok_tempacc") {
@@ -130,7 +132,7 @@ ws.onmessage = function (a) {
             "msg": encodeURIComponent(joinMessages[randomMsg]),
             "sender": uid,
             "channel": channelToSendTo,
-            "vanity": prompt("> ")
+            "vanity": playNameClient
         }));
     } else if (response.type == "gsend_r") {
         if (!hashes.includes(response.sender)) {
@@ -140,7 +142,8 @@ ws.onmessage = function (a) {
         if (senderer == 0) {
             createMessage(response.sender, `You: ${decodeURIComponent(response.msg)}`);
         } else {
-            createMessage(response.sender, `${hashes.indexOf(response.vanity)}: ${decodeURIComponent(response.msg)}`);
+            console.log(response);
+            createMessage(response.sender, `${response.vanity}: ${decodeURIComponent(response.msg)}`);
         }
     } else if (response.type == "pri") {
         var url = `${window.location.origin}/live-chat?c=${response.msg}`;
@@ -170,9 +173,13 @@ function send() {
         createPrivate(encoded);
         window.location.href = `/live-chat/?c=${encoded}`;
     } else{
+        console.log(JSON.stringify({
+            "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
+            "channel": channelToSendTo, "vanity": playNameClient
+        }));
         ws.send(JSON.stringify({
             "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
-            "channel": channelToSendTo
+            "channel": channelToSendTo, "vanity": playNameClient
         }));
     }
 } else {

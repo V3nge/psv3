@@ -136,6 +136,8 @@ app.ws('/live-chat-ws', function(ws, req) {
             case "tempacc":
                 ws.send(JSON.stringify({"type": "ok_tempacc"}));
                 accs.push(message.name);
+                console.log(message);
+                console.log(message.vanity);
                 accs_vanities.push(message.vanity);
                 websockets.push({socket: ws, channel: message.channel});
                 break;
@@ -150,6 +152,8 @@ app.ws('/live-chat-ws', function(ws, req) {
                     const senderHash = await sha256(message.sender);
                     websockets.forEach(person => {
                         if(person.channel == message.channel) {
+                            console.log(accs_vanities)
+                            console.log(accs_vanities[accs.indexOf(message.sender)]);
                             person.socket.send(JSON.stringify({
                                 "type": "gsend_r",
                                 "msg": encodeURIComponent(decodedMessage.trim() + getCurrentTime()),
