@@ -30,7 +30,7 @@ body {
     transition: 0.5s;
     width: 5%;
     border-radius: 100%;
-    background-color: var(--dark-pink-gradient);
+    background-color:  #120a31;
 }
 
 .icon:hover {
