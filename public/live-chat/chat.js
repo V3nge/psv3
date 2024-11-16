@@ -73,7 +73,11 @@ function send() {
         createPrivate(encodeURIComponent(prompt("code > ")));
     } else if(messageText == "!jp") {
         window.location.href = `/live-chat/?c=${encodeURIComponent(prompt("code > "))}`;
-    } else {
+    } else if(messageText == "!njp") {
+        var encoded = encodeURIComponent(prompt("code > "));
+        createPrivate(encoded);
+        window.location.href = `/live-chat/?c=${encoded}`;
+    } else{
         ws.send(JSON.stringify({
             "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
             "channel": channelToSendTo
