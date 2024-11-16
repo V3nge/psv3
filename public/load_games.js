@@ -13,9 +13,7 @@ const allGamesList = document.getElementById('allGames');
 const recentlyAddedCarousel = document.getElementById('recentlyAddedCarousel');  
 
 async function loadAllGames() {
-    var listing = (await (await fetch("/games")).text()).split(`<a href="`).reverse();
-    listing.pop();
-    listing = listing.reverse();
+    var listing = (await (await fetch("/games")).json());
     listing = listing.map(value => {
         return {image: `/images/games/${value.split('"')[0].replaceAll("/", "")}`, gameName: decodeURIComponent(value.split('"')[0]).replaceAll("/", ""), opens: `/games/${value.split('"')[0]}`};
     });

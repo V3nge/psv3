@@ -15,19 +15,16 @@ function constructGamesListJSON() {
             return console.log('Unable to scan directory: ' + err);
         } else {
             constructedGamesListJSON = files;
+            console.log(constructedGamesListJSON);
+            console.log("I like kids...!");
         }
     });
 }
 constructGamesListJSON();
 
-setInterval(() => constructGamesListJSON, 100000);
-
 app.get('/games/', (req, res) => {
-    if(constructedGamesListJSON != null) {
-        res.send(JSON.stringify([]));
-    } else {
-        res.send(JSON.stringify(constructedGamesListJSON));
-    }
+    res.setHeader('content-type', 'application/json');
+    res.send(JSON.stringify(constructedGamesListJSON));
 });
 
 app.use(express.static("public"));
