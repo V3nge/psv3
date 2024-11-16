@@ -69,9 +69,15 @@ function send() {
     var inputBox = document.getElementById("input-box");
     var messageText = inputBox.value;
     inputBox.value = "";
-    if (messageText == "!private") {
-        createPrivate(prompt("code > "));
-    } else {
+    if (messageText == "!np") {
+        createPrivate(encodeURIComponent(prompt("code > ")));
+    } else if(messageText == "!jp") {
+        window.location.href = `/live-chat/?c=${encodeURIComponent(prompt("code > "))}`;
+    } else if(messageText == "!njp") {
+        var encoded = encodeURIComponent(prompt("code > "));
+        createPrivate(encoded);
+        window.location.href = `/live-chat/?c=${encoded}`;
+    } else{
         ws.send(JSON.stringify({
             "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
             "channel": channelToSendTo
@@ -81,12 +87,16 @@ function send() {
 
 var codeInput = document.getElementById("code-input");
 
-function joinCode() {
-    window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
-}
-
-function createCode() {
-    createPrivate(codeInput.value);
+async function joinCode() {
+    var encoded = encodeURIComponent(codeInput.value);
+    if(await (await fetch(`/check_room?id=${encoded}`)).json()) {
+        window.location.href = `/live-chat/?c=${encoded}`;
+    } else {
+        createPrivate(codeInput.value);
+        setInterval(function() {
+            window.location.href = `/live-chat/?c=${encoded}`;
+        }, 1000);
+    }
 }
 
 function back() {
