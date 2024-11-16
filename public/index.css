@@ -362,3 +362,15 @@ pre {
     height: 5%;
     right: 2%;
 }
+
+.system-message {
+    padding: 10px;
+    background-color: var(--blue-violet);
+    width: max-content;
+    height: 7%;
+    border-radius: 10px 10px 10px 10px;
+}
+
+a {
+    color: white;
+}

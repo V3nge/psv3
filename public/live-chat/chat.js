@@ -7,11 +7,20 @@ ws.onopen = function() {
     ws.send(JSON.stringify({"type": "tempacc", "name": uid}));
 }
 
-function createMessage(value) {
+function createMessage(value, userMessage=true) {
     var message = document.createElement("div");
-    message.classList = ["message"];
-    var messagePTag = document.createElement("pre");
-    messagePTag.innerText = value;
+    if (userMessage) {
+        message.classList = ["message"];
+    } else {
+        message.classList = ["system-message"];
+    }
+    if(userMessage) {
+        var messagePTag = document.createElement("pre");
+        messagePTag.innerText = value;
+    } else {
+        var messagePTag = document.createElement("p");
+        messagePTag.innerHTML = value;
+    }
     message.appendChild(messagePTag);
     messagesContainer.appendChild(message);
 }
@@ -37,14 +46,25 @@ ws.onmessage = function(a) {
         } else {
             createMessage(`Person ${hashes.indexOf(response.sender)}: ${decodeURIComponent(response.msg)}`);
         }
+    } else if(response.type == "pri") {
+        var url = `${window.location.origin}/live-chat?c=${response.msg}`;
+        createMessage(`<a href="${url}">Your private chat</a>`, false);
     } else {
         console.log(response);
     }
+}
+
+function createPrivate() {
+    ws.send(JSON.stringify({"type":"newpri"}));
 }
 
 function send() {
     var inputBox = document.getElementById("input-box");
     var messageText = inputBox.value;
     inputBox.value = "";
-    ws.send(JSON.stringify({"type":"tempacc_gsend","msg":encodeURIComponent(messageText),"sender":uid}));
+    if(messageText == "!private") {
+        createPrivate();
+    } else {
+        ws.send(JSON.stringify({"type":"tempacc_gsend","msg":encodeURIComponent(messageText),"sender":uid}));
+    }
 }
