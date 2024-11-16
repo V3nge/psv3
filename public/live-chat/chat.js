@@ -81,3 +81,7 @@ function joinCode() {
 function createCode() {
     createPrivate(codeInput.value);
 }
+
+function back() {
+    window.location.href = "/"; // omg so pro
+}
