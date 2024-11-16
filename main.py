@@ -78,7 +78,7 @@ websockets = []
 rooms = []
 
 def encodeURIComponent(value):
-    return urllib.parse.quote(value)
+    return urllib.parse.quote(value, safe="")
 
 def create_private_room(name):
     rooms.append(name)

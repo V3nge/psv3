@@ -95,30 +95,36 @@ function createPrivateRoom(name) {
 
 app.ws('/live-chat-ws', function(ws, req) {
     ws.on('message', async function(msg) {
-        var message = JSON.parse(msg);
+        const message = JSON.parse(msg);
         switch(message.type) {
             case "tempacc":
-                ws.send(JSON.stringify({"type":"ok_tempacc"}));
+                ws.send(JSON.stringify({"type": "ok_tempacc"}));
                 accs.push(message.name);
-                websockets.push(ws);
-            break;
+                websockets.push({socket: ws, channel: message.channel});
+                break;
             case "tempacc_gsend":
                 if(accs.includes(message.sender)) {
-                    ws.send(JSON.stringify({"type":"ok"}));
-                    var senderHash = await sha256(message.sender);
-                    websockets.forEach(cws => {
-                        cws.send(JSON.stringify({"type":"gsend_r","msg":message.msg,"sender":senderHash}));
+                    ws.send(JSON.stringify({"type": "ok"}));
+                    const senderHash = await sha256(message.sender);
+                    websockets.forEach(person => {
+                        if(person.channel == message.channel) {
+                            person.socket.send(JSON.stringify({
+                                "type": "gsend_r",
+                                "msg": message.msg,
+                                "sender": senderHash
+                            }));
+                        }
                     });
                 } else {
-                    ws.send(JSON.stringify({"type":"nuh uh"}));
+                    ws.send(JSON.stringify({"type": "nuh uh"}));
                 }
-            break;
+                break;
             case "newpri":
-                ws.send(JSON.stringify({"type":"pri","msg":createPrivateRoom(message.code),"sender":senderHash}));
-            break;
+                const senderHash = await sha256(message.sender);
+                ws.send(JSON.stringify({"type": "pri", "msg": createPrivateRoom(message.code), "sender": senderHash}));
+                break;
             default:
-                ws.send(JSON.stringify({"type":"unknowntype","value":message.type}))
-            break;
+                ws.send(JSON.stringify({"type": "unknowntype", "value":message.type}));
         }
     });
     console.log('socket', req.testing);
