@@ -348,3 +348,7 @@ iframe {
     top: 50%;
     transform: translate(-50%, -50%)
 }
+
+.live-chat-button:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+}
