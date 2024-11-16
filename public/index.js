@@ -9,9 +9,11 @@ var gameIframe = null;
 function animeGirl() {
     if((+Date.now() - sfxTime) > 1000) {
         sfxTime = +Date.now();
-        var sfx = ["anime-wow-sound-effect.mp3", "cute-uwu.mp3", "yes-daddy_CKEAffI.mp3"];
+        var sfx = ["anime-wow-sound-effect.mp3", "cute-uwu.mp3", "yes-daddy_CKEAffI.mp3", "ara-ara-sound-effect-127279.mp3", "anime-cat-girl-105182.mp3", "onii-chan-187125.mp3"];
         var effect = sfx[Math.round(Math.random()*(sfx.length-1))];
-        (new Audio(`/sfx/${effect}`)).play();
+        var audio = (new Audio(`/sfx/${effect}`))
+        audio.volume = 1; 
+        audio.play();
     }
 }
 
