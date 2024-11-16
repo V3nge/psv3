@@ -331,3 +331,20 @@ iframe {
     background-color: var(--black);
     border-radius: 10px;
 }
+
+.live-chat-button {
+    transition: 0.1s;
+    min-width: 140px;
+    min-height: 50px;
+    border-radius: 10px;
+    box-shadow: #040112;
+    border: #1a1048 solid;
+    background-color: #120a31;
+    color: white;
+    font-size: larger;
+    border: black solid px;
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
