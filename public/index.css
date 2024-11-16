@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css?family=Imprima");
+
 @font-face {
     font-family: 'Satoshi';
     src: url('Satoshi-Variable.ttf') format('truetype');
 }
 
 * {
-    font-family: 'Satoshi', Helvetica, sans-serif, Arial;
+    font-family: "Imprima";
 }
 
 :root {
@@ -296,10 +298,11 @@ iframe {
 
 .message {
     padding: 10px;
-    background-color: var(--dark-pink-gradient);
-    width: max-content;
-    height: 7%;
-    border-radius: 10px 10px 10px 10px;
+    color: #ffffff !important;
+    font-size: 18px !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
+    text-shadow: rgb(75, 4, 133) -2px -2px, rgb(75, 4, 133) -2px -1px, rgb(75, 4, 133) -2px 0px, rgb(75, 4, 133) -2px 1px, rgb(75, 4, 133) -2px 2px, rgb(75, 4, 133) -1px -2px, rgb(75, 4, 133) -1px -1px, rgb(75, 4, 133) -1px 0px, rgb(75, 4, 133) -1px 1px, rgb(75, 4, 133) -1px 2px, rgb(75, 4, 133) 0px -2px, rgb(75, 4, 133) 0px -1px, rgb(75, 4, 133) 0px 0px, rgb(75, 4, 133) 0px 1px, rgb(75, 4, 133) 0px 2px, rgb(75, 4, 133) 1px -2px, rgb(75, 4, 133) 1px -1px, rgb(75, 4, 133) 1px 0px, rgb(75, 4, 133) 1px 1px, rgb(75, 4, 133) 1px 2px, rgb(75, 4, 133) 2px -2px, rgb(75, 4, 133) 2px -1px, rgb(75, 4, 133) 2px 0px, rgb(75, 4, 133) 2px 1px, rgb(75, 4, 133) 2px 2px;
 }
 
 .input-box {
@@ -395,4 +398,13 @@ a {
     width: 100%;
     height: 100%;
     background-color: var(--black);
+}
+
+message-container #message,
+message-container #message * {
+  color: #ffffff !important;
+  font-family: "Imprima";
+  font-size: 18px !important;
+  line-height: normal !important;
+  letter-spacing: normal !important;
 }
