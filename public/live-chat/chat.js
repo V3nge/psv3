@@ -69,6 +69,7 @@ function send() {
     var inputBox = document.getElementById("input-box");
     var messageText = inputBox.value;
     inputBox.value = "";
+    if (messageText.trim() != "") {
     if (messageText == "!np") {
         createPrivate(encodeURIComponent(prompt("code > ")));
     } else if(messageText == "!jp") {
@@ -83,6 +84,9 @@ function send() {
             "channel": channelToSendTo
         }));
     }
+} else {
+    alert("Invalid input >:(");
+}
 }
 
 var codeInput = document.getElementById("code-input");
