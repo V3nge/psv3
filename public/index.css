@@ -326,7 +326,7 @@ iframe {
     top: 5%;
     overflow-y: scroll;
     height: 70%;
-    background-color: var(--black);
+    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgb(16, 0, 46) 35%,  rgb(32, 0, 81) 100%);
     border-radius: 10px;
 }
 
@@ -358,17 +358,17 @@ pre {
 .live-chat-submit {
     position: absolute;
     bottom: 10%;
-    width: 5%; 
+    width: 6.5%; 
     height: 5%;
-    right: 7%;
+    right: 8%;
 }
 
 .live-chat-private {
     position: absolute;
     bottom: 10%;
-    width: 5%; 
+    width: 6.5%; 
     height: 5%;
-    right: 0.5%;
+    right: 1%;
 }
 
 .system-message {
