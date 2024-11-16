@@ -297,7 +297,8 @@ iframe {
 }
 
 .message {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     color: #ffffff !important;
     font-size: 18px !important;
     line-height: normal !important;
