@@ -134,7 +134,7 @@ app.ws('/live-chat-ws', function(ws, req) {
                         if(person.channel == message.channel) {
                             person.socket.send(JSON.stringify({
                                 "type": "gsend_r",
-                                "msg": message.msg,
+                                "msg": message.msg.trim(),
                                 "sender": senderHash
                             }));
                         }
