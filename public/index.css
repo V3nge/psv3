@@ -7,6 +7,7 @@
     font-family: 'Satoshi', Helvetica, sans-serif, Arial;
 }
 
+
 :root {
     --black: #040112;
     --white: white;
@@ -347,8 +348,11 @@ iframe {
     right: 8%;
     top: 50%;
     transform: translate(-50%, -50%)
+    
 }
 
 .live-chat-button:hover {
     transform: translate(-50%, -50%) scale(1.05);
 }
+
+
