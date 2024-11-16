@@ -81,12 +81,15 @@ function send() {
 
 var codeInput = document.getElementById("code-input");
 
-function joinCode() {
-    window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
-}
-
-function createCode() {
-    createPrivate(codeInput.value);
+async function joinCode() {
+    if(await (await fetch(`/check_room?id=${encodeURIComponent(codeInput.value)}`)).json()) {
+        window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
+    } else {
+        createCode();
+        setInterval(function() {
+            window.location.href = `/live-chat/?c=${encodeURIComponent(codeInput.value)}`;
+        }, 1000);
+    }
 }
 
 function back() {

@@ -94,6 +94,11 @@ function createPrivateRoom(name) {
     return `${encodeURIComponent(name)}`;
 }
 
+app.get('/check_room', (req, res) => {
+    res.setHeader('content-type', 'application/json');
+    res.send(rooms.includes(req.query.id));
+});
+
 app.ws('/live-chat-ws', function(ws, req) {
     ws.on('message', async function(msg) {
         const message = JSON.parse(msg);
