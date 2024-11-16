@@ -129,7 +129,8 @@ ws.onmessage = function (a) {
             "type": "tempacc_gsend",
             "msg": encodeURIComponent(joinMessages[randomMsg]),
             "sender": uid,
-            "channel": channelToSendTo
+            "channel": channelToSendTo,
+            "vanity": prompt("> ")
         }));
     } else if (response.type == "gsend_r") {
         if (!hashes.includes(response.sender)) {

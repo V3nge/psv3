@@ -101,6 +101,7 @@ async function sha256(message) {
 }
 
 var accs = [];
+var accs_vanities = [];
 var websockets = [];
 var rooms = [];
 
@@ -135,6 +136,7 @@ app.ws('/live-chat-ws', function(ws, req) {
             case "tempacc":
                 ws.send(JSON.stringify({"type": "ok_tempacc"}));
                 accs.push(message.name);
+                accs_vanities.push(message.vanity);
                 websockets.push({socket: ws, channel: message.channel});
                 break;
             case "tempacc_gsend":
@@ -151,7 +153,8 @@ app.ws('/live-chat-ws', function(ws, req) {
                             person.socket.send(JSON.stringify({
                                 "type": "gsend_r",
                                 "msg": encodeURIComponent(decodedMessage.trim() + getCurrentTime()),
-                                "sender": senderHash
+                                "sender": senderHash,
+                                "vanity": accs_vanities[accs.indexOf(message.sender)]
                             }));
                         }
                     });
