@@ -56,7 +56,7 @@ app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
         const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
         res.send(`${data}<script>${report}</script>`);
     } catch (err) {
-        if(err.code == "ENOENT") {
+        if (err.code == "ENOENT") {
             res.sendStatus(404);
         } else {
             console.error(err);
@@ -64,6 +64,35 @@ app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
         }
     }
 });
+
+const adjectives = [
+    "Sticky", "Squishy", "Bouncy", "Slimy", "Fizzy", "Prickly", "Crusty", "Fluffy",
+    "Wobbly", "Puffy", "Zesty", "Oozy", "Frothy", "Spiky", "Greasy", "Soggy",
+    "Chewy", "Shiny", "Lumpy", "Mushy", "Gritty", "Cranky", "Fuzzy", "Knobbly",
+    "Rusty", "Quirky", "Tacky", "Drippy", "Goopy", "Frosty", "Syrupy", "Slick",
+    "Twitchy", "Grimy", "Soggy", "Blobby", "Waxy", "Pungent", "Slippery", "Tacky",
+    "Musty", "Squiggly", "Fizzy", "Nippy", "Clingy", "Snappy", "Swirly", "Wonky",
+    "Frizzy", "Chunky", "Stupid", "Cute", "Hungry", "Vibrating", "Wet", "Dripping",
+    "Twitching", "Throbbing", "Tiny", "Big", "Suckable"
+];
+
+const nouns = [
+    "Tissue", "Toaster", "Banana", "Shoe", "Cactus", "Biscuit", "Penguin", "Balloon",
+    "Pillow", "Toothbrush", "Sock", "Lamp", "Pencil", "Towel", "Chair", "Bottle",
+    "Cupcake", "Turtle", "Sandwich", "Lollipop", "Potato", "Slipper", "Hat", "Book",
+    "Teapot", "Key", "Umbrella", "Soap", "Butterfly", "Pumpkin", "Donut", "Crayon",
+    "Clock", "Sock", "Cloud", "Dragon", "Shovel", "Robot", "Bubble", "Spider",
+    "Taco", "Fish", "Pizza", "Bag", "Panda", "Cushion", "Cat", "Carrot", "Owl", "Rock",
+    "Grandpa", "Grandma", "Diddy", "Diddler", "Lolicon", "Child", "Asian", "Adam", "Monitor",
+    "Computer", "Woman", "Man", "Vibrator"
+];
+
+// Function to generate a random combination
+function getRandomCombination() {
+    const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+    return randomAdjective + randomNoun;
+}
 
 const pathStats = {};
 
@@ -93,9 +122,9 @@ app.post("/r", (req, res) => {
 });
 
 async function sha256(message) {
-    const msgBuffer = new TextEncoder().encode(message);                    
+    const msgBuffer = new TextEncoder().encode(message);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));            
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     return hashHex;
 }
@@ -121,7 +150,7 @@ app.get('/search', (req, res) => {
     var filtered = [];
 
     constructedGamesListJSON.forEach(game => {
-        if(game.toLowerCase().includes(req.query.search.toLowerCase())) {
+        if (game.toLowerCase().includes(req.query.search.toLowerCase())) {
             filtered.push(game);
         }
     });
@@ -129,29 +158,32 @@ app.get('/search', (req, res) => {
     res.send(JSON.stringify(filtered));
 });
 
-app.ws('/live-chat-ws', function(ws, req) {
-    ws.on('message', async function(msg) {
+app.ws('/live-chat-ws', function (ws, req) {
+    ws.on('message', async function (msg) {
         const message = JSON.parse(msg);
-        switch(message.type) {
+        switch (message.type) {
             case "tempacc":
-                ws.send(JSON.stringify({"type": "ok_tempacc"}));
+                ws.send(JSON.stringify({ "type": "ok_tempacc" }));
                 accs.push(message.name);
                 console.log(message);
                 console.log(message.vanity);
+                if (message.vanity == null) {
+                    message.vanity = getRandomCombination();
+                }
                 accs_vanities.push(message.vanity);
-                websockets.push({socket: ws, channel: message.channel});  
+                websockets.push({socket: ws, channel: message.channel});
                 break;
             case "tempacc_gsend":
-                if(accs.includes(message.sender)) {
+                if (accs.includes(message.sender)) {
                     var decodedMessage = decodeURIComponent(message.msg);
-                    if(decodedMessage.trim() == "" || decodedMessage.trim().length > 2001) {
-                        ws.send(JSON.stringify({"type": "nuh uh"}));
+                    if (decodedMessage.trim() == "" || decodedMessage.trim().length > 2001) {
+                        ws.send(JSON.stringify({ "type": "nuh uh" }));
                         break;
                     }
-                    ws.send(JSON.stringify({"type": "ok"}));
+                    ws.send(JSON.stringify({ "type": "ok" }));
                     const senderHash = await sha256(message.sender);
                     websockets.forEach(person => {
-                        if(person.channel == message.channel) {
+                        if (person.channel == message.channel) {
                             console.log(accs_vanities)
                             console.log(accs_vanities[accs.indexOf(message.sender)]);
                             person.socket.send(JSON.stringify({
@@ -163,15 +195,15 @@ app.ws('/live-chat-ws', function(ws, req) {
                         }
                     });
                 } else {
-                    ws.send(JSON.stringify({"type": "nuh uh"}));
+                    ws.send(JSON.stringify({ "type": "nuh uh" }));
                 }
                 break;
             case "newpri":
                 const senderHash = await sha256(message.sender);
-                ws.send(JSON.stringify({"type": "pri", "msg": createPrivateRoom(message.code), "sender": senderHash}));
+                ws.send(JSON.stringify({ "type": "pri", "msg": createPrivateRoom(message.code), "sender": senderHash }));
                 break;
             default:
-                ws.send(JSON.stringify({"type": "unknowntype", "value":message.type}));
+                ws.send(JSON.stringify({ "type": "unknowntype", "value": message.type }));
         }
     });
 });
