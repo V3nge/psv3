@@ -167,12 +167,12 @@ app.ws('/live-chat-ws', function (ws, req) {
                 accs.push(message.name);
                 console.log(message);
                 console.log(message.vanity);
-                if (message.vanity == null) {
+                if (message.vanity == null || message.vanity.trim() == "" || message.vanity.trim().length > 30) {
                     var randomCombinationThing = getRandomCombination();
                     console.log(randomCombinationThing);
                     message.vanity = randomCombinationThing;
                 }
-                accs_vanities.push(message.vanity);
+                accs_vanities.push(message.vanity.trim());
                 websockets.push({socket: ws, channel: message.channel});
                 break;
             case "tempacc_gsend":
