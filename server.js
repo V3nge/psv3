@@ -139,7 +139,7 @@ app.ws('/live-chat-ws', function(ws, req) {
                 console.log(message);
                 console.log(message.vanity);
                 accs_vanities.push(message.vanity);
-                websockets.push({socket: ws, channel: message.channel});
+                websockets.push({socket: ws, channel: message.channel});  
                 break;
             case "tempacc_gsend":
                 if(accs.includes(message.sender)) {
