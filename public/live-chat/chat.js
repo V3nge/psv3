@@ -120,7 +120,7 @@ ws.onerror = function() {
     alert("OH SHOOT! There was an error... 😦😦😦");
 }
 
-var playNameClient = prompt("> ");
+var playNameClient = prompt("> Enter name for chat");
 
 ws.onmessage = function (a) {
     var response = JSON.parse(a.data);
