@@ -2,9 +2,25 @@ const crypto = require("crypto");
 const nocache = require('nocache');
 const express = require("express");
 const path = require('path');
-const fs = require('node:fs');
+const fs = require('fs');
+const expressRateLimit = require('express-rate-limit');
+const expressSlowDown = require("express-slow-down");
 const app = express();
 var expressWs = require('express-ws')(app);
+
+const limiter = expressRateLimit({
+    windowMs: 60 * 1000,
+    max: 500,
+});
+  
+const speedLimiter = expressSlowDown({
+    windowMs: 15 * 1000,
+    delayAfter: 125,
+    delayMs: () => 1500,
+});
+
+app.use(speedLimiter);
+app.use(limiter);
 
 app.use(nocache());
 
@@ -32,7 +48,7 @@ function getCurrentTime() {
 
 function constructGamesListJSON() {
     report = fs.readFileSync(path.join(__dirname, `private/report.js`));
-    const directoryPath = path.join(__dirname, 'Public/games');
+    const directoryPath = path.join(__dirname, 'public/games');
     fs.readdir(directoryPath, function (err, files) {
         if (err) {
             return console.log('Unable to scan directory: ' + err);
