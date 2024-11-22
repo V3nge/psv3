@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html><!-- 
+ single html processed by https://github.com/zTrix/webpage2html
+ title: 2048
+ url: https://bidoofery.github.io/gfiles/gfiles/html5/2048/
+ date: Sat May  6 14:23:37 2023
+-->
+<head>
+<meta charset="utf-8"/>
+<title>2048 | Project Sentinel</title>
+<style data-href="style/main.css" rel="stylesheet" type="text/css">@import url(data:text/css;charset=utf-8;base64,QGZvbnQtZmFjZSB7CiAgICBmb250LWZhbWlseTogIkNsZWFyIFNhbnMiOwogICAgc3JjOiB1cmwoIkNsZWFyU2Fucy1MaWdodC13ZWJmb250LmVvdCIpOwogICAgc3JjOiB1cmwoIkNsZWFyU2Fucy1MaWdodC13ZWJmb250ZDQxZC5lb3Q/I2llZml4IikgZm9ybWF0KCJlbWJlZGRlZC1vcGVudHlwZSIpLAogICAgICAgICB1cmwoIkNsZWFyU2Fucy1MaWdodC13ZWJmb250LnN2ZyNjbGVhcl9zYW5zX2xpZ2h0cmVndWxhciIpIGZvcm1hdCgic3ZnIiksCiAgICAgICAgIHVybCgiQ2xlYXJTYW5zLUxpZ2h0LXdlYmZvbnQud29mZiIpIGZvcm1hdCgid29mZiIpOwogICAgZm9udC13ZWlnaHQ6IDIwMDsKICAgIGZvbnQtc3R5bGU6IG5vcm1hbDsKfQoKQGZvbnQtZmFjZSB7CiAgICBmb250LWZhbWlseTogIkNsZWFyIFNhbnMiOwogICAgc3JjOiB1cmwoIkNsZWFyU2Fucy1SZWd1bGFyLXdlYmZvbnQuZW90Iik7CiAgICBzcmM6IHVybCgiQ2xlYXJTYW5zLVJlZ3VsYXItd2ViZm9udGQ0MWQuZW90PyNpZWZpeCIpIGZvcm1hdCgiZW1iZWRkZWQtb3BlbnR5cGUiKSwKICAgICAgICAgdXJsKCJDbGVhclNhbnMtUmVndWxhci13ZWJmb250LnN2ZyNjbGVhcl9zYW5zcmVndWxhciIpIGZvcm1hdCgic3ZnIiksCiAgICAgICAgIHVybCgiQ2xlYXJTYW5zLVJlZ3VsYXItd2ViZm9udC53b2ZmIikgZm9ybWF0KCJ3b2ZmIik7CiAgICBmb250LXdlaWdodDogbm9ybWFsOwogICAgZm9udC1zdHlsZTogbm9ybWFsOwp9CgpAZm9udC1mYWNlIHsKICAgIGZvbnQtZmFtaWx5OiAiQ2xlYXIgU2FucyI7CiAgICBzcmM6IHVybCgiQ2xlYXJTYW5zLUJvbGQtd2ViZm9udC5lb3QiKTsKICAgIHNyYzogdXJsKCJDbGVhclNhbnMtQm9sZC13ZWJmb250ZDQxZC5lb3Q/I2llZml4IikgZm9ybWF0KCJlbWJlZGRlZC1vcGVudHlwZSIpLAogICAgICAgICB1cmwoIkNsZWFyU2Fucy1Cb2xkLXdlYmZvbnQuc3ZnI2NsZWFyX3NhbnNib2xkIikgZm9ybWF0KCJzdmciKSwKICAgICAgICAgdXJsKCJDbGVhclNhbnMtQm9sZC13ZWJmb250LndvZmYiKSBmb3JtYXQoIndvZmYiKTsKICAgIGZvbnQtd2VpZ2h0OiA3MDA7CiAgICBmb250LXN0eWxlOiBub3JtYWw7Cn0KCg==);
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #faf8ef;
+  color: #776e65;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px; }
+
+body {
+  margin: 80px 0; }
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+h1.title {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+  display: block;
+  float: left; }
+
+@-webkit-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+@-moz-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+@keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+.scores-container {
+  float: right;
+  text-align: right; }
+
+.score-container, .best-container {
+  position: relative;
+  display: inline-block;
+  background: #bbada0;
+  padding: 15px 25px;
+  font-size: 25px;
+  height: 25px;
+  line-height: 47px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center; }
+  .score-container:after, .best-container:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: #eee4da; }
+  .score-container .score-addition, .best-container .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    color: rgba(119, 110, 101, 0.9);
+    z-index: 100;
+    -webkit-animation: move-up 600ms ease-in;
+    -moz-animation: move-up 600ms ease-in;
+    animation: move-up 600ms ease-in;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+
+.score-container:after {
+  content: "Score"; }
+
+.best-container:after {
+  content: "Best"; }
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.65; }
+
+a {
+  color: #776e65;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer; }
+
+strong.important {
+  text-transform: uppercase; }
+
+hr {
+  border: none;
+  border-bottom: 1px solid #d8d4d0;
+  margin-top: 20px;
+  margin-bottom: 30px; }
+
+.container {
+  width: 500px;
+  margin: 0 auto; }
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+.game-container {
+  margin-top: 40px;
+  position: relative;
+  padding: 15px;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -ms-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -ms-touch-action: none;
+  touch-action: none;
+  background: #bbada0;
+  border-radius: 6px;
+  width: 500px;
+  height: 500px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .game-container .game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.5);
+    z-index: 100;
+    text-align: center;
+    -webkit-animation: fade-in 800ms ease 1200ms;
+    -moz-animation: fade-in 800ms ease 1200ms;
+    animation: fade-in 800ms ease 1200ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    animation-fill-mode: both; }
+    .game-container .game-message p {
+      font-size: 60px;
+      font-weight: bold;
+      height: 60px;
+      line-height: 60px;
+      margin-top: 222px; }
+    .game-container .game-message .lower {
+      display: block;
+      margin-top: 59px; }
+    .game-container .game-message a {
+      display: inline-block;
+      background: #8f7a66;
+      border-radius: 3px;
+      padding: 0 20px;
+      text-decoration: none;
+      color: #f9f6f2;
+      height: 40px;
+      line-height: 42px;
+      margin-left: 9px; }
+      .game-container .game-message a.keep-playing-button {
+        display: none; }
+    .game-container .game-message.game-won {
+      background: rgba(237, 194, 46, 0.5);
+      color: #f9f6f2; }
+      .game-container .game-message.game-won a.keep-playing-button {
+        display: inline-block; }
+    .game-container .game-message.game-won, .game-container .game-message.game-over {
+      display: block; }
+
+.grid-container {
+  position: absolute;
+  z-index: 1; }
+
+.grid-row {
+  margin-bottom: 15px; }
+  .grid-row:last-child {
+    margin-bottom: 0; }
+  .grid-row:after {
+    content: "";
+    display: block;
+    clear: both; }
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin-right: 15px;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35); }
+  .grid-cell:last-child {
+    margin-right: 0; }
+
+.tile-container {
+  position: absolute;
+  z-index: 2; }
+
+.tile, .tile .tile-inner {
+  width: 107px;
+  height: 107px;
+  line-height: 107px; }
+.tile.tile-position-1-1 {
+  -webkit-transform: translate(0px, 0px);
+  -moz-transform: translate(0px, 0px);
+  -ms-transform: translate(0px, 0px);
+  transform: translate(0px, 0px); }
+.tile.tile-position-1-2 {
+  -webkit-transform: translate(0px, 121px);
+  -moz-transform: translate(0px, 121px);
+  -ms-transform: translate(0px, 121px);
+  transform: translate(0px, 121px); }
+.tile.tile-position-1-3 {
+  -webkit-transform: translate(0px, 242px);
+  -moz-transform: translate(0px, 242px);
+  -ms-transform: translate(0px, 242px);
+  transform: translate(0px, 242px); }
+.tile.tile-position-1-4 {
+  -webkit-transform: translate(0px, 363px);
+  -moz-transform: translate(0px, 363px);
+  -ms-transform: translate(0px, 363px);
+  transform: translate(0px, 363px); }
+.tile.tile-position-2-1 {
+  -webkit-transform: translate(121px, 0px);
+  -moz-transform: translate(121px, 0px);
+  -ms-transform: translate(121px, 0px);
+  transform: translate(121px, 0px); }
+.tile.tile-position-2-2 {
+  -webkit-transform: translate(121px, 121px);
+  -moz-transform: translate(121px, 121px);
+  -ms-transform: translate(121px, 121px);
+  transform: translate(121px, 121px); }
+.tile.tile-position-2-3 {
+  -webkit-transform: translate(121px, 242px);
+  -moz-transform: translate(121px, 242px);
+  -ms-transform: translate(121px, 242px);
+  transform: translate(121px, 242px); }
+.tile.tile-position-2-4 {
+  -webkit-transform: translate(121px, 363px);
+  -moz-transform: translate(121px, 363px);
+  -ms-transform: translate(121px, 363px);
+  transform: translate(121px, 363px); }
+.tile.tile-position-3-1 {
+  -webkit-transform: translate(242px, 0px);
+  -moz-transform: translate(242px, 0px);
+  -ms-transform: translate(242px, 0px);
+  transform: translate(242px, 0px); }
+.tile.tile-position-3-2 {
+  -webkit-transform: translate(242px, 121px);
+  -moz-transform: translate(242px, 121px);
+  -ms-transform: translate(242px, 121px);
+  transform: translate(242px, 121px); }
+.tile.tile-position-3-3 {
+  -webkit-transform: translate(242px, 242px);
+  -moz-transform: translate(242px, 242px);
+  -ms-transform: translate(242px, 242px);
+  transform: translate(242px, 242px); }
+.tile.tile-position-3-4 {
+  -webkit-transform: translate(242px, 363px);
+  -moz-transform: translate(242px, 363px);
+  -ms-transform: translate(242px, 363px);
+  transform: translate(242px, 363px); }
+.tile.tile-position-4-1 {
+  -webkit-transform: translate(363px, 0px);
+  -moz-transform: translate(363px, 0px);
+  -ms-transform: translate(363px, 0px);
+  transform: translate(363px, 0px); }
+.tile.tile-position-4-2 {
+  -webkit-transform: translate(363px, 121px);
+  -moz-transform: translate(363px, 121px);
+  -ms-transform: translate(363px, 121px);
+  transform: translate(363px, 121px); }
+.tile.tile-position-4-3 {
+  -webkit-transform: translate(363px, 242px);
+  -moz-transform: translate(363px, 242px);
+  -ms-transform: translate(363px, 242px);
+  transform: translate(363px, 242px); }
+.tile.tile-position-4-4 {
+  -webkit-transform: translate(363px, 363px);
+  -moz-transform: translate(363px, 363px);
+  -ms-transform: translate(363px, 363px);
+  transform: translate(363px, 363px); }
+
+.tile {
+  position: absolute;
+  -webkit-transition: 100ms ease-in-out;
+  -moz-transition: 100ms ease-in-out;
+  transition: 100ms ease-in-out;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform; }
+  .tile .tile-inner {
+    border-radius: 3px;
+    background: #eee4da;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    font-size: 55px; }
+  .tile.tile-2 .tile-inner {
+    background: #eee4da;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile.tile-4 .tile-inner {
+    background: #ede0c8;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile.tile-8 .tile-inner {
+    color: #f9f6f2;
+    background: #f2b179; }
+  .tile.tile-16 .tile-inner {
+    color: #f9f6f2;
+    background: #f59563; }
+  .tile.tile-32 .tile-inner {
+    color: #f9f6f2;
+    background: #f67c5f; }
+  .tile.tile-64 .tile-inner {
+    color: #f9f6f2;
+    background: #f65e3b; }
+  .tile.tile-128 .tile-inner {
+    color: #f9f6f2;
+    background: #edcf72;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+    font-size: 45px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-128 .tile-inner {
+        font-size: 25px; } }
+  .tile.tile-256 .tile-inner {
+    color: #f9f6f2;
+    background: #edcc61;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+    font-size: 45px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-256 .tile-inner {
+        font-size: 25px; } }
+  .tile.tile-512 .tile-inner {
+    color: #f9f6f2;
+    background: #edc850;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+    font-size: 45px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-512 .tile-inner {
+        font-size: 25px; } }
+  .tile.tile-1024 .tile-inner {
+    color: #f9f6f2;
+    background: #edc53f;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+    font-size: 35px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-1024 .tile-inner {
+        font-size: 15px; } }
+  .tile.tile-2048 .tile-inner {
+    color: #f9f6f2;
+    background: #edc22e;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-2048 .tile-inner {
+        font-size: 15px; } }
+  .tile.tile-super .tile-inner {
+    color: #f9f6f2;
+    background: #3c3a32;
+    font-size: 30px; }
+    @media screen and (max-width: 520px) {
+      .tile.tile-super .tile-inner {
+        font-size: 10px; } }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+@keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+.tile-new .tile-inner {
+  -webkit-animation: appear 200ms ease 100ms;
+  -moz-animation: appear 200ms ease 100ms;
+  animation: appear 200ms ease 100ms;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; }
+
+@-webkit-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+@-moz-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+@keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+.tile-merged .tile-inner {
+  z-index: 20;
+  -webkit-animation: pop 200ms ease 100ms;
+  -moz-animation: pop 200ms ease 100ms;
+  animation: pop 200ms ease 100ms;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; }
+
+.above-game:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+.game-intro {
+  float: left;
+  line-height: 42px;
+  margin-bottom: 0; }
+
+.restart-button {
+  display: inline-block;
+  background: #8f7a66;
+  border-radius: 3px;
+  padding: 0 20px;
+  text-decoration: none;
+  color: #f9f6f2;
+  height: 40px;
+  line-height: 42px;
+  display: block;
+  text-align: center;
+  float: right; }
+
+.game-explanation {
+  margin-top: 50px; }
+
+@media screen and (max-width: 520px) {
+  html, body {
+    font-size: 15px; }
+
+  body {
+    margin: 20px 0;
+    padding: 0 20px; }
+
+  h1.title {
+    font-size: 27px;
+    margin-top: 15px; }
+
+  .container {
+    width: 280px;
+    margin: 0 auto; }
+
+  .score-container, .best-container {
+    margin-top: 0;
+    padding: 15px 10px;
+    min-width: 40px; }
+
+  .heading {
+    margin-bottom: 10px; }
+
+  .game-intro {
+    width: 55%;
+    display: block;
+    box-sizing: border-box;
+    line-height: 1.65; }
+
+  .restart-button {
+    width: 42%;
+    padding: 0;
+    display: block;
+    box-sizing: border-box;
+    margin-top: 2px; }
+
+  .game-container {
+    margin-top: 17px;
+    position: relative;
+    padding: 10px;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -ms-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -ms-touch-action: none;
+    touch-action: none;
+    background: #bbada0;
+    border-radius: 6px;
+    width: 280px;
+    height: 280px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .game-container .game-message {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(238, 228, 218, 0.5);
+      z-index: 100;
+      text-align: center;
+      -webkit-animation: fade-in 800ms ease 1200ms;
+      -moz-animation: fade-in 800ms ease 1200ms;
+      animation: fade-in 800ms ease 1200ms;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both;
+      animation-fill-mode: both; }
+      .game-container .game-message p {
+        font-size: 60px;
+        font-weight: bold;
+        height: 60px;
+        line-height: 60px;
+        margin-top: 222px; }
+      .game-container .game-message .lower {
+        display: block;
+        margin-top: 59px; }
+      .game-container .game-message a {
+        display: inline-block;
+        background: #8f7a66;
+        border-radius: 3px;
+        padding: 0 20px;
+        text-decoration: none;
+        color: #f9f6f2;
+        height: 40px;
+        line-height: 42px;
+        margin-left: 9px; }
+        .game-container .game-message a.keep-playing-button {
+          display: none; }
+      .game-container .game-message.game-won {
+        background: rgba(237, 194, 46, 0.5);
+        color: #f9f6f2; }
+        .game-container .game-message.game-won a.keep-playing-button {
+          display: inline-block; }
+      .game-container .game-message.game-won, .game-container .game-message.game-over {
+        display: block; }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1; }
+
+  .grid-row {
+    margin-bottom: 10px; }
+    .grid-row:last-child {
+      margin-bottom: 0; }
+    .grid-row:after {
+      content: "";
+      display: block;
+      clear: both; }
+
+  .grid-cell {
+    width: 57.5px;
+    height: 57.5px;
+    margin-right: 10px;
+    float: left;
+    border-radius: 3px;
+    background: rgba(238, 228, 218, 0.35); }
+    .grid-cell:last-child {
+      margin-right: 0; }
+
+  .tile-container {
+    position: absolute;
+    z-index: 2; }
+
+  .tile, .tile .tile-inner {
+    width: 58px;
+    height: 58px;
+    line-height: 58px; }
+  .tile.tile-position-1-1 {
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate(0px, 0px); }
+  .tile.tile-position-1-2 {
+    -webkit-transform: translate(0px, 67px);
+    -moz-transform: translate(0px, 67px);
+    -ms-transform: translate(0px, 67px);
+    transform: translate(0px, 67px); }
+  .tile.tile-position-1-3 {
+    -webkit-transform: translate(0px, 135px);
+    -moz-transform: translate(0px, 135px);
+    -ms-transform: translate(0px, 135px);
+    transform: translate(0px, 135px); }
+  .tile.tile-position-1-4 {
+    -webkit-transform: translate(0px, 202px);
+    -moz-transform: translate(0px, 202px);
+    -ms-transform: translate(0px, 202px);
+    transform: translate(0px, 202px); }
+  .tile.tile-position-2-1 {
+    -webkit-transform: translate(67px, 0px);
+    -moz-transform: translate(67px, 0px);
+    -ms-transform: translate(67px, 0px);
+    transform: translate(67px, 0px); }
+  .tile.tile-position-2-2 {
+    -webkit-transform: translate(67px, 67px);
+    -moz-transform: translate(67px, 67px);
+    -ms-transform: translate(67px, 67px);
+    transform: translate(67px, 67px); }
+  .tile.tile-position-2-3 {
+    -webkit-transform: translate(67px, 135px);
+    -moz-transform: translate(67px, 135px);
+    -ms-transform: translate(67px, 135px);
+    transform: translate(67px, 135px); }
+  .tile.tile-position-2-4 {
+    -webkit-transform: translate(67px, 202px);
+    -moz-transform: translate(67px, 202px);
+    -ms-transform: translate(67px, 202px);
+    transform: translate(67px, 202px); }
+  .tile.tile-position-3-1 {
+    -webkit-transform: translate(135px, 0px);
+    -moz-transform: translate(135px, 0px);
+    -ms-transform: translate(135px, 0px);
+    transform: translate(135px, 0px); }
+  .tile.tile-position-3-2 {
+    -webkit-transform: translate(135px, 67px);
+    -moz-transform: translate(135px, 67px);
+    -ms-transform: translate(135px, 67px);
+    transform: translate(135px, 67px); }
+  .tile.tile-position-3-3 {
+    -webkit-transform: translate(135px, 135px);
+    -moz-transform: translate(135px, 135px);
+    -ms-transform: translate(135px, 135px);
+    transform: translate(135px, 135px); }
+  .tile.tile-position-3-4 {
+    -webkit-transform: translate(135px, 202px);
+    -moz-transform: translate(135px, 202px);
+    -ms-transform: translate(135px, 202px);
+    transform: translate(135px, 202px); }
+  .tile.tile-position-4-1 {
+    -webkit-transform: translate(202px, 0px);
+    -moz-transform: translate(202px, 0px);
+    -ms-transform: translate(202px, 0px);
+    transform: translate(202px, 0px); }
+  .tile.tile-position-4-2 {
+    -webkit-transform: translate(202px, 67px);
+    -moz-transform: translate(202px, 67px);
+    -ms-transform: translate(202px, 67px);
+    transform: translate(202px, 67px); }
+  .tile.tile-position-4-3 {
+    -webkit-transform: translate(202px, 135px);
+    -moz-transform: translate(202px, 135px);
+    -ms-transform: translate(202px, 135px);
+    transform: translate(202px, 135px); }
+  .tile.tile-position-4-4 {
+    -webkit-transform: translate(202px, 202px);
+    -moz-transform: translate(202px, 202px);
+    -ms-transform: translate(202px, 202px);
+    transform: translate(202px, 202px); }
+
+  .tile .tile-inner {
+    font-size: 35px; }
+
+  .game-message p {
+    font-size: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    margin-top: 90px !important; }
+  .game-message .lower {
+    margin-top: 30px !important; } }
+</style>
+<link data-href="favicon.ico" href="data:image/vnd.microsoft.icon;base64,AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAgBAAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAADE7E4AxOy+AMTs9ADE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz0AMTsvgDE7E0AAAAAAAAAAAAAAAAAxOyEAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7IQAAAAAAMTsTQDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7E0AxOy+AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTsvgDE7PIAxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOzzAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/Iszv/yLM7/8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/Iszv/yLM7/8RyO3/AMTs/wDE7P8AxOz/AMTs/5nn9////////////////////////////6rr+f8AxOz/Iszv/+77/v////////////////9E1PH/AMTs/wDE7P8AxOz/AMTs/wDE7P+Z5/f//////xHI7f8AxOz/RNTx//////////////////////+Z5/f/AMTs/wDE7P8AxOz/mef3/////////////////+77/v//////mef3/wDE7P/d9/z//////933/P/M8/v///////////8AxOz/iOP2/7vv+v+q6/n/quv5/+77/v//////u+/6/xHI7f/u+/7//////7vv+v+Z5/f///////////9E1PH/AMTs/wDE7P8AxOz/u+/6///////u+/7/Ecjt/wDE7P8AxOz/Ecjt////////////AMTs/wDE7P/u+/7//////0TU8f//////////////////////////////////////Ecjt/+77/v//////AMTs/wDE7P+77/r//////1XY8v8AxOz/AMTs/wDE7P8AxOz/quv5////////////Ecjt/wDE7P8RyO3//////+77/v8AxOz/AMTs/6rr+f//////Vdjy/6rr+f//////zPP7/xHI7f+77/r//////0TU8f8AxOz/3ff8//////+q6/n/Ztz0////////////Iszv/wDE7P8AxOz/AMTs/wDE7P8AxOz/zPP7///////d9/z/AMTs/xHI7f//////7vv+/wDE7P8AxOz/quv5//////9V2PL/AMTs/933/P//////M9Dw/5nn9///////Ecjt/wDE7P8RyO3//////////////////////2bc9P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz///////////8z0PD/Ecjt///////u+/7/AMTs/wDE7P+q6/n//////1XY8v8AxOz/Ecjt////////////u+/6//////8RyO3/AMTs/4jj9v//////7vv+/8zz+///////3ff8/wDE7P8AxOz/AMTs/xHI7f+q6/n/Vdjy/wDE7P/M8/v//////1XY8v8RyO3///////////8z0PD/Ecjt////////////M9Dw/wDE7P8AxOz/RNTx/////////////////xHI7f8AxOz/zPP7//////8z0PD/AMTs////////////Iszv/wDE7P8AxOz/Vdjy////////////////////////////Ecjt/wDE7P934PX//////////////////////7vv+v8AxOz/AMTs/wDE7P8AxOz/iOP2////////////Ecjt/wDE7P+I4/b///////////////////////////8AxOz/AMTs/wDE7P8AxOz/M9Dw/5nn9/+q6/n/mef3/xHI7f8AxOz/AMTs/wDE7P9E1PH/quv5/7vv+v9m3PT/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/Ztz0/3fg9f8RyO3/AMTs/wDE7P9V2PL/quv5/6rr+f934PX/Ecjt/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOzyAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs8gDE7L4AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOy+AMTsTADE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7E0AAAAAAMTshADE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOyEAAAAAAAAAAAAAAAAAMTsTQDE7L4AxOzzAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7PMAxOy+AMTsTAAAAAAAAAAAwAAAA4AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAcAAAAM=" rel="shortcut icon"/>
+<link data-href="meta/apple-touch-icon.png" href="data:image/png;base64,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" rel="apple-touch-icon"/>
+<link data-href="meta/apple-touch-startup-image-640x1096.png" href="https://bidoofery.github.io/gfiles/gfiles/html5/2048/meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/> <!-- iPhone 5+ -->
+<link data-href="meta/apple-touch-startup-image-640x920.png" href="https://bidoofery.github.io/gfiles/gfiles/html5/2048/meta/apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)" rel="apple-touch-startup-image"/> <!-- iPhone, retina -->
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="True" name="HandheldFriendly"/>
+<meta content="320" name="MobileOptimized"/>
+<meta content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui" name="viewport"/>
+</head>
+<body>
+<div class="container">
+<div class="heading">
+<h1 class="title">2048</h1>
+<div class="scores-container">
+<div class="score-container">0</div>
+<div class="best-container">0</div>
+</div>
+</div>
+<div class="above-game">
+<p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
+<a class="restart-button">New Game</a>
+</div>
+<div class="game-container">
+<div class="game-message">
+<p></p>
+<div class="lower">
+<a class="keep-playing-button">Keep going</a>
+<a class="retry-button">Try again</a>
+</div>
+</div>
+<div class="grid-container">
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+</div>
+<div class="tile-container">
+</div>
+</div>
+<p class="game-explanation">
+<strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
+</p>
+</div>
+<script data-src="js/bind_polyfill.js" type="text/javascript"><!--//--><![CDATA[//><!--
+Function.prototype.bind = Function.prototype.bind || function (target) {
+  var self = this;
+  return function (args) {
+    if (!(args instanceof Array)) {
+      args = [args];
+    }
+    self.apply(target, args);
+  };
+};
+
+//--><!]]></script>
+<script data-src="js/classlist_polyfill.js" type="text/javascript"><!--//--><![CDATA[//><!--
+(function () {
+  if (typeof window.Element === "undefined" ||
+      "classList" in document.documentElement) {
+    return;
+  }
+
+  var prototype = Array.prototype,
+      push = prototype.push,
+      splice = prototype.splice,
+      join = prototype.join;
+
+  function DOMTokenList(el) {
+    this.el = el;
+    // The className needs to be trimmed and split on whitespace
+    // to retrieve a list of classes.
+    var classes = el.className.replace(/^\s+|\s+$/g, '').split(/\s+/);
+    for (var i = 0; i < classes.length; i++) {
+      push.call(this, classes[i]);
+    }
+  }
+
+  DOMTokenList.prototype = {
+    add: function (token) {
+      if (this.contains(token)) return;
+      push.call(this, token);
+      this.el.className = this.toString();
+    },
+    contains: function (token) {
+      return this.el.className.indexOf(token) != -1;
+    },
+    item: function (index) {
+      return this[index] || null;
+    },
+    remove: function (token) {
+      if (!this.contains(token)) return;
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == token) break;
+      }
+      splice.call(this, i, 1);
+      this.el.className = this.toString();
+    },
+    toString: function () {
+      return join.call(this, ' ');
+    },
+    toggle: function (token) {
+      if (!this.contains(token)) {
+        this.add(token);
+      } else {
+        this.remove(token);
+      }
+
+      return this.contains(token);
+    }
+  };
+
+  window.DOMTokenList = DOMTokenList;
+
+  function defineElementGetter(obj, prop, getter) {
+    if (Object.defineProperty) {
+      Object.defineProperty(obj, prop, {
+        get: getter
+      });
+    } else {
+      obj.__defineGetter__(prop, getter);
+    }
+  }
+
+  defineElementGetter(HTMLElement.prototype, 'classList', function () {
+    return new DOMTokenList(this);
+  });
+})();
+
+//--><!]]></script>
+<script data-src="js/animframe_polyfill.js" type="text/javascript"><!--//--><![CDATA[//><!--
+(function () {
+  var lastTime = 0;
+  var vendors = ['webkit', 'moz'];
+  for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+    window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] ||
+      window[vendors[x] + 'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (callback) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function () {
+        callback(currTime + timeToCall);
+      },
+      timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (id) {
+      clearTimeout(id);
+    };
+  }
+}());
+
+//--><!]]></script>
+<script data-src="js/keyboard_input_manager.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function KeyboardInputManager() {
+  this.events = {};
+
+  if (window.navigator.msPointerEnabled) {
+    //Internet Explorer 10 style
+    this.eventTouchstart    = "MSPointerDown";
+    this.eventTouchmove     = "MSPointerMove";
+    this.eventTouchend      = "MSPointerUp";
+  } else {
+    this.eventTouchstart    = "touchstart";
+    this.eventTouchmove     = "touchmove";
+    this.eventTouchend      = "touchend";
+  }
+
+  this.listen();
+}
+
+KeyboardInputManager.prototype.on = function (event, callback) {
+  if (!this.events[event]) {
+    this.events[event] = [];
+  }
+  this.events[event].push(callback);
+};
+
+KeyboardInputManager.prototype.emit = function (event, data) {
+  var callbacks = this.events[event];
+  if (callbacks) {
+    callbacks.forEach(function (callback) {
+      callback(data);
+    });
+  }
+};
+
+KeyboardInputManager.prototype.listen = function () {
+  var self = this;
+
+  var map = {
+    38: 0, // Up
+    39: 1, // Right
+    40: 2, // Down
+    37: 3, // Left
+    75: 0, // Vim up
+    76: 1, // Vim right
+    74: 2, // Vim down
+    72: 3, // Vim left
+    87: 0, // W
+    68: 1, // D
+    83: 2, // S
+    65: 3  // A
+  };
+
+  // Respond to direction keys
+  document.addEventListener("keydown", function (event) {
+    var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+                    event.shiftKey;
+    var mapped    = map[event.which];
+
+    if (!modifiers) {
+      if (mapped !== undefined) {
+        event.preventDefault();
+        self.emit("move", mapped);
+      }
+    }
+
+    // R key restarts the game
+    if (!modifiers && event.which === 82) {
+      self.restart.call(self, event);
+    }
+  });
+
+  // Respond to button presses
+  this.bindButtonPress(".retry-button", this.restart);
+  this.bindButtonPress(".restart-button", this.restart);
+  this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+
+  // Respond to swipe events
+  var touchStartClientX, touchStartClientY;
+  var gameContainer = document.getElementsByClassName("game-container")[0];
+
+  gameContainer.addEventListener(this.eventTouchstart, function (event) {
+    if ((!window.navigator.msPointerEnabled && event.touches.length > 1) ||
+        event.targetTouches.length > 1) {
+      return; // Ignore if touching with more than 1 finger
+    }
+
+    if (window.navigator.msPointerEnabled) {
+      touchStartClientX = event.pageX;
+      touchStartClientY = event.pageY;
+    } else {
+      touchStartClientX = event.touches[0].clientX;
+      touchStartClientY = event.touches[0].clientY;
+    }
+
+    event.preventDefault();
+  });
+
+  gameContainer.addEventListener(this.eventTouchmove, function (event) {
+    event.preventDefault();
+  });
+
+  gameContainer.addEventListener(this.eventTouchend, function (event) {
+    if ((!window.navigator.msPointerEnabled && event.touches.length > 0) ||
+        event.targetTouches.length > 0) {
+      return; // Ignore if still touching with one or more fingers
+    }
+
+    var touchEndClientX, touchEndClientY;
+
+    if (window.navigator.msPointerEnabled) {
+      touchEndClientX = event.pageX;
+      touchEndClientY = event.pageY;
+    } else {
+      touchEndClientX = event.changedTouches[0].clientX;
+      touchEndClientY = event.changedTouches[0].clientY;
+    }
+
+    var dx = touchEndClientX - touchStartClientX;
+    var absDx = Math.abs(dx);
+
+    var dy = touchEndClientY - touchStartClientY;
+    var absDy = Math.abs(dy);
+
+    if (Math.max(absDx, absDy) > 10) {
+      // (right : left) : (down : up)
+      self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+    }
+  });
+};
+
+KeyboardInputManager.prototype.restart = function (event) {
+  event.preventDefault();
+  this.emit("restart");
+};
+
+KeyboardInputManager.prototype.keepPlaying = function (event) {
+  event.preventDefault();
+  this.emit("keepPlaying");
+};
+
+KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
+  var button = document.querySelector(selector);
+  button.addEventListener("click", fn.bind(this));
+  button.addEventListener(this.eventTouchend, fn.bind(this));
+};
+
+//--><!]]></script>
+<script data-src="js/html_actuator.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function HTMLActuator() {
+  this.tileContainer    = document.querySelector(".tile-container");
+  this.scoreContainer   = document.querySelector(".score-container");
+  this.bestContainer    = document.querySelector(".best-container");
+  this.messageContainer = document.querySelector(".game-message");
+
+  this.score = 0;
+}
+
+HTMLActuator.prototype.actuate = function (grid, metadata) {
+  var self = this;
+
+  window.requestAnimationFrame(function () {
+    self.clearContainer(self.tileContainer);
+
+    grid.cells.forEach(function (column) {
+      column.forEach(function (cell) {
+        if (cell) {
+          self.addTile(cell);
+        }
+      });
+    });
+
+    self.updateScore(metadata.score);
+    self.updateBestScore(metadata.bestScore);
+
+    if (metadata.terminated) {
+      if (metadata.over) {
+        self.message(false); // You lose
+      } else if (metadata.won) {
+        self.message(true); // You win!
+      }
+    }
+
+  });
+};
+
+// Continues the game (both restart and keep playing)
+HTMLActuator.prototype.continueGame = function () {
+  this.clearMessage();
+};
+
+HTMLActuator.prototype.clearContainer = function (container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+};
+
+HTMLActuator.prototype.addTile = function (tile) {
+  var self = this;
+
+  var wrapper   = document.createElement("div");
+  var inner     = document.createElement("div");
+  var position  = tile.previousPosition || { x: tile.x, y: tile.y };
+  var positionClass = this.positionClass(position);
+
+  // We can't use classlist because it somehow glitches when replacing classes
+  var classes = ["tile", "tile-" + tile.value, positionClass];
+
+  if (tile.value > 2048) classes.push("tile-super");
+
+  this.applyClasses(wrapper, classes);
+
+  inner.classList.add("tile-inner");
+  inner.textContent = tile.value;
+
+  if (tile.previousPosition) {
+    // Make sure that the tile gets rendered in the previous position first
+    window.requestAnimationFrame(function () {
+      classes[2] = self.positionClass({ x: tile.x, y: tile.y });
+      self.applyClasses(wrapper, classes); // Update the position
+    });
+  } else if (tile.mergedFrom) {
+    classes.push("tile-merged");
+    this.applyClasses(wrapper, classes);
+
+    // Render the tiles that merged
+    tile.mergedFrom.forEach(function (merged) {
+      self.addTile(merged);
+    });
+  } else {
+    classes.push("tile-new");
+    this.applyClasses(wrapper, classes);
+  }
+
+  // Add the inner part of the tile to the wrapper
+  wrapper.appendChild(inner);
+
+  // Put the tile on the board
+  this.tileContainer.appendChild(wrapper);
+};
+
+HTMLActuator.prototype.applyClasses = function (element, classes) {
+  element.setAttribute("class", classes.join(" "));
+};
+
+HTMLActuator.prototype.normalizePosition = function (position) {
+  return { x: position.x + 1, y: position.y + 1 };
+};
+
+HTMLActuator.prototype.positionClass = function (position) {
+  position = this.normalizePosition(position);
+  return "tile-position-" + position.x + "-" + position.y;
+};
+
+HTMLActuator.prototype.updateScore = function (score) {
+  this.clearContainer(this.scoreContainer);
+
+  var difference = score - this.score;
+  this.score = score;
+
+  this.scoreContainer.textContent = this.score;
+
+  if (difference > 0) {
+    var addition = document.createElement("div");
+    addition.classList.add("score-addition");
+    addition.textContent = "+" + difference;
+
+    this.scoreContainer.appendChild(addition);
+  }
+};
+
+HTMLActuator.prototype.updateBestScore = function (bestScore) {
+  this.bestContainer.textContent = bestScore;
+};
+
+HTMLActuator.prototype.message = function (won) {
+  var type    = won ? "game-won" : "game-over";
+  var message = won ? "You win!" : "Game over!";
+
+  this.messageContainer.classList.add(type);
+  this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+};
+
+HTMLActuator.prototype.clearMessage = function () {
+  // IE only takes one value to remove at a time.
+  this.messageContainer.classList.remove("game-won");
+  this.messageContainer.classList.remove("game-over");
+};
+
+//--><!]]></script>
+<script data-src="js/grid.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function Grid(size, previousState) {
+  this.size = size;
+  this.cells = previousState ? this.fromState(previousState) : this.empty();
+}
+
+// Build a grid of the specified size
+Grid.prototype.empty = function () {
+  var cells = [];
+
+  for (var x = 0; x < this.size; x++) {
+    var row = cells[x] = [];
+
+    for (var y = 0; y < this.size; y++) {
+      row.push(null);
+    }
+  }
+
+  return cells;
+};
+
+Grid.prototype.fromState = function (state) {
+  var cells = [];
+
+  for (var x = 0; x < this.size; x++) {
+    var row = cells[x] = [];
+
+    for (var y = 0; y < this.size; y++) {
+      var tile = state[x][y];
+      row.push(tile ? new Tile(tile.position, tile.value) : null);
+    }
+  }
+
+  return cells;
+};
+
+// Find the first available random position
+Grid.prototype.randomAvailableCell = function () {
+  var cells = this.availableCells();
+
+  if (cells.length) {
+    return cells[Math.floor(Math.random() * cells.length)];
+  }
+};
+
+Grid.prototype.availableCells = function () {
+  var cells = [];
+
+  this.eachCell(function (x, y, tile) {
+    if (!tile) {
+      cells.push({ x: x, y: y });
+    }
+  });
+
+  return cells;
+};
+
+// Call callback for every cell
+Grid.prototype.eachCell = function (callback) {
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      callback(x, y, this.cells[x][y]);
+    }
+  }
+};
+
+// Check if there are any cells available
+Grid.prototype.cellsAvailable = function () {
+  return !!this.availableCells().length;
+};
+
+// Check if the specified cell is taken
+Grid.prototype.cellAvailable = function (cell) {
+  return !this.cellOccupied(cell);
+};
+
+Grid.prototype.cellOccupied = function (cell) {
+  return !!this.cellContent(cell);
+};
+
+Grid.prototype.cellContent = function (cell) {
+  if (this.withinBounds(cell)) {
+    return this.cells[cell.x][cell.y];
+  } else {
+    return null;
+  }
+};
+
+// Inserts a tile at its position
+Grid.prototype.insertTile = function (tile) {
+  this.cells[tile.x][tile.y] = tile;
+};
+
+Grid.prototype.removeTile = function (tile) {
+  this.cells[tile.x][tile.y] = null;
+};
+
+Grid.prototype.withinBounds = function (position) {
+  return position.x >= 0 && position.x < this.size &&
+         position.y >= 0 && position.y < this.size;
+};
+
+Grid.prototype.serialize = function () {
+  var cellState = [];
+
+  for (var x = 0; x < this.size; x++) {
+    var row = cellState[x] = [];
+
+    for (var y = 0; y < this.size; y++) {
+      row.push(this.cells[x][y] ? this.cells[x][y].serialize() : null);
+    }
+  }
+
+  return {
+    size: this.size,
+    cells: cellState
+  };
+};
+
+//--><!]]></script>
+<script data-src="js/tile.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function Tile(position, value) {
+  this.x                = position.x;
+  this.y                = position.y;
+  this.value            = value || 2;
+
+  this.previousPosition = null;
+  this.mergedFrom       = null; // Tracks tiles that merged together
+}
+
+Tile.prototype.savePosition = function () {
+  this.previousPosition = { x: this.x, y: this.y };
+};
+
+Tile.prototype.updatePosition = function (position) {
+  this.x = position.x;
+  this.y = position.y;
+};
+
+Tile.prototype.serialize = function () {
+  return {
+    position: {
+      x: this.x,
+      y: this.y
+    },
+    value: this.value
+  };
+};
+
+//--><!]]></script>
+<script data-src="js/local_storage_manager.js" type="text/javascript"><!--//--><![CDATA[//><!--
+window.fakeStorage = {
+  _data: {},
+
+  setItem: function (id, val) {
+    return this._data[id] = String(val);
+  },
+
+  getItem: function (id) {
+    return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
+  },
+
+  removeItem: function (id) {
+    return delete this._data[id];
+  },
+
+  clear: function () {
+    return this._data = {};
+  }
+};
+
+function LocalStorageManager() {
+  this.bestScoreKey     = "bestScore";
+  this.gameStateKey     = "gameState";
+
+  var supported = this.localStorageSupported();
+  this.storage = supported ? window.localStorage : window.fakeStorage;
+}
+
+LocalStorageManager.prototype.localStorageSupported = function () {
+  var testKey = "test";
+
+  try {
+    var storage = window.localStorage;
+    storage.setItem(testKey, "1");
+    storage.removeItem(testKey);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+// Best score getters/setters
+LocalStorageManager.prototype.getBestScore = function () {
+  return this.storage.getItem(this.bestScoreKey) || 0;
+};
+
+LocalStorageManager.prototype.setBestScore = function (score) {
+  this.storage.setItem(this.bestScoreKey, score);
+};
+
+// Game state getters/setters and clearing
+LocalStorageManager.prototype.getGameState = function () {
+  var stateJSON = this.storage.getItem(this.gameStateKey);
+  return stateJSON ? JSON.parse(stateJSON) : null;
+};
+
+LocalStorageManager.prototype.setGameState = function (gameState) {
+  this.storage.setItem(this.gameStateKey, JSON.stringify(gameState));
+};
+
+LocalStorageManager.prototype.clearGameState = function () {
+  this.storage.removeItem(this.gameStateKey);
+};
+
+//--><!]]></script>
+<script data-src="js/game_manager.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function GameManager(size, InputManager, Actuator, StorageManager) {
+  this.size           = size; // Size of the grid
+  this.inputManager   = new InputManager;
+  this.storageManager = new StorageManager;
+  this.actuator       = new Actuator;
+
+  this.startTiles     = 2;
+
+  this.inputManager.on("move", this.move.bind(this));
+  this.inputManager.on("restart", this.restart.bind(this));
+  this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+
+  this.setup();
+}
+
+// Restart the game
+GameManager.prototype.restart = function () {
+  this.storageManager.clearGameState();
+  this.actuator.continueGame(); // Clear the game won/lost message
+  this.setup();
+};
+
+// Keep playing after winning (allows going over 2048)
+GameManager.prototype.keepPlaying = function () {
+  this.keepPlaying = true;
+  this.actuator.continueGame(); // Clear the game won/lost message
+};
+
+// Return true if the game is lost, or has won and the user hasn't kept playing
+GameManager.prototype.isGameTerminated = function () {
+  return this.over || (this.won && !this.keepPlaying);
+};
+
+// Set up the game
+GameManager.prototype.setup = function () {
+  var previousState = this.storageManager.getGameState();
+
+  // Reload the game from a previous game if present
+  if (previousState) {
+    this.grid        = new Grid(previousState.grid.size,
+                                previousState.grid.cells); // Reload grid
+    this.score       = previousState.score;
+    this.over        = previousState.over;
+    this.won         = previousState.won;
+    this.keepPlaying = previousState.keepPlaying;
+  } else {
+    this.grid        = new Grid(this.size);
+    this.score       = 0;
+    this.over        = false;
+    this.won         = false;
+    this.keepPlaying = false;
+
+    // Add the initial tiles
+    this.addStartTiles();
+  }
+
+  // Update the actuator
+  this.actuate();
+};
+
+// Set up the initial tiles to start the game with
+GameManager.prototype.addStartTiles = function () {
+  for (var i = 0; i < this.startTiles; i++) {
+    this.addRandomTile();
+  }
+};
+
+// Adds a tile in a random position
+GameManager.prototype.addRandomTile = function () {
+  if (this.grid.cellsAvailable()) {
+    var value = Math.random() < 0.9 ? 2 : 4;
+    var tile = new Tile(this.grid.randomAvailableCell(), value);
+
+    this.grid.insertTile(tile);
+  }
+};
+
+// Sends the updated grid to the actuator
+GameManager.prototype.actuate = function () {
+  if (this.storageManager.getBestScore() < this.score) {
+    this.storageManager.setBestScore(this.score);
+  }
+
+  // Clear the state when the game is over (game over only, not win)
+  if (this.over) {
+    this.storageManager.clearGameState();
+  } else {
+    this.storageManager.setGameState(this.serialize());
+  }
+
+  this.actuator.actuate(this.grid, {
+    score:      this.score,
+    over:       this.over,
+    won:        this.won,
+    bestScore:  this.storageManager.getBestScore(),
+    terminated: this.isGameTerminated()
+  });
+
+};
+
+// Represent the current game as an object
+GameManager.prototype.serialize = function () {
+  return {
+    grid:        this.grid.serialize(),
+    score:       this.score,
+    over:        this.over,
+    won:         this.won,
+    keepPlaying: this.keepPlaying
+  };
+};
+
+// Save all tile positions and remove merger info
+GameManager.prototype.prepareTiles = function () {
+  this.grid.eachCell(function (x, y, tile) {
+    if (tile) {
+      tile.mergedFrom = null;
+      tile.savePosition();
+    }
+  });
+};
+
+// Move a tile and its representation
+GameManager.prototype.moveTile = function (tile, cell) {
+  this.grid.cells[tile.x][tile.y] = null;
+  this.grid.cells[cell.x][cell.y] = tile;
+  tile.updatePosition(cell);
+};
+
+// Move tiles on the grid in the specified direction
+GameManager.prototype.move = function (direction) {
+  // 0: up, 1: right, 2: down, 3: left
+  var self = this;
+
+  if (this.isGameTerminated()) return; // Don't do anything if the game's over
+
+  var cell, tile;
+
+  var vector     = this.getVector(direction);
+  var traversals = this.buildTraversals(vector);
+  var moved      = false;
+
+  // Save the current tile positions and remove merger information
+  this.prepareTiles();
+
+  // Traverse the grid in the right direction and move tiles
+  traversals.x.forEach(function (x) {
+    traversals.y.forEach(function (y) {
+      cell = { x: x, y: y };
+      tile = self.grid.cellContent(cell);
+
+      if (tile) {
+        var positions = self.findFarthestPosition(cell, vector);
+        var next      = self.grid.cellContent(positions.next);
+
+        // Only one merger per row traversal?
+        if (next && next.value === tile.value && !next.mergedFrom) {
+          var merged = new Tile(positions.next, tile.value * 2);
+          merged.mergedFrom = [tile, next];
+
+          self.grid.insertTile(merged);
+          self.grid.removeTile(tile);
+
+          // Converge the two tiles' positions
+          tile.updatePosition(positions.next);
+
+          // Update the score
+          self.score += merged.value;
+
+          // The mighty 2048 tile
+          if (merged.value === 2048) self.won = true;
+        } else {
+          self.moveTile(tile, positions.farthest);
+        }
+
+        if (!self.positionsEqual(cell, tile)) {
+          moved = true; // The tile moved from its original cell!
+        }
+      }
+    });
+  });
+
+  if (moved) {
+    this.addRandomTile();
+
+    if (!this.movesAvailable()) {
+      this.over = true; // Game over!
+    }
+
+    this.actuate();
+  }
+};
+
+// Get the vector representing the chosen direction
+GameManager.prototype.getVector = function (direction) {
+  // Vectors representing tile movement
+  var map = {
+    0: { x: 0,  y: -1 }, // Up
+    1: { x: 1,  y: 0 },  // Right
+    2: { x: 0,  y: 1 },  // Down
+    3: { x: -1, y: 0 }   // Left
+  };
+
+  return map[direction];
+};
+
+// Build a list of positions to traverse in the right order
+GameManager.prototype.buildTraversals = function (vector) {
+  var traversals = { x: [], y: [] };
+
+  for (var pos = 0; pos < this.size; pos++) {
+    traversals.x.push(pos);
+    traversals.y.push(pos);
+  }
+
+  // Always traverse from the farthest cell in the chosen direction
+  if (vector.x === 1) traversals.x = traversals.x.reverse();
+  if (vector.y === 1) traversals.y = traversals.y.reverse();
+
+  return traversals;
+};
+
+GameManager.prototype.findFarthestPosition = function (cell, vector) {
+  var previous;
+
+  // Progress towards the vector direction until an obstacle is found
+  do {
+    previous = cell;
+    cell     = { x: previous.x + vector.x, y: previous.y + vector.y };
+  } while (this.grid.withinBounds(cell) &&
+           this.grid.cellAvailable(cell));
+
+  return {
+    farthest: previous,
+    next: cell // Used to check if a merge is required
+  };
+};
+
+GameManager.prototype.movesAvailable = function () {
+  return this.grid.cellsAvailable() || this.tileMatchesAvailable();
+};
+
+// Check for available matches between tiles (more expensive check)
+GameManager.prototype.tileMatchesAvailable = function () {
+  var self = this;
+
+  var tile;
+
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      tile = this.grid.cellContent({ x: x, y: y });
+
+      if (tile) {
+        for (var direction = 0; direction < 4; direction++) {
+          var vector = self.getVector(direction);
+          var cell   = { x: x + vector.x, y: y + vector.y };
+
+          var other  = self.grid.cellContent(cell);
+
+          if (other && other.value === tile.value) {
+            return true; // These two tiles can be merged
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+GameManager.prototype.positionsEqual = function (first, second) {
+  return first.x === second.x && first.y === second.y;
+};
+
+//--><!]]></script>
+<script data-src="js/application.js" type="text/javascript"><!--//--><![CDATA[//><!--
+// Wait till the browser is ready to render the game (avoids glitches)
+window.requestAnimationFrame(function () {
+  new GameManager(4, KeyboardInputManager, HTMLActuator, LocalStorageManager);
+});
+
+//--><!]]></script>
+</body>
+</html>

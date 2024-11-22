@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Imprima");
-
 @font-face {
     font-family: 'Satoshi';
     src: url('Satoshi-Variable.ttf') format('truetype');
@@ -17,13 +16,13 @@
     --light-steel-blue: #a4abec;
     --opacity-text: rgba(255, 255, 255, .6);
     --midnight-blue: #1a1048;
-    --dark-pink-gradient: #401048;
+    --dark-pink-gradient: #181048;
     --transparent: rgba(255, 255, 255, 0);
 }
 
 body {
-    background: rgb(4,1,18);
-    background: linear-gradient(0deg, rgba(4,1,18,1) 0%, rgb(17, 5, 44) 100%);
+    background: rgb(4, 1, 18);
+    background: linear-gradient(0deg, rgba(4, 1, 18, 1) 0%, rgb(17, 5, 44) 100%);
     transition: 0.5s;
     padding: 10px;
 }
@@ -32,7 +31,7 @@ body {
     transition: 0.5s;
     width: 5%;
     border-radius: 100%;
-    background-color:  #120a31;
+    background-color: #120a31;
 }
 
 .icon:hover {
@@ -50,20 +49,27 @@ body {
 }
 
 .glowing-border {
-  border: 2px solid transparent;
-  position: relative;
-  z-index: 0;
-  overflow: hidden;
-  box-shadow: 0 0 10px var(--blue-violet); /* Basic outer shadow for subtle glow */
+    border: 2px solid transparent;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    box-shadow: 0 0 10px var(--blue-violet);
+    /* Basic outer shadow for subtle glow */
 }
-  
 
-h1, h2, h3, h4, h5, h6, p, text {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+text {
     color: white;
 }
 
 .carousel {
-    display: flex;     
+    display: flex;
     overflow-x: auto;
     width: 100%;
     height: 60%;
@@ -121,8 +127,8 @@ h1, h2, h3, h4, h5, h6, p, text {
     left: -100%;
     height: 100%;
     width: 120px;
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
     animation: slide 2s infinite linear;
 }
 
@@ -134,7 +140,6 @@ h1, h2, h3, h4, h5, h6, p, text {
         left: 100%;
     }
 }
-
 
 .embedding {
     overflow: hidden;
@@ -258,10 +263,12 @@ button:hover {
 .banner {
     width: 100%;
     height: 10%;
-    background-color: black;;
+    background-color: black;
+    ;
     margin-top: 10px;
     border-radius: 10px;
-    background: rgb(128,71,154);background: linear-gradient(90deg, rgba(128,71,154,1) 0%, rgba(65,12,89,1) 100%);
+    background: rgb(128, 71, 154);
+    background: linear-gradient(90deg, rgba(128, 71, 154, 1) 0%, rgba(65, 12, 89, 1) 100%);
 }
 
 .min-img {
@@ -285,8 +292,6 @@ iframe {
     z-index: 9999999;
     background-color: white;
 }
-
-
 
 .glassy {
     background: rgba(143, 124, 124, 0.25);
@@ -330,7 +335,7 @@ iframe {
     top: 5%;
     overflow-y: scroll;
     height: 70%;
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgb(16, 0, 46) 35%,  rgb(32, 0, 81) 100%);
+    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgb(16, 0, 46) 35%, rgb(32, 0, 81) 100%);
     border-radius: 10px;
 }
 
@@ -348,7 +353,7 @@ iframe {
     position: absolute;
     right: 8%;
     top: 50%;
-    transform: translate(-50%, -50%)
+    transform: translate(-50%, -50%);
 }
 
 .live-chat-button:hover {
@@ -362,7 +367,7 @@ pre {
 .live-chat-submit {
     position: absolute;
     bottom: 10%;
-    width: 6.5%; 
+    width: 6.5%;
     height: 5%;
     right: 8%;
 }
@@ -370,7 +375,7 @@ pre {
 .live-chat-back {
     position: absolute;
     bottom: 1%;
-    width: 6.5%; 
+    width: 6.5%;
     height: 5%;
     right: 4%;
 }
@@ -378,7 +383,7 @@ pre {
 .live-chat-private {
     position: absolute;
     bottom: 10%;
-    width: 6.5%; 
+    width: 6.5%;
     height: 5%;
     right: 1%;
 }
@@ -403,9 +408,9 @@ a {
 
 message-container #message,
 message-container #message * {
-  color: #ffffff !important;
-  font-family: "Imprima";
-  font-size: 18px !important;
-  line-height: normal !important;
-  letter-spacing: normal !important;
+    color: #ffffff !important;
+    font-family: "Imprima";
+    font-size: 18px !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
 }

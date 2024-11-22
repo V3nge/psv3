@@ -1,0 +1,980 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dogeminer 2: Devblog 2 The Moon(s)</title>
+    <description>In the Dogeminer developer blog you might get a glimpse of what's going on behind the scenes. Or the ramblings of a madman.</description>
+    <link>https://blog.dogeminer2.com/</link>
+    <atom:link href="https://blog.dogeminer2.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 30 Oct 2020 14:34:13 +0000</pubDate>
+    <lastBuildDate>Fri, 30 Oct 2020 14:34:13 +0000</lastBuildDate>
+    <generator>Jekyll v3.9.0</generator>
+    
+      <item>
+        <title>Patch Notes 2.9</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-29---patron-bonuses--more&quot;&gt;Patch notes for 2.9 - Patron Bonuses &amp;amp; More&lt;/h1&gt;
+
+&lt;p&gt;As usual with every update, much of the game content might still be cached in your browser. Should it stop working completely, or if some &lt;em&gt;really&lt;/em&gt; weird bugs appear all the time, try your best to hard-refresh (Ctrl/Cmd + F5 on desktops, or sometimes a right-click on the refresh-button in the browser) a couple of times. If it doesn’t work; I suggest trying again later.&lt;/p&gt;
+
+&lt;p&gt;Should there be issues that needs reporting, it will be reported on Discord, I’m sure.&lt;/p&gt;
+
+&lt;h2 id=&quot;whats-new&quot;&gt;What’s new:&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Implemented Patreon-authentication to receive in-game bonuses for your support! &amp;lt;3&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Patron-specific stuff:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Existing and new &lt;a href=&quot;https://patreon.com/dogeminer&quot; target=&quot;_blank&quot;&gt;Patrons&lt;/a&gt; of Dogeminer can authenticate with Patreon for a special Patron-only fortune/badge, as well as some decent buffs!
+    &lt;ul&gt;
+      &lt;li&gt;Big thanks to &lt;strong&gt;&lt;a href=&quot;https://github.com/chippi&quot; target=&quot;_blank&quot;&gt;Chipp&lt;/a&gt;&lt;/strong&gt; who whipped up the authentication &amp;amp; API-integration through Patreon with NodeJS &amp;amp; more&lt;/li&gt;
+      &lt;li&gt;As a Patron, simply use one of the &lt;em&gt;“Login to Patreon”&lt;/em&gt; buttons ingame and allow Dogeminer to see your username and pledge&lt;/li&gt;
+      &lt;li&gt;One of these buttons is under Settings (can’t miss it), the other one shows up if you click the new “Patron Status Indicator” next to the inventory (below DogeDiamonds on mobile)&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Need to have at least one item in the pickaxe or fortune inventory for the last button to show - it might hide itself for no good reason too… working on that!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; This is the first version of this implementation, if it is unstable or problematic, it might be disabled temporarily for a quick-fix&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;The Patron fortune gives +100 Patronage (new stat) as well as +15% each of Loot, Luck &amp;amp; Wow&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;The fortune does &lt;strong&gt;not&lt;/strong&gt; disappear from the inventory should the patronage end (you only lose it from a wipe or complete reset)&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;The buffs / bonuses that authenticated Patrons also receive is:&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;+100 Patronage&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;-5% helper cost&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;+5% helper DPS&lt;/strong&gt; &lt;em&gt;(multiplicative, unlike similar stats for items)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;+5% DPS on Pickaxes&lt;/strong&gt; &lt;em&gt;(multiplicative, unlike similar stats for items)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;+5 DogeDiamonds per mission&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Patrons are also able to open the &lt;strong&gt;Mystery Box&lt;/strong&gt;, even if ad blocking was detected - because the box knows you’re a really good Doge!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Some of these won’t be updated/seen in every spot yet, e.g. the new DPS helper upgrades doesn’t take the +5% into account yet (and a few more I bet)&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;All the stats and buffs are subject to change, should they be under-/overpowered - best way to test it is to do it live!&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Side-note: The Patron fortune is good early on, but gets pretty weak mid- to lategame. The plan is that it will gradually improve itself as you progress through the game to solve this little issue - as for the +patronage stat, which does nothing at the moment…. it will do something! A good idea could be to reduce the Mystery Box timer by the amount in seconds (100 in this case), so about 1½ minute, seems good? (Thanks for the ideas regarding this, uzoqe!)&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added helper names submitted by &lt;a href=&quot;https://patreon.com/dogeminer&quot; target=&quot;_blank&quot;&gt;Patrons&lt;/a&gt; (via the Name-A-Shibe tier(s))&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Further changes &amp;amp; stuff:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Added &lt;strong&gt;Download Save&lt;/strong&gt; button under Settings &lt;em&gt;(so you don’t have to go to the front page for that precious backup!)&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Music has been turned on by default for new players
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;It became apparent that many players had no idea the game has music, even though there’s a nice hint about it&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;The music hint now asks if you want to turn off the music instead of turning it on…&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added a &lt;strong&gt;skip button&lt;/strong&gt; to the &lt;em&gt;mission conversation&lt;/em&gt; on the &lt;em&gt;DogeTalkie&lt;/em&gt;!
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;The button shows up if the mission has been completed at least once&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Improved DogeDiamond calculations, plus slightly upped the maximum for the D.I.A. mission&lt;/li&gt;
+  &lt;li&gt;Kitten helpers are no longer &lt;em&gt;slaves&lt;/em&gt;, we realized only Cate would see them as such
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Instead of uploading cute pics for dogecoin, they’ve started streaming instead. Gotta keep up with the times!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Catching a Cate thief no longer &lt;strong&gt;enslaves&lt;/strong&gt; their kittens. Instead the kittens are &lt;strong&gt;rescued!&lt;/strong&gt;&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;They also do podcasts…&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Most of the Kitten names and descriptions (+their upgrades) were edited&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added a new stat: &lt;strong&gt;Space Rocket Cost&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Reduces cost of helpers that are &lt;em&gt;Space Rockets&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;Other rockets do not count&lt;/li&gt;
+      &lt;li&gt;Stacks both with itself &lt;em&gt;(if duplicate(s) are found in the Mystery Box)&lt;/em&gt; as well as with the Patron helper cost reduction buff&lt;/li&gt;
+      &lt;li&gt;Can currently be found only on one fortune &lt;em&gt;(it’ll make sense)&lt;/em&gt; and currently always has a &lt;strong&gt;5%&lt;/strong&gt; reduction&lt;/li&gt;
+      &lt;li&gt;The &lt;em&gt;Space Rocket Cost&lt;/em&gt; stat is not able to be added to Super Fortunes &lt;em&gt;(for good reason)&lt;/em&gt;, sorry&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Changed a bunch strings/texts here and there&lt;/li&gt;
+  &lt;li&gt;Added another feature that is yet to be used: sounds for pickaxes are now easier to set per-pickaxe in the data
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This will allow for the more unique / different pickaxes to sound more special when used in a future patch&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Slight position improvements to settings on all layouts
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Yes, the mobile version of settings still stinks&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Still washing your hands I hope?&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;We live in a society!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added code to easily set the &lt;em&gt;reason&lt;/em&gt; for why helpers are locked
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Only a couple helpers have a reason set for now (the rest get the default)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Will add the rest of the locked reasons in an upcoming patch now that it’s easy yay&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Will also be making it so locked helpers are completely hidden instead of partly, as per a few users request (in another patch too)&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Moved the loading spinner &lt;em&gt;(The bobbing Doge-head…)&lt;/em&gt; away from the html-pages, now loaded as an svg-object
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Removed completely from landing page to improve speed&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;This will slightly speed up game loading thanks to caching&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Possibly resolved an issue where the wrong location is loaded &lt;em&gt;(if this works it’s a small miracle)&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;This will be the 7th iteration of the bug-fix &lt;em&gt;(it’s a matrix reference ya youngsters, get off my lawn!!)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;This is unrelated, but I think Search Doges are a bit lazy. Maybe we should consider training them harder.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Hopefully didn’t break ad loading when I attempted to improve the code and delayed their loading&lt;/li&gt;
+  &lt;li&gt;Changed the one-time email alert sign-up CTA for the Steam release
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Now it’s just an email field with a button. Much simple, less odd&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Super Shibes&lt;/strong&gt; get names and aren’t just “Super Shibe” no more - as requested!
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Currently hired, unnamed Super Shibes might not have names assigned… new ones do though!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;They use a &lt;strong&gt;new feature in the code&lt;/strong&gt;, which makes it easy for me to change/edit which array of names to grab from, wohoo!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;The Super Shibes aren’t using the same names as the others heh&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Little bit of spring cleaning of unused old code, the usual…&lt;/li&gt;
+  &lt;li&gt;Changed the “loading text” (before the game has finished loading) around a bit, but not too much&lt;/li&gt;
+  &lt;li&gt;Some performance improvements here and there, as well as performance un-improvements, most likely&lt;/li&gt;
+  &lt;li&gt;The bug I swallowed should be fully digested by now&lt;/li&gt;
+  &lt;li&gt;Disabled some annoying alerts when loading of certain 3rd party scripts fail / are blocked
+    &lt;ul&gt;
+      &lt;li&gt;If there’s a script error, it probably won’t show up as it used to, &lt;em&gt;if&lt;/em&gt; it used to…&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;Slightly&lt;/em&gt; improved orientation-change handling on mobile devices&lt;/li&gt;
+  &lt;li&gt;Fixed closing the social stuff (sidebar) via swiping down in tablet and mobile layouts
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Why did it decide to stop working? Guess correctly and win a dogecoin!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;My guess is Unicorns, they’re always up to no good&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Updated Mystery Box popup-frame texts when it detects ad blocking &lt;em&gt;(and not patreon authenticated)&lt;/em&gt; to be more detailed&lt;/li&gt;
+  &lt;li&gt;Improved background swaps, it was acting a little weird&lt;/li&gt;
+  &lt;li&gt;Removed one-time email alert sign-up from sidebar
+    &lt;ul&gt;
+      &lt;li&gt;Mostly reduce loading times and remove a thirty party script&lt;/li&gt;
+      &lt;li&gt;There’s now a link to back to the front page for this instead&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;em&gt;I think cloud save checks have been improved - or they’ve broken down (temporarily if so), we’ll test it live!&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Added a simple cookie &amp;amp; privacy policy information bottom-bar to the front page for players connecting from within the EU
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;No one likes this&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;… No one at all&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;All tooltips in inventories broke from a library update, had to spend a day fixing that, so much fun&lt;/li&gt;
+  &lt;li&gt;Updated analytics to the latest version (GA 4)
+    &lt;ul&gt;
+      &lt;li&gt;Nothing that you care about, I just hope that it still works!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Probably a dozen of other small things. As usual… probably not much that is of interest anyway. Maybe something. Idk.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;happy-halloween&quot;&gt;Happy Halloween!&lt;/h1&gt;
+
+&lt;p&gt;A minor halloween theme has been added!&lt;/p&gt;
+
+&lt;p&gt;Next year it will run through the entirety of October, but this year we’ll have it for the Halloween weekend as well as a week or two into November.&lt;/p&gt;
+
+&lt;p&gt;There’s only ~8 Halloween-specific items to find, no event or anything like that; mostly aesthetics things this time around. There were a few more ideas I wanted to add but time got cut short, lets just call it the 2020 edition, heh.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;I hope I didn’t break the game for anyone. Let me know if so. Stay safe!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Please report bugs in the &lt;em&gt;&lt;a href=&quot;https://dogeminer2.com/discord&quot; target=&quot;_blank&quot;&gt;#bug_reporting&lt;/a&gt;&lt;/em&gt; channel on &lt;a href=&quot;https://dogeminer2.com/discord&quot; target=&quot;_blank&quot;&gt;Discord&lt;/a&gt;&lt;/strong&gt; found under the &lt;em&gt;“Feedback &amp;amp; Ideas”&lt;/em&gt; category, &lt;strong&gt;but before you do, try a refresh (F5)&lt;/strong&gt; - your browser might have loaded cached files from before. Thank you &amp;lt;3&lt;/p&gt;
+
+&lt;p&gt;//&lt;strong&gt;&lt;a href=&quot;https://twitter.com/rkn_dev&quot; target=&quot;_blank&quot;&gt;rkn&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 26 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.9/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.9/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.8</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-28&quot;&gt;Patch notes for 2.8&lt;/h1&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Added Easter Holiday Theme / Event&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;During April, the Easter Holiday will be active in-game&lt;/li&gt;
+      &lt;li&gt;Brand new Easter theme, art credit &lt;strong&gt;&lt;a href=&quot;https://twitter.com/sarahmavrelis&quot; target=&quot;_blank&quot;&gt;LaFite&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;An Easter Egg Hunt - Find all the eggs and double their bonus! Idea and art credit &lt;strong&gt;&lt;a href=&quot;https://twitter.com/Dimifw&quot; target=&quot;_blank&quot;&gt;DimiFW&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;A dozen or so new items, not all Easter exclusive, art credit &lt;strong&gt;&lt;a href=&quot;https://twitter.com/Dimifw&quot; target=&quot;_blank&quot;&gt;DimiFW&lt;/a&gt;&lt;/strong&gt;&lt;/li&gt;
+      &lt;li&gt;Brand new bugs, tell us all about them!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Re-branded the T-Rex to Ð-Rex&lt;/li&gt;
+  &lt;li&gt;Updated some incorrect description strings&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Wash your hands&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Might have made some alterations to certain variables if the date is April 1st
+    &lt;ul&gt;
+      &lt;li&gt;Some might have noticed an increase in certain activities&lt;/li&gt;
+      &lt;li&gt;There will be an increase of certain activities for the duration of this holiday, although with less crime than today&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Changed save file ending to .DOGE, previously .LZ
+    &lt;ul&gt;
+      &lt;li&gt;You can still upload .LZ files, it’s really just a change of filename for more wow&lt;/li&gt;
+      &lt;li&gt;If you’re curious, I chose .LZ originally due to the name of the compression library&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Fixed missing pew pew’s for the shotgun
+    &lt;ul&gt;
+      &lt;li&gt;We live in a society&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Balance updates
+    &lt;ul&gt;
+      &lt;li&gt;Altered drop rates and stats to favor slightly more loot with lower stats in general&lt;/li&gt;
+      &lt;li&gt;Pickaxe DPS is unaltered from the previous change&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Pushed back how early you can get access to the D.I.A. mission
+    &lt;ul&gt;
+      &lt;li&gt;Somewhat. I’m not telling&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added the requested names submitted by &lt;a href=&quot;https://patreon.com/dogeminer&quot; target=&quot;_blank&quot;&gt;Patrons&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Updated a couple of supporting libraries (HowlerJS and mobile-detect.js)&lt;/li&gt;
+  &lt;li&gt;Fixed some new-found time-travel bugs where multiple cars would appear and the buttons never show
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;There is one known bug with time-travel: If you have Fast Travel on (in settings) and do two missions where you hit SKIP, the second one most likely won’t show the buttons. A temporary fix is to press SKIP to show them :)&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Accidentally made the shop display the absolute wrong DPS for all helpers
+    &lt;ul&gt;
+      &lt;li&gt;Upgrades remained unaffected&lt;/li&gt;
+      &lt;li&gt;Should be all good now, though&lt;/li&gt;
+      &lt;li&gt;There was another bug as well, but you had to have the Holiday Theme turned off&lt;/li&gt;
+      &lt;li&gt;Luckily, with the aid of a friendly Shibe, we fixed it, yay us&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;There were at least two more people I was going to credit&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Also,&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I swallowed a bug&lt;/li&gt;
+  &lt;li&gt;This is the first Easter Holiday version
+    &lt;ul&gt;
+      &lt;li&gt;The plan is to add more content before April is over and even more features for next year&lt;/li&gt;
+      &lt;li&gt;Definitely more backgrounds&lt;/li&gt;
+      &lt;li&gt;Things do not usually go as planned&lt;/li&gt;
+      &lt;li&gt;There was going to be a big April Fools feature, but then I barely made the update in time for April, bar a few bugs to fix, which took up the rest of the time available&lt;/li&gt;
+      &lt;li&gt;At least we have a thousand ideas for next year :D&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Certain new parts of the phone and tablet modes remain untested
+    &lt;ul&gt;
+      &lt;li&gt;These parts are visual in nature and should not cause malfunction, if they are problematic at all&lt;/li&gt;
+      &lt;li&gt;I do not advice anyone to use the phone layout without using a phone, or faking the use of a phone&lt;/li&gt;
+      &lt;li&gt;There are probably some bugs with using different modes when on the “wrong” device (e.g. phone and desktop layout = stop right there, criminal scum!)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;That is all she wrote. I think. &lt;a href=&quot;https://dogeminer2.com/&quot; target=&quot;_blank&quot;&gt;Hope everyone enjoys the update!&lt;/a&gt; Stay safe out there!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Please report bugs in the &lt;em&gt;&lt;a href=&quot;https://dogeminer2.com/discord&quot; target=&quot;_blank&quot;&gt;#bug_reporting&lt;/a&gt;&lt;/em&gt; channel on &lt;a href=&quot;https://dogeminer2.com/discord&quot; target=&quot;_blank&quot;&gt;Discord&lt;/a&gt;&lt;/strong&gt; found under the &lt;em&gt;“Feedback &amp;amp; Ideas”&lt;/em&gt; category, &lt;strong&gt;but before you do, try a refresh (F5)&lt;/strong&gt; - your browser might have loaded the older files. Thank you &amp;lt;3&lt;/p&gt;
+
+&lt;h1 id=&quot;patreon-auth-soon&quot;&gt;Patreon auth soon™&lt;/h1&gt;
+
+&lt;p&gt;While Patreon integration is still underway, it is nearing completion. Very soon™. Credit to this achievement will go to &lt;strong&gt;&lt;a href=&quot;https://github.com/chippi&quot; target=&quot;_blank&quot;&gt;Chipp&lt;/a&gt;&lt;/strong&gt;!&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;To repeat, this feature is for all the wonderful &lt;a href=&quot;https://patreon.com/dogeminer&quot; target=&quot;_blank&quot;&gt;Patrons&lt;/a&gt; of Dogeminer, so you may receive a small buff in-game, plus the ability open the Mystery Box while ads are blocked, as was suggested by you. We’ll see about other possibilities in the future too!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;//&lt;strong&gt;&lt;a href=&quot;https://twitter.com/rkn_dev&quot; target=&quot;_blank&quot;&gt;rkn&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.8/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.8/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.7</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-27&quot;&gt;Patch notes for 2.7&lt;/h1&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Big change&lt;/strong&gt; to how stats are calculated over time with ‘wow’ (which is the main factor that increases stats on new items), now on a logarithmic scale instead of a sorta-exponential
+    &lt;ul&gt;
+      &lt;li&gt;This means stats won’t get out of hand and is such much easier to balance.&lt;/li&gt;
+      &lt;li&gt;Will be monitoring the results and see if tweaks are needed&lt;/li&gt;
+      &lt;li&gt;In short, stats should grow slower and &lt;strong&gt;if you’re on a deep or deepish save right now&lt;/strong&gt;, you’ll probably get lower stats on new     items (even pickaxes) - this is sub-optimal but the alternative was to nerf what you already had or reset everyone…&lt;/li&gt;
+      &lt;li&gt;A big change like this is required to be able to balance for new locations, which is why it’s uploaded now so that we have the time to    adjust if need be, before the big one (Steam)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A few bug fixes as per usual
+    &lt;ul&gt;
+      &lt;li&gt;Timeline indicator being able to be hidden by helpers&lt;/li&gt;
+      &lt;li&gt;The mystery box low-fps auto-clicker exploit (did you know about that one? too bad if you didn’t ;))&lt;/li&gt;
+      &lt;li&gt;Probably the third or fourth attempt at fixing a known bug, we’ll see…&lt;/li&gt;
+      &lt;li&gt;Upgrades found right after upgrading &lt;em&gt;should&lt;/em&gt; not become invisible and require a location change or refresh&lt;/li&gt;
+      &lt;li&gt;Probably a few smaller ones squashed too&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Kept most planets/moons round, we’ll see if this requires flattening later&lt;/li&gt;
+  &lt;li&gt;New ‘alert system’ for when the Steam version is up
+    &lt;ul&gt;
+      &lt;li&gt;Simply add your email for a one-time (ONLY) alert when/seconds before its out - no subscription or mailing list, you’ll all be removed after the one email&lt;/li&gt;
+      &lt;li&gt;Links to open this widget is available both in the sidebar and on the landing page&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;5-6 items!
+    &lt;ul&gt;
+      &lt;li&gt;Most are pickaxes this time, wow! Courtesy of &lt;strong&gt;&lt;a href=&quot;https://twitter.com/Dimifw&quot; target=&quot;_blank&quot;&gt;DimiFW&lt;/a&gt;!&lt;/strong&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Some stuff you won’t see that was done behind the scenes
+    &lt;ul&gt;
+      &lt;li&gt;Started writing gamepad-input basics (for Steam)&lt;/li&gt;
+      &lt;li&gt;Also working on some neat filters/effects&lt;/li&gt;
+      &lt;li&gt;Holiday (Easter!) preparations (will continue working on this the following week(s)&lt;/li&gt;
+      &lt;li&gt;&lt;strong&gt;Much Soon™&lt;/strong&gt; all &lt;strong&gt;&lt;a href=&quot;https://patreon.com/dogeminer&quot; target=&quot;_blank&quot;&gt;Patrons&lt;/a&gt;&lt;/strong&gt; will be able to authenticate to receive a small buff (not too OP, not decided exactly either, think something like a +2-4% overall bonus dps or similar - accepting suggestions! Naturally, the buff should increase slightly per month of patronage) &lt;strong&gt;plus&lt;/strong&gt; the &lt;strong&gt;ability to open the mystery box while using an ad-blocker&lt;/strong&gt;!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added an icon-link to the official &lt;strong&gt;&lt;a href=&quot;https://steamcommunity.com/groups/dogeminergame&quot; target=&quot;_blank&quot;&gt;Steam Group&lt;/a&gt;&lt;/strong&gt; in the sidebar&lt;/li&gt;
+  &lt;li&gt;Trialing some speedier-load-thingies that shouldn’t affect anything negatively&lt;/li&gt;
+  &lt;li&gt;The Phone UI got some love this time &lt;em&gt;(Even though you are in the &amp;lt;5-6% if you’re playing from one - I know you want it as an app, it will come!)&lt;/em&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Helpers are now below Doge&lt;/li&gt;
+      &lt;li&gt;The shop does not open on “swipe up” any more! This happened &lt;strong&gt;a lot&lt;/strong&gt; by mistake if you were mining and looting fast &lt;em&gt;(still two ways to open it: the bottom button or by tapping directly on a helper)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;I know the Phone UI is far from perfect and some times outright buggy, it’ll receive much more love after Steam has been released and it’s time for mobile app-variants!&lt;/li&gt;
+      &lt;li&gt;Currently known bug is that the Share-button can hide the Settings button. It’s still possible to open settings if you tap just right, I’ll fix it another time (PS. if you didn’t know, closing the “share” interface (which is actually the sidebar on PC) is done by a simple &lt;em&gt;swipe down&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Wrote these patch notes and extra paragraphs, &lt;em&gt;pheewww&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Plus, you know, whatever I forgot I did/fixed/broke&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Please report bugs in the &lt;em&gt;&lt;a href=&quot;https://dogeminer2.com/discord&quot; target=&quot;_blank&quot;&gt;#bug_reporting&lt;/a&gt;&lt;/em&gt; channel on &lt;a href=&quot;https://dogeminer2.com/discord&quot; target=&quot;_blank&quot;&gt;Discord&lt;/a&gt;&lt;/strong&gt; found under the &lt;em&gt;“Feedback &amp;amp; Ideas”&lt;/em&gt; category, &lt;strong&gt;but before you do, try a refresh (F5)&lt;/strong&gt; - your browser might have loaded the older files. Thank you &amp;lt;3&lt;/p&gt;
+
+&lt;h1 id=&quot;steam-is-the-main-focus---launch-day-such-important&quot;&gt;Steam is the main focus - Launch day such important&lt;/h1&gt;
+
+&lt;p&gt;This is one of the reasons patches don’t contain a ton of content (apart from holidays maybe ;)).&lt;/p&gt;
+
+&lt;p&gt;The bricks of the foundation are being laid, with as many bug fixes and other similarly important stuffs as possible. The idea is that the web version will be the ‘demo’ of &lt;em&gt;some&lt;/em&gt; of what the Steam version will offer (without taking anything away from it).&lt;/p&gt;
+
+&lt;p&gt;Also, &lt;strong&gt;unless it’s just not possible&lt;/strong&gt;, you’ll of course be able authenticate with &lt;a href=&quot;https://patreon.com/dogeminer&quot; target=&quot;_blank&quot;&gt;Patreon&lt;/a&gt; and whatever else might come &lt;em&gt;(Discord is on the list, we’ll see how it goes)&lt;/em&gt; in the &lt;em&gt;Steam version&lt;/em&gt; - as well as import your save from the web &lt;em&gt;(the save-import might change, either way, if it will be allowed, it will be for a limited time after release)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;I need to be as sure as we can possible be that there’s a good balance (which will still be improved upon before the Steam launch - e.g. the cost increase of helpers will be going down too, by using a similar approach as for the stats (soon™), among a few other balance-related things &lt;em&gt;(to say the least)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;We really need to hit &lt;em&gt;“New and popular”&lt;/em&gt; on Steam to gain real traction, and to do that we need as many copies as possible sold within 24 hours of release - or in other words, &lt;em&gt;the best game possible on day one!&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;If you aren’t one of the shibes with a $1 Steam Key waiting for them via Patreon&lt;/strong&gt;, &lt;em&gt;and not planning to become one&lt;/em&gt;, please do sign-up for the new &lt;strong&gt;&lt;a href=&quot;https://dogeminer2.com/&quot; target=&quot;_blank&quot;&gt;email alert&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Being there on day one is so, so, so important to the game &lt;em&gt;(and me)&lt;/em&gt;, so… please very thank much love &amp;lt;3&lt;/p&gt;
+
+&lt;h2 id=&quot;friendly-reminder-if-you-want-to-be-sure-that-you-wont-lose-your-progress-make-sure-to-download-your-save-every-now-and-then&quot;&gt;Friendly reminder: If you want to be sure that you won’t lose your progress, &lt;strong&gt;make sure to download your save every now and then&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;It’s super easy, just click the download/upload button on the landing page and click download. Then forget about it (or place it somewhere you’ll remember - otherwise just look in the download folder duh). The save is compressed, so it’s small (sub 100kb pretty much guaranteed, normal saves would be &amp;lt;30kb) and the name of the save-file has a timestamp to avoid duplicates.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-usual-suspects-for-losing-a-save&quot;&gt;The usual suspects for losing a save:&lt;/h2&gt;
+
+&lt;p&gt;Browser cleanup of some kind. The save is stored (if not cloud saved) in your browsers localStorage (like cookies, but for larger sizes and not for tracking etc). However, when an app cleans out your cookies, this usually includes your localStorage too.&lt;/p&gt;
+
+&lt;p&gt;Usually a 3rd party program will do this to clear out stuff that could slow down your PC or browser, or track you. Common tools known to do this are CCleaner, SpyBot S&amp;amp;D (&lt;em&gt;if you don’t un-check your browser cookies from being removed, after a search&lt;/em&gt;) and perhaps a few anti-virus programs.&lt;/p&gt;
+
+&lt;p&gt;Always download your save to be safe, &lt;em&gt;then&lt;/em&gt; run whatever cleanup tool you have. If you lose your save and your PC isn’t broken, &lt;em&gt;it’s on you.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ps-theres-still-many-limited-steam-keys-limit-is-100-on-that-tier-theres-79-left-as-of-writing-on-patreon-for-1&quot;&gt;PS. There’s still many limited Steam keys (limit is 100 on that tier, there’s 79 left as of writing!) on Patreon for $1&lt;/h2&gt;
+
+&lt;p&gt;While I can’t tell you what the Steam price will be &lt;em&gt;(it’s simply not decided, currently jumping anywhere between $5 and $15, but it’ll be some % off on launch)&lt;/em&gt;, but even with the % off, the $1 limited Steam Key Patreon tier is going to be &lt;em&gt;at least&lt;/em&gt; 3-4x cheaper than when the game releases. There are also other tiers with multiple keys that are similar. Just a FYI! &lt;em&gt;(Also to be clear: It’ll be months before the Steam release is actually ready - much work to do, so your help right now is mightily appreciated)&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;//&lt;a href=&quot;https://twitter.com/rkn_dev&quot; target=&quot;_blank&quot;&gt;rkn&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 10 Mar 2020 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.7/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.7/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.6</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-26---mystery-box&quot;&gt;Patch notes for 2.6 - Mystery Box&lt;/h1&gt;
+
+&lt;h3 id=&quot;quick-note---weve-started-an-official-steam-group-for-dogeminer&quot;&gt;Quick note - We’ve started an official Steam group for Dogeminer!&lt;/h3&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://steamcommunity.com/groups/dogeminergame&quot; target=&quot;_blank&quot;&gt;Link to the group&lt;/a&gt;. Feel free to join and invite your friends! It’s brand new, mind the paint.&lt;/p&gt;
+
+&lt;p&gt;Same rules as on Discord apply for now; behave and all shall be well. Kindness and wholesomeness goes a long way with us.&lt;/p&gt;
+
+&lt;h3 id=&quot;continuing&quot;&gt;Continuing…&lt;/h3&gt;
+
+&lt;p&gt;The holiday theme is over (and has been for a while) and I think, for our first limited “theme”, it went rather well. It was supposed to have more content; next time around there should be time to add more fun stuffs.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;PS. If you were wondering what Holiday Spirit does, it did nothing this time around, but for future holidays, expect it to do something (maybe a simple % increase, or reduced costs, or … #game_suggestions on discord).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Looking at doing a similar thing for Easter and Halloween (these holidays come to mind as pretty international). But that’s a sidenote, here come the patch notes.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;TL;DR: The Mystery Box fortune has evolved into a feature that occasionally can be opened for any item on any location you’ve unlocked, and a little extra! In addition to the regular bug fixes and minor stuffs, all those copies of Super Fortunes and D.I.A. badges some of you have collected will now be merged into one of each the next time you decide to timetravel, saving space and resources!&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Find the Mystery Box fortune and if you’re nice to it, it will show you its secrets! If you already have it, expect it to let you know somehow…
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;The fortune has gained [Protected] status, perhaps it did not appreciate being tossed into Super Fortunes…&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;It magically finds items from any locations you’ve unlocked on your current timeline&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;It seems not to care whether or not you already own the item it finds… This new development have rendered the fortune counter helpless, and sparked wonder in many shibes…&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;It is rather judgy, and will only allow itself to be opened if it does not detect an ad-blocker(!)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;It has a 20 minute timer, increasing with each opening, up to 25 minutes after ten. The first opening has no timer.&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;The tenth opening of the box gives &lt;strong&gt;twice&lt;/strong&gt; the rewards. Yes, that’s two items! The counter will then reset&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;If the Mystery Box drops a new pickaxe, currently, it will only auto-equip if auto-looting is enabled. This will change with an auto-equip setting in the future, as auto-looting is only available after entering timeline 2&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The save system has changed its compression in order to fix an issue with Safari not being capable of doing what everyone else is doing
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Lets pray to the Dogegod (=dogegoD) that I implemented this change correctly and didn’t break all the saves&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Duplicate fortunes from time-travel will now combine itself with others of the same type&lt;/li&gt;
+  &lt;li&gt;Fixed the bug where DPS would not properly update in the shop after a bonus fades away. Same with upgrades.&lt;/li&gt;
+  &lt;li&gt;Mars is still round
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Just give up, Flat Mars folk&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added some special code before loading the game after loading the save, to reduce some &lt;em&gt;weirdness&lt;/em&gt; from &lt;em&gt;sometimes&lt;/em&gt; happening&lt;/li&gt;
+  &lt;li&gt;Added a dozen or so fortunes, spread across the locations (it’s not much, but I wasn’t feeling like coding that day)&lt;/li&gt;
+  &lt;li&gt;Holiday fortunes should no longer drop, properly this time. We’ll say the holidays were simply extended due to lack of enough holiday spirit.&lt;/li&gt;
+  &lt;li&gt;Certain bad kittens have been fired, for the good of all. &lt;em&gt;Doge bless their families.&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Some weirdness is guaranteed to exist&lt;/li&gt;
+  &lt;li&gt;Added new bugs for our good Shibe bug hunters to find!
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Think of it like being a monster hunter, but with less songs written about you&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Tossed a coin to some witches, did I do it right?&lt;/li&gt;
+  &lt;li&gt;Reduced the time cloud saves wait for a load
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Should save some time on the first load when cloud saves are not being used, I’ve hopefully not broken it&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;And whatever I forgot or didn’t quickly find in my git history&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;This goes without saying: If the game has completely broken for you, try refreshing the page first (preferably a forced refresh - hold Ctrl (or Cmd on Mac) and press F5 to force-download the assets - sorta hard if you’re not on a Mac or PC, but it solves 9/10 cases).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;If this does not work, let me know as soon as possible (&lt;a href=&quot;https://discord.gg/PBg9yb4&quot; target=&quot;_blank&quot;&gt;Discord&lt;/a&gt; usually works the best/fastest, use the #bug_reporting channel once you’ve passed the anti-bot-spam counter-measures á reacting to the message in #hello-there).&lt;/em&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;friendly-reminder-if-you-want-to-be-sure-that-you-wont-lose-your-progress-make-sure-to-download-your-save-every-now-and-then&quot;&gt;Friendly reminder: If you want to be sure that you won’t lose your progress, &lt;strong&gt;make sure to download your save every now and then&lt;/strong&gt;&lt;/h1&gt;
+
+&lt;p&gt;It’s super easy, just click the download/upload button on the landing page and click download. Then forget about it (or place it somewhere you’ll remember - otherwise just look in the download folder duh). The save is compressed, so it’s small (sub 100kb pretty much guaranteed) and has a timestamp in the name to avoid duplicates.&lt;/p&gt;
+
+&lt;h1 id=&quot;the-usual-suspects-for-losing-a-save&quot;&gt;The usual suspects for losing a save:&lt;/h1&gt;
+
+&lt;p&gt;Browser cleanup of some kind. The save is stored (if not cloud saved) in your browsers localStorage (like cookies, but for larger sizes and not for tracking etc). However, when an app cleans out your cookies, this usually includes your localStorage too.&lt;/p&gt;
+
+&lt;p&gt;Usually a 3rd party program will do this to clear out stuff that could slow down your PC or browser, or track you. Common tools known to do this are CCleaner, SpyBot S&amp;amp;D (&lt;em&gt;if you don’t uncheck your browser cookies from being removed, after a search&lt;/em&gt;) and perhaps a few anti-virus programs.&lt;/p&gt;
+
+&lt;p&gt;Always download your save to be safe, &lt;em&gt;then&lt;/em&gt; run whatever cleanup tool you have. If you lose your save and your PC isn’t broken, it’s on you.&lt;/p&gt;
+
+&lt;h2 id=&quot;faster-update-schedule&quot;&gt;Faster update schedule&lt;/h2&gt;
+
+&lt;p&gt;2020 is here, so to make sure the game makes it to Steam this year, weekly goals (among other priorities) are now a big thing, in order to increase the speed that things get done, simply put.&lt;/p&gt;
+
+&lt;p&gt;Since the focus will be on Steam this year, very soon the web version will see less updates as I/we slowly progress towards this. I’ll be attempting to modularize the development to the extent that each platform should be able to receive some updates, without affecting others.&lt;/p&gt;
+
+&lt;p&gt;This is not to say that the web will be getting the same treatment as the Steam-version, but to make mobile app-versions easier to add to the mix - some time after the Steam release.&lt;/p&gt;
+
+&lt;p&gt;Steam 2020 Hype! Let’s go!&lt;/p&gt;
+
+&lt;p&gt;//rkn&lt;/p&gt;
+</description>
+        <pubDate>Sun, 26 Jan 2020 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.6a/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.6a/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.5e</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-25e&quot;&gt;Patch notes for 2.5e&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;TL;DR: Added a new way to save/load by downloading or uploading a save-file. Changes to layouts to pronounce the &lt;a href=&quot;https://discord.gg/PBg9yb4&quot; target=&quot;_blank&quot;&gt;Discord&lt;/a&gt; server and &lt;a href=&quot;https://patreon.com/Dogeminer&quot; target=&quot;_blank&quot;&gt;Patreon&lt;/a&gt; page, a new sidebar (in-game) which also focuses on Discord and Patreon, plus a spot for sponsored content below the sidebar (sorry, I don’t like them either). Cate Thief can pop up anywhere (even behind you right now!), Doge got a better-fitting party shirt when on Mars (courtesy of our wonderful ChateauLafite1827).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Plus everything else I forgot I fixed/changed/added. There’s no &lt;em&gt;new&lt;/em&gt; in-game content in this patch; that’s coming up next, now that the proper social links and outside-of-game things have been updated.&lt;/p&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Fixed an issue where Slave Kittens would sometimes attempt an escape&lt;/li&gt;
+  &lt;li&gt;Save/load via files is now available in beta-ish! Wow!
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This is very-very new and there may be issues not yet discovered on devices not tested yet, especially Apple devices&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Cate has expanded their operation and will now attempt to steal your coins on more locations than Earth&lt;/li&gt;
+  &lt;li&gt;Mars is now round
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;I apologize for the inconvenience this may cause Flat Mars folk&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added beautification of numbers to stats&lt;/li&gt;
+  &lt;li&gt;Changed “MISSION FINISHED” to “MISSION PASSED” (…because memes)&lt;/li&gt;
+  &lt;li&gt;Some optimizations to the loading of both landing &amp;amp; game pages
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Older versions of Safari on OSX &amp;amp; iOS may see the opposite and may not work at all…&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Kittens protesting harsh working conditions have been permanently terminated&lt;/li&gt;
+  &lt;li&gt;If on a phone and for some reason the desktop layout is activated, the game will detect this and force-use the phone layout&lt;/li&gt;
+  &lt;li&gt;Added T for trillion at a certain level (!)&lt;/li&gt;
+  &lt;li&gt;All the other things&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;It goes without saying these days: If the game has completely broken for you with this update, let me know (first try refreshing the page, that usually solves minor hiccups)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;current-short-term-roadmap&quot;&gt;Current short-term roadmap&lt;/h2&gt;
+
+&lt;p&gt;If you’re not on Discord you might’ve missed the message about this, so if you’re interested, here’s the current short-term roadmap before I need to focus on the Steam release (I reserve the right to change everything):&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A difference in timelines depending on what option you choose during the Doge Intelligence Agency (DIA) mission! Yes, finally! Well, at first just news will change but if that seems to work well I can more easily add differences such as certain helpers and other things as we go (CateKitnapper anyone? Steals yo helpers. Guard Doges to stop him? Hmm?)&lt;/li&gt;
+  &lt;li&gt;It’ll get snowy and a little x-mas’y (sorry people not celebrating anything, you might get the option to opt out of the theme) over the holidays&lt;/li&gt;
+  &lt;li&gt;The Mystery Box Fortune will be getting its own little feature! It’ll be openable every few minutes for some random free loot! (Caveat: Only works if ads aren’t blocked (sorry not sorry), like a reward for not using a blocker). The same update will have new loot to make up for the free loot! Wohoo! Can’t wait to mine with that AWP | DogeLore!&lt;/li&gt;
+  &lt;li&gt;Maybe, MAYBE, if I have time before I need to get the Steam rolling (!), a really cool Cate event where you get caught by a CateStars tractor beam (!) and have to fight (!) Cate minions to escape - and of course get rewards (possibly based on performance!) This event is one of many to come, they will most likely be optional in case you didn’t like some or are on your 99th timeline and just like …cant. heh&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;That’s short-term (that can totally change) before I’ll focus on a Steam version.&lt;/p&gt;
+
+&lt;p&gt;I know many of you are looking forward to the next location (the sun is now a planet apparently!), I’m aiming to put that in the initial Steam release to make sure it has something unique to offer out of the gate, I hope you understand!&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading, playing &amp;amp; being such amaze&lt;/p&gt;
+
+&lt;p&gt;//rkn&lt;/p&gt;
+</description>
+        <pubDate>Fri, 08 Nov 2019 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.5e/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.5e/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.5d</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-25d-micropatch&quot;&gt;Patch notes for 2.5d (“Micropatch”)&lt;/h1&gt;
+
+&lt;p&gt;&lt;em&gt;This is a small-ish patch that won’t make a ton of difference on the outside, most of the changes are behind the scenes or simply changes to certain strings or descriptions.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Pickaxes should no longer explode&lt;/li&gt;
+  &lt;li&gt;String changes to helpers &amp;amp; upgrades
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;You can no longer purchase a “shit-ton” of Mars Bases (a heckin’ lot of bases is enough)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;While High Quality Pussy was great, due to possible misconceptions, that specific upgrade will now give Pussycats higher quality instead&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Added a dozen additional phrases here and there&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Earth is now round to appeal to a larger audience
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;I deeply apologize for the inconvenience caused to all Flat Earth shibes&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Cost/balance changes
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Lowered the initial cost of the DogeStar&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;The “Sensor Package” upgrade now acts as an upgrade rather than a downgrade&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Very minor changes in a few spots&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The main coins counters are now displayed with a faster bitmap version of the font
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This is a bit technical but it should improve performance in rendering, as the text/numbers are updated very frequently compared to everything else&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Kittens have reduced their appetite for human flesh&lt;/li&gt;
+  &lt;li&gt;Added links to the awesome &lt;a href=&quot;https://discord.gg/PBg9yb4&quot; target=&quot;_blank&quot;&gt;Dogeminer Discord&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Added a link to the new &lt;a href=&quot;https://patreon.com/Dogeminer&quot; target=&quot;_blank&quot;&gt;Patreon page&lt;/a&gt; if ad-blocking is detected
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;The Dogeminer Patreon is new and still in the works, later it should become more visible - probably added to the sidebar by the social links&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Initial work on a few new features has also been done, but won’t be noticed or available in this update as they are still being worked on - for now I’ll just say that they are wow.&lt;/p&gt;
+
+&lt;p&gt;A bunch of bugs remain unsquashed (if you have reported them before, fear not - I most likely still have it on the todo list!). Most of the bugs &lt;em&gt;should&lt;/em&gt; be visual in nature, or has to do with the cloud saves not working on all platforms - this specific one most-likely won’t be changed soon, it should be replaced by a different system.&lt;/p&gt;
+
+&lt;p&gt;Some minor alterations are bound to be unlisted, due to the inherent memory loss nature over time in human brains. Hopefully a future update will correct this issue, but for now it’s out of my hands.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;As per usual, if the game has become completely broken, let me know (first try refreshing the page, that usually solves minor hiccups)!&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 26 Aug 2019 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.5d/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.5d/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Dogeminer Discord is here, come chat with us!</title>
+        <description>&lt;h1 id=&quot;a-discord-for-all-shibes&quot;&gt;A Discord for all shibes!&lt;/h1&gt;
+
+&lt;p&gt;You asked, &lt;em&gt;probably more than once&lt;/em&gt;, we finally listened! The Dogeminer Discord server has &lt;strong&gt;officially launched!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;[imagine trumpet sounds]&lt;/em&gt;&lt;/p&gt;
+
+&lt;amp-img width=&quot;1000&quot; height=&quot;187&quot; alt=&quot;Dogeminer Discord Logo&quot; layout=&quot;responsive&quot; src=&quot;/assets/images/blog-discord.jpg&quot;&gt;&lt;/amp-img&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://discord.gg/wrEfE7F&quot; target=&quot;_blank&quot;&gt;Tl;dr here’s the invite link.&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;were-still-working-on-it-be-one-of-the-first-to-join-and-help-us-shape-it&quot;&gt;We’re still working on it, be one of the first to join and help us shape it!&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Since it’s just opened, it’s a work-in-progress. But we think we got the basics we need to get going, and with your help, we can make it even better!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Please join to have a chat with me, the mod team or all the other shibes that have put their paws forward! We got plenty of room and we don’t bite. &lt;em&gt;Sometimes we even give away real dogecoin too!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Just remember to behave appropriately&lt;/strong&gt; - simply by being good &amp;amp; wholesome, you won’t even have to read the rules. But if you’re unsure of what that means, it’s right below the welcome messages in the welcome channel.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://discord.gg/wrEfE7F&quot; target=&quot;_blank&quot;&gt;Use this invite link to join us.&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;You can also use the widget below, simply click the connect button! (It’s only listing voice channels it seems, but we have way more chat channels!)&lt;/p&gt;
+
+&lt;amp-iframe sandbox=&quot;allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox&quot; src=&quot;https://discordapp.com/widget?id=153602077854138369&amp;amp;theme=dark&quot; width=&quot;350&quot; height=&quot;500&quot; frameborder=&quot;0&quot;&gt;&lt;/amp-iframe&gt;
+
+&lt;p&gt;On a separate note, I’d like to take a brief moment to tell you why patches have been rare in the past few months.&lt;/p&gt;
+
+&lt;h3 id=&quot;patches-have-slowed-why&quot;&gt;Patches have slowed, why?&lt;/h3&gt;
+
+&lt;p&gt;Some of you may already know this, &lt;strong&gt;I recently got my first dog&lt;/strong&gt; (a &lt;strong&gt;Shiba Inu&lt;/strong&gt;, of course), his name is &lt;strong&gt;Vincent&lt;/strong&gt; and he’s still a &lt;strong&gt;puppy&lt;/strong&gt;, so he requires constant attention and lots of play - and I really want to do it right.&lt;/p&gt;
+
+&lt;p&gt;That is the main reason for the slowed development. The second reason is that I’m also &lt;strong&gt;moving to another apartment&lt;/strong&gt; (for the first time in almost 10 years - so much to throw away!). Which can be both stressful and very time-consuming. It should be mostly sorted and &lt;strong&gt;done in about a month&lt;/strong&gt; (the moving, not the puppy!). I need to be out of my current apartment before May is up.&lt;/p&gt;
+
+&lt;p&gt;Once the moving is sorted, patches &lt;em&gt;should&lt;/em&gt; start coming in again &lt;em&gt;(summer is a wildcard and is just around the corner for us, this might make me melt for a month or so, depending on how long and hot the summer decides to be, if it gets very hot then working inside on the computer is… no fun at all!)&lt;/em&gt;. Although the new apartment (still renting, I’m no rich shibe!) doesn’t have windows facing the rising sun, so it might not be as bad as it has been the past years. &lt;em&gt;Here’s to hoping!&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Anyway, now you know why patching and new content is on a bit of a downer.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thank you for your continued patience with this fun game/project &amp;amp; &lt;strong&gt;please join the discord, it’ll be awesome!&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;there-is-a-patch-around-the-corner-but-its-more-of-a-micro-patch&quot;&gt;There is a patch around the corner, but it’s more of a ‘micro-patch’&lt;/h3&gt;
+
+&lt;p&gt;Nothing huge, a couple of bug fixes and some new shiny FX, along with (hopefully) a performance boost (I replaced the dogecoin counter, which was a PIXI.Text object, to a Bitmap-based version. This basically means it’ll cost much less performance to update itself, which it does do a lot).&lt;/p&gt;
+
+&lt;p&gt;I still need to test it on a few more devices before I can roll it out, but so far I’ve not run into any problems. So that’s &lt;strong&gt;probably&lt;/strong&gt; being pushed out within a week. No new content inside of it yet I’m afraid.&lt;/p&gt;
+
+&lt;p&gt;If you suddenly notice that the game is completely broken, that might be the patch (always try a hard refresh - Ctrl/Cmd + F5 in Windows/OSX, mobile/tablet shibes might need to wait for their cache to clear (so annoying right?), but if it doesn’t work at all or something is or seems very off - please let me know asap!)&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;On behalf of myself and the mod team, &lt;strong&gt;thank you for your continued support, suggestions, bug reports and more! You’re awesome!&lt;/strong&gt; Lets keep growing! Much yay!&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 16 Apr 2019 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Discord/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Discord/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.5</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-25b-auto-loot-beta-2&quot;&gt;Patch notes for 2.5b (Auto-Loot “beta 2”)&lt;/h1&gt;
+
+&lt;amp-img width=&quot;290&quot; height=&quot;165&quot; alt=&quot;The Auto-Loot Option&quot; src=&quot;/assets/images/autoloot.jpg&quot;&gt;&lt;/amp-img&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Reduced value calculation for rocks (slightly) and fixed an issue where the saved value would sometimes become &amp;gt;100%&lt;/li&gt;
+  &lt;li&gt;Reduced Titan “rock” base value slightly&lt;/li&gt;
+  &lt;li&gt;Changed multiple functions that remove stuff to be more optimized and remove with higher success rate (it seems)
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Hopefully this solves most cases of stuck text and such&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A ton of similar changes where the destroy methods were called too fast in repetition, this is not recommended with PIXI
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Pro tip was: use timeouts without time set (=next frame) if destroying many sprites fast&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Hopefully these changes will solve the issues that surfaced yesterday.&lt;/p&gt;
+
+&lt;p&gt;I uploaded this version after testing it briefly on a PC (Chrome@win10), an iPad (Safari@ iOS 12.1.1) as well as an Android phone (Chrome, Android 8.0.0). They ran fine and the changes were simple enough that I believe I didn’t break it from working.&lt;/p&gt;
+
+&lt;p&gt;Those few of you with browsers that cache very aggressively might have some issues as usual, as usual I recommend attempting a hard refresh (Ctrl+F5 on Windows), sometimes this is required once per location (you’ll know if you need it).&lt;/p&gt;
+
+&lt;h3 id=&quot;patch-notes-for-25a-auto-loot-beta-1&quot;&gt;Patch notes for 2.5a (Auto-Loot “beta 1”)&lt;/h3&gt;
+
+&lt;h2 id=&quot;changes-1&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Added Auto-Loot option in settings
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This option is unlocked after one mission or from timeline #2&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;At the moment it will automatically equip new pickaxes that are auto-looted&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;In the next patch, I intend to finish the new Settings design, which will give more space (on all devices), so that’s when an Auto-Equip option can be available&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Big&lt;/strong&gt; change to the &lt;strong&gt;value&lt;/strong&gt; algorithm for rocks, clouds, etc
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;It now uses parts of your current DPS to determine the value&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;These values are subject to change based on your feedback. Testing indicates decent values so far, but you guys are my bestest testers&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;This was done because increased DPS after prestige was causing boring gameplay, especially early on&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;If appropriate, +DPS could be brought back to Super Fortunes, but for now we will do without and see how it runs&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;In addition: rocks (etc) no longer have a chance to drop loot boxes when at more than 50%
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;I think most will agree that getting up to 5 boxes from 1 rock with high +Loot Find and +Luck stats was a bit too much&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The game will no longer automatically travel when you purchase the rockets if you have done so before
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;For example, you can now buy the Space Rocket without it automatically sending you to The Moon if you are on another timeline than the first&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added a chance to do more than 2.5x damage if your +Critical chance is over 100%
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;I think it works&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;99% of everyone was playing with the “Rock UI” on (showing the % left), so that option has been removed to save space
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Want it back? Let me know and I’ll put it in the new settings&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added an option on the front page to use more compressed textures (less pretty) if your internet is known to be slow
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Additional tools like this planned&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Added a new MAX performance option that will reduce graphical complexity
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This is still a work in progress and there is much more that it could improve&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;I think performance was reduced slightly in this patch, &lt;strong&gt;please let me know if the game suddenly runs a lot worse for you&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I believe that was most of the changes in this patch.&lt;/p&gt;
+
+&lt;p&gt;Note that this is a &lt;em&gt;very new patch&lt;/em&gt; that has been &lt;em&gt;tested very fast&lt;/em&gt; and there may be new bugs to fix. &lt;em&gt;Let me know&lt;/em&gt; if you happen upon any and if you can, give as many details as possible (device, browser - even errors in the console when the bug occurred, if any and if possible on your device. An image of either the bug itself or the console error also helps a lot).&lt;/p&gt;
+
+&lt;h3 id=&quot;regarding-dps-change-in-last-patch&quot;&gt;Regarding +DPS change in last patch:&lt;/h3&gt;
+
+&lt;p&gt;First of all, thanks to everyone who voted! Only 6 of you picked the crazy option.&lt;/p&gt;
+
+&lt;p&gt;About one third voted against removing +DPS from Super Fortunes, which tells me that quite a few wanted to keep it, but more were fine with losing it, in favor of a more balanced approach.&lt;/p&gt;
+
+&lt;p&gt;We’ll see if the new rock and loot changes in this patch would allow +DPS to come back to Super Fortunes, but I think it would be too OP still (and especially in the long run), but I might be wrong.&lt;/p&gt;
+
+&lt;p&gt;Oh and if you load the game and suddenly your timelines don’t show and it pops up stuff you have already seen: refresh the game and it should be good again. This happened randomly to me only a few times, so I’m still working on the reason.&lt;/p&gt;
+
+&lt;p&gt;And lastly: Have fun!
+&lt;em&gt;Unless the game became completely broken, then tell me&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 14 Jan 2019 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.5/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.5/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Patch Notes 2.4d</title>
+        <description>&lt;h1 id=&quot;patch-notes-for-version-24d-no-auto-loot-yet-its-next&quot;&gt;Patch notes for version 2.4d (no auto-loot yet, it’s next!)&lt;/h1&gt;
+
+&lt;p&gt;This is a short post detailing the changes recently uploaded. &lt;strong&gt;At the bottom of the post is a poll about the biggest change in this patch.&lt;/strong&gt; Use it to let me know if you liked or did not like this change (you can of course also contact me about it).&lt;/p&gt;
+
+&lt;p&gt;Before we get to the changes, have you seen &lt;a href=&quot;https://www.instagram.com/dogeminerdev/&quot; target=&quot;_blank&quot; title=&quot;Dogeminer on Instagram&quot;&gt;Dogeminerdev on instagram&lt;/a&gt;? Only those following the Facebook page could’ve gotten a notification about it as I have not advertised it anywhere yet - I’m still not sure it’s going to work out or is a good idea, but at least it’s not spammy: &lt;a href=&quot;https://www.instagram.com/p/BsM1_rfBvWM/&quot; target=&quot;_blank&quot; title=&quot;First dogeminer post on instagram&quot;&gt;There’s only one post right now.&lt;/a&gt; Anyway, if instagram is your thing, go follow that awesome account and we’ll see if magic happens.&lt;/p&gt;
+
+&lt;h2 id=&quot;changes&quot;&gt;Changes:&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Fixed helper damage not starting properly if changing location&lt;/li&gt;
+  &lt;li&gt;Fixed an incorrect string one of the Mining Shibe upgrades&lt;/li&gt;
+  &lt;li&gt;Changed the behaviour of &lt;em&gt;prestige&lt;/em&gt; to not spiral out of control (hopefully)
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;Might need changing again, need to test it on my personal guinea pigs first (that’s you)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;There were multiple changes here but I believe I got the big bad one&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Various &lt;em&gt;small&lt;/em&gt; optimizations to performance, still much more needed for low-end machines - I’ve only done what I could do quickly so far
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;There’s at least one pretty big thing I can do about the performance according to the docs, but it might take a little time&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;Unless I’ve missed something that is doing more work than is required, I’m going to check the performance audits for this and get more into detail about what costs the most to perform&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Big:&lt;/strong&gt; Changed the font on this amazing blog, among a few minor CSS changes for readability.&lt;/li&gt;
+  &lt;li&gt;Reduced amount of DogeDiamonds that sometimes drop from containers &lt;em&gt;by very little&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Reduced the strength of +Wow (will also be reducing the effect it has on itself)
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This was done a couple of days ago but I didn’t blog about it (wow)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;This is probably the best stat in the game (one wow to rule them all), so it makes sense it should be weaker and take more time to really shine&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Fixed wrong value being shown for the D.I.A. badge during the chat the agent &lt;em&gt;(and also stopped it from receiving benefits from +wow (sometimes?). It was not on purpose)&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Did not fix NewsDoge sometimes going black (only seen this happen on phones so far, wth?)&lt;/li&gt;
+  &lt;li&gt;Think I fixed the NewsDoge issue where he cancels his news reel just as he is about to speak (rude!)&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Actual big change:&lt;/strong&gt; removed +DPS from Super Fortunes (i.e. following time travel/prestige) *loud gasp*
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;This will reduce your “free” income at the start of a new timeline or location&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;More importantly, it helps to balance the game by a lot!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;It greatly reduces the prestige issue with getting too many items too fast (you end up just picking things up very fast, not great gameplay…)&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;It also increases the time it takes to get to the next location after time traveling, which was very unbalanced&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;For those of you who have been playing for a while now, you’ll still be looting more than playing due to your sick stats, my advice: either wait for auto-loot &lt;strong&gt;or&lt;/strong&gt; restart from scratch and help me check the new balance!&lt;/em&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;em&gt;&lt;strong&gt;There’s a poll at the bottom of this post&lt;/strong&gt;, use it to &lt;strong&gt;let me know what you think&lt;/strong&gt; of this change&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;The big thing&lt;/strong&gt; I really need to implement ASAP is &lt;strong&gt;the auto-loot feature&lt;/strong&gt; (optional to use ofc), that &lt;em&gt;gets unlocked after the first prestige&lt;/em&gt;. I’ve got it planned out and ready to get at it right away, &lt;em&gt;I don’t like it when people get to play the new update and somehow the awesomeness is overshadowed by too much loot! Who’d a thunk? Somehow should have playtested this! How did this get past Q&amp;amp;A? …Oh right…&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;The root of the cause is that it gets boring to pick up containers quickly when you’re so full of stats that &lt;em&gt;the only thing you have time to do&lt;/em&gt; is &lt;em&gt;open boxes&lt;/em&gt; because the rock is constantly being broken and your loot find is OP. It’s cool, but not fun to play!&lt;/p&gt;
+
+&lt;p&gt;I’ve wanted and semi-planned an auto-loot feature before the &lt;em&gt;prestige&lt;/em&gt; even existed (I couldn’t find out a good lore/not ugly implementation; I wanted a little dog to carry your burdens). But no worries, I’ll make it simpler. Once auto-looting is active, items dropped from the rock that doesn’t disappear by themselves &lt;em&gt;(in this case lootboxes &amp;amp; dogediamonds)&lt;/em&gt; will be picked up &lt;em&gt;(auto-opened too, without a pop-up in your face, in the case of lootboxes)&lt;/em&gt; and quickly fly straight into your inventory! Sounds neat, no?&lt;/p&gt;
+
+&lt;h2 id=&quot;so-i-removed-dps-from-your-super-fortunes&quot;&gt;So I removed +DPS from your Super Fortunes&lt;/h2&gt;
+
+&lt;p&gt;I want to make it clear on why I did that and also tell you that this decision was not taken lightly.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;I really don’t like removing any hard-earned stats from following along (I still don’t like leaving the pickaxes, but they’d be too strong, and we needed something to trade for dogediamonds).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;However, +DPS was the main perpetrator that was causing rocks to get destroyed like paper, faster than could can loot &lt;em&gt;(and it could happen as soon as the first or second prestige/timeline)&lt;/em&gt;. It made a lot of sense to me, perhaps it should never have existed (boring!), but I didn’t need to completely remove it - only from timetravel/prestige.&lt;/p&gt;
+
+&lt;p&gt;If you feel worried about a change such as this, stop! &lt;em&gt;And don’t be so selfish!&lt;/em&gt; You’ll find plenty of new +DPS gear with better stats the further you progress, until, of course, you time travel.&lt;/p&gt;
+
+&lt;p&gt;Maybe it’s not a good idea, what do I know. Time will tell. Let me know if you think it is (and why), only you have the power to change this.&lt;/p&gt;
+
+&lt;h2 id=&quot;before-you-go-please-answer-this-poll-about-the-dps-time-travel-change&quot;&gt;Before you go, please answer this poll about the DPS time travel change&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.strawpoll.me/17185959&quot; target=&quot;_blank&quot; title=&quot;A poll about the +DPS stat&quot;&gt;&lt;strong&gt;Click here to go to the strawpoll!&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Stay classy, shibes diego.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Patch-Notes-2.4d/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Patch-Notes-2.4d/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Feedback Is Love, Feedback Is Life</title>
+        <description>&lt;h1 id=&quot;in-the-last-post-i-included-a-short-list-among-many-lists&quot;&gt;In the last post I included a short list (among many lists)&lt;/h1&gt;
+
+&lt;p&gt;It was the list of the priorities that I’ll be working on for Dogeminer 2 next &lt;em&gt;(there was also a list for new content that will come LATER in the previous post, check it out if you’re interested, I’m especially fond of the CateStar kittnapping idea).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;After releasing &lt;strong&gt;v2.4 (Titan &amp;amp; D.I.A.)&lt;/strong&gt; I got a ton of feedback from a lot of people, on what needs fixing or what could/should be implemented and/or changed. This is just after ONE day, so more is likely to come and the following list might be outdated as I am typing it.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;It’s so nice to have users actually tell you what they think btw, you have no idea! &amp;lt;3&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;I’m very grateful to all of you who helped make the new todo list. &lt;em&gt;Shoutout to the subreddit &lt;a href=&quot;https://www.reddit.com/r/incremental_games/&quot; target=&quot;_blank&quot;&gt;/r/incremental_games&lt;/a&gt; as the feedback gathered from their users slightly trumped my faithful &lt;a href=&quot;https://www.reddit.com/r/DogeMiner/&quot; target=&quot;_blank&quot;&gt;/r/dogeminer&lt;/a&gt; shibes (granted we are much smaller, but we are wow!)&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;heres-the-most-recent-list-of-new-prioritized-todos&quot;&gt;Here’s the most recent list of new (prioritized) todos:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A fix for NewsDoge suddenly disappearing just as he was about to speak
+    &lt;ul&gt;
+      &lt;li&gt;Very rude of me to introduce this bug, I feel a little bad&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Some sort of diminishing returns on the +Wow stat or the pickaxe damage (or both)
+    &lt;ul&gt;
+      &lt;li&gt;This is the problem and possible solution:&lt;/li&gt;
+      &lt;li&gt;Pickaxe damage goes nuts after a few mission runs (and some stats in general), which eventually messes up both drop rates (because rocks break real easy) and rock health vs pickaxes&lt;/li&gt;
+      &lt;li&gt;There’s a need for a double-fixer here though, as the rocks’ health shouldn’t need to change with timelines or progress (except when they break), but if they do not, eventually they will be one-shotted to get all the loot there is (this might be okay if it’s very, very, lategame - it’s far from late right now though)&lt;/li&gt;
+      &lt;li&gt;Right now I think I’ve set the rocks to not become crazy high in health per break, as for example the cost of a helper per buy can get&lt;/li&gt;
+      &lt;li&gt;I’ll have to test some changes here and see what sticks. I’m thinking a combination of diminishing returns on +Wow, as well as a slightly higher rock health per kill&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Properly setting the DPS after changing location (until then, buying something solves this)&lt;/li&gt;
+  &lt;li&gt;Stop rockets from auto-travelling after at least one mission has been completed
+    &lt;ul&gt;
+      &lt;li&gt;So annoying right?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Automatically loot diamonds and open up containers (users choice) without affecting gameplay
+    &lt;ul&gt;
+      &lt;li&gt;When you get to a certain point, you get containers faster than you can open them, and once you’ve opened a few hundred, it gets very tiresome…&lt;/li&gt;
+      &lt;li&gt;This is most likely going to ‘unlock’ after the first mission run&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;An accessibility solution for at least a few different types of color blindedness&lt;/li&gt;
+  &lt;li&gt;Got more than 100% crit? It should do something. More damage or perhaps a chance to double-crit, decided by luck
+    &lt;ul&gt;
+      &lt;li&gt;I just made that last part up, good idea?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When looting or viewing a pickaxe, there should be a visible comparison to your equipped pickaxe&lt;/li&gt;
+  &lt;li&gt;Many optimizations and improvements to performance needed - some users on older hardware are experiencing quite bad lag at the moment. This should not be the case for such a ‘simple’ game and I will find the reason(s) and I will fix them
+    &lt;ul&gt;
+      &lt;li&gt;…To the best of my ability&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Those were all new items on my todo-list and they currently have the highest priority. I know that someone once requested the pickaxe comparison, but sadly that note or memory was lost with time. I’m sorry, whoever you were.&lt;/p&gt;
+
+&lt;p&gt;So that’s what I’ll be working on next, and I’m guessing by the time this post goes live, you’ll have given me even more feedback on other great things to fix or improve upon. You go, you.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-now-slightly-less-prioritized-list&quot;&gt;The now slightly-less prioritized list&lt;/h3&gt;
+
+&lt;p&gt;This is from the last post, it has been shortened to remove the obvious and already pointed out stuff. This is now my “secondary” todo:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Hints/answers for locked helpers on how to unlock them
+    &lt;ul&gt;
+      &lt;li&gt;Might make it to the same ‘patch’ as some of the above&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Making the timeline you are on stand out a bit more: it is an important increment to your progress and should be treated as such
+    &lt;ul&gt;
+      &lt;li&gt;Going to need to design this first and possibly reconsider it’s placement (or move diamonds slightly)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Balance adjustments are always a strong possibility, but so far you’ve told me great things about the balance
+    &lt;ul&gt;
+      &lt;li&gt;End-game balance will most likely be the target for changes, as I’ve seen some of your stats grow insanely with this update (not really surprising). It doesn’t take many missions and looting to get to the point of having too-much loot find (ish).&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;shortly-after-this-is-still-in-the-pipe&quot;&gt;Shortly after, this is still in the pipe:&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Brand new Settings window(!) - it’ll pop up and cover a larger area, as well as split up the check-buttons and whatnot into sections.
+    &lt;ul&gt;
+      &lt;li&gt;&lt;em&gt;The design looks good and it might be perfect for some of the newer options that will be introduced, I might put this higher up if another todo would need it&lt;/em&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Separate FX and Music volume sliders for the new settings, as has been requested&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I would also want to change the design of this blog a bit. It’s obviously not a priority, I haven’t had any complaints and it’s fast, does what it was built for (communication etc) as it should… and is really easy to use/publish with &lt;em&gt;(it’s using jekyll with github, so I don’t have to fiddle with any servers; I just make a post file, commit that to github and viola, the post is up!).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Uhh, yeah, I’m almost afraid to check my inbox(es) now for new feedback, lol&lt;/p&gt;
+
+&lt;p&gt;Good talk&lt;/p&gt;
+</description>
+        <pubDate>Sat, 05 Jan 2019 00:00:00 +0000</pubDate>
+        <link>https://blog.dogeminer2.com/Your-Feedback-Is-Love/</link>
+        <guid isPermaLink="true">https://blog.dogeminer2.com/Your-Feedback-Is-Love/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>

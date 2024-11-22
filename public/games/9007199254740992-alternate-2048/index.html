@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html><!-- 
+ single html processed by https://github.com/zTrix/webpage2html
+ title: 9007199254740992 | 3kh0
+ url: https://bidoofery.github.io/renov8/projects/9007199254740992/index.html
+ date: Fri May  5 19:14:33 2023
+-->
+<head>
+<meta charset="utf-8"/>
+<title>9007199254740992 | Project Sentinel</title>
+<style data-href="style/main.css" rel="stylesheet" type="text/css">@import url(https://bidoofery.github.io/renov8/projects/9007199254740992/style/fonts/clear-sans.css);
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #faf8ef;
+  color: #776e65;
+  font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
+  font-size: 18px; }
+
+body {
+  margin: 80px 0; }
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both; }
+
+h1.title {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+  display: block;
+  float: left; }
+
+@-webkit-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+@-moz-keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+@keyframes move-up {
+  0% {
+    top: 25px;
+    opacity: 1; }
+
+  100% {
+    top: -50px;
+    opacity: 0; } }
+
+.scores-container {
+  float: right;
+  text-align: right; }
+
+.score-container, .best-container {
+  position: relative;
+  display: inline-block;
+  background: #bbada0;
+  padding: 15px 25px;
+  font-size: 25px;
+  height: 25px;
+  line-height: 47px;
+  font-weight: bold;
+  border-radius: 3px;
+  color: white;
+  margin-top: 8px;
+  text-align: center; }
+  .score-container:after, .best-container:after {
+    position: absolute;
+    width: 100%;
+    top: 10px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: #eee4da; }
+  .score-container .score-addition, .best-container .score-addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: 25px;
+    line-height: 25px;
+    font-weight: bold;
+    color: rgba(119, 110, 101, 0.9);
+    z-index: 100;
+    -webkit-animation: move-up 600ms ease-in;
+    -moz-animation: move-up 600ms ease-in;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both; }
+
+.score-container:after {
+  content: "Score"; }
+
+.best-container:after {
+  content: "Best"; }
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+  line-height: 1.65; }
+
+a {
+  color: #776e65;
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer; }
+
+strong.important {
+  text-transform: uppercase; }
+
+hr {
+  border: none;
+  border-bottom: 1px solid #d8d4d0;
+  margin-top: 20px;
+  margin-bottom: 30px; }
+
+.container {
+  width: 984px;
+  margin: 0 auto; }
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@-moz-keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; }
+
+  100% {
+    opacity: 1; } }
+
+.game-container {
+  margin-top: 40px;
+  position: relative;
+  padding: 15px;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  background: #bbada0;
+  border-radius: 6px;
+  width: 984px;
+  height: 984px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .game-container .game-message {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(238, 228, 218, 0.5);
+    z-index: 100;
+    text-align: center;
+    -webkit-animation: fade-in 800ms ease 1200ms;
+    -moz-animation: fade-in 800ms ease 1200ms;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both; }
+    .game-container .game-message p {
+      font-size: 60px;
+      font-weight: bold;
+      height: 60px;
+      line-height: 60px;
+      margin-top: 222px; }
+    .game-container .game-message .lower {
+      display: block;
+      margin-top: 59px; }
+    .game-container .game-message a {
+      display: inline-block;
+      background: #8f7a66;
+      border-radius: 3px;
+      padding: 0 20px;
+      text-decoration: none;
+      color: #f9f6f2;
+      height: 40px;
+      line-height: 42px;
+      margin-left: 9px; }
+    .game-container .game-message.game-won {
+      background: rgba(237, 194, 46, 0.5);
+      color: #f9f6f2; }
+    .game-container .game-message.game-won, .game-container .game-message.game-over {
+      display: block; }
+
+.grid-container {
+  position: absolute;
+  z-index: 1; }
+
+.grid-row {
+  margin-bottom: 15px; }
+  .grid-row:last-child {
+    margin-bottom: 0; }
+  .grid-row:after {
+    content: "";
+    display: block;
+    clear: both; }
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin-right: 15px;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35); }
+  .grid-cell:last-child {
+    margin-right: 0; }
+
+.tile-container {
+  position: absolute;
+  z-index: 2; }
+
+.tile {
+  width: 106.25px;
+  height: 106.25px;
+  line-height: 116.25px; }
+  .tile.tile-position-1-1 {
+    position: absolute;
+    left: 0px;
+    top: 0px; }
+  .tile.tile-position-1-2 {
+    position: absolute;
+    left: 0px;
+    top: 121px; }
+  .tile.tile-position-1-3 {
+    position: absolute;
+    left: 0px;
+    top: 243px; }
+  .tile.tile-position-1-4 {
+    position: absolute;
+    left: 0px;
+    top: 364px; }
+  .tile.tile-position-1-5 {
+    position: absolute;
+    left: 0px;
+    top: 485px; }
+  .tile.tile-position-1-6 {
+    position: absolute;
+    left: 0px;
+    top: 606px; }
+  .tile.tile-position-1-7 {
+    position: absolute;
+    left: 0px;
+    top: 728px; }
+  .tile.tile-position-1-8 {
+    position: absolute;
+    left: 0px;
+    top: 849px; }
+  .tile.tile-position-2-1 {
+    position: absolute;
+    left: 121px;
+    top: 0px; }
+  .tile.tile-position-2-2 {
+    position: absolute;
+    left: 121px;
+    top: 121px; }
+  .tile.tile-position-2-3 {
+    position: absolute;
+    left: 121px;
+    top: 243px; }
+  .tile.tile-position-2-4 {
+    position: absolute;
+    left: 121px;
+    top: 364px; }
+  .tile.tile-position-2-5 {
+    position: absolute;
+    left: 121px;
+    top: 485px; }
+  .tile.tile-position-2-6 {
+    position: absolute;
+    left: 121px;
+    top: 606px; }
+  .tile.tile-position-2-7 {
+    position: absolute;
+    left: 121px;
+    top: 728px; }
+  .tile.tile-position-2-8 {
+    position: absolute;
+    left: 121px;
+    top: 849px; }
+  .tile.tile-position-3-1 {
+    position: absolute;
+    left: 243px;
+    top: 0px; }
+  .tile.tile-position-3-2 {
+    position: absolute;
+    left: 243px;
+    top: 121px; }
+  .tile.tile-position-3-3 {
+    position: absolute;
+    left: 243px;
+    top: 243px; }
+  .tile.tile-position-3-4 {
+    position: absolute;
+    left: 243px;
+    top: 364px; }
+  .tile.tile-position-3-5 {
+    position: absolute;
+    left: 243px;
+    top: 485px; }
+  .tile.tile-position-3-6 {
+    position: absolute;
+    left: 243px;
+    top: 606px; }
+  .tile.tile-position-3-7 {
+    position: absolute;
+    left: 243px;
+    top: 728px; }
+  .tile.tile-position-3-8 {
+    position: absolute;
+    left: 243px;
+    top: 849px; }
+  .tile.tile-position-4-1 {
+    position: absolute;
+    left: 364px;
+    top: 0px; }
+  .tile.tile-position-4-2 {
+    position: absolute;
+    left: 364px;
+    top: 121px; }
+  .tile.tile-position-4-3 {
+    position: absolute;
+    left: 364px;
+    top: 243px; }
+  .tile.tile-position-4-4 {
+    position: absolute;
+    left: 364px;
+    top: 364px; }
+  .tile.tile-position-4-5 {
+    position: absolute;
+    left: 364px;
+    top: 485px; }
+  .tile.tile-position-4-6 {
+    position: absolute;
+    left: 364px;
+    top: 606px; }
+  .tile.tile-position-4-7 {
+    position: absolute;
+    left: 364px;
+    top: 728px; }
+  .tile.tile-position-4-8 {
+    position: absolute;
+    left: 364px;
+    top: 849px; }
+  .tile.tile-position-5-1 {
+    position: absolute;
+    left: 485px;
+    top: 0px; }
+  .tile.tile-position-5-2 {
+    position: absolute;
+    left: 485px;
+    top: 121px; }
+  .tile.tile-position-5-3 {
+    position: absolute;
+    left: 485px;
+    top: 243px; }
+  .tile.tile-position-5-4 {
+    position: absolute;
+    left: 485px;
+    top: 364px; }
+  .tile.tile-position-5-5 {
+    position: absolute;
+    left: 485px;
+    top: 485px; }
+  .tile.tile-position-5-6 {
+    position: absolute;
+    left: 485px;
+    top: 606px; }
+  .tile.tile-position-5-7 {
+    position: absolute;
+    left: 485px;
+    top: 728px; }
+  .tile.tile-position-5-8 {
+    position: absolute;
+    left: 485px;
+    top: 849px; }
+  .tile.tile-position-6-1 {
+    position: absolute;
+    left: 606px;
+    top: 0px; }
+  .tile.tile-position-6-2 {
+    position: absolute;
+    left: 606px;
+    top: 121px; }
+  .tile.tile-position-6-3 {
+    position: absolute;
+    left: 606px;
+    top: 243px; }
+  .tile.tile-position-6-4 {
+    position: absolute;
+    left: 606px;
+    top: 364px; }
+  .tile.tile-position-6-5 {
+    position: absolute;
+    left: 606px;
+    top: 485px; }
+  .tile.tile-position-6-6 {
+    position: absolute;
+    left: 606px;
+    top: 606px; }
+  .tile.tile-position-6-7 {
+    position: absolute;
+    left: 606px;
+    top: 728px; }
+  .tile.tile-position-6-8 {
+    position: absolute;
+    left: 606px;
+    top: 849px; }
+  .tile.tile-position-7-1 {
+    position: absolute;
+    left: 728px;
+    top: 0px; }
+  .tile.tile-position-7-2 {
+    position: absolute;
+    left: 728px;
+    top: 121px; }
+  .tile.tile-position-7-3 {
+    position: absolute;
+    left: 728px;
+    top: 243px; }
+  .tile.tile-position-7-4 {
+    position: absolute;
+    left: 728px;
+    top: 364px; }
+  .tile.tile-position-7-5 {
+    position: absolute;
+    left: 728px;
+    top: 485px; }
+  .tile.tile-position-7-6 {
+    position: absolute;
+    left: 728px;
+    top: 606px; }
+  .tile.tile-position-7-7 {
+    position: absolute;
+    left: 728px;
+    top: 728px; }
+  .tile.tile-position-7-8 {
+    position: absolute;
+    left: 728px;
+    top: 849px; }
+  .tile.tile-position-8-1 {
+    position: absolute;
+    left: 849px;
+    top: 0px; }
+  .tile.tile-position-8-2 {
+    position: absolute;
+    left: 849px;
+    top: 121px; }
+  .tile.tile-position-8-3 {
+    position: absolute;
+    left: 849px;
+    top: 243px; }
+  .tile.tile-position-8-4 {
+    position: absolute;
+    left: 849px;
+    top: 364px; }
+  .tile.tile-position-8-5 {
+    position: absolute;
+    left: 849px;
+    top: 485px; }
+  .tile.tile-position-8-6 {
+    position: absolute;
+    left: 849px;
+    top: 606px; }
+  .tile.tile-position-8-7 {
+    position: absolute;
+    left: 849px;
+    top: 728px; }
+  .tile.tile-position-8-8 {
+    position: absolute;
+    left: 849px;
+    top: 849px; }
+
+.tile {
+  border-radius: 3px;
+  background: #eee4da;
+  text-align: center;
+  font-weight: bold;
+  z-index: 10;
+  font-size: 55px;
+  -webkit-transition: 100ms ease-in-out;
+  -moz-transition: 100ms ease-in-out;
+  -webkit-transition-property: top, left;
+  -moz-transition-property: top, left; }
+  .tile.tile-2 {
+    background: #eee4da;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile.tile-4 {
+    background: #ede0c8;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0); }
+  .tile.tile-8 {
+    color: #f9f6f2;
+    background: #f2b179; }
+  .tile.tile-16 {
+    color: #f9f6f2;
+    background: #f59563; }
+  .tile.tile-32 {
+    color: #f9f6f2;
+    background: #f67c5f; }
+  .tile.tile-64 {
+    color: #f9f6f2;
+    background: #f65e3b; }
+  .tile.tile-128 {
+    color: #f9f6f2;
+    background: #edcf72;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.2381), inset 0 0 0 1px rgba(255, 255, 255, 0.14286);
+    font-size: 45px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-128 {
+        font-size: 25px; } }
+  .tile.tile-256 {
+    color: #f9f6f2;
+    background: #edcc61;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.31746), inset 0 0 0 1px rgba(255, 255, 255, 0.19048);
+    font-size: 45px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-256 {
+        font-size: 25px; } }
+  .tile.tile-512 {
+    color: #f9f6f2;
+    background: #edc850;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.39683), inset 0 0 0 1px rgba(255, 255, 255, 0.2381);
+    font-size: 45px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-512 {
+        font-size: 25px; } }
+  .tile.tile-1024 {
+    color: #f9f6f2;
+    background: #edc53f;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.47619), inset 0 0 0 1px rgba(255, 255, 255, 0.28571);
+    font-size: 35px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-1024 {
+        font-size: 15px; } }
+  .tile.tile-2048 {
+    color: #f9f6f2;
+    background: #edc22e;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-2048 {
+        font-size: 15px; } }
+  .tile.tile-4096 {
+    color: #f9f6f2;
+    background: #ebb914;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.63556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-4096 {
+        font-size: 15px; } }
+  .tile.tile-8192 {
+    color: #f9f6f2;
+    background: #d3a612;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.71556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 35px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-8192 {
+        font-size: 15px; } }
+  .tile.tile-16384 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 30px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-16384 {
+        font-size: 10px; } }
+   .tile.tile-32768 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 30px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-32768 {
+        font-size: 10px; } }
+   .tile.tile-65536 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 30px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-65536 {
+        font-size: 10px; } }
+   .tile.tile-131072 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 30px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-131072 {
+        font-size: 10px; } }
+   .tile.tile-262144 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 30px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-262144 {
+        font-size: 10px; } }
+   .tile.tile-524288 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 30px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-523288 {
+        font-size: 10px; } }
+   .tile.tile-1048576 {
+    color: #f9f6f2;
+    background: #bc9410;
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.79556), inset 0 0 0 1px rgba(255, 255, 255, 0.33333);
+    font-size: 23px; }
+    @media screen and (max-width: 480px) {
+      .tile.tile-1048576 {
+        font-size: 5px; } }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0); }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+.tile-new {
+  -webkit-animation: appear 200ms ease 100ms;
+  -moz-animation: appear 200ms ease 100ms;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both; }
+
+@-webkit-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+@-moz-keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+@keyframes pop {
+  0% {
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0); }
+
+  50% {
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2); }
+
+  100% {
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1); } }
+
+.tile-merged {
+  z-index: 20;
+  -webkit-animation: pop 200ms ease 100ms;
+  -moz-animation: pop 200ms ease 100ms;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-fill-mode: both; }
+
+.game-intro {
+  margin-bottom: 0; }
+
+.game-explanation {
+  margin-top: 50px; }
+
+@media screen and (max-width: 480px) {
+  html, body {
+    font-size: 15px; }
+
+  body {
+    margin: 20px 0;
+    padding: 0 20px; }
+
+  h1.title {
+    font-size: 27px;
+    margin-top: 15px; }
+
+  .container {
+    width: 550px;
+    margin: 0 auto; }
+
+  .score-container, .best-container {
+    margin-top: 0;
+    padding: 15px 10px;
+    min-width: 40px; }
+
+  .heading {
+    margin-bottom: 10px; }
+
+  .game-container {
+    margin-top: 40px;
+    position: relative;
+    padding: 10px;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    background: #bbada0;
+    border-radius: 6px;
+    width: 550px;
+    height: 550px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+    .game-container .game-message {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(238, 228, 218, 0.5);
+      z-index: 100;
+      text-align: center;
+      -webkit-animation: fade-in 800ms ease 1200ms;
+      -moz-animation: fade-in 800ms ease 1200ms;
+      -webkit-animation-fill-mode: both;
+      -moz-animation-fill-mode: both; }
+      .game-container .game-message p {
+        font-size: 60px;
+        font-weight: bold;
+        height: 60px;
+        line-height: 60px;
+        margin-top: 222px; }
+      .game-container .game-message .lower {
+        display: block;
+        margin-top: 59px; }
+      .game-container .game-message a {
+        display: inline-block;
+        background: #8f7a66;
+        border-radius: 3px;
+        padding: 0 20px;
+        text-decoration: none;
+        color: #f9f6f2;
+        height: 40px;
+        line-height: 42px;
+        margin-left: 9px; }
+      .game-container .game-message.game-won {
+        background: rgba(237, 194, 46, 0.5);
+        color: #f9f6f2; }
+      .game-container .game-message.game-won, .game-container .game-message.game-over {
+        display: block; }
+
+  .grid-container {
+    position: absolute;
+    z-index: 1; }
+
+  .grid-row {
+    margin-bottom: 10px; }
+    .grid-row:last-child {
+      margin-bottom: 0; }
+    .grid-row:after {
+      content: "";
+      display: block;
+      clear: both; }
+
+  .grid-cell {
+    width: 57.5px;
+    height: 57.5px;
+    margin-right: 10px;
+    float: left;
+    border-radius: 3px;
+    background: rgba(238, 228, 218, 0.35); }
+    .grid-cell:last-child {
+      margin-right: 0; }
+
+  .tile-container {
+    position: absolute;
+    z-index: 2; }
+
+  .tile {
+    width: 57.5px;
+    height: 57.5px;
+    line-height: 67.5px; }
+    .tile.tile-position-1-1 {
+      position: absolute;
+      left: 0px;
+      top: 0px; }
+    .tile.tile-position-1-2 {
+      position: absolute;
+      left: 0px;
+      top: 68px; }
+    .tile.tile-position-1-3 {
+      position: absolute;
+      left: 0px;
+      top: 135px; }
+    .tile.tile-position-1-4 {
+      position: absolute;
+      left: 0px;
+      top: 203px; }
+    .tile.tile-position-1-5 {
+      position: absolute;
+      left: 0px;
+      top: 270px; }
+    .tile.tile-position-1-6 {
+      position: absolute;
+      left: 0px;
+      top: 338px; }
+    .tile.tile-position-1-7 {
+      position: absolute;
+      left: 0px;
+      top: 405px; }
+    .tile.tile-position-1-8 {
+      position: absolute;
+      left: 0px;
+      top: 473px; }
+    .tile.tile-position-2-1 {
+      position: absolute;
+      left: 68px;
+      top: 0px; }
+    .tile.tile-position-2-2 {
+      position: absolute;
+      left: 68px;
+      top: 68px; }
+    .tile.tile-position-2-3 {
+      position: absolute;
+      left: 68px;
+      top: 135px; }
+    .tile.tile-position-2-4 {
+      position: absolute;
+      left: 68px;
+      top: 203px; }
+    .tile.tile-position-2-5 {
+      position: absolute;
+      left: 68px;
+      top: 270px; }
+    .tile.tile-position-2-6 {
+      position: absolute;
+      left: 68px;
+      top: 338px; }
+    .tile.tile-position-2-7 {
+      position: absolute;
+      left: 68px;
+      top: 405px; }
+    .tile.tile-position-2-8 {
+      position: absolute;
+      left: 68px;
+      top: 473px; }
+    .tile.tile-position-3-1 {
+      position: absolute;
+      left: 135px;
+      top: 0px; }
+    .tile.tile-position-3-2 {
+      position: absolute;
+      left: 135px;
+      top: 68px; }
+    .tile.tile-position-3-3 {
+      position: absolute;
+      left: 135px;
+      top: 135px; }
+    .tile.tile-position-3-4 {
+      position: absolute;
+      left: 135px;
+      top: 203px; }
+    .tile.tile-position-3-5 {
+      position: absolute;
+      left: 135px;
+      top: 270px; }
+    .tile.tile-position-3-6 {
+      position: absolute;
+      left: 135px;
+      top: 338px; }
+    .tile.tile-position-3-7 {
+      position: absolute;
+      left: 135px;
+      top: 405px; }
+    .tile.tile-position-3-8 {
+      position: absolute;
+      left: 135px;
+      top: 473px; }
+    .tile.tile-position-4-1 {
+      position: absolute;
+      left: 203px;
+      top: 0px; }
+    .tile.tile-position-4-2 {
+      position: absolute;
+      left: 203px;
+      top: 68px; }
+    .tile.tile-position-4-3 {
+      position: absolute;
+      left: 203px;
+      top: 135px; }
+    .tile.tile-position-4-4 {
+      position: absolute;
+      left: 203px;
+      top: 203px; }
+    .tile.tile-position-4-5 {
+      position: absolute;
+      left: 203px;
+      top: 270px; }
+    .tile.tile-position-4-6 {
+      position: absolute;
+      left: 203px;
+      top: 338px; }
+    .tile.tile-position-4-7 {
+      position: absolute;
+      left: 203px;
+      top: 405px; }
+    .tile.tile-position-4-8 {
+      position: absolute;
+      left: 203px;
+      top: 473px; }
+	.tile.tile-position-5-1 {
+      position: absolute;
+      left: 270px;
+      top: 0px; }
+    .tile.tile-position-5-2 {
+      position: absolute;
+      left: 270px;
+      top: 68px; }
+    .tile.tile-position-5-3 {
+      position: absolute;
+      left: 270px;
+      top: 135px; }
+    .tile.tile-position-5-4 {
+      position: absolute;
+      left: 270px;
+      top: 203px; }
+    .tile.tile-position-5-5 {
+      position: absolute;
+      left: 270px;
+      top: 270px; }
+    .tile.tile-position-5-6 {
+      position: absolute;
+      left: 270px;
+      top: 338px; }
+    .tile.tile-position-5-7 {
+      position: absolute;
+      left: 270px;
+      top: 405px; }
+    .tile.tile-position-5-8 {
+      position: absolute;
+      left: 270px;
+      top: 473px; }
+	.tile.tile-position-6-1 {
+      position: absolute;
+      left: 338px;
+      top: 0px; }
+    .tile.tile-position-6-2 {
+      position: absolute;
+      left: 338px;
+      top: 68px; }
+    .tile.tile-position-6-3 {
+      position: absolute;
+      left: 338px;
+      top: 135px; }
+    .tile.tile-position-6-4 {
+      position: absolute;
+      left: 338px;
+      top: 203px; }
+    .tile.tile-position-6-5 {
+      position: absolute;
+      left: 338px;
+      top: 270px; }
+    .tile.tile-position-6-6 {
+      position: absolute;
+      left: 338px;
+      top: 338px; }
+    .tile.tile-position-6-7 {
+      position: absolute;
+      left: 338px;
+      top: 405px; }
+    .tile.tile-position-6-8 {
+      position: absolute;
+      left: 338px;
+      top: 473px; }
+	.tile.tile-position-7-1 {
+      position: absolute;
+      left: 405px;
+      top: 0px; }
+    .tile.tile-position-7-2 {
+      position: absolute;
+      left: 405px;
+      top: 68px; }
+    .tile.tile-position-7-3 {
+      position: absolute;
+      left: 405px;
+      top: 135px; }
+    .tile.tile-position-7-4 {
+      position: absolute;
+      left: 405px;
+      top: 203px; }
+    .tile.tile-position-7-5 {
+      position: absolute;
+      left: 405px;
+      top: 270px; }
+    .tile.tile-position-7-6 {
+      position: absolute;
+      left: 405px;
+      top: 338px; }
+    .tile.tile-position-7-7 {
+      position: absolute;
+      left: 405px;
+      top: 405px; }
+    .tile.tile-position-7-8 {
+      position: absolute;
+      left: 405px;
+      top: 473px; }
+	.tile.tile-position-8-1 {
+      position: absolute;
+      left: 473px;
+      top: 0px; }
+    .tile.tile-position-8-2 {
+      position: absolute;
+      left: 473px;
+      top: 68px; }
+    .tile.tile-position-8-3 {
+      position: absolute;
+      left: 473px;
+      top: 135px; }
+    .tile.tile-position-8-4 {
+      position: absolute;
+      left: 473px;
+      top: 203px; }
+    .tile.tile-position-8-5 {
+      position: absolute;
+      left: 473px;
+      top: 270px; }
+    .tile.tile-position-8-6 {
+      position: absolute;
+      left: 473px;
+      top: 338px; }
+    .tile.tile-position-8-7 {
+      position: absolute;
+      left: 473px;
+      top: 405px; }
+    .tile.tile-position-8-8 {
+      position: absolute;
+      left: 473px;
+      top: 473px; }
+
+  .game-container {
+    margin-top: 20px; }
+
+  .tile {
+    font-size: 35px; }
+
+  .game-message p {
+    font-size: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    margin-top: 90px !important; }
+  .game-message .lower {
+    margin-top: 30px !important; } }
+</style>
+<style data-href="style/others.css" rel="stylesheet" type="text/css">.auto-move-container{
+	margin: 60px auto 0px auto;
+	width: 450px;
+	font-size: 20px;
+	color: #0099FF;
+}
+</style>
+<link data-href="favicon.ico" href="data:image/vnd.microsoft.icon;base64,AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAgBAAABMLAAATCwAAAAAAAAAAAAAAAAAAAAAAAADE7E4AxOy+AMTs9ADE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz0AMTsvgDE7E0AAAAAAAAAAAAAAAAAxOyEAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7IQAAAAAAMTsTQDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7E0AxOy+AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTsvgDE7PIAxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOzzAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/Iszv/yLM7/8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/Iszv/yLM7/8RyO3/AMTs/wDE7P8AxOz/AMTs/5nn9////////////////////////////6rr+f8AxOz/Iszv/+77/v////////////////9E1PH/AMTs/wDE7P8AxOz/AMTs/wDE7P+Z5/f//////xHI7f8AxOz/RNTx//////////////////////+Z5/f/AMTs/wDE7P8AxOz/mef3/////////////////+77/v//////mef3/wDE7P/d9/z//////933/P/M8/v///////////8AxOz/iOP2/7vv+v+q6/n/quv5/+77/v//////u+/6/xHI7f/u+/7//////7vv+v+Z5/f///////////9E1PH/AMTs/wDE7P8AxOz/u+/6///////u+/7/Ecjt/wDE7P8AxOz/Ecjt////////////AMTs/wDE7P/u+/7//////0TU8f//////////////////////////////////////Ecjt/+77/v//////AMTs/wDE7P+77/r//////1XY8v8AxOz/AMTs/wDE7P8AxOz/quv5////////////Ecjt/wDE7P8RyO3//////+77/v8AxOz/AMTs/6rr+f//////Vdjy/6rr+f//////zPP7/xHI7f+77/r//////0TU8f8AxOz/3ff8//////+q6/n/Ztz0////////////Iszv/wDE7P8AxOz/AMTs/wDE7P8AxOz/zPP7///////d9/z/AMTs/xHI7f//////7vv+/wDE7P8AxOz/quv5//////9V2PL/AMTs/933/P//////M9Dw/5nn9///////Ecjt/wDE7P8RyO3//////////////////////2bc9P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz///////////8z0PD/Ecjt///////u+/7/AMTs/wDE7P+q6/n//////1XY8v8AxOz/Ecjt////////////u+/6//////8RyO3/AMTs/4jj9v//////7vv+/8zz+///////3ff8/wDE7P8AxOz/AMTs/xHI7f+q6/n/Vdjy/wDE7P/M8/v//////1XY8v8RyO3///////////8z0PD/Ecjt////////////M9Dw/wDE7P8AxOz/RNTx/////////////////xHI7f8AxOz/zPP7//////8z0PD/AMTs////////////Iszv/wDE7P8AxOz/Vdjy////////////////////////////Ecjt/wDE7P934PX//////////////////////7vv+v8AxOz/AMTs/wDE7P8AxOz/iOP2////////////Ecjt/wDE7P+I4/b///////////////////////////8AxOz/AMTs/wDE7P8AxOz/M9Dw/5nn9/+q6/n/mef3/xHI7f8AxOz/AMTs/wDE7P9E1PH/quv5/7vv+v9m3PT/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/Ztz0/3fg9f8RyO3/AMTs/wDE7P9V2PL/quv5/6rr+f934PX/Ecjt/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOzyAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs8gDE7L4AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOy+AMTsTADE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7E0AAAAAAMTshADE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOyEAAAAAAAAAAAAAAAAAMTsTQDE7L4AxOzzAMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7P8AxOz/AMTs/wDE7PMAxOy+AMTsTAAAAAAAAAAAwAAAA4AAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAcAAAAM=" rel="shortcut icon"/>
+<link data-href="meta/apple-touch-icon.png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5gYIFDEF6yV34QAACYZJREFUeNrtnGtsHFcVx68bmtAUaNQ2hapVAVVthRpeEiINz1IRREOFRNISCRqhkoi2UqEEilrxkviGaFRUQYuoEBIIFUj50lIkkChKd3a9fjuOHb9jO3bi2J2Z3Z3HPmfmHj6sGsf23DszOzt2dvMf6ffFWu/dufObe88998wwLc0IgKRg6AQAwQAEAwCCAQgGIBgAEAxAMADBAIBgAIIBCAYABAMQDAAIBiAYgGAAQDAAwQAEAwCCAQgGIBgAEAxAMAAgGIBgAIIBAMEABAMQDAAIBiAYgGAAQDAAwQAEAwCCAQgGAAQDEAxAMAAgGIBgAIIBAMEABAMQDAAIBiAYABAMQDAAwQCAYACCAQgGAAQDEAxAMABaWzCljppa4e2/Jdnmhra3CX266vxSm39+bKM7oDC4h2pGL3HXJO6VibhzCTXibpG86jJZ00/UOylmm6rCqLz4EnEnT9wrrWmvSty1yC3NUmH4q01pLwhr4jAVZ76/DnvmaEP9meu9i6q5/4n70ysRdwpUWf476Z07Nly4DRPMHPsGcdemSAd3qLTwXGMXXmHkWsPRmvPKZI4+lNhFyA98Qtp+lO8qDO4m7pgU9fCqi6Rnb2ofwdQUo5qRpTiHYw2R+mb4NvXO7cS9SsPtVdTXmj+aZa4OsJtC3zilc8co7mFNPdkGgimMXGuImnFU9X+FG1ky7yDiXuz2Sueeb+JI1hE82oQUzJr6LjXryPXd3dqCVZb+Qs088oO7A9t0S9NNa69w8p6m3GSVpZdDzM/BgqknWKiRmbsOcY8HT5c1LfGYLFHBCkOfk56gW5wg+8xRMkYOkDX5GDmmfLSr5f4j7ZBc7wfkHVpZJuPUXsr330n5gQ9Taf5XAZ9fijQ1N9IHUQSzxg+Jp3Xtn6R37VxZGSuMtPRVlOu7nbyqJon73tnaMZie3UGuPbp+NOrftV4WhVF+4KOSC35BfMEVRq49Lp7yFp71bU/vupG4V5WMYp9s/Nw7r42wwggWrKq/7h+jFselMaPsd1hTj7X+KlJNMbImHrl4Unr2OumUUl58UXAROKknRCK/W7IYtQNWZPcI/7d8/rcNTiMdxJ1C8wRTGDmm/2LJPvO94Gl6+a/+I9/iH9snD5br/SDlem4J/Jw9dUR4HUSC5fvvFsdu/bsCbwCvMi+IZ8rRp0mFUTlM3BVZsC5/waYeDV55nn/B/wZqJ8HCUpz7mTBPJbrYxflfCq9cmDZLC88Kr72evSHS7zdG9ollH/h4w1NkRf2Hf2xayATcBFuEv8c49aUrTDCFUS33X0EMNu8fayiM3OKMQMpauCRoz53iOGzoM+Hjrq6dwu8pzjxDeue2hgXLD3xMPJWfe9FXMjXFqFZQBG3WEt+9uOwE0zPXiFeR+Tf84yGFSfJn/w4XJ54Qf4c18XDouMur6f6BuHmyvqiIIZiaYuRYg+KEtNlLetdNF/ckC4O7ySvPS0avvVdYNYXCqPLW34QdYo4+KEiubhWPGrM/CSfYm4y4Y/jHODM/CrXnWVl+WTiKvj1SxBGsfq7biLvFgKT061QzuqWfsad/cOWV6xRO3SuOgWs5YZwhW0GaowdDr3S96qIgxXEscCVpjh4QZ8y7b74kZRBTsHQH6dn3kFuabDiBbIzcv2Gb3peNYHrnu6RZamv8kDTXJs5j7QkvWOWsYKUlT1Xkem4VCz7x7TXnGVewlRHXmnw8kljlC39u32qKoKnRq5wXx15GRp5I7NoRO1Gqphh55bkGBOsQZsqr2mvr/q8ZgqkpRubofuJuKfLoVZz9aezdiZYSTE0xcoujkiSpSVp6S8DKTSLYYBMEu/CCr2BqilHlreOCshj/baa4gqkpRuXFP8TaY+WOGZgbbAvB1BQjxz4tqc+qUq77VtLSHQHbUdeJ443hL0aIwRb8Y7Dzv/YVTLg3yF3SMtsFoUAMwRRGlaU/BZQ2DVJh6LNkjh0kr7ok38wf3NPGgimMnOKYrCSAcn13BcpVv2jXSPbanggtGK/l/KeVuV/4xF3vlwTRDwh/dxzBjOF9kpuxRubYwVWjpppiVFo4Jt0+0NJXtaNgW8gVTEcXR66e20LJFZSpLi/+PnTQTLwmkPSIT9ylCvYufxdwMzQmWH0KPyvc4dCzO8Vl6kNfkOQWU+0lmN65nTzBSFGPDwzSszdGkKveidz1l8Mtz4f8nq2SEenLq6fGyUcFvz1HxsheMsf2C7HGD4pXnGNfu/i5fN+H1vSbJAwY+Upg/9hnfiiQs5LoynJDBdO7dgpHCSIirzxHWvrqhqbbqvqqZBoIltWaOCzOY/Xevkaww5T0Yc/8fM3v+5a4ACDEqjDX/V5xTViqDQTL9d0hLyYspGLti5mn94s7MLM18P9lWzBrf9dmCGbP/lgwQs+G67fMNslm/vtaWDCFUWHo8/IE4LnfxN501bvFm8yV5eOBv1FUx1/LvXF5CHbmqVjlRHrX9ZtS1Zr4Qx/21OPSx9LM0wdWPwQbBkHCU/qAQ89tkkrYEUlc9PX10+kmCCa7SY1T9wVeB2vyiGhFlWhFRbIPfSy/Ik/4Nfj0j6jo0Jr8jjzvM7yX9M5rV+rVu28mV5KHq9/d62NCc/ybxB2deE2NjqNJ9ltXPmdPP7V+lSt9QugO35JwTWFkDN8vyQZZrRvkRyoZDp2GFpdNy+KMxkaRp0M9oh8FLc2EaYp1rzVYWydnZAKeEspTaeE5siYeJnvyMJUXXyLy5DexX44Pgp2Q1dd/qjnNOEYiU0ecRKuevaG5XenkW7vgcDMEk5dPhz/07PUJ5QHj7UWa4480pxu9Cmnpra29VbRZgtXfhXGo/gKQiIdXXQ6V1tgswbQ0o3zfroYqKS4tPddSG5OeSlQwr7pI3LObi2OFLzdRGFWWj9ffOiOV1iXumFQ4+enE66X0zm3EveL683JLkVfoxun9xJ18qBuJ8yp55bOU7/8IXkCX1HuzCkP3kj1zlIpzT1Nx7hmyxo+Q3nVL678jTGGkZbaTMbJv1fnZ00+SMXTfpr4HDW84BBAMQDAAIBiAYACCAQDBAAQDEAwACAYgGIBgAEAwAMEAgGAAggEIBgAEAxAMQDAAIBiAYACCAQDBAAQDAIIBCAYgGAAQDEAwAMEAgGAAggEIBgAEAxAMQDAAIBiAYABAMADBAAQDAIIBCAYgGAAQDFy+gnF0BEgIzrQ0K6AjQEIUmJZmC+gIkBADiMFAkjwPwUDiUyQ6AiBNASAYABAMQDAAwQCAYACCgXbn/56+rpifgjxEAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA2LTA4VDIwOjQ4OjI2KzAwOjAwr5b+sgAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNi0wOFQyMDo0ODoyNiswMDowMN7LRg4AAAAASUVORK5CYII=" rel="apple-touch-icon"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="True" name="HandheldFriendly"/>
+<meta content="320" name="MobileOptimized"/>
+<meta content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no" name="viewport"/>
+</head>
+<script data-src="/js/main.js" type="text/javascript"><!--//--><![CDATA[//><!--
+
+//--><!]]></script>
+<body>
+<div class="container">
+<div class="heading">
+<h1 class="title">9007199254740992</h1>
+<div class="scores-container">
+<div class="score-container">0</div>
+<div class="best-container">0</div>
+</div>
+</div>
+<p class="game-intro">Join the numbers and get to the <strong>9007199254740992 tile!</strong></p>
+<div class="game-container">
+<div class="game-message">
+<p></p>
+<div class="lower">
+<a class="retry-button">Try again</a>
+</div>
+</div>
+<div class="grid-container">
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+<div class="grid-row">
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+<div class="grid-cell"></div>
+</div>
+</div>
+<div class="tile-container">
+</div>
+</div>
+<div class="auto-move-container">
+<p><strong>Move with </strong><input id="auto-move-input-time" maxlength="8" name="auto-move-time" onkeypress="return event.charCode &gt;= 48 &amp;&amp; event.charCode &lt;= 57" size="6" type="text" value=""/><strong> ms.</strong> <input class="auto-move-button" id="auto-move-run" type="submit" value="Run"/> <input class="auto-move-button" id="auto-move-stop" type="submit" value="Stop"/></p>
+</div>
+<p class="game-explanation">
+<strong class="important">How to play:</strong> Use your <strong>arrow keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong>
+</p>
+<hr/>
+<p>
+<strong class="important">Note:</strong> This site is <font color="red"><strong>not</strong></font> the official version of 2048. You can play the normal version <a data-href="https://3kh0.github.io/2048/" href="https://3kh0.github.io/2048/">here!</a>
+</p>
+<hr/>
+<p>
+	    Orginal 2048 game by <a data-href="http://gabrielecirulli.com" href="http://gabrielecirulli.com" target="_blank">Gabriele Cirulli.</a><br/>
+	    Expanded by <a data-href="https://github.com/3kh0" href="https://github.com/3kh0" target="_blank">3kh0</a><br/>
+</p><hr/>
+</div>
+<script data-src="js/animframe_polyfill.js" type="text/javascript"><!--//--><![CDATA[//><!--
+(function() {
+  var lastTime = 0;
+  var vendors = ['webkit', 'moz'];
+  for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+    window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+    window.cancelAnimationFrame =
+    window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+  }
+
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(callback, element) {
+      var currTime = new Date().getTime();
+      var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+      var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+      timeToCall);
+      lastTime = currTime + timeToCall;
+      return id;
+    };
+  }
+
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function(id) {
+      clearTimeout(id);
+    };
+  }
+}());
+
+//--><!]]></script>
+<script data-src="js/keyboard_input_manager.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function KeyboardInputManager() {
+  this.events = {};
+
+  this.listen();
+}
+
+KeyboardInputManager.prototype.on = function (event, callback) {
+  if (!this.events[event]) {
+    this.events[event] = [];
+  }
+  this.events[event].push(callback);
+};
+
+KeyboardInputManager.prototype.emit = function (event, data) {
+  var callbacks = this.events[event];
+  if (callbacks) {
+    callbacks.forEach(function (callback) {
+      callback(data);
+    });
+  }
+};
+
+KeyboardInputManager.prototype.listen = function () {
+  var self = this;
+
+  var map = {
+    38: 0, // Up
+    39: 1, // Right
+    40: 2, // Down
+    37: 3, // Left
+    75: 0, // vim keybindings
+    76: 1,
+    74: 2,
+    72: 3,
+    87: 0, // W
+    68: 1, // D
+    83: 2, // S
+    65: 3  // A
+  };
+
+  document.addEventListener("keydown", function (event) {
+    var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
+                    event.shiftKey;
+    var mapped    = map[event.which];
+
+    if (!modifiers) {
+      if (mapped !== undefined) {
+        event.preventDefault();
+        self.emit("move", mapped);
+      }
+
+      if (event.which === 32) self.restart.bind(self)(event);
+    }
+  });
+
+  var retry = document.getElementsByClassName("retry-button")[0];
+  retry.addEventListener("click", this.restart.bind(this));
+  retry.addEventListener("touchend", this.restart.bind(this));
+
+  // Listen to swipe events
+  var touchStartClientX, touchStartClientY;
+  var gameContainer = document.getElementsByClassName("game-container")[0];
+
+  gameContainer.addEventListener("touchstart", function (event) {
+    if (event.touches.length > 1) return;
+
+    touchStartClientX = event.touches[0].clientX;
+    touchStartClientY = event.touches[0].clientY;
+    event.preventDefault();
+  });
+
+  gameContainer.addEventListener("touchmove", function (event) {
+    event.preventDefault();
+  });
+
+  gameContainer.addEventListener("touchend", function (event) {
+    if (event.touches.length > 0) return;
+
+    var dx = event.changedTouches[0].clientX - touchStartClientX;
+    var absDx = Math.abs(dx);
+
+    var dy = event.changedTouches[0].clientY - touchStartClientY;
+    var absDy = Math.abs(dy);
+
+    if (Math.max(absDx, absDy) > 10) {
+      // (right : left) : (down : up)
+      self.emit("move", absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
+    }
+  });
+};
+
+KeyboardInputManager.prototype.restart = function (event) {
+  event.preventDefault();
+  this.emit("restart");
+};
+
+//--><!]]></script>
+<script data-src="js/html_actuator.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function HTMLActuator() {
+  this.tileContainer    = document.querySelector(".tile-container");
+  this.scoreContainer   = document.querySelector(".score-container");
+  this.bestContainer    = document.querySelector(".best-container");
+  this.messageContainer = document.querySelector(".game-message");
+
+  this.score = 0;
+}
+
+HTMLActuator.prototype.actuate = function (grid, metadata) {
+  var self = this;
+
+  window.requestAnimationFrame(function () {
+    self.clearContainer(self.tileContainer);
+
+    grid.cells.forEach(function (column) {
+      column.forEach(function (cell) {
+        if (cell) {
+          self.addTile(cell);
+        }
+      });
+    });
+
+    self.updateScore(metadata.score);
+    self.updateBestScore(metadata.bestScore);
+
+    if (metadata.over) self.message(false); // You lose
+    if (metadata.won) self.message(true); // You win!
+  });
+};
+
+HTMLActuator.prototype.restart = function () {
+  this.clearMessage();
+};
+
+HTMLActuator.prototype.clearContainer = function (container) {
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+};
+
+HTMLActuator.prototype.addTile = function (tile) {
+  var self = this;
+
+  var element   = document.createElement("div");
+  var position  = tile.previousPosition || { x: tile.x, y: tile.y };
+  positionClass = this.positionClass(position);
+
+  // We can't use classlist because it somehow glitches when replacing classes
+  var classes = ["tile", "tile-" + tile.value, positionClass];
+  if (tile.value > 1048576)
+  classes = ["tile", "tile-" + 1048576, positionClass];
+  this.applyClasses(element, classes);
+
+  element.textContent = tile.value;
+
+  if (tile.previousPosition) {
+    // Make sure that the tile gets rendered in the previous position first
+    window.requestAnimationFrame(function () {
+      classes[2] = self.positionClass({ x: tile.x, y: tile.y });
+      self.applyClasses(element, classes); // Update the position
+    });
+  } else if (tile.mergedFrom) {
+    classes.push("tile-merged");
+    this.applyClasses(element, classes);
+
+    // Render the tiles that merged
+    tile.mergedFrom.forEach(function (merged) {
+      self.addTile(merged);
+    });
+  } else {
+    classes.push("tile-new");
+    this.applyClasses(element, classes);
+  }
+
+  // Put the tile on the board
+  this.tileContainer.appendChild(element);
+};
+
+HTMLActuator.prototype.applyClasses = function (element, classes) {
+  element.setAttribute("class", classes.join(" "));
+};
+
+HTMLActuator.prototype.normalizePosition = function (position) {
+  return { x: position.x + 1, y: position.y + 1 };
+};
+
+HTMLActuator.prototype.positionClass = function (position) {
+  position = this.normalizePosition(position);
+  return "tile-position-" + position.x + "-" + position.y;
+};
+
+HTMLActuator.prototype.updateScore = function (score) {
+  this.clearContainer(this.scoreContainer);
+
+  var difference = score - this.score;
+  this.score = score;
+
+  this.scoreContainer.textContent = this.score;
+
+  if (difference > 0) {
+    var addition = document.createElement("div");
+    addition.classList.add("score-addition");
+    addition.textContent = "+" + difference;
+
+    this.scoreContainer.appendChild(addition);
+  }
+};
+
+HTMLActuator.prototype.updateBestScore = function (bestScore) {
+  this.bestContainer.textContent = bestScore;
+};
+
+HTMLActuator.prototype.message = function (won) {
+  var type    = won ? "game-won" : "game-over";
+  var message = won ? "You win!" : "Game over!";
+
+  this.messageContainer.classList.add(type);
+  this.messageContainer.getElementsByTagName("p")[0].textContent = message;
+};
+
+HTMLActuator.prototype.clearMessage = function () {
+  this.messageContainer.classList.remove("game-won", "game-over");
+};
+
+//--><!]]></script>
+<script data-src="js/grid.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function Grid(size) {
+  this.size = size;
+
+  this.cells = [];
+
+  this.build();
+}
+
+// Build a grid of the specified size
+Grid.prototype.build = function () {
+  for (var x = 0; x < this.size; x++) {
+    var row = this.cells[x] = [];
+
+    for (var y = 0; y < this.size; y++) {
+      row.push(null);
+    }
+  }
+};
+
+// Find the first available random position
+Grid.prototype.randomAvailableCell = function () {
+  var cells = this.availableCells();
+
+  if (cells.length) {
+    return cells[Math.floor(Math.random() * cells.length)];
+  }
+};
+
+Grid.prototype.availableCells = function () {
+  var cells = [];
+
+  this.eachCell(function (x, y, tile) {
+    if (!tile) {
+      cells.push({ x: x, y: y });
+    }
+  });
+
+  return cells;
+};
+
+// Call callback for every cell
+Grid.prototype.eachCell = function (callback) {
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      callback(x, y, this.cells[x][y]);
+    }
+  }
+};
+
+// Check if there are any cells available
+Grid.prototype.cellsAvailable = function () {
+  return !!this.availableCells().length;
+};
+
+// Check if the specified cell is taken
+Grid.prototype.cellAvailable = function (cell) {
+  return !this.cellOccupied(cell);
+};
+
+Grid.prototype.cellOccupied = function (cell) {
+  return !!this.cellContent(cell);
+};
+
+Grid.prototype.cellContent = function (cell) {
+  if (this.withinBounds(cell)) {
+    return this.cells[cell.x][cell.y];
+  } else {
+    return null;
+  }
+};
+
+// Inserts a tile at its position
+Grid.prototype.insertTile = function (tile) {
+  this.cells[tile.x][tile.y] = tile;
+};
+
+Grid.prototype.removeTile = function (tile) {
+  this.cells[tile.x][tile.y] = null;
+};
+
+Grid.prototype.withinBounds = function (position) {
+  return position.x >= 0 && position.x < this.size &&
+         position.y >= 0 && position.y < this.size;
+};
+
+//--><!]]></script>
+<script data-src="js/tile.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function Tile(position, value) {
+  this.x                = position.x;
+  this.y                = position.y;
+  this.value            = value || 2;
+
+  this.previousPosition = null;
+  this.mergedFrom       = null; // Tracks tiles that merged together
+}
+
+Tile.prototype.savePosition = function () {
+  this.previousPosition = { x: this.x, y: this.y };
+};
+
+Tile.prototype.updatePosition = function (position) {
+  this.x = position.x;
+  this.y = position.y;
+};
+
+//--><!]]></script>
+<script data-src="js/local_score_manager.js" type="text/javascript"><!--//--><![CDATA[//><!--
+window.fakeStorage = {
+  _data: {},
+
+  setItem: function (id, val) {
+    return this._data[id] = String(val);
+  },
+
+  getItem: function (id) {
+    return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
+  },
+
+  removeItem: function (id) {
+    return delete this._data[id];
+  },
+
+  clear: function () {
+    return this._data = {};
+  }
+};
+
+function LocalScoreManager() {
+  var localSupported = !!window.localStorage;
+
+  this.key     = "bestScore_9007199254740992";
+  this.storage = localSupported ? window.localStorage : window.fakeStorage;
+}
+
+LocalScoreManager.prototype.get = function () {
+  return this.storage.getItem(this.key) || 0;
+};
+
+LocalScoreManager.prototype.set = function (score) {
+  this.storage.setItem(this.key, score);
+};
+
+//--><!]]></script>
+<script data-src="js/game_manager.js" type="text/javascript"><!--//--><![CDATA[//><!--
+function GameManager(size, InputManager, Actuator, ScoreManager) {
+  this.size         = size; // Size of the grid
+  this.inputManager = new InputManager;
+  this.scoreManager = new ScoreManager;
+  this.actuator     = new Actuator;
+
+  this.startTiles   = 2;
+
+  this.inputManager.on("move", this.move.bind(this));
+  this.inputManager.on("restart", this.restart.bind(this));
+
+  this.setup();
+}
+
+// Restart the game
+GameManager.prototype.restart = function () {
+  this.actuator.restart();
+  this.setup();
+};
+
+// Set up the game
+GameManager.prototype.setup = function () {
+  this.grid         = new Grid(this.size);
+
+  this.score        = 0;
+  this.over         = false;
+  this.won          = false;
+
+  // Add the initial tiles
+  this.addStartTiles();
+
+  // Update the actuator
+  this.actuate();
+};
+
+// Set up the initial tiles to start the game with
+GameManager.prototype.addStartTiles = function () {
+  for (var i = 0; i < this.startTiles; i++) {
+    this.addRandomTile();
+  }
+};
+
+// Adds a tile in a random position
+GameManager.prototype.addRandomTile = function () {
+  if (this.grid.cellsAvailable()) {
+    var value = Math.random() < 0.9 ? 2 : 4;
+    var tile = new Tile(this.grid.randomAvailableCell(), value);
+
+    this.grid.insertTile(tile);
+  }
+};
+
+// Sends the updated grid to the actuator
+GameManager.prototype.actuate = function () {
+  if (this.scoreManager.get() < this.score) {
+    this.scoreManager.set(this.score);
+  }
+
+  this.actuator.actuate(this.grid, {
+    score:     this.score,
+    over:      this.over,
+    won:       this.won,
+    bestScore: this.scoreManager.get()
+  });
+
+};
+
+// Save all tile positions and remove merger info
+GameManager.prototype.prepareTiles = function () {
+  this.grid.eachCell(function (x, y, tile) {
+    if (tile) {
+      tile.mergedFrom = null;
+      tile.savePosition();
+    }
+  });
+};
+
+// Move a tile and its representation
+GameManager.prototype.moveTile = function (tile, cell) {
+  this.grid.cells[tile.x][tile.y] = null;
+  this.grid.cells[cell.x][cell.y] = tile;
+  tile.updatePosition(cell);
+};
+
+// Move tiles on the grid in the specified direction
+GameManager.prototype.move = function (direction) {
+  // 0: up, 1: right, 2:down, 3: left
+  var self = this;
+
+  if (this.over || this.won) return; // Don't do anything if the game's over
+
+  var cell, tile;
+
+  var vector     = this.getVector(direction);
+  var traversals = this.buildTraversals(vector);
+  var moved      = false;
+
+  // Save the current tile positions and remove merger information
+  this.prepareTiles();
+
+  // Traverse the grid in the right direction and move tiles
+  traversals.x.forEach(function (x) {
+    traversals.y.forEach(function (y) {
+      cell = { x: x, y: y };
+      tile = self.grid.cellContent(cell);
+
+      if (tile) {
+        var positions = self.findFarthestPosition(cell, vector);
+        var next      = self.grid.cellContent(positions.next);
+
+        // Only one merger per row traversal?
+        if (next && next.value === tile.value && !next.mergedFrom) {
+          var merged = new Tile(positions.next, tile.value * 2);
+          merged.mergedFrom = [tile, next];
+
+          self.grid.insertTile(merged);
+          self.grid.removeTile(tile);
+
+          // Converge the two tiles' positions
+          tile.updatePosition(positions.next);
+
+          // Update the score
+          self.score += merged.value;
+
+          // The mighty 2048 tile
+          if (merged.value === 9007199254740992) self.won = true;
+        } else {
+          self.moveTile(tile, positions.farthest);
+        }
+
+        if (!self.positionsEqual(cell, tile)) {
+          moved = true; // The tile moved from its original cell!
+        }
+      }
+    });
+  });
+
+  if (moved) {
+    this.addRandomTile();
+
+    if (!this.movesAvailable()) {
+      this.over = true; // Game over!
+    }
+
+    this.actuate();
+  }
+};
+
+// Get the vector representing the chosen direction
+GameManager.prototype.getVector = function (direction) {
+  // Vectors representing tile movement
+  var map = {
+    0: { x: 0,  y: -1 }, // up
+    1: { x: 1,  y: 0 },  // right
+    2: { x: 0,  y: 1 },  // down
+    3: { x: -1, y: 0 }   // left
+  };
+
+  return map[direction];
+};
+
+// Build a list of positions to traverse in the right order
+GameManager.prototype.buildTraversals = function (vector) {
+  var traversals = { x: [], y: [] };
+
+  for (var pos = 0; pos < this.size; pos++) {
+    traversals.x.push(pos);
+    traversals.y.push(pos);
+  }
+
+  // Always traverse from the farthest cell in the chosen direction
+  if (vector.x === 1) traversals.x = traversals.x.reverse();
+  if (vector.y === 1) traversals.y = traversals.y.reverse();
+
+  return traversals;
+};
+
+GameManager.prototype.findFarthestPosition = function (cell, vector) {
+  var previous;
+
+  // Progress towards the vector direction until an obstacle is found
+  do {
+    previous = cell;
+    cell     = { x: previous.x + vector.x, y: previous.y + vector.y };
+  } while (this.grid.withinBounds(cell) &&
+           this.grid.cellAvailable(cell));
+
+  return {
+    farthest: previous,
+    next: cell // Used to check if a merge is required
+  };
+};
+
+GameManager.prototype.movesAvailable = function () {
+  return this.grid.cellsAvailable() || this.tileMatchesAvailable();
+};
+
+// Check for available matches between tiles (more expensive check)
+GameManager.prototype.tileMatchesAvailable = function () {
+  var self = this;
+
+  var tile;
+
+  for (var x = 0; x < this.size; x++) {
+    for (var y = 0; y < this.size; y++) {
+      tile = this.grid.cellContent({ x: x, y: y });
+
+      if (tile) {
+        for (var direction = 0; direction < 4; direction++) {
+          var vector = self.getVector(direction);
+          var cell   = { x: x + vector.x, y: y + vector.y };
+
+          var other  = self.grid.cellContent(cell);
+
+          if (other && other.value === tile.value) {
+            return true; // These two tiles can be merged
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+};
+
+GameManager.prototype.positionsEqual = function (first, second) {
+  return first.x === second.x && first.y === second.y;
+};
+
+//--><!]]></script>
+<script data-src="js/application.js" type="text/javascript"><!--//--><![CDATA[//><!--
+var GM;
+
+// Wait till the browser is ready to render the game (avoids glitches)
+window.requestAnimationFrame(function () {
+  GM = new GameManager(8, KeyboardInputManager, HTMLActuator, LocalScoreManager);
+});
+
+//--><!]]></script>
+<script data-src="js/auto_move.js" type="text/javascript"><!--//--><![CDATA[//><!--
+
+var auto_move_flag = false;
+var auto_move_time;
+
+function start_auto_move(){
+	auto_move_flag = true;
+	auto_move();
+}
+
+function auto_move(){
+	if ( auto_move_flag === false )
+		return;
+	var direction = Math.floor( Math.random() * 4 );
+	GM.move( direction );
+	setTimeout( "auto_move()", auto_move_time );
+}
+
+function stop_auto_move(){
+	auto_move_flag = false;
+}
+
+window.requestAnimationFrame(function(){
+	document.getElementById("auto-move-run").addEventListener("click",function(){
+		var time = parseInt( document.getElementById("auto-move-input-time").value );
+		if ( !isNaN( time ) ){
+			auto_move_time = time;
+			if ( auto_move_flag === false ){
+				start_auto_move();
+			}
+		}
+	});
+	document.getElementById("auto-move-stop").addEventListener("click",function(){
+		stop_auto_move();
+	});
+});
+
+//--><!]]></script>
+<script data-src="https://www.googletagmanager.com/gtag/js?id=G-98DP5VKS42" type="text/javascript"><!--//--><![CDATA[//><!--
+
+//--><!]]></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-98DP5VKS42');
+  </script>
+<!--<script>window.scrollTo(0,document.body.scrollHeight);</script>-->
+<style>
+	hr.tw{
+		border-color: blue;
+	}
+  </style>
+</body>
+</html>
