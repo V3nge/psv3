@@ -15,6 +15,15 @@ const recentlyAddedCarousel = document.getElementById('recentlyAddedCarousel');
 var urlParams = new URLSearchParams(window.location.search);
 var ToSearch = urlParams.get('search');
 
+function searchThings() {
+    var search = document.getElementById("search").value;
+    if ('URLSearchParams' in window) {
+        var searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("search", search);
+        window.location.search = searchParams.toString();
+    }    
+}
+
 async function search(query) {
     return (await (await fetch(`/search?search=${encodeURIComponent(query)}`)).json());
 }

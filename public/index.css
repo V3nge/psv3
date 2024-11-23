@@ -438,3 +438,25 @@ message-container #message * {
     line-height: normal !important;
     letter-spacing: normal !important;
 }
+
+.search-button {
+    transition: 0.1s;
+    min-width: 140px;
+    min-height: 50px;
+    border-radius: 10px;
+    box-shadow: #040112;
+    border: #1a1048 solid;
+    background-color: #120a31;
+    color: white;
+    font-size: larger;
+    border: black solid px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.search-button:hover {
+    transform: translate(-50%, -50%) rotate(1deg);
+}
