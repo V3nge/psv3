@@ -1,3 +1,4 @@
+const DEBUG = true;
 const crypto = require("crypto");
 const nocache = require('nocache');
 const express = require("express");
@@ -8,19 +9,21 @@ const expressSlowDown = require("express-slow-down");
 const app = express();
 var expressWs = require('express-ws')(app);
 
-const limiter = expressRateLimit({
-    windowMs: 60 * 1000,
-    max: 500,
-});
-  
-const speedLimiter = expressSlowDown({
-    windowMs: 15 * 1000,
-    delayAfter: 125,
-    delayMs: () => 1500,
-});
-
-app.use(speedLimiter);
-app.use(limiter);
+if(!DEBUG) {
+    const limiter = expressRateLimit({
+        windowMs: 60 * 1000,
+        max: 500,
+    });
+      
+    const speedLimiter = expressSlowDown({
+        windowMs: 15 * 1000,
+        delayAfter: 125,
+        delayMs: () => 1500,
+    });
+    
+    app.use(speedLimiter);
+    app.use(limiter);
+}
 
 app.use(nocache());
 

@@ -1,42 +1,42 @@
 [
    {
       "name":"Request or Report a Game",
-      "thumbnail":"/games/game/request/image(1).png",
+      "thumbnail":"/game/request/image(1).png",
       "slug":"request"
    },
    {
       "name":"Subway Surfers",
-      "thumbnail":"images/games/subway.jpg",
+      "thumbnail":"images/subway.jpg",
       "slug":"subwaysurfers"
    },
    {
       "name":"Temple Run",
-      "thumbnail":"/games/game/temple-run/81246F7IQJL.png",
+      "thumbnail":"/game/temple-run/81246F7IQJL.png",
       "slug":"temple-run"
    },
    {
       "name":"Champion Island",
-      "thumbnail":"images/games/champion.webp",
+      "thumbnail":"images/champion.webp",
       "slug":"champion-island"
    },
    {
       "name":"Greybox",
-      "thumbnail":"images/games/greybox.jpeg",
+      "thumbnail":"images/greybox.jpeg",
       "slug":"greybox"
    },
    {
       "name":"Jetpack Joyride",
-      "thumbnail":"images/games/jetpack.avif",
+      "thumbnail":"images/jetpack.avif",
       "slug":"jetpack-joyride"
    },
    {
       "name":"Krunker",
-      "thumbnail":"images/games/krunker.png",
+      "thumbnail":"images/krunker.png",
       "slug":"krunker"
    },
    {
       "name":"Learn to Fly",
-      "thumbnail":"/games/game/learntofly/learntofly.png",
+      "thumbnail":"/game/learntofly/learntofly.png",
       "slug":"learntofly"
    },
    {
@@ -46,12 +46,12 @@
    },
    {
       "name":"osu!",
-      "thumbnail":"images/games/osu.webp",
+      "thumbnail":"images/osu.webp",
       "slug":"osu!"
    },
    {
       "name":"Pandemic 2",
-      "thumbnail":"images/games/pandemic.webp",
+      "thumbnail":"images/pandemic.webp",
       "slug":"pandemic2"
    },
    {
@@ -66,27 +66,27 @@
    },
    {
       "name":"Protektor",
-      "thumbnail":"images/games/protektor.png",
+      "thumbnail":"images/protektor.png",
       "slug":"protektor"
    },
    {
       "name":"Rabbit Samurai 2",
-      "thumbnail":"images/games/rabbit.avif",
+      "thumbnail":"images/rabbit.avif",
       "slug":"rabbit-samurai2"
    },
    {
       "name":"Rooftop Snipers",
-      "thumbnail":"images/games/rooftop.avif",
+      "thumbnail":"images/rooftop.avif",
       "slug":"rooftop-snipers"
    },
    {
       "name":"Scrap Metal",
-      "thumbnail":"images/games/scapmetal.webp",
+      "thumbnail":"images/scapmetal.webp",
       "slug":"scrapmetal"
    },
    {
       "name":"Terraria (Scratch)",
-      "thumbnail":"images/games/terraria.png",
+      "thumbnail":"images/terraria.png",
       "slug":"scratcharia"
    },
    {
@@ -101,208 +101,208 @@
    },
    {
       "name":"Station 141",
-      "thumbnail":"images/games/station141.png",
+      "thumbnail":"images/station141.png",
       "slug":"station-141"
    },
    {
       "name":"Stick Archers",
-      "thumbnail":"images/games/stickarchers.jpg",
+      "thumbnail":"images/stickarchers.jpg",
       "slug":"stick-archers"
    },
    {
       "name":"Stick Duel Battle",
-      "thumbnail":"images/games/stickduel.webp",
+      "thumbnail":"images/stickduel.webp",
       "slug":"stick-duel-battle"
    },
    {
       "name":"Stickman Boost",
-      "thumbnail":"images/games/stickmanboost.jpg",
+      "thumbnail":"images/stickmanboost.jpg",
       "slug":"stickman-boost"
    },
    {
       "name":"Stickman Hook",
-      "thumbnail":"images/games/stickmanhook.jpg",
+      "thumbnail":"images/stickmanhook.jpg",
       "slug":"stickman-hook"
    },
    {
       "name":"Tactical Weapon Pack 2",
-      "thumbnail":"images/games/weapon.jpg",
+      "thumbnail":"images/weapon.jpg",
       "slug":"tactical-weapon-pack-2"
    },
    {
       "name":"Tactical Assassin 2",
-      "thumbnail":"images/games/tactical.webp",
+      "thumbnail":"images/tactical.webp",
       "slug":"tacticalassasin2"
    },
    {
       "name":"There Is No Game",
-      "thumbnail":"images/games/nogame.webp",
+      "thumbnail":"images/nogame.webp",
       "slug":"there-is-no-game"
    },
    {
       "name":"Madalin Stunt Cars 2",
-      "thumbnail":"images/games/stuntcars2.jpg",
+      "thumbnail":"images/stuntcars2.jpg",
       "slug":"madalin-stunt-cars-2"
    },
    {
       "name":"Madalin Stunt Cars 3",
-      "thumbnail":"images/games/stuntcars3.jpg",
+      "thumbnail":"images/stuntcars3.jpg",
       "slug":"madalin-cars-3"
    },
    {
       "name":"Rocket League",
-      "thumbnail":"images/games/rocket.png",
+      "thumbnail":"images/rocket.png",
       "slug":"rocket-soccer"
    },
    {
       "name":"Paper IO 2",
-      "thumbnail":"images/games/paperio.webp",
+      "thumbnail":"images/paperio.webp",
       "slug":"paperio2"
    },
    {
       "name":"Tetris",
-      "thumbnail":"images/games/tetris.png",
+      "thumbnail":"images/tetris.png",
       "slug":"tetris"
    },
    {
       "name":"Retro Bowl",
-      "thumbnail":"images/games/retrobowl.jpg",
+      "thumbnail":"images/retrobowl.jpg",
       "slug":"retro-bowl"
    },
    {
       "name":"Retro Bowl College",
-      "thumbnail":"/games/game/retro-bowl-college/unnamed.png",
+      "thumbnail":"/game/retro-bowl-college/unnamed.png",
       "slug":"retro-bowl-college"
    },
    {
       "name":"Run 3",
-      "thumbnail":"images/games/run3.jpg",
+      "thumbnail":"images/run3.jpg",
       "slug":"run3"
    },
    {
       "name":"Slither",
-      "thumbnail":"images/games/slither.png",
+      "thumbnail":"images/slither.png",
       "slug":"slither"
    },
    {
       "name":"Spinning Rat",
-      "thumbnail":"images/games/spinningrat.gif",
+      "thumbnail":"images/spinningrat.gif",
       "slug":"spinningrat"
    },
    {
       "name":"Poom",
-      "thumbnail":"images/games/poom.jpg",
+      "thumbnail":"images/poom.jpg",
       "slug":"poom"
    },
    {
       "name":"Stunt Cars",
-      "thumbnail":"images/games/stuntcars.jpg",
+      "thumbnail":"images/stuntcars.jpg",
       "slug":"stuntcars"
    },
    {
       "name":"Google Snake",
-      "thumbnail":"images/games/snake.png",
+      "thumbnail":"images/snake.png",
       "slug":"google-snake"
    },
    {
       "name":"FNF",
-      "thumbnail":"images/games/fnf.png",
+      "thumbnail":"images/fnf.png",
       "slug":"fnf"
    },
    {
       "name":"FNF Mods",
-      "thumbnail":"images/games/fnf.png",
+      "thumbnail":"images/fnf.png",
       "slug":"fnf-mods"
    },
    {
       "name":"FNaF",
-      "thumbnail":"images/games/fnaf.webp",
+      "thumbnail":"images/fnaf.webp",
       "slug":"FNAF"
    },
    {
       "name":"FNaF 2",
-      "thumbnail":"images/games/fnaf2.jpg",
+      "thumbnail":"images/fnaf2.jpg",
       "slug":"FNAF2"
    },
    {
       "name":"FNaF 3",
-      "thumbnail":"images/games/fnaf3.png",
+      "thumbnail":"images/fnaf3.png",
       "slug":"FNAF3"
    },
    {
       "name":"Aquapark",
-      "thumbnail":"images/games/aquapark.png",
+      "thumbnail":"images/aquapark.png",
       "slug":"aquapark-slides"
    },
    {
       "name":"ADOFAI",
-      "thumbnail":"images/games/adofai.png",
+      "thumbnail":"images/adofai.png",
       "slug":"adofai"
    },
    {
       "name":"Basketbros",
-      "thumbnail":"images/games/basketbros.jpg",
+      "thumbnail":"images/basketbros.jpg",
       "slug":"basketbros-io"
    },
    {
       "name":"Bitlife",
-      "thumbnail":"/games/game/bitlife/thumbnail.png",
+      "thumbnail":"/game/bitlife/thumbnail.png",
       "slug":"bitlife"
    },
    {
       "name":"Bloxorz",
-      "thumbnail":"images/games/bloxorz.png",
+      "thumbnail":"images/bloxorz.png",
       "slug":"bloxorz"
    },
    {
       "name":"BTD 5",
-      "thumbnail":"/games/game/btd5/thumbnail.jpg",
+      "thumbnail":"/game/btd5/thumbnail.jpg",
       "slug":"btd5"
    },
    {
       "name":"FNaF 4",
-      "thumbnail":"images/games/fnaf4.webp",
+      "thumbnail":"images/fnaf4.webp",
       "slug":"FNAF4"
    },
    {
       "name":"Crossy Road",
-      "thumbnail":"images/games/crossyroad.avif",
+      "thumbnail":"images/crossyroad.avif",
       "slug":"crossy"
    },
    {
       "name":"Doom",
-      "thumbnail":"images/games/doom.jpg",
+      "thumbnail":"images/doom.jpg",
       "slug":"doom"
    },
    {
       "name":"Drift Hunters",
-      "thumbnail":"images/games/drifthunters.png",
+      "thumbnail":"images/drifthunters.png",
       "slug":"drift-hunters"
    },
    {
       "name":"Duck Life Games",
-      "thumbnail":"images/games/ducklife.webp",
+      "thumbnail":"images/ducklife.webp",
       "slug":"ducklife"
    },
 
    {
       "name":"Fortcraft",
-      "thumbnail":"images/games/fortcraft.webp",
+      "thumbnail":"images/fortcraft.webp",
       "slug":"fortcraft"
    },
    {
       "name":"1v1",
-      "thumbnail":"images/games/1v1.avif",
+      "thumbnail":"images/1v1.avif",
       "slug":"1v1"
    },
    {
       "name":"AdVenture Capitalist",
-      "thumbnail":"/games/game/adcap/thumbnail.jpg",
+      "thumbnail":"/game/adcap/thumbnail.jpg",
       "slug":"adcap"
    },
    {
       "name":"Effing Worms",
-      "thumbnail":"images/games/worms.jpg",
+      "thumbnail":"images/worms.jpg",
       "slug":"effingworms"
    },
    {
@@ -317,27 +317,27 @@
    },
    {
       "name":"Cookie Clicker",
-      "thumbnail":"/games/game/cookieclicker/thumbnail.png",
+      "thumbnail":"/game/cookieclicker/thumbnail.png",
       "slug":"cookieclicker"
    },
    {
       "name":"Burrito Bison",
-      "thumbnail":"/games/game/burritobison/thumbnail.png",
+      "thumbnail":"/game/burritobison/thumbnail.png",
       "slug":"burritobison"
    },
    {
       "name":"Car Simulator",
-      "thumbnail":"/games/game/cars-simulator/thumbnail.jpg",
+      "thumbnail":"/game/cars-simulator/thumbnail.jpg",
       "slug":"cars-simulator"
    },
    {
       "name":"Townscaper",
-      "thumbnail":"/games/game/townscaper/thumbnail.jpg",
+      "thumbnail":"/game/townscaper/thumbnail.jpg",
       "slug":"townscaper"
    },
    {
       "name":"Sketchbook",
-      "thumbnail":"/games/game/sketchbook/sketchbook.png",
+      "thumbnail":"/game/sketchbook/sketchbook.png",
       "slug":"sketchbook"
    },
    {
@@ -347,12 +347,12 @@
    },
    {
       "name":"Monkey Mart",
-      "thumbnail":"/games/game/monkey-mart/thumbnail.jpg",
+      "thumbnail":"/game/monkey-mart/thumbnail.jpg",
       "slug":"monkey-mart"
    },
    {
       "name":"1 (2048 remake)",
-      "thumbnail":"/games/game/1-2048-remake/thumbnail.png",
+      "thumbnail":"/game/1-2048-remake/thumbnail.png",
       "slug":"1-2048-remake"
    },
    {
@@ -367,7 +367,7 @@
    },
    {
       "name":"Ninja VS Evilcorp",
-      "thumbnail":"/games/game/ninja-vs-evilcorp/thumbnail.jpg",
+      "thumbnail":"/game/ninja-vs-evilcorp/thumbnail.jpg",
       "slug":"ninja-vs-evilcorp"
    },
    {
@@ -382,7 +382,7 @@
    },
    {
       "name":"Connect 3",
-      "thumbnail":"/games/game/connect-3/thumbnail.png",
+      "thumbnail":"/game/connect-3/thumbnail.png",
       "slug":"connect-3"
    },
    {
@@ -392,17 +392,17 @@
    },
    {
       "name":"Offline Paradise",
-      "thumbnail":"/games/game/offline-paradise/thumbnail.jpg",
+      "thumbnail":"/game/offline-paradise/thumbnail.jpg",
       "slug":"offline-paradise"
    },
    {
       "name":"Space Company",
-      "thumbnail":"/games/game/space-company/thumbnail.jpg",
+      "thumbnail":"/game/space-company/thumbnail.jpg",
       "slug":"space-company"
    },
    {
       "name":"2048",
-      "thumbnail":"/games/game/2048/thumbnail.jpg",
+      "thumbnail":"/game/2048/thumbnail.jpg",
       "slug":"2048"
    },
    {
@@ -412,7 +412,7 @@
    },
    {
       "name":"Google Feud",
-      "thumbnail":"/games/game/google-feud/thumbnail.jpg",
+      "thumbnail":"/game/google-feud/thumbnail.jpg",
       "slug":"google-feud"
    },
    {
@@ -422,7 +422,7 @@
    },
    {
       "name":"Stack",
-      "thumbnail":"/games/game/stack/thumbnail.png",
+      "thumbnail":"/game/stack/thumbnail.png",
       "slug":"stack"
    },
    {
@@ -442,12 +442,12 @@
    },
    {
       "name":"Push Back",
-      "thumbnail":"/games/game/push-back/thumbnail.jpg",
+      "thumbnail":"/game/push-back/thumbnail.jpg",
       "slug":"push-back"
    },
    {
       "name":"Swerve",
-      "thumbnail":"https://img.gamepix.com/games/swerve/cover/swerve.png?width=600&height=340&fit=cover&quality=90",
+      "thumbnail":"https://img.gamepix.com/swerve/cover/swerve.png?width=600&height=340&fit=cover&quality=90",
       "slug":"swerve"
    },
    {
@@ -467,7 +467,7 @@
    },
    {
       "name":"Radius Raid",
-      "thumbnail":"/games/game/radius-raid/thumbnail.jpg",
+      "thumbnail":"/game/radius-raid/thumbnail.jpg",
       "slug":"radius-raid"
    },
    {
@@ -482,12 +482,12 @@
    },
    {
       "name":"Dogeminer",
-      "thumbnail":"/games/game/dogeminer/thumbnail.jpg",
+      "thumbnail":"/game/dogeminer/thumbnail.jpg",
       "slug":"dogeminer"
    },
    {
       "name":"Dogeminer 2",
-      "thumbnail":"/games/game/dogeminer-2/icon-512x512.png",
+      "thumbnail":"/game/dogeminer-2/icon-512x512.png",
       "slug":"dogeminer-2"
    },
    {
@@ -497,7 +497,7 @@
    },
    {
       "name":"Retrohaunt",
-      "thumbnail":"https://js13kgames.com/games/retrohaunt/__big.jpg",
+      "thumbnail":"https://js13kgames.com/retrohaunt/__big.jpg",
       "slug":"retrohaunt"
    },
    {
@@ -507,22 +507,22 @@
    },
    {
       "name":"Astray",
-      "thumbnail":"/games/game/astray/thumbnail.png",
+      "thumbnail":"/game/astray/thumbnail.png",
       "slug":"astray"
    },
    {
       "name":"Doodlejump",
-      "thumbnail":"/games/game/doodlejump/thumbnail.jpg",
+      "thumbnail":"/game/doodlejump/thumbnail.jpg",
       "slug":"doodlejump"
    },
    {
       "name":"Konnekt",
-      "thumbnail":"/games/game/konnekt/thumbnail.jpg",
+      "thumbnail":"/game/konnekt/thumbnail.jpg",
       "slug":"konnekt"
    },
    {
       "name":"Rolling Forests",
-      "thumbnail":"/games/game/rolling-forests/thumbnail.webp",
+      "thumbnail":"/game/rolling-forests/thumbnail.webp",
       "slug":"rolling-forests"
    },
    {
@@ -532,7 +532,7 @@
    },
    {
       "name":"Black Hole Square",
-      "thumbnail":"/games/game/black-hole-square/thumbnail.jpeg",
+      "thumbnail":"/game/black-hole-square/thumbnail.jpeg",
       "slug":"black-hole-square"
    },
    {
@@ -547,7 +547,7 @@
    },
    {
       "name":"Sandboxels",
-      "thumbnail":"/games/game/sandboxels/thumbnail.png",
+      "thumbnail":"/game/sandboxels/thumbnail.png",
       "slug":"sandboxels"
    },
    {
@@ -562,7 +562,7 @@
    },
    {
       "name":"Evil Glitch",
-      "thumbnail":"/games/game/evil-glitch/thumbnail.jpg",
+      "thumbnail":"/game/evil-glitch/thumbnail.jpg",
       "slug":"evil-glitch"
    },
    {
@@ -582,22 +582,22 @@
    },
    {
       "name":"Chess",
-      "thumbnail":"/games/game/chess/thumbnail.png",
+      "thumbnail":"/game/chess/thumbnail.png",
       "slug":"chess"
    },
    {
       "name":"Exo",
-      "thumbnail":"/games/game/exo/thumbnail.png",
+      "thumbnail":"/game/exo/thumbnail.png",
       "slug":"exo"
    },
    {
       "name":"Missiles",
-      "thumbnail":"/games/game/missiles/thumbnail.png",
+      "thumbnail":"/game/missiles/thumbnail.png",
       "slug":"missiles"
    },
    {
       "name":"Shuttledeck",
-      "thumbnail":"https://js13kgames.com/games/shuttledeck/__big.jpg",
+      "thumbnail":"https://js13kgames.com/shuttledeck/__big.jpg",
       "slug":"shuttledeck"
    },
    {
@@ -607,7 +607,7 @@
    },
    {
       "name":"Chroma Incident",
-      "thumbnail":"/games/game/chroma-incident/thumbnail.png",
+      "thumbnail":"/game/chroma-incident/thumbnail.png",
       "slug":"chroma-incident"
    },
    {
@@ -617,112 +617,112 @@
    },
    {
       "name":"Ngon",
-      "thumbnail":"/games/game/ngon/thumbnail.png",
+      "thumbnail":"/game/ngon/thumbnail.png",
       "slug":"ngon"
    },
    {
       "name":"Sleeping Beauty",
-      "thumbnail":"/games/game/sleeping-beauty/thumbnail.png",
+      "thumbnail":"/game/sleeping-beauty/thumbnail.png",
       "slug":"sleeping-beauty"
    },
    {
       "name":"You Are Bezos",
-      "thumbnail":"/games/game/you-are-bezos/thumbnail.png",
+      "thumbnail":"/game/you-are-bezos/thumbnail.png",
       "slug":"you-are-bezos"
    },
    {
       "name":"OvO",
-      "thumbnail":"/games/game/ovo/ovologo.png",
+      "thumbnail":"/game/ovo/ovologo.png",
       "slug":"ovo"
    },
    {
       "name":"Slope",
-      "thumbnail":"/games/game/slope/slope.jpg",
+      "thumbnail":"/game/slope/slope.jpg",
       "slug":"slope"
    },
    {
       "name":"Moto X3M",
-      "thumbnail":"/games/game/moto-x3m/moto-x3m.png",
+      "thumbnail":"/game/moto-x3m/moto-x3m.png",
       "slug":"moto-x3m"
    },
    {
       "name":"Moto X3M 2",
-      "thumbnail":"/games/game/moto-x3m-2/moto-x3m-2.webp",
+      "thumbnail":"/game/moto-x3m-2/moto-x3m-2.webp",
       "slug":"moto-x3m-2"
    },
    {
       "name":"Moto X3M Pool Party",
-      "thumbnail":"/games/game/moto-x3m-pool-party/moto-x3m-pool-party.jpg",
+      "thumbnail":"/game/moto-x3m-pool-party/moto-x3m-pool-party.jpg",
       "slug":"moto-x3m-pool-party"
    },
    {
       "name":"Moto X3M Winter",
-      "thumbnail":"/games/game/moto-x3m-winter/moto-x3m-winter.jpg",
+      "thumbnail":"/game/moto-x3m-winter/moto-x3m-winter.jpg",
       "slug":"moto-x3m-winter"
    },
    {
       "name":"Moto X3M Spooky Land",
-      "thumbnail":"/games/game/moto-x3m-spooky-land/Moto-X3M-Spooky-Land.jpg",
+      "thumbnail":"/game/moto-x3m-spooky-land/Moto-X3M-Spooky-Land.jpg",
       "slug":"moto-x3m-spooky-land"
    },
    {
       "name":"Geometry Dash",
-      "thumbnail":"/games/game/gdlite/gd.png",
+      "thumbnail":"/game/gdlite/gd.png",
       "slug":"gdlite"
    },
    {
       "name":"Territorial.io",
-      "thumbnail":"/games/game/territorialio/maxresdefault.jpg",
+      "thumbnail":"/game/territorialio/maxresdefault.jpg",
       "slug":"territorialio"
    },
    {
       "name":"Drift Boss",
-      "thumbnail":"/games/game/drift-boss/drift-boss.png",
+      "thumbnail":"/game/drift-boss/drift-boss.png",
       "slug":"drift-boss"
    },
    {
       "name":"Getaway Shoot-Out",
-      "thumbnail":"/games/game/getawayshootout/R.webp",
+      "thumbnail":"/game/getawayshootout/R.webp",
       "slug":"getawayshootout"
    },
    {
       "name":"Pac-Man",
-      "thumbnail":"/games/game/pac-man/OIP.jfif",
+      "thumbnail":"/game/pac-man/OIP.jfif",
       "slug":"pac-man"
    },
    {
       "name":"Riddle School Games",
-      "thumbnail":"/games/game/riddleschool1/riddleschool.png",
+      "thumbnail":"/game/riddleschool1/riddleschool.png",
       "slug":"riddle-school-games"
    },
    {
       "name":"Bob the Robber 2",
-      "thumbnail":"/games/game/bobtherobber2/icon.png",
+      "thumbnail":"/game/bobtherobber2/icon.png",
       "slug":"bobtherobber2"
    },
    {
       "name":"Block Blast",
-      "thumbnail":"/games/game/block-blast/image.webp",
+      "thumbnail":"/game/block-blast/image.webp",
       "slug":"block-blast"
    },
    {
       "name":"Cluster Truck",
-      "thumbnail":"/games/game/cluster-truck/image.jpg",
+      "thumbnail":"/game/cluster-truck/image.jpg",
       "slug":"cluster-truck"
    },
    {
       "name":"Idle Breakout",
-      "thumbnail":"/games/game/idle-breakout/R.jpg",
+      "thumbnail":"/game/idle-breakout/R.jpg",
       "slug":"idle-breakout"
    },
    {
       "name":"Jelly Truck",
-      "thumbnail":"/games/game/jelly-truck/R.jpg",
+      "thumbnail":"/game/jelly-truck/R.jpg",
       "slug":"jelly-truck"
    },
    {
       "name":"Yohoho.io",
-      "thumbnail":"/games/game/yohoho.io/R.jpg",
+      "thumbnail":"/game/yohoho.io/R.jpg",
       "slug":"yohoho.io"
    }
 ]
