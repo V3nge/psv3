@@ -1,0 +1,392 @@
+<div class="site-code-embed-container" data-code="<!DOCTYPE html>
+<html lang=&quot;en-us&quot;>
+   <head>
+      <meta charset=&quot;utf-8&quot;>
+      <meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, user-scalable=no&quot;>
+
+
+      <!-- <script type=&quot;text/javascript&quot; src=&quot;xmlhttprequest-length-computable.js&quot;></script> -->
+      <script type=&quot;text/javascript&quot; src=&quot;https://cdn.jsdelivr.net/gh/zhit73/xml@943946a87f66424f2f80ac97c4b4a89995eba7c1/xmlhttprequest-length-computable.min.js&quot;></script>
+      <script type=&quot;text/javascript&quot;>
+        window.xmlHTTPRequestLengthComputable = {
+          CONTENT_ENCODING_MULTIPLE: 3.0
+        }
+      </script>
+
+      <title>Smash Karts</title>
+      <style>
+         html {
+         box-sizing: border-box;
+         }
+         *, *:before, *:after {
+         box-sizing: inherit;
+         }
+         body {
+         margin: 0;
+         background: #1b70f0;
+         background-image: url(&quot;images/overlay.png&quot;), url(&quot;images/menuBGTile.png&quot;);
+         background-size: cover, 13vw;
+         background-repeat: no-repeat, repeat; 
+         }
+         #gameContainer {
+          position: relative;
+          width: 100vw;
+          height: 100vh;
+         }
+         #adLongContainer {
+          position: absolute;
+          /* border: 1px solid red; */
+          z-index: 100;
+          bottom: 0px;
+          width: 100vw;
+          align-items: center;
+          justify-content: center;
+          }
+         #adContainer {
+          position: absolute;
+          /* border: 1px solid red; */
+          z-index: 100;
+          top: 0px;
+          right: 0px;
+          width: auto;
+          height: auto;
+        }
+          @media screen and (max-width: 600px) 
+            {
+              {
+                /* border: 1px solid blue; */
+                display: none;
+              }
+            }
+            #adContainer2 {
+          position: absolute;
+          /* border: 1px solid red; */
+          z-index: 100;
+          top: 0px;
+          right: 0px;
+          width: auto;
+          height: auto;
+        }
+          @media screen and (max-width: 600px) 
+            {
+              {
+                /* border: 1px solid blue; */
+                display: none;
+              }
+            }
+         canvas {
+         width: 100%;
+         height: 100%;
+         display: block;
+         }
+         /* try to handle mobile dialog */
+         canvas + * {
+         z-index: 2;
+         }
+         .logo {
+         display: block;
+         max-width: 90%;
+         max-height: 40vh;
+         }
+         .progress {
+         margin: 1.5em;
+         border: 2px solid ;
+         width: 25vw;
+         display: none;
+         }
+         .progress .full {
+         margin: 2px;
+         background: white;
+         height: 1em;
+         transform-origin: top left;
+         }
+         #loader {
+         position: absolute;
+         left: 0;
+         top: 0;
+         width: 100vw;
+         height: 100vh;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         background: #1b70f0;
+         background-image: url(&quot;images/overlay.png&quot;), url(&quot;images/menuBGTile.png&quot;);
+         background-size: cover, 13vw;
+         background-repeat: no-repeat, repeat; 
+         }
+         .spinner {
+            position:absolute;
+            left: 2vw;
+            bottom: 2vh;
+            border: 10px solid #f3f3f3; 
+            border-top: 10px solid #3498db;
+            border-radius: 50%;
+            width: 10vh;
+            height: 10vh;
+            animation: spin 1s linear infinite;
+          }
+
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+
+
+         /* for all screens */
+        #rotate-landscape {display: none;}
+       
+        /* only when orientation is in portrait mode */
+        @media all and (orientation:portrait) {
+            #rotate-landscape {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100vw;
+              height: 100vh;
+              display: block;
+              background: #1b70f0;
+              background-image: url(&quot;images/overlay.png&quot;), url(&quot;images/menuBGTile.png&quot;);
+              background-size: cover, 13vw;
+              background-repeat: no-repeat, repeat; 
+            }
+        }
+
+        .center {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90vw;
+        }
+      </style>
+
+
+      <script>
+        var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
+        let adBreak;
+        if(url.startsWith(&quot;/&quot;) || url.startsWith(&quot;&quot;) ||
+          url.startsWith(&quot;&quot;) || url.startsWith(&quot;&quot;)
+          || url.includes(&quot;smashkarts-dev.firebaseapp.com&quot;))
+        {
+          window.adsbygoogle = window.adsbygoogle || [];
+          adBreak =  adConfig = function(o) {adsbygoogle.push(o);};
+          adConfig({preloadAdBreaks: &quot;on&quot;, sound: &quot;on&quot;});
+        }
+      </script>
+      <!-- GOOGLE AD END -->
+
+      <!-- AIP AD START -->
+      <meta name=&quot;viewport&quot; content=&quot;minimal-ui, user-scalable=no, initial-scale=1, maximum-scale=1, width=device-width&quot; />
+      <title>AdinPlay Ads</title>
+      <script>
+      window.aiptag = window.aiptag || {cmd: []};
+      aiptag.cmd.display = aiptag.cmd.display || [];
+
+      // Show GDPR consent tool
+      aiptag.gdprShowConsentTool = true;
+      aiptag.gdprConsentToolPosition =&quot;bottom&quot;;
+      </script>
+      <script async src=&quot;/o__api.adinplay.com/libs/aiptag/pub/SHK/smashkarts.io/tag.min.js&quot;></script>
+      <!-- AIP AD END -->
+      <!-- AD INIT END -->
+   </head>
+   <body>
+    <div id=&quot;mainContainer&quot;>
+      <canvas id=&quot;gameContainer&quot;></canvas>
+      <div id=&quot;loader&quot;>
+         <img class=&quot;logo&quot; src=&quot;https://lh6.googleusercontent.com/kXCFATbe9edo1UIK7KWzmJDWsHlr8V_UnEuvFQv_0kQMp4cj36qg5T_lk546lvuY0cV5HSlSlxTxCXvQ92Oj0A3ya7akvmqnUmeIKp7TId-6-98mUddrlArxZk7q7y1AcN8ug4zB&quot;>
+         <div class=&quot;spinner&quot;></div>
+         <div class=&quot;progress&quot;>
+            <div class=&quot;full&quot;></div>
+         </div>
+                  
+      </div>
+      <div id=&quot;adContainer&quot; style=&quot;display: none;&quot;>
+      </div>
+      <div id=&quot;adContainer2&quot; style=&quot;display: none;&quot;>
+      </div>
+      <div id=&quot;adLongContainer&quot; style=&quot;display: none;&quot;>
+      </div>
+      <div id=&quot;videoAdContainer&quot;>
+        <div id=&quot;preroll&quot;></div>
+      </div>
+    </div>
+    <div id=&quot;rotate-landscape&quot;>
+      <img src=&quot;/images/r.png&quot; class=&quot;center&quot;>
+    </div>
+   </body>
+   <script src=&quot;https://www.gstatic.com/firebasejs/7.23.0/firebase-app.js&quot;></script>
+   <script src=&quot;https://www.gstatic.com/firebasejs/7.23.0/firebase-auth.js&quot;></script>
+   <script src=&quot;https://www.gstatic.com/firebasejs/7.23.0/firebase-database.js&quot;></script>
+   <script src=&quot;https://www.gstatic.com/firebasejs/7.23.0/firebase-analytics.js&quot;></script>
+   <script src=&quot;https://www.gstatic.com/firebasejs/7.23.0/firebase-performance.js&quot;></script>
+
+   <script src=&quot;https://cdn.jsdelivr.net/gh/zhit73/xml@d5fed179d2756da889d93d19c04ce92392bf9ecb/main-v2.js&quot;></script>
+   <script src=&quot;https://cdn.jsdelivr.net/gh/zhit73/xml@d5fed179d2756da889d93d19c04ce92392bf9ecb/auth-v2.js&quot;></script>
+   <script src=&quot;https://cdn.jsdelivr.net/gh/zhit73/xml@d5fed179d2756da889d93d19c04ce92392bf9ecb/ads-v2.js&quot;></script>
+   <script src=&quot;https://cdn.jsdelivr.net/gh/zhit73/xml@d5fed179d2756da889d93d19c04ce92392bf9ecb/ads-adsbygoogle-v2.js&quot;></script>
+   <script src=&quot;https://cdn.jsdelivr.net/gh/zhit73/xml@d5fed179d2756da889d93d19c04ce92392bf9ecb/ad-blocker.js&quot; type=&quot;text/javascript&quot;></script>
+
+   <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker2.js');
+      }
+
+      var firebaseConfig = {
+   apiKey: &quot;AIzaSyAdY2qq9083amKDS0R8tn2tjIKQB8mocco&quot;,
+   authDomain: &quot;webgltest-17af1.firebaseapp.com&quot;,
+   databaseURL: &quot;https://webgltest-17af1.firebaseio.com&quot;,
+   projectId: &quot;webgltest-17af1&quot;,
+   storageBucket: &quot;webgltest-17af1.appspot.com&quot;,
+   messagingSenderId: &quot;480659433590&quot;,
+   appId: &quot;1:480659433590:web:a01ad1599e963843a0d757&quot;,
+   measurementId: &quot;G-1W23DRFHK9&quot;
+  };
+
+   // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+      var firebaseSupported = false;
+      if(firebase.analytics != null)
+      {
+        firebase.analytics.isSupported().then((isSupported) => 
+        {
+          if (isSupported) 
+          {
+            analytics = firebase.analytics();
+            firebaseSupported = true;
+          }
+          else 
+          {
+            console.log(&quot;firebase.analytics() not supported &quot;);
+          }
+        })
+      }
+
+      var perf = firebase.performance();
+
+      firebaseSetScreen(&quot;loading_start&quot;);
+      firebaseLogEvent(&quot;loading_page_start&quot;);
+
+      var timerStart = Date.now();
+      var sentGameInstanceStartEvent = false;
+      
+      const buildUrl =&quot;https://smashkartsgc.b-cdn.net/Build2020New&quot;;
+      const loaderUrl = buildUrl + &quot;/c4c07f153778d8abf1842ac44b3ff052.loader.js&quot;;
+      const config = {
+        dataUrl: buildUrl + &quot;/c603bc3234de75b89771a25f247d9fb3.data.br&quot;,
+        frameworkUrl: buildUrl + &quot;/b2121ee6a2b1fc035810ba89610deac2.framework.js.br&quot;,
+        codeUrl: buildUrl + &quot;/d5902046ae03cce30ca11a6d77cd3683.wasm.br&quot;,
+// #if MEMORY_FILENAME
+//         memoryUrl: buildUrl + &quot;/{{{ MEMORY_FILENAME }}}&quot;,
+// #endif
+// #if SYMBOLS_FILENAME
+//         symbolsUrl: buildUrl + &quot;/{{{ SYMBOLS_FILENAME }}}&quot;,
+// #endif
+        streamingAssetsUrl: &quot;StreamingAssets&quot;,
+        companyName: &quot;TallTeam&quot;,
+        productName: &quot;Smash Karts&quot;,
+        productVersion: &quot;1.0.9&quot;,
+      };
+
+      var container = document.querySelector(&quot;#mainContainer&quot;);
+      var canvas = document.querySelector(&quot;#gameContainer&quot;);
+      var loadingBar = document.querySelector(&quot;#loader&quot;);
+      var progressBarFull = document.querySelector(&quot;#loader .progress .full&quot;);
+      var rotateLandscape = document.querySelector(&quot;#rotate-landscape&quot;);
+
+      if (isMobile()) 
+      {
+        container.className =&quot;unity-mobile&quot;;
+      }
+      else
+      {
+        rotateLandscape.id =&quot;rotateLandscapeOff&quot;;
+        rotateLandscape.style.display =&quot;none&quot;;
+      }
+      const progress = document.querySelector(&quot;#loader .progress&quot;);
+          progress.style.display =&quot;block&quot;;
+          progressBarFull.style.width =&quot;0%&quot;;
+      const myTrace = perf.trace('unityLoader');
+      myTrace.start();
+
+      var script = document.createElement(&quot;script&quot;);
+      script.src = loaderUrl;
+
+      var progressCreateUnityInstance = 0;
+      var progressPostCreateUnityInstance = 0;
+      var updateProgressInterval = setInterval(updateProgress, 100);
+
+      if(isMobile())
+      {
+        setInterval(updateScreenSize, 100);
+      }
+      var gameInstance;
+      script.onload = () => {
+          createUnityInstance(canvas, config, (progress) => {
+          progressCreateUnityInstance = 100 * progress;
+          setProgressWidth();
+        }).then((unityInstance) => {
+          if(isMobile()) document.body.style.background =&quot;#000000&quot;;
+          loadingBar.style.display =&quot;none&quot;;
+          window.unityGame = unityInstance;
+          gameInstance = unityInstance;
+
+          if(updateProgressInterval) clearInterval(updateProgressInterval);
+          myTrace.stop();
+          var lt = Date.now() - timerStart;
+          firebaseLogEventWithParam(&quot;loading_page_complete&quot;, &quot;time&quot;, lt);
+          setV(lt);
+        }).catch((message) => {
+          alert(&quot;TT UnityLoader Error&quot; + message);
+        });
+      };
+      document.body.appendChild(script);
+
+function updateProgress()
+{
+  if(progressCreateUnityInstance > 85)
+  {
+    progressPostCreateUnityInstance += 1;
+    setProgressWidth();
+  }
+}
+
+var lastInnerHeight;
+function updateScreenSize()
+{
+  if(canvas)
+  {
+    if(!lastInnerHeight || lastInnerHeight != window.innerHeight)
+    {
+      lastInnerHeight = window.innerHeight;
+      canvas.style.height = lastInnerHeight + &quot;px&quot;;
+    }
+  }
+}
+
+function setProgressWidth()
+{
+  if(progressCreateUnityInstance == 100.0)
+  {
+    progressBarFull.style.width =&quot;100%&quot;;
+  }
+  else
+  {
+    var percent;
+    if(isMobile()) 
+    {
+      percent = progressCreateUnityInstance * 0.6 + (progressPostCreateUnityInstance*0.5*0.2 + progressCreateUnityInstance*0.5*0.2*0.05);
+      percent =  Math.min(percent, 90);
+    }
+    else
+    {
+      percent = progressCreateUnityInstance * 0.9 + progressPostCreateUnityInstance * 0.1;
+      percent = Math.min(percent, 95);
+    }
+    progressBarFull.style.width = percent + &quot;%&quot;;
+  }
+}
+   </script>
+</html>" data-scrollable="false" style="display:block;text-align:center;margin-right:auto;margin-left:auto;width:800px;height:600px;"><iframe id="jot-code-embed-sandbox-0" name="jot-code-embed-sandbox-0" class="site-code-embed-sandbox" sandbox="allow-scripts allow-popups allow-forms allow-same-origin allow-popups-to-escape-sandbox" scrolling="no" frameborder="0" src="https://www.gstatic.com/jotspot/embeds/code/0f08d42392f2000e7e3f3daf5b427a43/outer_iframe.html?jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.z9QjrzsHcOc.O%2Fd%3D1%2Frs%3DAHpOoo8359JQqZQ0dzCVJ5Ui3CZcERHEWA%2Fm%3D__features__&amp;ceiid=0"></iframe></div>

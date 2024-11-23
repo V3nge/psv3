@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Imprima");
-
 @font-face {
     font-family: 'Satoshi';
     src: url('Satoshi-Variable.ttf') format('truetype');
@@ -10,30 +9,29 @@
 }
 
 :root {
-    --tblack: #040112;
-    --tblack: rgba(4, 1, 18, 0.5);
+    --black: #040112;
     --white: white;
     --violet: #df9aff;
     --blue-violet: #6825f5;
     --light-steel-blue: #a4abec;
     --opacity-text: rgba(255, 255, 255, .6);
     --midnight-blue: #1a1048;
-    --dark-pink-gradient: #401048;
+    --dark-pink-gradient: #181048;
     --transparent: rgba(255, 255, 255, 0);
 }
 
 body {
-    background: rgb(4,1,18);
-    background: linear-gradient(0deg, rgba(4,1,18,1) 0%, rgb(17, 5, 44) 100%);
+    background: rgb(4, 1, 18);
+    background: linear-gradient(0deg, rgba(4, 1, 18, 1) 0%, rgb(17, 5, 44) 100%);
+    transition: 0.5s;
     padding: 10px;
 }
 
 .icon {
+    transition: 0.5s;
     width: 5%;
     border-radius: 100%;
-    background-color:  #120a31;
-    transition: 0.5s;
-    z-index: 1;
+    background-color: #120a31;
 }
 
 .icon:hover {
@@ -46,38 +44,36 @@ body {
 
 .topbar {
     width: 100%;
-    background-color: var(--tblack);
-    border-radius: 999999999px;
-    min-height: 70px;
-    height: calc(7%);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-    white-space: nowrap;
+    background-color: var(--black);
+    border-radius: 120px;
 }
-
 
 .glowing-border {
-  border: 2px solid transparent;
-  position: relative;
-  z-index: 0;
-  overflow: hidden;
-  box-shadow: 0 0 10px var(--blue-violet); /* Basic outer shadow for subtle glow */
+    border: 2px solid transparent;
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    box-shadow: 0 0 10px var(--blue-violet);
+    /* Basic outer shadow for subtle glow */
 }
-  
 
-h1, h2, h3, h4, h5, h6, p, text {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+text {
     color: white;
 }
 
 .carousel {
-    display: flex;     
+    display: flex;
     overflow-x: auto;
     width: 100%;
-    min-height: 100px;
-    height: 30%;
-    background-color: rgba(0, 0, 0, 0.5);
+    height: 60%;
+    background-color: var(--black);
     border-radius: 10px;
     padding: 10px;
     gap: 2px;
@@ -86,48 +82,42 @@ h1, h2, h3, h4, h5, h6, p, text {
 }
 
 .carousel-element-preload {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-
-    background-color: var(--midnight-blue);
+    transition: 0.5s;
     position: relative;
-    max-height: 100%;    
-    width: 13.5%;
+    flex: 0 0 auto;
+    height: 100%;
+    width: 250px;
+    background-color: var(--midnight-blue);
     scroll-snap-align: start;
     border-radius: 10px;
     overflow: hidden;
-    transition: 0.5s;
 }
 
 .carousel-element {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-
     background-color: var(--midnight-blue);
+    transition: 0.5s;
     position: relative;
-    max-height: 100%;    
-    width: 13.5%;
+    flex: 0 0 auto;
+    height: 100%;
+    width: 250px;
     scroll-snap-align: start;
     border-radius: 10px;
     overflow: hidden;
-    transition: 0.5s;
 }
 
 .carousel-element-preload:hover {
+    transition: 0.08s;
     transform: scale(1.1);
     background-color: var(--light-steel-blue);
     border: 1px var(--blue-violet) solid;
     z-index: 9999;
-    transition: 0.08s;
 }
 
 .carousel-element:hover {
+    transition: 0.08s;
     transform: scale(1.1);
     border: 1px var(--blue-violet) solid;
     z-index: 9999;
-    transition: 0.08s;
 }
 
 .carousel-element-preload::before {
@@ -137,8 +127,8 @@ h1, h2, h3, h4, h5, h6, p, text {
     left: -100%;
     height: 100%;
     width: 120px;
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
     animation: slide 2s infinite linear;
 }
 
@@ -151,19 +141,18 @@ h1, h2, h3, h4, h5, h6, p, text {
     }
 }
 
-
 .embedding {
     overflow: hidden;
     width: 100%;
-    height: fit-content;
-    background-color: var(--tblack);
+    height: 30%;
+    background-color: var(--black);
     border-radius: 10px;
 }
 
 .embedding-overflowable {
     width: calc(100% - 20px);
     height: 30%;
-    background-color: var(--tblack);
+    background-color: var(--black);
     border-radius: 10px;
     height: max-content;
     padding: 10px;
@@ -175,10 +164,13 @@ h1, h2, h3, h4, h5, h6, p, text {
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 }
 
-input {
+.search {
     position: absolute;
     width: 50%;
     height: 40%;
+    top: 50%;
+    left: 32%;
+    transform: translate(-50%, -50%);
     border-radius: 10px;
     box-shadow: #040112;
     border: #1a1048 solid;
@@ -194,20 +186,20 @@ input {
 }
 
 .game-icon {
+    transition: 0.5s;
     background-color: #120a31;
     width: 120px;
     height: 120px;
     border-radius: 10px;
-    transition: 0.5s;
 }
 
 .game-icon:hover {
+    transition: 0.1s;
     background-color: #120a31;
     transform: scale(1.2) rotate(5deg);
     box-shadow: 10px 5px 5px var(--light-steel-blue);
     z-index: 99;
     outline: 1px var(--white) solid;
-    transition: 0.1s;
 }
 
 .game-icon:active {
@@ -232,6 +224,7 @@ input {
 }
 
 button {
+    transition: 0.1s;
     min-width: 100px;
     min-height: 50px;
     border-radius: 10px;
@@ -240,7 +233,6 @@ button {
     background-color: #120a31;
     color: white;
     font-size: larger;
-    transition: 0.1s;
 }
 
 button:hover {
@@ -248,6 +240,7 @@ button:hover {
 }
 
 .settings-button {
+    transition: 0.1s;
     min-width: 140px;
     min-height: 50px;
     border-radius: 10px;
@@ -261,7 +254,6 @@ button:hover {
     right: 0%;
     top: 50%;
     transform: translate(-50%, -50%);
-    transition: 0.1s;
 }
 
 .settings-button:hover {
@@ -271,31 +263,23 @@ button:hover {
 .banner {
     width: 100%;
     height: 10%;
-    background-color: black;;
+    background-color: black;
+    ;
     margin-top: 10px;
     border-radius: 10px;
-    background: rgb(128,71,154);background: linear-gradient(90deg, rgba(128,71,154,1) 0%, rgba(65,12,89,1) 100%);
+    background: rgb(128, 71, 154);
+    background: linear-gradient(90deg, rgba(128, 71, 154, 1) 0%, rgba(65, 12, 89, 1) 100%);
 }
 
 .min-img {
     max-width: 100%;
-    max-height: 80%;
+    max-height: 100%;
     border-radius: 10px;
 }
 
 .thumbnail {
-    object-fit: cover;
-    min-width: 100%;
-    width: 100%;
-
-    border-radius: 10px;
-
-    /* margin-top: 10%;
     max-width: 100%;
-    max-height: 50%;
-    min-height: 50%;
-    height: 50%;
-    width: 90%; */
+    max-height: 100%;
 }
 
 iframe {
@@ -308,8 +292,6 @@ iframe {
     z-index: 9999999;
     background-color: white;
 }
-
-
 
 .glassy {
     background: rgba(143, 124, 124, 0.25);
@@ -330,6 +312,7 @@ iframe {
 }
 
 .input-box {
+    transition: 0.1s;
     min-width: 140px;
     min-height: 50px;
     border-radius: 10px;
@@ -342,7 +325,6 @@ iframe {
     position: absolute;
     bottom: 10%;
     left: 5%;
-    transition: 0.1s;
 }
 
 .message-container {
@@ -353,8 +335,29 @@ iframe {
     top: 5%;
     overflow-y: scroll;
     height: 70%;
-    background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgb(16, 0, 46) 35%,  rgb(32, 0, 81) 100%);
+    background: linear-gradient(180deg, rgba(2, 0, 36, 1) 0%, rgb(16, 0, 46) 35%, rgb(32, 0, 81) 100%);
     border-radius: 10px;
+}
+
+.live-chat-button {
+    transition: 0.1s;
+    min-width: 140px;
+    min-height: 50px;
+    border-radius: 10px;
+    box-shadow: #040112;
+    border: #1a1048 solid;
+    background-color: #120a31;
+    color: white;
+    font-size: larger;
+    border: black solid px;
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.live-chat-button:hover {
+    transform: translate(-50%, -50%) scale(1.05);
 }
 
 pre {
@@ -364,7 +367,7 @@ pre {
 .live-chat-submit {
     position: absolute;
     bottom: 10%;
-    width: 6.5%; 
+    width: 6.5%;
     height: 5%;
     right: 8%;
 }
@@ -372,7 +375,7 @@ pre {
 .live-chat-back {
     position: absolute;
     bottom: 1%;
-    width: 6.5%; 
+    width: 6.5%;
     height: 5%;
     right: 4%;
 }
@@ -380,7 +383,7 @@ pre {
 .live-chat-private {
     position: absolute;
     bottom: 10%;
-    width: 6.5%; 
+    width: 6.5%;
     height: 5%;
     right: 1%;
 }
@@ -400,14 +403,14 @@ a {
 .live-chat-dialog {
     width: 100%;
     height: 100%;
-    background-color: var(--tblack);
+    background-color: var(--black);
 }
 
 message-container #message,
 message-container #message * {
-  color: #ffffff !important;
-  font-family: "Imprima";
-  font-size: 18px !important;
-  line-height: normal !important;
-  letter-spacing: normal !important;
+    color: #ffffff !important;
+    font-family: "Imprima";
+    font-size: 18px !important;
+    line-height: normal !important;
+    letter-spacing: normal !important;
 }

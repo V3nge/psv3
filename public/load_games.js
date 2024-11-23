@@ -10,7 +10,7 @@
 // }
 
 const allGamesList = document.getElementById('allGames');
-const recentlyAddedCarousel = document.getElementById('recentlyAddedCarousel');  
+const recentlyAddedCarousel = document.getElementById('recentlyAddedCarousel');
 
 var urlParams = new URLSearchParams(window.location.search);
 var ToSearch = urlParams.get('search');
@@ -30,7 +30,7 @@ function shuffleArray(arr) {
 async function loadAllGames() {
     var listing;
 
-    if(ToSearch == null) {
+    if (ToSearch == null) {
         listing = (await (await fetch("/games")).json());
     } else {
         listing = await search(ToSearch);
@@ -39,14 +39,14 @@ async function loadAllGames() {
     console.log(listing);
 
     listing = listing.map(value => {
-        return {image: `/images/games/${value.split('"')[0].replaceAll("/", "")}`, gameName: decodeURIComponent(value.split('"')[0]).replaceAll("/", ""), opens: `/games/${value.split('"')[0]}`};
+        return { image: `/images/games/${value.split('"')[0].replaceAll("/", "")}`, gameName: decodeURIComponent(value.split('"')[0]).replaceAll("/", ""), opens: `/games/${value.split('"')[0]}` };
     });
 
     var games = [];
 
     listing.forEach(item => {
         var game = {
-            src: item.image, 
+            src: item.image,
             text: item.gameName,
             opens: item.opens
         };
@@ -54,9 +54,9 @@ async function loadAllGames() {
         games.push(game);
     });
 
-    if(ToSearch == null) {
+    if (ToSearch == null) {
         var built = games.map(game => `<div class="carousel-element centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="thumbnail" loading="lazy"></img><text>${game.text}</text></a></div>`).join('');
-        recentlyAddedCarousel.innerHTML = built;    
+        recentlyAddedCarousel.innerHTML = built;
     }
 
     games = shuffleArray(games);
@@ -69,9 +69,9 @@ function loadGame(source) {
     document.body.style.overflow = "hidden";
     inGame = true;
     scrollTo(0, 0);
-    
-    if(gameIframe != null) { 
-        gameIframe.remove(); 
+
+    if (gameIframe != null) {
+        gameIframe.remove();
     }
 
     gameIframe = document.createElement("iframe");
