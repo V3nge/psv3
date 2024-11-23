@@ -85,14 +85,12 @@ app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
 });
 
 const adjectives = [
-    "Sticky", "Squishy", "Bouncy", "Slimy", "Fizzy", "Prickly", "Crusty", "Fluffy",
-    "Wobbly", "Puffy", "Zesty", "Oozy", "Frothy", "Spiky", "Greasy", "Soggy",
-    "Chewy", "Shiny", "Lumpy", "Mushy", "Gritty", "Cranky", "Fuzzy", "Knobbly",
-    "Rusty", "Quirky", "Tacky", "Drippy", "Goopy", "Frosty", "Syrupy", "Slick",
-    "Twitchy", "Grimy", "Soggy", "Blobby", "Waxy", "Pungent", "Slippery", "Tacky",
-    "Musty", "Squiggly", "Fizzy", "Nippy", "Clingy", "Snappy", "Swirly", "Wonky",
-    "Frizzy", "Chunky", "Stupid", "Cute", "Hungry", "Vibrating", "Wet", "Dripping",
-    "Twitching", "Throbbing", "Tiny", "Big", "Suckable"
+    "Sticky", "Bouncy", "Slimy", "Fizzy", "Fluffy", "Wobbly", "Puffy", "Zesty",
+    "Oozy", "Frothy", "Spiky", "Greasy", "Chewy", "Shiny", "Lumpy", "Mushy",
+    "Gritty", "Fuzzy", "Rusty", "Quirky", "Tacky", "Drippy", "Frosty", "Slick",
+    "Grimy", "Blobby", "Waxy", "Slippery", "Musty", "Swirly", "Wonky", "Frizzy",
+    "Chunky", "Cute", "Hungry", "Wet", "Tiny", "Big", "Bright", "Soft", "Smooth",
+    "Warm", "Cool", "Colorful", "Light", "Heavy", "Gentle", "Happy", "Quick", "Quiet"
 ];
 
 const nouns = [
@@ -100,11 +98,12 @@ const nouns = [
     "Pillow", "Toothbrush", "Sock", "Lamp", "Pencil", "Towel", "Chair", "Bottle",
     "Cupcake", "Turtle", "Sandwich", "Lollipop", "Potato", "Slipper", "Hat", "Book",
     "Teapot", "Key", "Umbrella", "Soap", "Butterfly", "Pumpkin", "Donut", "Crayon",
-    "Clock", "Sock", "Cloud", "Dragon", "Shovel", "Robot", "Bubble", "Spider",
-    "Taco", "Fish", "Pizza", "Bag", "Panda", "Cushion", "Cat", "Carrot", "Owl", "Rock",
-    "Grandpa", "Grandma", "Diddy", "Diddler", "Lolicon", "Child", "Asian", "Adam", "Monitor",
-    "Computer", "Woman", "Man", "Vibrator"
+    "Clock", "Cloud", "Dragon", "Shovel", "Robot", "Bubble", "Spider", "Taco",
+    "Fish", "Pizza", "Bag", "Panda", "Cushion", "Cat", "Carrot", "Owl", "Rock",
+    "Flower", "Tree", "Bird", "House", "Garden", "Star", "River", "Mountain", "Boat",
+    "Dog", "Beach", "Shell", "Fruit", "Leaf", "Window", "Bridge", "Train", "Snowman"
 ];
+
 
 // Function to generate a random combination
 function getRandomCombination() {
