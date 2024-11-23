@@ -150,7 +150,7 @@ text {
 
 .embedding-overflowable {
     width: calc(100% - 20px);
-    height: 30%;
+    height: fit-content;
     background-color: var(--black);
     border-radius: 10px;
     height: max-content;
@@ -159,7 +159,7 @@ text {
 
 .flexed {
     display: grid;
-    gap: 10px;
+    gap: 4%;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 }
 
@@ -187,8 +187,9 @@ text {
 .game-icon {
     transition: 0.5s;
     background-color: #120a31;
-    width: 10%;
-    height: 10%;
+    width: 120%;
+    height: 120%;
+    max-height: 170px;
     border-radius: 10px;
 }
 
