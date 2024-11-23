@@ -43,7 +43,8 @@ function update() {
 }
 
 
-function openBlank(content) {
+function openBlank() {
+    const content = document.documentElement.outerHTML;
     const newWindow = window.open('about:blank', '_blank');
     newWindow.document.open();
     newWindow.document.write(content);
