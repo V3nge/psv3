@@ -1,8 +1,8 @@
 [
    {
-   "name":"Request or Report a Game",
-   "thumbnail":"/games/game/request/image(1).png",
-   "slug":"request"
+      "name":"Request or Report a Game",
+      "thumbnail":"/games/game/request/image(1).png",
+      "slug":"request"
    },
    {
       "name":"Subway Surfers",
@@ -725,6 +725,4 @@
       "thumbnail":"/games/game/yohoho.io/R.jpg",
       "slug":"yohoho.io"
    }
-
-
 ]

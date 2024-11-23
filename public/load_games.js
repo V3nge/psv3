@@ -38,30 +38,14 @@ async function loadAllGames() {
 
     console.log(listing);
 
-    listing = listing.map(value => {
-        return { image: `/images/games/${value.split('"')[0].replaceAll("/", "")}`, gameName: decodeURIComponent(value.split('"')[0]).replaceAll("/", ""), opens: `/games/${value.split('"')[0]}` };
-    });
-
-    var games = [];
-
-    listing.forEach(item => {
-        var game = {
-            src: item.image,
-            text: item.gameName,
-            opens: item.opens
-        };
-
-        games.push(game);
-    });
-
     if (ToSearch == null) {
-        var built = games.map(game => `<div class="carousel-element centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="thumbnail" loading="lazy"></img><text>${game.text}</text></a></div>`).join('');
+        var built = listing.map(game => `<div class="carousel-element centered"><a href='javascript:loadGame("/games/${game.slug}")'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text>${game.name}</text></a></div>`).join('');
         recentlyAddedCarousel.innerHTML = built;
     }
 
-    games = shuffleArray(games);
+    listing = shuffleArray(listing);
 
-    built = games.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("${game.opens}")'><img src="${game.src}" class="min-img"></img></a></div>`).join('');
+    built = listing.map(game => `<div class="game-icon centered"><a href='javascript:loadGame("/games/${game.slug}")'><img src="${game.thumbnail}" class="min-img"></img></a></div>`).join('');
     allGamesList.innerHTML = built;
 }
 

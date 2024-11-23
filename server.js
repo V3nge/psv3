@@ -46,22 +46,22 @@ function getCurrentTime() {
     return ` (${hours}:${formattedMinutes} ${ampm})`;
 }
 
+var constructedGamesListJSONTimestamp = +Date.now();
 function constructGamesListJSON() {
-    report = fs.readFileSync(path.join(__dirname, `private/report.js`));
-    const directoryPath = path.join(__dirname, 'public/games');
-    fs.readdir(directoryPath, function (err, files) {
-        if (err) {
-            return console.log('Unable to scan directory: ' + err);
-        } else {
-            constructedGamesListJSON = files;
-        }
-    });
+    const jsonData = fs.readFileSync(path.join(__dirname, './private/all.json'));
+    constructedGamesListJSON = jsonData;
 }
+
 constructGamesListJSON();
 
 app.get('/games/', (req, res) => {
+    // Updates the games list every 30 minutes (in ms)
+    if((Date.now() - constructedGamesListJSONTimestamp) > 1800000) {
+        constructGamesListJSON();
+    }
+
     res.setHeader('content-type', 'application/json');
-    res.send(JSON.stringify(constructedGamesListJSON));
+    res.send(constructedGamesListJSON);
 });
 
 // Instead of adding stuff for EVERY index html,
