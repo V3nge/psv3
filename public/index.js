@@ -43,4 +43,13 @@ function update() {
 }
 
 
+function openBlank(content) {
+    const newWindow = window.open('about:blank', '_blank');
+    newWindow.document.open();
+    newWindow.document.write(content);
+    newWindow.document.close();
+}
+
+
+
 requestAnimationFrame(update);
