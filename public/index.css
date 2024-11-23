@@ -149,7 +149,7 @@ text {
 }
 
 .embedding-overflowable {
-    width: calc(100% - 20px);
+    width: calc(100% - 4%);
     height: fit-content;
     background-color: var(--black);
     border-radius: 10px;
@@ -158,8 +158,10 @@ text {
 }
 
 .flexed {
-    display: grid;
-    gap: 4%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.7%;
+    padding: 1%;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
 }
 
@@ -181,16 +183,26 @@ text {
 
 .all-games-list {
     width: 100%;
-    height: 100%;
+    height: fit-content;
 }
 
 .game-icon {
     transition: 0.5s;
     background-color: #120a31;
-    width: 120%;
-    height: 120%;
+    width: 8%;
+    height: 8%;
     max-height: 170px;
     border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.game-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: 3%;
 }
 
 .game-icon:hover {
