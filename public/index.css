@@ -192,7 +192,7 @@ text {
     height: 140px;
     border-radius: 10px;
     overflow: hidden;
-
+    font-size: 1px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -205,6 +205,11 @@ text {
     box-shadow: 10px 5px 5px var(--light-steel-blue);
     z-index: 99;
     outline: 1px var(--white) solid;
+    font-size: 100%;
+}
+
+.a {
+    bottom: 10%;
 }
 
 .game-icon:active {
