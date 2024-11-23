@@ -69,20 +69,20 @@ app.get('/games/', (req, res) => {
 
 // Instead of adding stuff for EVERY index html,
 // just add it from the server side...
-app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-    res.setHeader('content-type', 'text/html');
-    try {
-        const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
-        res.send(`${data}<script>${report}</script>`);
-    } catch (err) {
-        if (err.code == "ENOENT") {
-            res.sendStatus(404);
-        } else {
-            console.error(err);
-            res.sendStatus(500);
-        }
-    }
-});
+// app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
+//     res.setHeader('content-type', 'text/html');
+//     try {
+//         const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
+//         res.send(`${data}<script>${report}</script>`);
+//     } catch (err) {
+//         if (err.code == "ENOENT") {
+//             res.sendStatus(404);
+//         } else {
+//             console.error(err);
+//             res.sendStatus(500);
+//         }
+//     }
+// });
 
 const adjectives = [
     "Sticky", "Bouncy", "Slimy", "Fizzy", "Fluffy", "Wobbly", "Puffy", "Zesty",
@@ -176,7 +176,8 @@ app.get('/search', (req, res) => {
     res.send(JSON.stringify(filtered));
 });
 
-app.use('/images', express.static("public/images/games"));
+app.use('/images', express.static("public/images/games/"));
+app.use('/game', express.static("public/games/game/"));
 
 app.ws('/live-chat-ws', function (ws, req) {
     ws.on('message', async function (msg) {
