@@ -198,6 +198,15 @@ text {
     align-items: center;
 }
 
+.centerthing {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background-color: black;
+    border-radius: 100px;
+    transform: translate(-50%, -50%);
+}
+
 .game-icon:hover {
     transition: 0.1s;
     background-color: #120a31;
