@@ -180,7 +180,7 @@ text {
 }
 
 .all-games-list {
-    width: calc(100% - 5%);
+    width: calc(100% - 2.5%);
     height: 100%;
     padding: 20px;
 }
