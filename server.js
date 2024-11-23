@@ -49,10 +49,11 @@ function getCurrentTime() {
     return ` (${hours}:${formattedMinutes} ${ampm})`;
 }
 
-var constructedGamesListJSONTimestamp = +Date.now();
+var constructedGamesListJSONTimestamp;
 function constructGamesListJSON() {
-    const jsonData = fs.readFileSync(path.join(__dirname, './private/all.json'));
-    constructedGamesListJSON = jsonData;
+    const jsonData = fs.readFileSync(path.join(__dirname, './private/all.json'), 'utf-8');
+    constructedGamesListJSON = JSON.parse(jsonData);
+    constructedGamesListJSONTimestamp = +Date.now();
 }
 
 constructGamesListJSON();
@@ -166,9 +167,9 @@ app.get('/search', (req, res) => {
     res.setHeader('content-type', 'application/json');
 
     var filtered = [];
-
     constructedGamesListJSON.forEach(game => {
-        if (game.toLowerCase().includes(req.query.search.toLowerCase())) {
+        var content = `${game.name}${game.thumbnail}${game.slug}`;
+        if (content.toLowerCase().includes(req.query.search.toLowerCase())) {
             filtered.push(game);
         }
     });
