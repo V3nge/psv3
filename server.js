@@ -176,6 +176,8 @@ app.get('/search', (req, res) => {
     res.send(JSON.stringify(filtered));
 });
 
+app.use('/images', express.static("public/images/games"));
+
 app.ws('/live-chat-ws', function (ws, req) {
     ws.on('message', async function (msg) {
         const message = JSON.parse(msg);
