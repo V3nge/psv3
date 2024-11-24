@@ -5,6 +5,7 @@
     "express-rate-limit": "^7.4.1",
     "express-slow-down": "^2.0.3",
     "express-ws": "^5.0.2",
+    "fuse": "^0.12.1",
     "fuse.js": "^7.0.0",
     "helmet": "^8.0.0",
     "jsonminify": "^0.4.2",

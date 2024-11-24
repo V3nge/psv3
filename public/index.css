@@ -233,7 +233,7 @@ text {
 .game-icon:hover {
     transition: 0.1s;
     background-color: #120a31;
-    transform: scale(1.2) rotate(5deg);
+    transform: scale(1.2) rotate(3deg);
     box-shadow: 10px 5px 5px var(--black);
     z-index: 99;
     outline: 1px var(--blue-violet) solid;
