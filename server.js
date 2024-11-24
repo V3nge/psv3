@@ -331,10 +331,26 @@ app.get("/search", (req, res) => {
 app.use("/images", express.static("public/images/games/"));
 app.use("/game", express.static("public/games/game/"));
 
+var activeUsers = 0;
+
+app.get("/chat-names", (req, res) => {
+  res.setHeader("content-type", "application/json");
+  res.send(accs_vanities);
+});
+
 app.ws("/live-chat-ws", function (ws, req) {
+  activeUsers++;
+
+  ws.on("close", async function(err) {
+    activeUsers--;
+  });
+
   ws.on("message", async function (msg) {
     const message = JSON.parse(msg);
     switch (message.type) {
+      case "names":
+        ws.send(JSON.stringify({ "type" : "nameslist", value: accs_vanities }));
+        break;
       case "tempacc":
         ws.send(JSON.stringify({ type: "ok_tempacc" }));
         accs.push(message.name);

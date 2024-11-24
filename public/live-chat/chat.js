@@ -134,6 +134,7 @@ ws.onmessage = function (a) {
             "channel": channelToSendTo,
             "vanity": playNameClient
         }));
+        ws.send(JSON.stringify({"type" : "names"}));
     } else if (response.type == "gsend_r") {
         if (!hashes.includes(response.sender)) {
             hashes.push(response.sender);
@@ -150,6 +151,8 @@ ws.onmessage = function (a) {
         createMessage("System", `<a href="${url}">Your private chat: ${response.msg}</a>`, false);
         liveChatDialogLink.href = url;
         liveChatDialogLink.innerText = url;
+    } else if (response.type == "nameslist") {
+        createMessage("System", `(System) Active users: ${response.value}`, false);
     } else {
         console.log(response);
     }
@@ -186,6 +189,10 @@ function send() {
     alert("Invalid input >:(");
 }
 }
+
+setInterval(function() {
+    ws.send(JSON.stringify({"type" : "names"}));
+}, 1000 * 60 * 3);
 
 var codeInput = document.getElementById("code-input");
 
