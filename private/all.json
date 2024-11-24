@@ -1,9 +1,4 @@
 [{
-        "name": "Request or Report a Game",
-        "thumbnail": "/games/request/image(1).png",
-        "slug": "request"
-    },
-    {
         "name": "Subway Surfers",
         "thumbnail": "images/subway.jpg",
         "slug": "subwaysurfers"

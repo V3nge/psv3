@@ -46,10 +46,15 @@ function update() {
 function openBlank() {
     const content = document.documentElement.outerHTML;
     const newWindow = window.open('about:blank', '_blank');
-    newWindow.document.open();
+    newWindow.open();
     newWindow.document.write(content);
     newWindow.document.close();
+
+    location.href = "https://sacs.instructure.com";
+    close();
 }
+
+
 
 
 
