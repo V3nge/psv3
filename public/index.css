@@ -84,7 +84,7 @@ text {
     transition: 0.5s;
     position: relative;
     flex: 0 0 auto;
-    height: 100%;
+    height: 95%;
     width: 10%;
     background-color: var(--midnight-blue);
     scroll-snap-align: start;
@@ -97,7 +97,7 @@ text {
     transition: 0.5s;
     position: relative;
     flex: 0 0 auto;
-    height: 100%;
+    height: 95%;
     width: 10%;
     scroll-snap-align: start;
     border-radius: 10px;
@@ -105,6 +105,7 @@ text {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .carousel-element-preload:hover {
@@ -126,6 +127,7 @@ text {
 .carousel-element:hover .centerthing {
     visibility: visible;
     font-size: 100%;
+    text-align: center;
 }
 
 .carousel-element-preload::before {
@@ -134,7 +136,7 @@ text {
     top: 0;
     left: -100%;
     height: 100%;
-    width: 120px;
+    width: 120%;
     background: rgb(255, 255, 255);
     background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
     animation: slide 2s infinite linear;
@@ -158,7 +160,7 @@ text {
 }
 
 .embedding-overflowable {
-    width: calc(100% - 20px);
+    width: 100%;
     height: 30%;
     background-color: var(--black);
     border-radius: 10px;
@@ -185,7 +187,7 @@ text {
     background-color: #120a31;
     color: white;
     font-size: large;
-    min-height: 50px;
+    min-height: 50%;
 }
 
 .all-games-list {
@@ -209,11 +211,12 @@ text {
 
 .centerthing {
     transition: 0.1;
+    text-align: center;
     visibility: hidden;
     position: absolute;
     left: 50%;
     top: 50%;
-    height: 100;
+    height: 100%;
     width: 100%;
     border-radius: 1%;
     font-size: 1px;
@@ -233,6 +236,7 @@ text {
 
 .game-icon:hover .centerthing {
     visibility: visible;
+    text-align: center;
     font-size: 100%;
 }
 
