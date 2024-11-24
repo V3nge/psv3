@@ -44,14 +44,17 @@ function update() {
 
 
 function openBlank() {
-    const content = document.documentElement.outerHTML;
     const newWindow = window.open('about:blank', '_blank');
-    newWindow.open();
-    newWindow.document.write(`<script>var __BLANK__ = true;</script>`+content);
+    newWindow.document.write(`
+        <iframe src="${window.location.href}" 
+                style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" 
+                frameborder="0"></iframe>
+    `);
     newWindow.document.close();
 
     location.href = "https://sacs.instructure.com";
     close();
 }
+
 
 requestAnimationFrame(update);
