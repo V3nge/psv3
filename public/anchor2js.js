@@ -1,42 +1,56 @@
-// if (__BLANK__) {
-//     console.log("YOU'VE BEEN BLANKED");
+const PRELOAD = false;
 
-//     const gamesContent = {};
+if (__BLANK__) {
+    console.log("YOU'VE BEEN BLANKED");
 
-//     function openBlank(content) {
-//         const newWindow = window.open('about:blank', '_blank');
-//         newWindow.open();
-//         newWindow.document.write(`<script>var __BLANK__ = true;</script>` + content);
-//         newWindow.document.close();
-//     }
+    const gamesContent = {};
 
-//     async function fixAnchors() {
-//         const anchors = Array.from(document.getElementsByTagName("a"));
-//         for (const tag of anchors) {
-//             if (!tag.href.startsWith("javascript:") && tag.href.startsWith(window.location.href)) {
-//                 console.log("fixing", tag.href);
-//                 if (tag.dataset.loaded) continue;
+    function openBlank(content) {
+        const newWindow = window.open('about:blank', '_blank');
+        newWindow.open();
 
-//                 tag.dataset.loaded = "true";
+        if(PRELOAD) {
+            newWindow.document.write(`<script>var __BLANK__ = true;</script>` + content);
+        } else {
+            newWindow.document.write(`<iframe src="${content}" 
+                style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" 
+                frameborder="0"></iframe>`);
+        }
 
-//                 try {
-//                     const response = await fetch(tag.href);
-//                     const html = await response.text();
-//                     const key = btoa(tag.href);
-//                     gamesContent[key] = html;
+        newWindow.document.close();
+    }
 
-//                     tag.removeAttribute('href');
+    async function fixAnchors() {
+        const anchors = Array.from(document.getElementsByTagName("a"));
+        for (const tag of anchors) {
+            if (!tag.href.startsWith("javascript:") && tag.href.startsWith(window.location.href)) {
+                console.log("fixing", tag.href);
+                if (tag.dataset.loaded) continue;
 
-//                     tag.onclick = () => {
-//                         openBlank(gamesContent[key]);
-//                     };
-//                 } catch (error) {
-//                     console.error(`Failed to fetch ${tag.href}`, error);
-//                 }
-//             }
-//         }
-//     }
+                tag.dataset.loaded = "true";
 
-//     setInterval(fixAnchors, 100);
-//     fixAnchors();
-// }
+                try {
+                    if(PRELOAD) {
+                        const response = await fetch(tag.href);
+                        const html = await response.text();
+                        const key = btoa(tag.href);
+                        gamesContent[key] = html;    
+                    } else {
+                        gamesContent[key] = `${tag.href}`;
+                    }
+
+                    tag.removeAttribute('href');
+
+                    tag.onclick = () => {
+                        openBlank(gamesContent[key]);
+                    };
+                } catch (error) {
+                    console.error(`Failed to fetch ${tag.href}`, error);
+                }
+            }
+        }
+    }
+
+    setInterval(fixAnchors, 100);
+    fixAnchors();
+}
