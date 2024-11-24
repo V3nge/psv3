@@ -40,7 +40,7 @@ if (!DEBUG) {
 app.use(nocache());
 
 const hostname = "127.0.0.1";
-const port = 8000;
+const port = 7764;
 
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 

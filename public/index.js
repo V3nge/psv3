@@ -47,15 +47,11 @@ function openBlank() {
     const content = document.documentElement.outerHTML;
     const newWindow = window.open('about:blank', '_blank');
     newWindow.open();
-    newWindow.document.write(content);
+    newWindow.document.write(`<script>var __BLANK__ = true;</script>`+content);
     newWindow.document.close();
 
     location.href = "https://sacs.instructure.com";
     close();
 }
-
-
-
-
 
 requestAnimationFrame(update);
