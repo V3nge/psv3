@@ -140,7 +140,7 @@ function orderGames(gamesList, scoresList) {
 }
 
 async function loadAllGames() {
-    var listing;
+    let listing;
 
     if (ToSearch == null) {
         listing = await (await fetch("/games")).json();
@@ -155,10 +155,15 @@ async function loadAllGames() {
     });
 
     if (ToSearch == null) {
-        var built = listing.reverse()
+        const built = listing.reverse()
             .map(
                 (game) =>
-                `<div class="carousel-element centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
+                `<div class="carousel-element centered">
+                    <a href='javascript:openBlank("/games/${game.slug}/")'>
+                        <img src="${game.thumbnail}" class="thumbnail" loading="lazy" />
+                        <text class="centerthing">${game.name}</text>
+                    </a>
+                </div>`
             )
             .join("");
         recentlyAddedCarousel.innerHTML = built;
@@ -166,24 +171,43 @@ async function loadAllGames() {
 
     listing = listing.reverse();
 
-    built = listing
+    const allGamesBuilt = listing
         .map(
             (game) =>
-            `<div class="game-icon centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="min-img"></img><text class="centerthing">${game.name}</text></a></div>`
+            `<div class="game-icon centered">
+                <a href='javascript:openBlank("/games/${game.slug}/")'>
+                    <img src="${game.thumbnail}" class="min-img" />
+                    <text class="centerthing">${game.name}</text>
+                </a>
+            </div>`
         )
         .join("");
-    allGamesList.innerHTML = built;
+    allGamesList.innerHTML = allGamesBuilt;
 
-    
-    var popular = await fetchAndSortGames();
-    var popularListing = orderGames(listing, popular);
+    const popular = await fetchAndSortGames();
+    const popularListing = orderGames(listing, popular);
 
-    built = popularListing.map(
+    const popularBuilt = popularListing.map(
         (game) =>
-        `<div class="carousel-element centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
+        `<div class="carousel-element centered">
+            <a href='javascript:openBlank("/games/${game.slug}/")'>
+                <img src="${game.thumbnail}" class="thumbnail" loading="lazy" />
+                <text class="centerthing">${game.name}</text>
+            </a>
+        </div>`
     )
     .join("");
-    mostPlayedCarousel.innerHTML = built;
+    mostPlayedCarousel.innerHTML = popularBuilt;
+}
+
+function openBlank(url) {
+    const newWindow = window.open('about:blank', '_blank');
+    newWindow.document.write(`
+        <iframe src="${url}" 
+                style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" 
+                frameborder="0"></iframe>
+    `);
+    newWindow.document.close();
 }
 
 function loadGame(source) {
