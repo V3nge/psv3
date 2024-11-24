@@ -222,7 +222,7 @@ text {
     visibility: hidden;
     position: absolute;
     left: 50%;
-    bottom: 0%;
+    top: 50%;
     width: 100%;
     border-radius: 1%;
     font-size: 1px;
