@@ -137,7 +137,7 @@ function loadGame(source) {
   gameIframe = document.createElement("iframe");
   gameIframe.src = source;
   document.body.appendChild(gameIframe);
-  history.pushState({}, "", source);
+  history.replaceState({}, "", source);
   gameIframe.contentWindow.focus();
 }
 
