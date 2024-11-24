@@ -74,7 +74,11 @@ app.get('/games/', (req, res) => {
 app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
     res.setHeader('content-type', 'text/html');
     try {
-        const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
+        var path = path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`);
+        const data = fs.readFileSync(path, 'utf8');
+
+        console.log(path);
+
         res.send(`${data}${report}`);
     } catch (err) {
         if (err.code == "ENOENT") {
