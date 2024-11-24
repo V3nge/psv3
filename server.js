@@ -7,8 +7,15 @@ const fs = require('fs');
 const expressRateLimit = require('express-rate-limit');
 const expressSlowDown = require("express-slow-down");
 const Fuse = require('fuse.js');
+const compression = require('compression');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const app = express();
 var expressWs = require('express-ws')(app);
+
+app.use(compression());
+app.use(helmet());
+app.use(morgan('combined'));
 
 if(!DEBUG) {
     const limiter = expressRateLimit({
@@ -72,16 +79,18 @@ app.get('/games/', (req, res) => {
 // Instead of adding stuff for EVERY index html,
 // just add it from the server side...
 app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-    res.setHeader('content-type', 'text/html');
+    res.setHeader('Content-Type', 'text/html');
+
+    const sanitizedUrl = req.originalUrl.replace(/\.|\//g, "_");
+    const filePath = path.join(__dirname, 'Public', sanitizedUrl, 'index.html');
+
+    console.log(filePath);
+
     try {
-        var path = path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`);
-        const data = fs.readFileSync(path, 'utf8');
-
-        console.log(path);
-
+        const data = fs.readFile(filePath, 'utf8');
         res.send(`${data}${report}`);
     } catch (err) {
-        if (err.code == "ENOENT") {
+        if (err.code === 'ENOENT') {
             res.sendStatus(404);
         } else {
             console.error(err);

@@ -1,11 +1,14 @@
 {
   "dependencies": {
+    "compression": "^1.7.5",
     "express": "^4.21.1",
     "express-rate-limit": "^7.4.1",
     "express-slow-down": "^2.0.3",
     "express-ws": "^5.0.2",
     "fuse.js": "^7.0.0",
+    "helmet": "^8.0.0",
     "jsonminify": "^0.4.2",
+    "morgan": "^1.10.0",
     "nocache": "^4.0.0",
     "node-json-minify": "^3.0.0"
   }
