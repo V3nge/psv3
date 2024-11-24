@@ -113,6 +113,7 @@ text {
     background-color: var(--light-steel-blue);
     border: 1px var(--blue-violet) solid;
     z-index: 9999;
+    font-size: 100%;
 }
 
 .carousel-element:hover {
@@ -205,7 +206,7 @@ text {
     visibility: hidden;
     position: absolute;
     left: 50%;
-    bottom: -7%;
+    top: 50%;
     width: 100%;
     border-radius: 1%;
     transform: translate(-50%, -50%);
@@ -223,6 +224,10 @@ text {
 }
 
 .game-icon:hover .centerthing {
+    visibility: visible;
+}
+
+.carousel-element-preload:hover .centerthing {
     visibility: visible;
 }
 
