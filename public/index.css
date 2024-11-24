@@ -108,19 +108,24 @@ text {
 }
 
 .carousel-element-preload:hover {
-    transition: 0.08s;
+    transition: 0.1s;
     transform: scale(1.1);
     background-color: var(--light-steel-blue);
+    border: 1px var(--blue-violet) solid;
+    z-index: 9999;
+}
+
+.carousel-element:hover {
+    transition: 0.1s;
+    transform: scale(1.1);
     border: 1px var(--blue-violet) solid;
     z-index: 9999;
     font-size: 100%;
 }
 
-.carousel-element:hover {
-    transition: 0.08s;
-    transform: scale(1.1);
-    border: 1px var(--blue-violet) solid;
-    z-index: 9999;
+.carousel-element:hover .centerthing {
+    visibility: visible;
+    font-size: 100%;
 }
 
 .carousel-element-preload::before {
@@ -203,12 +208,14 @@ text {
 }
 
 .centerthing {
+    transition: 0.1;
     visibility: hidden;
     position: absolute;
     left: 50%;
     top: 50%;
     width: 100%;
     border-radius: 1%;
+    font-size: 1px;
     transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.521)
 }
@@ -225,10 +232,7 @@ text {
 
 .game-icon:hover .centerthing {
     visibility: visible;
-}
-
-.carousel-element-preload:hover .centerthing {
-    visibility: visible;
+    font-size: 100%;
 }
 
 .a {
