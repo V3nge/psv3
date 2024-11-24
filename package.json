@@ -4,6 +4,7 @@
     "express-rate-limit": "^7.4.1",
     "express-slow-down": "^2.0.3",
     "express-ws": "^5.0.2",
+    "fuse.js": "^7.0.0",
     "jsonminify": "^0.4.2",
     "nocache": "^4.0.0",
     "node-json-minify": "^3.0.0"
