@@ -537,7 +537,7 @@ p {
 
 .feature-list li {
     font-size: 1.2rem;
-    background-color: #333;
+    background-color: black;
     margin: 10px 0;
     padding: 10px;
     border-radius: 8px;
@@ -578,4 +578,5 @@ p {
 
 li {
     color: var(--light-steel-blue);
+    background-color: black;
 }

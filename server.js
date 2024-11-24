@@ -75,7 +75,7 @@ app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
     res.setHeader('content-type', 'text/html');
     try {
         const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
-        res.send(`${data}<script>${report}</script>`);
+        res.send(`${data}${report}`);
     } catch (err) {
         if (err.code == "ENOENT") {
             res.sendStatus(404);
