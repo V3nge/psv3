@@ -485,9 +485,9 @@ message-container #message * {
     position: fixed;
     width: 20px;
     height: 20px;
-    background-color: #61dafb;
+    background-color: var(--violet);
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
-    z-index: 1000;
+    z-index: 9999999999;
 }
