@@ -598,3 +598,59 @@ li {
     left: 50%;
     transform: translate(-50%, 0%);
 }
+
+.rainbowText {
+    display: inline-block;
+    font-size: 28px;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(45deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #04F26C, #6500FF, #04F297);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 400% 400%;
+
+    -webkit-animation: rainbowanim 10s ease infinite;
+    -moz-animation: rainbowanim 10s ease infinite;
+    animation: rainbowanim 10s ease infinite;
+}
+
+@-webkit-keyframes rainbowanim {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes rainbowanim {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes rainbowanim {
+    0% {
+        background-position: 0% 50%
+    }
+
+    50% {
+        background-position: 100% 50%
+    }
+
+    100% {
+        background-position: 0% 50%
+    }
+}

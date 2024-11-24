@@ -31,7 +31,7 @@ app.use(nocache());
 const hostname = "127.0.0.1";
 const port = 8000;
 
-var report = fs.readFileSync(path.join(__dirname, `private/report.js`));
+var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 
 var constructedGamesListJSON = null;
 
