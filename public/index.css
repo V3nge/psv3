@@ -84,7 +84,7 @@ text {
     transition: 0.5s;
     position: relative;
     flex: 0 0 auto;
-    height: 95%;
+    height: 80%;
     width: 10%;
     background-color: var(--midnight-blue);
     scroll-snap-align: start;
@@ -97,7 +97,7 @@ text {
     transition: 0.5s;
     position: relative;
     flex: 0 0 auto;
-    height: 95%;
+    height: 80%;
     width: 10%;
     scroll-snap-align: start;
     border-radius: 10px;
@@ -154,14 +154,14 @@ text {
 .embedding {
     overflow: hidden;
     width: 100%;
-    height: 30%;
+    height: 50%;
     background-color: var(--black);
     border-radius: 10px;
 }
 
 .embedding-overflowable {
     width: 100%;
-    height: 30%;
+    height: 50%;
     background-color: var(--black);
     border-radius: 10px;
     height: max-content;
@@ -611,7 +611,6 @@ li {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 400% 400%;
-
     -webkit-animation: rainbowanim 10s ease infinite;
     -moz-animation: rainbowanim 10s ease infinite;
     animation: rainbowanim 10s ease infinite;
@@ -621,11 +620,9 @@ li {
     0% {
         background-position: 0% 50%
     }
-
     50% {
         background-position: 100% 50%
     }
-
     100% {
         background-position: 0% 50%
     }
@@ -635,11 +632,9 @@ li {
     0% {
         background-position: 0% 50%
     }
-
     50% {
         background-position: 100% 50%
     }
-
     100% {
         background-position: 0% 50%
     }
@@ -649,11 +644,9 @@ li {
     0% {
         background-position: 0% 50%
     }
-
     50% {
         background-position: 100% 50%
     }
-
     100% {
         background-position: 0% 50%
     }
