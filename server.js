@@ -308,7 +308,7 @@ app.get("/check_room", (req, res) => {
 app.get("/search", (req, res) => {
   res.setHeader("content-type", "application/json");
 
-  const searchQuery = req.query.search?.toLowerCase() || "";
+  const searchQuery = req.query.search.toLowerCase() || "";
   if (!searchQuery) {
     res.send(JSON.stringify([]));
     return;
