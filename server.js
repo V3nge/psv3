@@ -8,13 +8,18 @@ const expressRateLimit = require('express-rate-limit');
 const expressSlowDown = require("express-slow-down");
 const Fuse = require('fuse.js');
 const compression = require('compression');
-const helmet = require('helmet');
+
+// should probably use this in the future, but is causing problems now...
+// const helmet = require('helmet');
+
 const morgan = require('morgan');
 const app = express();
 var expressWs = require('express-ws')(app);
 
 app.use(compression());
-app.use(helmet());
+
+// app.use(helmet());
+
 app.use(morgan('combined'));
 
 if(!DEBUG) {
@@ -78,26 +83,26 @@ app.get('/games/', (req, res) => {
 
 // // Instead of adding stuff for EVERY index html,
 // // just add it from the server side...
-// app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-//     res.setHeader('Content-Type', 'text/html');
+app.get(/^\/games\/[^\/]+$/, (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
 
-//     const sanitizedUrl = req.originalUrl.replace(/\.|\//g, "_");
-//     const filePath = path.join(__dirname, 'Public', sanitizedUrl, 'index.html');
+    const filePath = path.join(__dirname, 'Public', req.originalUrl, 'index.html');
 
-//     console.log(filePath);
+    console.log(filePath);
 
-//     try {
-//         const data = fs.readFile(filePath, 'utf8');
-//         res.send(`${data}${report}`);
-//     } catch (err) {
-//         if (err.code === 'ENOENT') {
-//             res.sendStatus(404);
-//         } else {
-//             console.error(err);
-//             res.sendStatus(500);
-//         }
-//     }
-// });
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                res.sendStatus(404);
+            } else {
+                console.error(err);
+                res.sendStatus(500);
+            }
+        } else {
+            res.send(`${data}${report}`);
+        }
+    });
+});
 
 const adjectives = [
     "Sticky", "Bouncy", "Slimy", "Fizzy", "Fluffy", "Wobbly", "Puffy", "Zesty",
