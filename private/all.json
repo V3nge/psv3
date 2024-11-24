@@ -743,5 +743,10 @@
         "name": "Fireboy & Watergirl 4",
         "thumbnail": "/games/fireboywatergirl4/300.jpg",
         "slug": "fireboywatergirl4"
+    },
+    {
+        "name": "Warfare 1917",
+        "thumbnail": "/games/warfare1917/thumbnail.jpeg",
+        "slug": "warfare1917"
     }
 ]
