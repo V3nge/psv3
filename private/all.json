@@ -718,5 +718,10 @@
         "name": "Yohoho.io",
         "thumbnail": "/games/yohoho.io/R.jpg",
         "slug": "yohoho.io"
+    },
+    {
+        "name": "Eaglercraft",
+        "thumbnail": "/games/eaglercraft/minecraft.webp",
+        "slug": "eaglercraft"
     }
 ]
