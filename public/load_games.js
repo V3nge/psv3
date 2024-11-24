@@ -113,6 +113,32 @@ async function fetchAndSortGames() {
     }
 }
 
+function orderGames(gamesList, scoresList) {
+    // Ensure both inputs are valid arrays
+    if (!Array.isArray(gamesList) || !Array.isArray(scoresList)) {
+        throw new TypeError("Both arguments must be arrays");
+    }
+
+    const scoresMap = scoresList.reduce((acc, item) => {
+        if (item.game && typeof item.game === 'string') {
+            const slug = item.game.split('/games/')[1]?.split('/')[0];
+            if (slug) acc[slug] = item;
+        }
+        return acc;
+    }, {});
+
+    return gamesList.sort((a, b) => {
+        const indexA = scoresList.findIndex(item =>
+            item.game.includes(`/games/${a.slug}/`)
+        );
+        const indexB = scoresList.findIndex(item =>
+            item.game.includes(`/games/${b.slug}/`)
+        );
+
+        return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+    });
+}
+
 async function loadAllGames() {
     var listing;
 
@@ -147,6 +173,17 @@ async function loadAllGames() {
         )
         .join("");
     allGamesList.innerHTML = built;
+
+    
+    var popular = await fetchAndSortGames();
+    var popularListing = orderGames(listing, popular);
+
+    built = popularListing.map(
+        (game) =>
+        `<div class="carousel-element centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
+    )
+    .join("");
+    mostPlayedCarousel.innerHTML = built;
 }
 
 function loadGame(source) {
