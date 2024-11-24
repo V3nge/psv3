@@ -106,7 +106,7 @@ async function loadAllGames() {
         var built = listing
             .map(
                 (game) =>
-                `<div class="carousel-element centered"><a href='/games/${game.slug})'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
+                `<div class="carousel-element centered"><a href='/games/${game.slug}'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
             )
             .join("");
         recentlyAddedCarousel.innerHTML = built;

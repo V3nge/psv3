@@ -76,28 +76,28 @@ app.get('/games/', (req, res) => {
     res.send(constructedGamesListJSON);
 });
 
-// Instead of adding stuff for EVERY index html,
-// just add it from the server side...
-app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
+// // Instead of adding stuff for EVERY index html,
+// // just add it from the server side...
+// app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
+//     res.setHeader('Content-Type', 'text/html');
 
-    const sanitizedUrl = req.originalUrl.replace(/\.|\//g, "_");
-    const filePath = path.join(__dirname, 'Public', sanitizedUrl, 'index.html');
+//     const sanitizedUrl = req.originalUrl.replace(/\.|\//g, "_");
+//     const filePath = path.join(__dirname, 'Public', sanitizedUrl, 'index.html');
 
-    console.log(filePath);
+//     console.log(filePath);
 
-    try {
-        const data = fs.readFile(filePath, 'utf8');
-        res.send(`${data}${report}`);
-    } catch (err) {
-        if (err.code === 'ENOENT') {
-            res.sendStatus(404);
-        } else {
-            console.error(err);
-            res.sendStatus(500);
-        }
-    }
-});
+//     try {
+//         const data = fs.readFile(filePath, 'utf8');
+//         res.send(`${data}${report}`);
+//     } catch (err) {
+//         if (err.code === 'ENOENT') {
+//             res.sendStatus(404);
+//         } else {
+//             console.error(err);
+//             res.sendStatus(500);
+//         }
+//     }
+// });
 
 const adjectives = [
     "Sticky", "Bouncy", "Slimy", "Fizzy", "Fluffy", "Wobbly", "Puffy", "Zesty",
