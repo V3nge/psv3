@@ -99,9 +99,7 @@ async function loadAllGames() {
     console.log(listing);
 
     listing.forEach((item) => {
-        if (item.name.toLowerCase().includes("game")) {
-            item.name = applyLookalikes(item.name);
-        }
+        item.name = item.name.replaceAll("a", "а").replaceAll("e", "е");
     });
 
     if (ToSearch == null) {

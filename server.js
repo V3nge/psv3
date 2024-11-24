@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const expressRateLimit = require('express-rate-limit');
 const expressSlowDown = require("express-slow-down");
+const Fuse = require('fuse.js');
 const app = express();
 var expressWs = require('express-ws')(app);
 
@@ -70,20 +71,20 @@ app.get('/games/', (req, res) => {
 
 // Instead of adding stuff for EVERY index html,
 // just add it from the server side...
-// app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-//     res.setHeader('content-type', 'text/html');
-//     try {
-//         const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
-//         res.send(`${data}<script>${report}</script>`);
-//     } catch (err) {
-//         if (err.code == "ENOENT") {
-//             res.sendStatus(404);
-//         } else {
-//             console.error(err);
-//             res.sendStatus(500);
-//         }
-//     }
-// });
+app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
+    res.setHeader('content-type', 'text/html');
+    try {
+        const data = fs.readFileSync(path.join(__dirname, `Public${req.originalUrl.replaceAll(".", "_").replaceAll("index.html", "")}/index.html`), 'utf8');
+        res.send(`${data}<script>${report}</script>`);
+    } catch (err) {
+        if (err.code == "ENOENT") {
+            res.sendStatus(404);
+        } else {
+            console.error(err);
+            res.sendStatus(500);
+        }
+    }
+});
 
 const adjectives = [
     "Sticky", "Bouncy", "Slimy", "Fizzy", "Fluffy", "Wobbly", "Puffy", "Zesty",
@@ -121,6 +122,10 @@ function updateCount(path, key) {
     }
     pathStats[path][key]++;
 }
+
+app.get("/stats", (req, res) => {
+    res.send(pathStats);
+})
 
 app.post("/s", (req, res) => {
     const path = req.query.u;
@@ -166,16 +171,26 @@ app.get('/check_room', (req, res) => {
 app.get('/search', (req, res) => {
     res.setHeader('content-type', 'application/json');
 
-    var filtered = [];
-    constructedGamesListJSON.forEach(game => {
-        var content = `${game.name}${game.thumbnail}${game.slug}`;
-        if (content.toLowerCase().includes(req.query.search.toLowerCase())) {
-            filtered.push(game);
-        }
-    });
+    const searchQuery = req.query.search?.toLowerCase() || '';
+    if (!searchQuery) {
+        res.send(JSON.stringify([]));
+        return;
+    }
+
+    const options = {
+        keys: ['name', 'thumbnail', 'slug'],
+        threshold: 0.3,               
+        includeScore: true
+    };
+
+    const fuse = new Fuse(constructedGamesListJSON, options);
+    const results = fuse.search(searchQuery);
+
+    const filtered = results.map(result => result.item);
 
     res.send(JSON.stringify(filtered));
 });
+
 
 app.use('/images', express.static("public/images/games/"));
 app.use('/game', express.static("public/games/game/"));
