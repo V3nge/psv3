@@ -222,7 +222,6 @@ text {
 
 .game-icon:hover .centerthing {
     visibility: visible;
-    filter: none;
 }
 
 .a {
