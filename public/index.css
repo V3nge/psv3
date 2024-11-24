@@ -199,6 +199,7 @@ text {
 }
 
 .centerthing {
+    visibility: hidden;
     position: absolute;
     left: 50%;
     bottom: -10;
@@ -217,6 +218,11 @@ text {
     z-index: 99;
     outline: 1px var(--white) solid;
     font-size: 100%;
+}
+
+.game-icon:hover .centerthing {
+    visibility: visible;
+    filter: none;
 }
 
 .a {
