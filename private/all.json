@@ -748,5 +748,15 @@
         "name": "Warfare 1917",
         "thumbnail": "/games/warfare1917/thumbnail.jpeg",
         "slug": "warfare1917"
+    },
+    {
+        "name": "Johnny Upgrade",
+        "thumbnail": "/games/johnny-upgrade/thumbnail.png",
+        "slug": "johnny-upgrade"
+    },
+    {
+        "name": "60 Second Burger Run",
+        "thumbnail": "/games/60secondburgerrun/thumbnail.jpeg",
+        "slug": "60secondburgerrun"
     }
 ]
