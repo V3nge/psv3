@@ -42,6 +42,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
+var searches = [];
 
 function openBlank() {
     const newWindow = window.open('about:blank', '_blank');
@@ -52,9 +53,8 @@ function openBlank() {
     `);
     newWindow.document.close();
 
-    location.href = "https://sacs.instructure.com";
+    location.href = "https://google.com/";
     close();
 }
-
 
 requestAnimationFrame(update);

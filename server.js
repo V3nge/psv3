@@ -339,67 +339,79 @@ app.get("/chat-names", (req, res) => {
 });
 
 app.ws("/live-chat-ws", function (ws, req) {
+  let thisUser = {};
   activeUsers++;
 
-  ws.on("close", async function(err) {
+  const removeUser = (user) => {
+    const index = accs.indexOf(user.name);
+    if (index !== -1) {
+      accs.splice(index, 1);
+      accs_vanities.splice(index, 1);
+      websockets.splice(index, 1);
+      console.log(`User removed: ${user.name}`);
+    } else {
+      console.log("User not found in users list!");
+    }
+  };
+
+  const sendToChannel = (channel, message, senderHash) => {
+    websockets.forEach((person) => {
+      if (person.channel === channel) {
+        person.socket.send(
+          JSON.stringify({
+            type: "gsend_r",
+            msg: encodeURIComponent(message + getCurrentTime()),
+            sender: senderHash,
+            vanity: accs_vanities[accs.indexOf(message.sender)],
+          })
+        );
+      }
+    });
+  };
+
+  ws.on("close", async function (err) {
     activeUsers--;
+    removeUser(thisUser);
   });
 
   ws.on("message", async function (msg) {
     const message = JSON.parse(msg);
     switch (message.type) {
       case "names":
-        ws.send(JSON.stringify({ "type" : "nameslist", value: JSON.stringify(accs_vanities) }));
+        ws.send(JSON.stringify({ type: "nameslist", value: JSON.stringify(accs_vanities) }));
         break;
+
       case "tempacc":
+        thisUser = message;
         ws.send(JSON.stringify({ type: "ok_tempacc" }));
+
         accs.push(message.name);
-        console.log(message);
-        console.log(message.vanity);
-        if (
-          message.vanity == null ||
-          message.vanity.trim() == "" ||
-          message.vanity.trim().length > 30
-        ) {
-          var randomCombinationThing = getRandomCombination();
-          console.log(randomCombinationThing);
-          message.vanity = randomCombinationThing;
+
+        if (!message.vanity || message.vanity.trim() === "" || message.vanity.trim().length > 30) {
+          message.vanity = getRandomCombination();
         }
         accs_vanities.push(message.vanity.trim());
+
         websockets.push({ socket: ws, channel: message.channel });
+        thisUser.websocket = { socket: ws, channel: message.channel };
         break;
+
       case "tempacc_gsend":
         if (accs.includes(message.sender)) {
-          var decodedMessage = decodeURIComponent(message.msg);
-          if (
-            decodedMessage.trim() == "" ||
-            decodedMessage.trim().length > 2001
-          ) {
+          const decodedMessage = decodeURIComponent(message.msg);
+          if (decodedMessage.trim() === "" || decodedMessage.trim().length > 2001) {
             ws.send(JSON.stringify({ type: "nuh uh" }));
             break;
           }
           ws.send(JSON.stringify({ type: "ok" }));
+
           const senderHash = await sha256(message.sender);
-          websockets.forEach((person) => {
-            if (person.channel == message.channel) {
-              console.log(accs_vanities);
-              console.log(accs_vanities[accs.indexOf(message.sender)]);
-              person.socket.send(
-                JSON.stringify({
-                  type: "gsend_r",
-                  msg: encodeURIComponent(
-                    decodedMessage.trim() + getCurrentTime()
-                  ),
-                  sender: senderHash,
-                  vanity: accs_vanities[accs.indexOf(message.sender)],
-                })
-              );
-            }
-          });
+          sendToChannel(message.channel, decodedMessage.trim(), senderHash);
         } else {
           ws.send(JSON.stringify({ type: "nuh uh" }));
         }
         break;
+
       case "newpri":
         const senderHash = await sha256(message.sender);
         ws.send(
@@ -410,6 +422,7 @@ app.ws("/live-chat-ws", function (ws, req) {
           })
         );
         break;
+
       default:
         ws.send(JSON.stringify({ type: "unknowntype", value: message.type }));
     }
