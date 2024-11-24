@@ -106,7 +106,7 @@ async function loadAllGames() {
         var built = listing
             .map(
                 (game) =>
-                `<div class="carousel-element centered"><a href='/games/${game.slug}'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
+                `<div class="carousel-element centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
             )
             .join("");
         recentlyAddedCarousel.innerHTML = built;
@@ -117,7 +117,7 @@ async function loadAllGames() {
     built = listing
         .map(
             (game) =>
-            `<div class="game-icon centered"><a href='/games/${game.slug}'><img src="${game.thumbnail}" class="min-img"></img><text class="centerthing">${game.name}</text></a></div>`
+            `<div class="game-icon centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="min-img"></img><text class="centerthing">${game.name}</text></a></div>`
         )
         .join("");
     allGamesList.innerHTML = built;

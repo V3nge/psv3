@@ -85,48 +85,32 @@ app.get("/games/", (req, res) => {
 
 // AHHH FUCK IT
 
-function injectReport() {
-  console.log("Injector loaded");
-  return (req, res, next) => {
-    const originalSend = res.send;
-
-    res.send = function (body) {
-      if (typeof body === "string" && (body.includes("</body>") || body.includes("<html>"))) {
-        const injectedBody = `${body}${report}`;
-        console.log("Injected");
-        originalSend.call(this, injectedBody);
-      } else {
-        console.log("Didn't inject");
-        originalSend.call(this, body);
-      }
-    };
-
-    next();
-  };
-}
 
 // // Instead of adding stuff for EVERY index html,
 // // just add it from the server side...
-// app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-//     res.setHeader('Content-Type', 'text/html');
+app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
 
-//     const filePath = path.join(__dirname, 'public', req.originalUrl, 'index.html');
+  const safeUrl = path.normalize(req.originalUrl);
+  const filePath = path.join(__dirname, 'public', safeUrl, 'index.html');
 
-//     console.log(filePath);
+  console.log(`Serving file: ${filePath}`);
 
-//     fs.readFile(filePath, 'utf8', (err, data) => {
-//         if (err) {
-//             if (err.code === 'ENOENT') {
-//                 res.sendStatus(404);
-//             } else {
-//                 console.error(err);
-//                 res.sendStatus(500);
-//             }
-//         } else {
-//             res.send(`${data}${report}`);
-//         }
-//     });
-// });
+  fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+          if (err.code === 'ENOENT') {
+              console.error('File not found:', filePath);
+              res.sendStatus(404);
+          } else {
+              console.error('Error reading file:', err);
+              res.sendStatus(500);
+          }
+          return;
+      }
+
+      res.send(`${data}${report}`);
+  });
+});
 
 const adjectives = [
   "Sticky",
