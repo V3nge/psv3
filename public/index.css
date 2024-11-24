@@ -480,3 +480,14 @@ message-container #message * {
 .search-button:hover {
     transform: translate(-50%, -50%) rotate(1deg);
 }
+
+.follower {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background-color: #61dafb;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
