@@ -213,6 +213,7 @@ text {
     position: absolute;
     left: 50%;
     top: 50%;
+    height: 100;
     width: 100%;
     border-radius: 1%;
     font-size: 1px;
@@ -224,9 +225,9 @@ text {
     transition: 0.1s;
     background-color: #120a31;
     transform: scale(1.2) rotate(5deg);
-    box-shadow: 10px 5px 5px var(--light-steel-blue);
+    box-shadow: 10px 5px 5px var(--black);
     z-index: 99;
-    outline: 1px var(--white) solid;
+    outline: 1px var(--blue-violet) solid;
     font-size: 100%;
 }
 
@@ -502,7 +503,6 @@ message-container #message * {
     transform: translate(-50%, -50%);
     z-index: 9999999999;
 }
-
 
 
 /*EPIC CSS*/
