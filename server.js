@@ -256,8 +256,14 @@ app.get("/stats", (req, res) => {
   res.send(pathStats);
 });
 
+function affixSlash(path) {
+  path = path.trim();
+  if(path.endsWith("/")) { return; }
+  return `${path}/`;
+}
+
 app.post("/s", (req, res) => {
-  const path = req.query.u;
+  const path = affixSlash(req.query.u);
   if (!path) {
     return res.status(400).send({ error: "Path is required" });
   }
@@ -266,7 +272,7 @@ app.post("/s", (req, res) => {
 });
 
 app.post("/r", (req, res) => {
-  const path = req.query.u;
+  const path = affixSlash(req.query.u);
   if (!path) {
     return res.status(400).send({ error: "Path is required" });
   }
