@@ -11,6 +11,7 @@
 
 const allGamesList = document.getElementById("allGames");
 const recentlyAddedCarousel = document.getElementById("recentlyAddedCarousel");
+const mostPlayedCarousel = document.getElementById("mostPlayCarousel");
 
 var urlParams = new URLSearchParams(window.location.search);
 var ToSearch = urlParams.get("search");
@@ -87,6 +88,31 @@ function applyLookalikes(inputString) {
         .join("");
 }
 
+async function fetchAndSortGames() {
+    try {
+        const response = await fetch('/stats');
+        if (!response.ok) {
+            throw new Error(`Error fetching stats: ${response.statusText}`);
+        }
+        const gameData = await response.json();
+        function calculateAndSortScores(gameData) {
+            const gameEntries = Object.entries(gameData);
+            const scoredGames = gameEntries.map(([game, stats]) => {
+                const score = (stats.recurring / stats.starts || 0) + (stats.recurring * 2);
+                return { game, score, starts: stats.starts, recurring: stats.recurring };
+            });
+
+            scoredGames.sort((a, b) => b.score - a.score);
+            return scoredGames;
+        }
+        const sortedGames = calculateAndSortScores(gameData);
+        console.log(sortedGames);
+        return sortedGames;
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
 async function loadAllGames() {
     var listing;
 
@@ -103,7 +129,7 @@ async function loadAllGames() {
     });
 
     if (ToSearch == null) {
-        var built = listing
+        var built = listing.reverse()
             .map(
                 (game) =>
                 `<div class="carousel-element centered"><a href='/games/${game.slug}/'><img src="${game.thumbnail}" class="thumbnail" loading="lazy"></img><text class="centerthing">${game.name}</text></a></div>`
@@ -112,7 +138,7 @@ async function loadAllGames() {
         recentlyAddedCarousel.innerHTML = built;
     }
 
-    listing = shuffleArray(listing);
+    listing = listing.reverse();
 
     built = listing
         .map(

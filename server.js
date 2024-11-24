@@ -258,7 +258,7 @@ app.get("/stats", (req, res) => {
 
 function affixSlash(path) {
   path = path.trim();
-  if(path.endsWith("/")) { return; }
+  if(path.endsWith("/")) { return path; }
   return `${path}/`;
 }
 
