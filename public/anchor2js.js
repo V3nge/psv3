@@ -1,12 +1,23 @@
+// const PRELOAD = false;
+
 // if (__BLANK__) {
 //     console.log("YOU'VE BEEN BLANKED");
 
 //     const gamesContent = {};
 
 //     function openBlank(content) {
+//         console.log(content);
 //         const newWindow = window.open('about:blank', '_blank');
 //         newWindow.open();
-//         newWindow.document.write(`<script>var __BLANK__ = true;</script>` + content);
+
+//         if(PRELOAD) {
+//             newWindow.document.write(`<script>var __BLANK__ = true;</script>` + content);
+//         } else {
+//             newWindow.document.write(`<iframe src="${content}" 
+//                 style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" 
+//                 frameborder="0"></iframe>`);
+//         }
+
 //         newWindow.document.close();
 //     }
 
@@ -20,10 +31,14 @@
 //                 tag.dataset.loaded = "true";
 
 //                 try {
-//                     const response = await fetch(tag.href);
-//                     const html = await response.text();
-//                     const key = btoa(tag.href);
-//                     gamesContent[key] = html;
+//                     if(PRELOAD) {
+//                         const response = await fetch(tag.href);
+//                         const html = await response.text();
+//                         const key = btoa(tag.href);
+//                         gamesContent[key] = html;    
+//                     } else {
+//                         gamesContent[key] = `${tag.href}`;
+//                     }
 
 //                     tag.removeAttribute('href');
 
