@@ -723,5 +723,25 @@
         "name": "Eaglercraft",
         "thumbnail": "/games/eaglercraft/minecraft.webp",
         "slug": "eaglercraft"
+    },
+    {
+        "name": "Fireboy & Watergirl 1",
+        "thumbnail": "/games/fireboywatergirl/logo.jpeg",
+        "slug": "fireboywatergirl"
+    },
+    {
+        "name": "Fireboy & Watergirl 2",
+        "thumbnail": "/games/fireboywatergirl2/Untitled.jpeg",
+        "slug": "fireboywatergirl2"
+    },
+    {
+        "name": "Fireboy & Watergirl 3",
+        "thumbnail": "/games/fireboywatergirl3/icon.png",
+        "slug": "fireboywatergirl"
+    },
+    {
+        "name": "Fireboy & Watergirl 4",
+        "thumbnail": "/games/fireboywatergirl4/300.jpg",
+        "slug": "fireboywatergirl4"
     }
 ]
