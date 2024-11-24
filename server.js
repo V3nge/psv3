@@ -349,7 +349,7 @@ app.ws("/live-chat-ws", function (ws, req) {
     const message = JSON.parse(msg);
     switch (message.type) {
       case "names":
-        ws.send(JSON.stringify({ "type" : "nameslist", value: accs_vanities }));
+        ws.send(JSON.stringify({ "type" : "nameslist", value: JSON.stringify(accs_vanities) }));
         break;
       case "tempacc":
         ws.send(JSON.stringify({ type: "ok_tempacc" }));

@@ -152,7 +152,7 @@ ws.onmessage = function (a) {
         liveChatDialogLink.href = url;
         liveChatDialogLink.innerText = url;
     } else if (response.type == "nameslist") {
-        createMessage("System", `(System) Active users: ${response.value}`, false);
+        createMessage("System", `(System) Active users: ${JSON.parse(response.value).join(', ')}`, false);
     } else {
         console.log(response);
     }
