@@ -584,3 +584,17 @@ li {
     color: var(--light-steel-blue);
     background-color: black;
 }
+
+.flex-same-line {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.descriptor {
+    transition: 1s;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
