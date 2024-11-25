@@ -235,21 +235,34 @@ const NOUNS = [
     "Snowman",
 ];
 
-// Function to generate a random combination
-function getRandomCombination() {
-    const randomAdjective =
-        ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
-    const randomNoun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
-    return randomAdjective + randomNoun;
+function randomElement(list) {
+    return list[Math.floor(Math.random() * list.length)];
 }
 
-const pathStats = {};
+function getRandomCombination() {
+    return `${randomElement(ADJECTIVES)}${randomElement(NOUNS)}`;
+}
+
+var pathStats = {};
+var lastSavedPathStats = +Date.now();
 
 function updateCount(path, key) {
     if (!pathStats[path]) {
         pathStats[path] = { starts: 0, recurring: 0 };
     }
+
     pathStats[path][key]++;
+
+    if ((+Date.now() - lastSavedPathStats) > (60 * 1000)) {
+        lastSavedPathStats = +Date.now();
+        
+        try {
+            fs.writeFileSync('path-stats.json', JSON.stringify(pathStats));
+            console.log('Saved pathStats to JSON file.');
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
 
 app.get("/stats", (req, res) => {
