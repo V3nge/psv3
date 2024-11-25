@@ -1,4 +1,6 @@
 const DEBUG = true;
+const PING_TIMEOUT = 10000;
+
 const crypto = require("crypto");
 const nocache = require("nocache");
 const express = require("express");
@@ -332,13 +334,39 @@ app.use("/game", express.static("public/games/game/"));
 
 var activeUsers = 0;
 
-app.get("/chat-names", (req, res) => {
+app.get("/live-chat/active", (req, res) => {
   res.setHeader("content-type", "application/json");
   res.send(accs_vanities);
 });
 
+var blockedUIDs = ["KNZ9TpHRbpbh76c70Bmp"];
 app.ws("/live-chat-ws", function (ws, req) {
   let thisUser = {};
+  thisUser.connected = true;
+  thisUser.needsRemovalOnDisconnect = true;
+  thisUser.lastPingReturned = +Date.now();
+
+  thisUser.pingTimeout = setTimeout(function go() {
+    // Basically a set interval
+    if(!thisUser.connected) {
+        if(thisUser.needsRemovalOnDisconnect) {
+            removeUser(thisUser);
+        }
+        return; // Don't set the next timeout since they left (or disconnected unintentionally)
+    } else {
+        ws.send(JSON.stringify({ "type" : "ping" }));
+        if(((+Date.now()) - thisUser.lastPingReturned) > (PING_TIMEOUT + 5000)) {
+            console.log(`${thisUser.name}'s last ping was more than 15 seconds ago, disconnecting and closing websocket.`);
+            thisUser.connected = false;
+            thisUser.needsRemovalOnDisconnect = false;
+
+            removeUser(thisUser);
+            ws.close();
+        }
+    }
+    thisUser.pingTimeout = setTimeout(go, 5000);
+  }, 5000);
+
   activeUsers++;
 
   const removeUser = (user) => {
@@ -375,6 +403,7 @@ app.ws("/live-chat-ws", function (ws, req) {
   ws.on("close", async function (err) {
     activeUsers--;
     removeUser(thisUser);
+    thisUser.connected = false;
   });
 
   ws.on("message", async function (msg) {
@@ -382,13 +411,30 @@ app.ws("/live-chat-ws", function (ws, req) {
     const ipAddress = req.ip;
     const now = new Date();
 
+    // If they send literally anything back that means
+    // they are still connected...
+    thisUser.lastPingReturned = +Date.now();
+
     switch (message.type) {
       case "names":
         ws.send(JSON.stringify({ type: "nameslist", value: JSON.stringify(accs_vanities) }));
         break;
 
       case "tempacc":
+        // I would do it by ip normally but everyone has the same ip...
+        // and everybody is too stupid to figure out they can just clear their localstorage
+        if(blockedUIDs.includes(message.name) || message.name.length != 20) {
+            thisUser.connected = false;
+            thisUser.needsRemovalOnDisconnect = false;
+            ws.send(JSON.stringify({ type: "blocked" }));
+            return;
+        }
+
         thisUser = message;
+        thisUser.connected = true;
+        thisUser.needsRemovalOnDisconnect = true;
+        thisUser.lastPingReturned = +Date.now();
+
         ws.send(JSON.stringify({ type: "ok_tempacc" }));
 
         accs.push(message.name);
@@ -441,7 +487,7 @@ app.ws("/live-chat-ws", function (ws, req) {
           })
         );
         break;
-
+      case "ping": break;
       default:
         ws.send(JSON.stringify({ type: "unknowntype", value: message.type }));
     }

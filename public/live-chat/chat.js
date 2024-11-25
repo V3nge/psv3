@@ -92,7 +92,11 @@ function generateRandomString(length) {
     return result;
 }
 
-var uid = generateRandomString(20);
+var uid = localStorage.getItem("chat_uid");
+if(uid == null) { 
+    uid = generateRandomString(20);
+    localStorage.setItem("chat_uid", uid);
+}
 
 var urlParams = new URLSearchParams(window.location.search);
 var channelToSendTo = urlParams.get('c');
@@ -167,7 +171,9 @@ ws.onmessage = function (a) {
     } else if (response.type == "nameslist") {
         createMessage("System", `(System) Active users: ${JSON.parse(response.value).join(', ')}`, false);
     } else if (response.type == "ping") {
-        ws.send({ "type" : "ping" });
+        ws.send(JSON.stringify({ "type" : "ping" }));
+    } else if (response.type == "blocked") {
+        document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
     } else {
         console.log(response);
     }
