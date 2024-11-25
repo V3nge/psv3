@@ -83,9 +83,6 @@ app.get("/games/", (req, res) => {
   res.send(constructedGamesListJSON);
 });
 
-// AHHH FUCK IT
-
-
 // // Instead of adding stuff for EVERY index html,
 // // just add it from the server side...
 app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
@@ -351,6 +348,10 @@ app.ws("/live-chat-ws", function (ws, req) {
       accs_vanities.splice(index, 1);
       websockets.splice(index, 1);
       console.log(`User removed: ${user.name}`);
+      var message = {
+        "decodedMessage" : `${user.vanity} has left the chat!`
+      };
+      sendToChannel(user.channel, message, null);
     } else {
       console.log("User not found in users list!");
     }
@@ -362,7 +363,7 @@ app.ws("/live-chat-ws", function (ws, req) {
         person.socket.send(
           JSON.stringify({
             type: "gsend_r",
-            msg: encodeURIComponent(message + getCurrentTime()),
+            msg: encodeURIComponent(message.decodedMessage + getCurrentTime()),
             sender: senderHash,
             vanity: accs_vanities[accs.indexOf(message.sender)],
           })
@@ -417,23 +418,14 @@ app.ws("/live-chat-ws", function (ws, req) {
           }
           ws.send(JSON.stringify({ type: "ok" }));
 
+          message.decodedMessage = decodedMessage;
+
           const senderHash = await sha256(message.sender);
-          websockets.forEach((person) => {
-            if (person.channel == message.channel) {
-              console.log(accs_vanities);
-              console.log(accs_vanities[accs.indexOf(message.sender)]);
-              person.socket.send(
-                JSON.stringify({
-                  type: "gsend_r",
-                  msg: encodeURIComponent(
-                    decodedMessage.trim() + getCurrentTime()
-                  ),
-                  sender: senderHash,
-                  vanity: accs_vanities[accs.indexOf(message.sender)],
-                })
-              );
-            }
-          });
+
+          console.log(message);
+          console.log(decodedMessage);
+
+          sendToChannel(message.channel, message, senderHash);
         } else {
           ws.send(JSON.stringify({ type: "nuh uh" }));
         }

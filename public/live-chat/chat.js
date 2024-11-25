@@ -83,7 +83,16 @@ const joinMessages = [
     "The legends were true—I hath arrived, fashionably late as always!"
 ];
 
-var uid = JSON.stringify(Math.round(Math.random() * 999999999999));
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+var uid = generateRandomString(20);
 
 var urlParams = new URLSearchParams(window.location.search);
 var channelToSendTo = urlParams.get('c');
@@ -135,6 +144,11 @@ ws.onmessage = function (a) {
         }));
         ws.send(JSON.stringify({"type" : "names"}));
     } else if (response.type == "gsend_r") {
+        if (response.sender == null) {
+            createMessage("?", `${decodeURIComponent(response.msg)}`);
+            return;
+        }
+
         if (!hashes.includes(response.sender)) {
             hashes.push(response.sender);
         }
@@ -152,6 +166,8 @@ ws.onmessage = function (a) {
         liveChatDialogLink.innerText = url;
     } else if (response.type == "nameslist") {
         createMessage("System", `(System) Active users: ${JSON.parse(response.value).join(', ')}`, false);
+    } else if (response.type == "ping") {
+        ws.send({ "type" : "ping" });
     } else {
         console.log(response);
     }
