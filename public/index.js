@@ -5,6 +5,9 @@ var settingsList = document.getElementById("settingsList");
 var sfxTime = +Date.now();
 var inGame = false;
 var gameIframe = null;
+var backgroundDegrees = 0;
+var startTimestamp = +Date.now();
+var lastTimestamp = startTimestamp;
 
 function animeGirl() {
     if ((+Date.now() - sfxTime) > 1000) {
@@ -29,14 +32,10 @@ function saveSettings(save) {
     });
 }
 
-var backgroundDegrees = 0;
-var start = +Date.now();
-var last = start;
-
 function update() {
-    last = start;
-    start = +Date.now();
-    backgroundDegrees -= ((start - last) / (80 + (Math.random() * 20)));
+    lastTimestamp = startTimestamp;
+    startTimestamp = +Date.now();
+    backgroundDegrees -= ((startTimestamp - lastTimestamp) / (80 + (Math.random() * 20)));
     backgroundDegrees %= 360;
     document.body.style.background = `linear-gradient(${backgroundDegrees}deg, rgba(4,1,18,1) 0%, rgb(17, 5, 44) 100%)`;
     requestAnimationFrame(update);
