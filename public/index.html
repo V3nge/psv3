@@ -16,42 +16,15 @@
     <!-- <div class="follower"></div> -->
 
     <div class="topbar glowing-border">
+        
         <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
-        <input id="search" class="search" placeholder="Search here">
-        <script>
-            var input = document.getElementById("search");
-            input.addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    searchThings();
-                }
-            });
-        </script>
-        </input>
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                fetch("quotes.json")
-                    .then((response) => response.json())
-                    .then((data) => {
-                        const randomQuote = data[Math.floor(Math.random() * data.length)];
+        <input id="search" placeholder="Search here" class="search"></input>
 
-                        if (randomQuote.includes("OGNUM1") && randomQuote.includes("SQRTNUM1")) {
-                            const ognum = Math.floor(Math.random() * 3000);
-                            randomQuote = `the square root of ${ognum} is ${Math.sqrt(ognum)}`;
-                        } else if (randomQuote.includes("CURRENTURL")) {
-                            randomQuote = window.location.hostname;
-                        }
-
-                        document.getElementById("quote").innerHTML = randomQuote;
-                    })
-                    .catch((error) => console.error("Error loading quotes:", error));
-            });
-        </script>
-
-        <input onclick="document.getElementById('settingsDialog').showModal()" class="settings-button" type="button" value="Open Settings"></input>
-        <input onclick="openBlank();" class="blank-button" type="button" value="about:blank"></input>
-        <a href="live-chat"><input class="live-chat-button" type="button" value="Live Chat"></input>
-        </a>
-
+        <div class="top-flexed flexed">
+            <button onclick="document.getElementById('settingsDialog').showModal()">Open Settings</button>
+            <button onclick="openBlank();">about:blank</button>
+            <a href="live-chat"><button>Live Chat</button></a>
+        </div>
     </div>
     <dialog id="settingsDialog" class="menu">
         <h1>Settings</h1>
@@ -142,6 +115,32 @@
     <script src="report.js"></script>
     <!-- <script src="anchor2js.js"></script> -->
     <!-- <script src="follower.js"></script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("quotes.json")
+                .then((response) => response.json())
+                .then((data) => {
+                    const randomQuote = data[Math.floor(Math.random() * data.length)];
+
+                    if (randomQuote.includes("OGNUM1") && randomQuote.includes("SQRTNUM1")) {
+                        const ognum = Math.floor(Math.random() * 3000);
+                        randomQuote = `the square root of ${ognum} is ${Math.sqrt(ognum)}`;
+                    } else if (randomQuote.includes("CURRENTURL")) {
+                        randomQuote = window.location.hostname;
+                    }
+
+                    document.getElementById("quote").innerHTML = randomQuote;
+                })
+                .catch((error) => console.error("Error loading quotes:", error));
+        });
+
+        var input = document.getElementById("search");
+        input.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                searchThings();
+            }
+        });
+    </script>
 </footer>
 
 </html>
