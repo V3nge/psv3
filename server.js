@@ -93,16 +93,18 @@ app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
 
   const safeUrl = path.normalize(req.originalUrl);
   const filePath = path.join(__dirname, 'public', safeUrl, 'index.html');
+  const ipAddress = req.ip;
+  const now = new Date();
 
-  console.log(`Serving file: ${filePath}`);
+  console.log(now.toISOString() + ":" + ipAddress + ": Serving file: " + filePath);
 
   fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
           if (err.code === 'ENOENT') {
-              console.error('File not found:', filePath);
+              console.log(now.toISOString() + ":" + ipAddress + ": Error file not found: " + filePath);
               res.sendStatus(404);
           } else {
-              console.error('Error reading file:', err);
+              console.log(now.toISOString() + ":" + ipAddress + ": Error reading file: " + err);
               res.sendStatus(500);
           }
           return;
@@ -347,6 +349,9 @@ app.ws("/live-chat-ws", function (ws, req) {
 
   ws.on("message", async function (msg) {
     const message = JSON.parse(msg);
+    const ipAddress = req.ip;
+    const now = new Date();
+
     switch (message.type) {
       case "names":
         ws.send(JSON.stringify({ "type" : "nameslist", value: JSON.stringify(accs_vanities) }));
@@ -354,15 +359,15 @@ app.ws("/live-chat-ws", function (ws, req) {
       case "tempacc":
         ws.send(JSON.stringify({ type: "ok_tempacc" }));
         accs.push(message.name);
-        console.log(message);
-        console.log(message.vanity);
+        console.log(now.toISOString() + ":" + ipAddress + ":MSG:" + message);
+        console.log(now.toISOString() + ":" + ipAddress + ":MSGV:" + message.vanity);
         if (
           message.vanity == null ||
           message.vanity.trim() == "" ||
           message.vanity.trim().length > 30
         ) {
           var randomCombinationThing = getRandomCombination();
-          console.log(randomCombinationThing);
+          console.log(now.toISOString() + ":" + ipAddress + ":RAND:" + randomCombinationThing);
           message.vanity = randomCombinationThing;
         }
         accs_vanities.push(message.vanity.trim());
@@ -382,8 +387,8 @@ app.ws("/live-chat-ws", function (ws, req) {
           const senderHash = await sha256(message.sender);
           websockets.forEach((person) => {
             if (person.channel == message.channel) {
-              console.log(accs_vanities);
-              console.log(accs_vanities[accs.indexOf(message.sender)]);
+              console.log(now.toISOString() + ":" + ipAddress + ":ACCSV:" + accs_vanities);
+              console.log(now.toISOString() + ":" + ipAddress + ":ACCSVS:" + accs_vanities[accs.indexOf(message.sender)]);
               person.socket.send(
                 JSON.stringify({
                   type: "gsend_r",
