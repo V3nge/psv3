@@ -1,147 +1,140 @@
 <html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+        <title>Sentinel V3</title>
+        <link rel="icon" href="milkers.ico">
+    </head>
 
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-    <title>Sentinel V3</title>
-    <link rel="icon" href="milkers.ico">
-</head>
+    <body>
+        <div class="topbar glowing-border">
+            
+            <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
+            <input id="search" placeholder="Search here" class="search"></input>
 
-<body>
-    <!-- <div class="banner centered">
-            <h1>Live chat coming soon...<h1>
+            <div class="top-flexed flexed">
+                <button onclick="document.getElementById('settingsDialog').showModal()">Open Settings</button>
+                <!-- Apparently my feeble brain cannot comprehend why when I call this from index.js it doesn't work... -->
+                <button onclick='function openBlank(){let e=window.open("about:blank","_blank");e.document.write(`<iframe src="${window.location.href}" style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" frameborder="0"></iframe>`),e.document.close(),window.location.href=getRandomSearch(),close()}openBlank();'>about:blank</button>
+                <a href="live-chat"><button>Live Chat</button></a>
+            </div>
         </div>
-        <br> -->
-    <!-- <div class="follower"></div> -->
+        <dialog id="settingsDialog" class="menu">
+            <h1>Settings</h1>
+            <div id="settingsList">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox">
+                <label for="vehicle1"> <text>I have a bike</text></label><br>
+            </div>
+            <div class="menu-bottom-bar centered">
+                <br><button onclick="document.getElementById('settingsDialog').close();clearSettingsMenu();">Cancel</button>
+                <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and Continue</button>
+            </div>
+        </dialog>
+        <br>
+        <div class="embedding-overflowable">
+            <h1 class="centered">Announcements</h1>
+            <div class="container">
+                <center>
+                    <h2>Attention minions:</h2>
+                    <p>This terrible project has been resurrected, unfortunately. <span class="highlight-text">Project Sentinel V3</span> is how I can mind control all of you because it is funny when you all play gаmes for hours straight.</p>
 
-    <div class="topbar glowing-border">
-        
-        <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
-        <input id="search" placeholder="Search here" class="search"></input>
+                    <h2>Why is Sentinel V3 the Peak?</h2>
 
-        <div class="top-flexed flexed">
-            <button onclick="document.getElementById('settingsDialog').showModal()">Open Settings</button>
-            <!-- Apparently my feeble brain cannot comprehend why when I call this from index.js it doesn't work... -->
-            <button onclick='function openBlank(){let e=window.open("about:blank","_blank");e.document.write(`<iframe src="${window.location.href}" style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" frameborder="0"></iframe>`),e.document.close(),window.location.href=getRandomSearch(),close()}openBlank();'>about:blank</button>
-            <a href="live-chat"><button>Live Chat</button></a>
+                    <p>Its super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic live chаt that definitely works</p>
+
+                    <h2>Who owns this website?</h2>
+                    <p>The original owners are back. No further explanations.</p>
+                    <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
+                </center>
+
+            </div>
+        </div><br>
+        <div class="embedding">
+            <h1 class="centered">Recently Added Gаmеs</h1>
+            <div id="recentlyAddedCarousel" class="carousel">
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+            </div>
+        </div><br>
+        <div class="embedding">
+            <h1 class="centered">Most Played</h1>
+            <div id="mostPlayCarousel" class="carousel">
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+                <div class="carousel-element-preload"></div>
+            </div>
+        </div><br>
+        <div class="embedding-overflowable">
+            <h1 class="centered">All Gаmеs</h1>
+            <div class="centered">
+                <p id="quote"></p>
+            </div>
+            <h3 class="centered">Can't find what you're looking for? Request a gаmе or recommend a fix <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYd3my1TJtwfvvMFoDznrJZndsKvRmkL0enqyKvfDgqJkSxQ/viewform" style="color: rgb(255, 255, 255)">here</a>.</h3>
+            <div class="all-games-list flexed" id="allGames">
+                <div class="game-icon"></div>
+            </div>
         </div>
-    </div>
-    <dialog id="settingsDialog" class="menu">
-        <h1>Settings</h1>
-        <div id="settingsList">
-            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox">
-            <label for="vehicle1"> <text>I have a bike</text></label><br>
-        </div>
-        <div class="menu-bottom-bar centered">
-            <br><button onclick="document.getElementById('settingsDialog').close();clearSettingsMenu();">Cancel</button>
-            <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and Continue</button>
-        </div>
-    </dialog>
-    <br>
-    <div class="embedding-overflowable">
-        <h1 class="centered">Announcements</h1>
-        <div class="container">
-            <center>
-                <h2>Attention minions:</h2>
-                <p>This terrible project has been resurrected, unfortunately. <span class="highlight-text">Project Sentinel V3</span> is how I can mind control all of you because it is funny when you all play gаmes for hours straight.</p>
+    </body>
+    
+    <footer>
+        <script src="index.js"></script>
+        <script src="load_games.js"></script>
+        <script src="report.js"></script>
+        <!-- <script src="anchor2js.js"></script> -->
+        <!-- <script src="follower.js"></script> -->
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                fetch("quotes.json")
+                    .then((response) => response.json())
+                    .then((data) => {
+                        const randomQuote = data[Math.floor(Math.random() * data.length)];
 
-                <h2>Why is Sentinel V3 the Peak?</h2>
+                        if (randomQuote.includes("OGNUM1") && randomQuote.includes("SQRTNUM1")) {
+                            const ognum = Math.floor(Math.random() * 3000);
+                            randomQuote = `the square root of ${ognum} is ${Math.sqrt(ognum)}`;
+                        } else if (randomQuote.includes("CURRENTURL")) {
+                            randomQuote = window.location.hostname;
+                        }
 
-                <p>Its super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic live chаt that definitely works</p>
+                        document.getElementById("quote").innerHTML = randomQuote;
+                    })
+                    .catch((error) => console.error("Error loading quotes:", error));
+            });
 
-                <h2>Who owns this website?</h2>
-                <p>The original owners are back. No further explanations.</p>
-                <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
-            </center>
-
-        </div>
-    </div><br>
-    <div class="embedding">
-        <h1 class="centered">Recently Added Gаmеs</h1>
-        <div id="recentlyAddedCarousel" class="carousel">
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-        </div>
-    </div><br>
-    <div class="embedding">
-        <h1 class="centered">Most Played</h1>
-        <div id="mostPlayCarousel" class="carousel">
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-            <div class="carousel-element-preload"></div>
-        </div>
-    </div><br>
-    <div class="embedding-overflowable">
-        <h1 class="centered">All Gаmеs</h1>
-        <div class="centered">
-            <p id="quote"></p>
-        </div>
-        <h3 class="centered">Can't find what you're looking for? Request a gаmе or recommend a fix <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYd3my1TJtwfvvMFoDznrJZndsKvRmkL0enqyKvfDgqJkSxQ/viewform" style="color: rgb(255, 255, 255)">here</a>.</h3>
-        <div class="all-games-list flexed" id="allGames">
-            <div class="game-icon"></div>
-        </div>
-    </div>
-</body>
-<footer>
-    <script src="index.js"></script>
-    <script src="load_games.js"></script>
-    <script src="report.js"></script>
-    <!-- <script src="anchor2js.js"></script> -->
-    <!-- <script src="follower.js"></script> -->
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch("quotes.json")
-                .then((response) => response.json())
-                .then((data) => {
-                    const randomQuote = data[Math.floor(Math.random() * data.length)];
-
-                    if (randomQuote.includes("OGNUM1") && randomQuote.includes("SQRTNUM1")) {
-                        const ognum = Math.floor(Math.random() * 3000);
-                        randomQuote = `the square root of ${ognum} is ${Math.sqrt(ognum)}`;
-                    } else if (randomQuote.includes("CURRENTURL")) {
-                        randomQuote = window.location.hostname;
-                    }
-
-                    document.getElementById("quote").innerHTML = randomQuote;
-                })
-                .catch((error) => console.error("Error loading quotes:", error));
-        });
-
-        var input = document.getElementById("search");
-        input.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                searchThings();
-            }
-        });
-    </script>
-</footer>
-
+            var input = document.getElementById("search");
+            input.addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    searchThings();
+                }
+            });
+        </script>
+    </footer>
 </html>

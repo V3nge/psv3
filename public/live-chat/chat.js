@@ -1,5 +1,7 @@
 const messagesContainer = document.getElementById("messages");
 var ws = new WebSocket(`ws://${window.location.host}/live-chat-ws`);
+var hashes = [];
+var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
 function createTextShadow(c) { 
     return `${c} -2px -2px, ${c} -2px -1px, ${c} -2px 0px, ${c} -2px 1px, ${c} -2px 2px, ${c} -1px -2px, ${c} -1px -1px, ${c} -1px 0px, ${c} -1px 1px, ${c} -1px 2px, ${c} 0px -2px, ${c} 0px -1px, ${c} 0px 0px, ${c} 0px 1px, ${c} 0px 2px, ${c} 1px -2px, ${c} 1px -1px, ${c} 1px 0px, ${c} 1px 1px, ${c} 1px 2px, ${c} 2px -2px, ${c} 2px -1px, ${c} 2px 0px, ${c} 2px 1px, ${c} 2px 2px`;
@@ -108,9 +110,6 @@ function createMessage(name, value, userMessage = true) {
     message.appendChild(messagePTag);
     messagesContainer.appendChild(message);
 }
-
-var hashes = [];
-var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
 ws.onclose = function() {
     alert("Uh oh! Your websocket disconnected... 😦");

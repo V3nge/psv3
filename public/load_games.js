@@ -1,14 +1,3 @@
-// function iOS() {
-//     return [
-//       'iPad Simulator',
-//       'iPhone Simulator',
-//       'iPod Simulator',
-//       'iPad',
-//       'iPhone',
-//       'iPod'
-//     ].includes(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-// }
-
 const allGamesList = document.getElementById("allGames");
 const recentlyAddedCarousel = document.getElementById("recentlyAddedCarousel");
 const mostPlayedCarousel = document.getElementById("mostPlayCarousel");
