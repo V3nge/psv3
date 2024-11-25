@@ -1,5 +1,7 @@
 const DEBUG = true;
 const PING_TIMEOUT = 10000;
+const HOSTNAME = "127.0.0.1";
+const PORT = 7764;
 
 const crypto = require("crypto");
 const nocache = require("nocache");
@@ -40,9 +42,6 @@ if (!DEBUG) {
 }
 
 app.use(nocache());
-
-const hostname = "127.0.0.1";
-const port = 7764;
 
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 
@@ -496,4 +495,4 @@ app.ws("/live-chat-ws", function (ws, req) {
 
 app.use(express.static("public"));
 
-app.listen(port);
+app.listen(PORT);
