@@ -227,7 +227,7 @@ app.get("/games/", (req, res) => {
 app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
     res.setHeader('Content-Type', 'text/html');
 
-    const safeUrl = path.normalize(affixSlash(path.normalize(req.originalUrl.replace("?a=b", ""))));
+    const safeUrl = path.normalize(affixSlash(path.normalize(req.originalUrl)));
     const filePath = path.join(__dirname, 'public', safeUrl, 'index.html');
     const ipAddress = req.ip;
     const now = new Date();

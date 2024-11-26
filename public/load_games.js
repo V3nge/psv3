@@ -164,7 +164,7 @@ async function loadAllGames() {
         .map(
             (game) =>
             `<div class="game-icon centered">
-                <a href='javascript:openBlank("/games/${game.slug}/?a=b")'>
+                <a href='javascript:openBlank("/games/${game.slug}/")'>
                     <img src="${game.thumbnail}" class="min-img" />
                     <text class="centerthing">${game.name}</text>
                 </a>
@@ -179,7 +179,7 @@ async function loadAllGames() {
     const popularBuilt = popularListing.map(
         (game) =>
         `<div class="carousel-element centered">
-            <a href='javascript:openBlank("/games/${game.slug}/?a=b")'>
+            <a href='javascript:openBlank("/games/${game.slug}/")'>
                 <img src="${game.thumbnail}" class="thumbnail" loading="lazy" />
                 <text class="centerthing">${game.name}</text>
             </a>
