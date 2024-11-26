@@ -1,117 +1,3 @@
-const DEBUG = true;
-const PING_TIMEOUT = 10000;
-const HOSTNAME = "127.0.0.1";
-const PORT = 7764;
-
-const crypto = require("crypto");
-const nocache = require("nocache");
-const express = require("express");
-const path = require("path");
-const fs = require("fs");
-const expressRateLimit = require("express-rate-limit");
-const expressSlowDown = require("express-slow-down");
-const Fuse = require("fuse.js");
-const compression = require("compression");
-
-// should probably use this in the future, but is causing problems now...
-// const helmet = require('helmet');
-// const morgan = require('morgan');
-
-const app = express();
-var expressWs = require("express-ws")(app);
-
-app.use(compression());
-
-// app.use(helmet());
-// app.use(morgan('combined'));
-
-if (!DEBUG) {
-    const limiter = expressRateLimit({
-        windowMs: 60 * 1000,
-        max: 500,
-    });
-
-    const speedLimiter = expressSlowDown({
-        windowMs: 15 * 1000,
-        delayAfter: 125,
-        delayMs: () => 1500,
-    });
-
-    app.use(speedLimiter);
-    app.use(limiter);
-} else {
-    app.use(nocache());
-}
-
-var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
-
-var constructedGamesListJSON = null;
-
-function getCurrentTime() {
-    const now = new Date();
-
-    let hours = now.getHours();
-    const minutes = now.getMinutes();
-    const ampm = hours >= 12 ? "PM" : "AM";
-
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-
-    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-
-    return ` (${hours}:${formattedMinutes} ${ampm})`;
-}
-
-var constructedGamesListJSONTimestamp;
-function constructGamesListJSON() {
-    const jsonData = fs.readFileSync(
-        path.join(__dirname, "./private/all.json"),
-        "utf-8"
-    );
-    constructedGamesListJSON = JSON.parse(jsonData);
-    constructedGamesListJSONTimestamp = +Date.now();
-}
-
-constructGamesListJSON();
-
-app.get("/games/", (req, res) => {
-    // Updates the games list every 30 minutes (in ms)
-    if (Date.now() - constructedGamesListJSONTimestamp > 1800000) {
-        constructGamesListJSON();
-    }
-
-    res.setHeader("content-type", "application/json");
-    res.send(constructedGamesListJSON);
-});
-
-// // Instead of adding stuff for EVERY index html,
-// // just add it from the server side...
-app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
-    res.setHeader('Content-Type', 'text/html');
-
-    const safeUrl = path.normalize(req.originalUrl);
-    const filePath = path.join(__dirname, 'public', safeUrl, 'index.html');
-    const ipAddress = req.ip;
-    const now = new Date();
-
-    console.log(now.toISOString() + ":" + ipAddress + ": Serving file: " + filePath);
-
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            if (err.code === 'ENOENT') {
-                console.log(now.toISOString() + ":" + ipAddress + ": Error file not found: " + filePath);
-                res.sendStatus(404);
-            } else {
-                console.log(now.toISOString() + ":" + ipAddress + ": Error reading file: " + err);
-                res.sendStatus(500);
-            }
-            return;
-        }
-
-        res.send(`${data}${report}`);
-    });
-});
-
 const ADJECTIVES = [
     "Sticky",
     "Bouncy",
@@ -235,6 +121,135 @@ const NOUNS = [
     "Snowman",
 ];
 
+const DEBUG = true;
+const PING_TIMEOUT = 10000;
+const HOSTNAME = "127.0.0.1";
+const PORT = 7764;
+
+const crypto = require("crypto");
+const nocache = require("nocache");
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const expressRateLimit = require("express-rate-limit");
+const expressSlowDown = require("express-slow-down");
+const Fuse = require("fuse.js");
+const compression = require("compression");
+
+const app = express();
+var expressWs = require("express-ws")(app);
+var accs = [];
+var accs_vanities = [];
+var websockets = [];
+var rooms = [];
+var lastSavedPathStats = +Date.now();
+var activeUsers = 0;
+var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
+var constructedGamesListJSON = null;
+var blockedUIDs = [];
+var pathStats = {};
+
+try {
+    const data = fs.readFileSync('path-stats.json');
+    pathStats = JSON.parse(data);
+    const now = new Date();
+    console.log(`${now.toISOString()}: Success: Loaded path-stats.json`);
+} catch (err) {
+    const now = new Date();
+    console.error(`${now.toISOString()}: Error, file not found: path-stats.json`);
+}
+
+app.use(compression());
+
+// should probably use this in the future, but is causing problems now...
+// const helmet = require('helmet');
+// const morgan = require('morgan');
+// app.use(helmet());
+// app.use(morgan('combined'));
+
+if (!DEBUG) {
+    const limiter = expressRateLimit({
+        windowMs: 60 * 1000,
+        max: 500,
+    });
+
+    const speedLimiter = expressSlowDown({
+        windowMs: 15 * 1000,
+        delayAfter: 125,
+        delayMs: () => 1500,
+    });
+
+    app.use(speedLimiter);
+    app.use(limiter);
+} else {
+    app.use(nocache());
+}
+
+function getCurrentTime() {
+    const now = new Date();
+
+    let hours = now.getHours();
+    const minutes = now.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return ` (${hours}:${formattedMinutes} ${ampm})`;
+}
+
+var constructedGamesListJSONTimestamp;
+function constructGamesListJSON() {
+    const jsonData = fs.readFileSync(
+        path.join(__dirname, "./private/all.json"),
+        "utf-8"
+    );
+    constructedGamesListJSON = JSON.parse(jsonData);
+    constructedGamesListJSONTimestamp = +Date.now();
+}
+
+constructGamesListJSON();
+
+app.get("/games/", (req, res) => {
+    // Updates the games list every 30 minutes (in ms)
+    if (Date.now() - constructedGamesListJSONTimestamp > 1800000) {
+        constructGamesListJSON();
+    }
+
+    res.setHeader("content-type", "application/json");
+    res.send(constructedGamesListJSON);
+});
+
+// // Instead of adding stuff for EVERY index html,
+// // just add it from the server side...
+app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
+    res.setHeader('Content-Type', 'text/html');
+
+    const safeUrl = path.normalize(affixSlash(path.normalize(req.originalUrl)).replace("\?a=b", ""));
+    const filePath = path.join(__dirname, 'public', safeUrl, 'index.html');
+    const ipAddress = req.ip;
+    const now = new Date();
+
+    console.log(now.toISOString() + ":" + ipAddress + ": Serving file: " + filePath);
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            if (err.code === 'ENOENT') {
+                console.log(now.toISOString() + ":" + ipAddress + ": Error, file not found: " + filePath);
+                res.sendStatus(404);
+            } else {
+                console.log(now.toISOString() + ":" + ipAddress + ": Error reading file: " + err);
+                res.sendStatus(500);
+            }
+            return;
+        }
+
+        res.send(`${data}${report}`);
+    });
+});
+
 function randomElement(list) {
     return list[Math.floor(Math.random() * list.length)];
 }
@@ -242,9 +257,6 @@ function randomElement(list) {
 function getRandomCombination() {
     return `${randomElement(ADJECTIVES)}${randomElement(NOUNS)}`;
 }
-
-var pathStats = {};
-var lastSavedPathStats = +Date.now();
 
 function updateCount(path, key) {
     if (!pathStats[path]) {
@@ -255,10 +267,11 @@ function updateCount(path, key) {
 
     if ((+Date.now() - lastSavedPathStats) > (60 * 1000)) {
         lastSavedPathStats = +Date.now();
-        
+
         try {
             fs.writeFileSync('path-stats.json', JSON.stringify(pathStats));
-            console.log('Saved pathStats to JSON file.');
+            const now = new Date();
+            console.log(`${now.toISOString()}: Success: Saved path-stats.json`);
         } catch (err) {
             console.error(err);
         }
@@ -303,11 +316,6 @@ async function sha256(message) {
     return hashHex;
 }
 
-var accs = [];
-var accs_vanities = [];
-var websockets = [];
-var rooms = [];
-
 function createPrivateRoom(name) {
     rooms.push(name);
     return `${encodeURIComponent(name)}`;
@@ -344,14 +352,11 @@ app.get("/search", (req, res) => {
 app.use("/images", express.static("public/images/games/"));
 app.use("/game", express.static("public/games/game/"));
 
-var activeUsers = 0;
-
 app.get("/live-chat/active", (req, res) => {
     res.setHeader("content-type", "application/json");
     res.send(accs_vanities);
 });
 
-var blockedUIDs = ["KNZ9TpHRbpbh76c70Bmp"];
 app.ws("/live-chat-ws", function (ws, req) {
     let thisUser = {};
     thisUser.connected = true;
