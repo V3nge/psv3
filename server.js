@@ -224,11 +224,13 @@ app.get("/games/", (req, res) => {
 
 // // Instead of adding stuff for EVERY index html,
 // // just add it from the server side...
-app.get(/^\/games\/[^\/]+\/?$/, (req, res) => {
+app.get("/games/:game/index.html", (req, res) => {
     res.setHeader('Content-Type', 'text/html');
 
-    const safeUrl = path.normalize(affixSlash(path.normalize(req.originalUrl)));
-    const filePath = path.join(__dirname, 'public', safeUrl, 'index.html');
+    updateCount(`/games/${req.query.game}/`, "starts");
+
+    const safeUrl = path.normalize(req.originalUrl);
+    const filePath = path.join(__dirname, 'public', safeUrl);
     const ipAddress = req.ip;
     const now = new Date();
 
@@ -287,15 +289,6 @@ function affixSlash(path) {
     if (path.endsWith("/")) { return path; }
     return `${path}/`;
 }
-
-app.post("/s", (req, res) => {
-    const path = affixSlash(req.query.u);
-    if (!path) {
-        return res.status(400).send({ error: "Path is required" });
-    }
-    updateCount(path, "starts");
-    res.send();
-});
 
 app.post("/r", (req, res) => {
     const path = affixSlash(req.query.u);
@@ -428,7 +421,7 @@ app.ws("/live-chat-ws", function (ws, req) {
         const ipAddress = req.ip;
         const now = new Date();
 
-        // If they send literally anything back that means
+        // If they send anything back that means
         // they are still connected...
         thisUser.lastPingReturned = +Date.now();
 
@@ -439,7 +432,6 @@ app.ws("/live-chat-ws", function (ws, req) {
 
             case "tempacc":
                 // I would do it by ip normally but everyone has the same ip...
-                // and everybody is too stupid to figure out they can just clear their localstorage
                 if (blockedUIDs.includes(message.name) || message.name.length != 20) {
                     thisUser.connected = false;
                     thisUser.needsRemovalOnDisconnect = false;

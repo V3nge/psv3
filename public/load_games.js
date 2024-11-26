@@ -135,11 +135,6 @@ function orderGames(gamesList, scoresList) {
 
 async function loadAllGames() {
     let listing;
-    var suffix = "";
-
-    if(ios()) {
-        suffix = "index.html";
-    }
 
     if (ToSearch == null) {
         listing = await (await fetch("/games")).json();
@@ -158,7 +153,7 @@ async function loadAllGames() {
             .map(
                 (game) =>
                 `<div class="carousel-element centered">
-                    <a href='javascript:openBlank("/games/${game.slug}/${suffix}")'>
+                    <a href='/games/${game.slug}/index.html'>
                         <img src="${game.thumbnail}" class="thumbnail" loading="lazy" />
                         <text class="centerthing">${game.name}</text>
                     </a>
@@ -174,7 +169,7 @@ async function loadAllGames() {
         .map(
             (game) =>
             `<div class="game-icon centered">
-                <a href='javascript:openBlank("/games/${game.slug}/${suffix}")'>
+                <a href='/games/${game.slug}/index.html'>
                     <img src="${game.thumbnail}" class="min-img" />
                     <text class="centerthing">${game.name}</text>
                 </a>
