@@ -1,3 +1,8 @@
+const ios = () => {
+    if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
+};
+
 const allGamesList = document.getElementById("allGames");
 const recentlyAddedCarousel = document.getElementById("recentlyAddedCarousel");
 const mostPlayedCarousel = document.getElementById("mostPlayCarousel");
@@ -130,6 +135,11 @@ function orderGames(gamesList, scoresList) {
 
 async function loadAllGames() {
     let listing;
+    var suffix = "";
+
+    if(ios()) {
+        suffix = "index.html";
+    }
 
     if (ToSearch == null) {
         listing = await (await fetch("/games")).json();
@@ -148,7 +158,7 @@ async function loadAllGames() {
             .map(
                 (game) =>
                 `<div class="carousel-element centered">
-                    <a href='javascript:openBlank("/games/${game.slug}/")'>
+                    <a href='javascript:openBlank("/games/${game.slug}/${suffix}")'>
                         <img src="${game.thumbnail}" class="thumbnail" loading="lazy" />
                         <text class="centerthing">${game.name}</text>
                     </a>
@@ -164,7 +174,7 @@ async function loadAllGames() {
         .map(
             (game) =>
             `<div class="game-icon centered">
-                <a href='javascript:openBlank("/games/${game.slug}/")'>
+                <a href='javascript:openBlank("/games/${game.slug}/${suffix}")'>
                     <img src="${game.thumbnail}" class="min-img" />
                     <text class="centerthing">${game.name}</text>
                 </a>
