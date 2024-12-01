@@ -123,7 +123,6 @@ const NOUNS = [
 
 const DEBUG = true;
 const PING_TIMEOUT = 10000;
-const HOSTNAME = "127.0.0.1";
 const PORT = 7764;
 
 const crypto = require("crypto");
@@ -135,6 +134,9 @@ const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const Fuse = require("fuse.js");
 const compression = require("compression");
+const axios = require('axios');
+// const httpProxy = require('http-proxy');
+// const http = require('http');
 
 const app = express();
 var expressWs = require("express-ws")(app);
@@ -148,6 +150,14 @@ var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 var constructedGamesListJSON = null;
 var blockedUIDs = [];
 var pathStats = {};
+
+// var proxy = httpProxy.createProxyServer({});
+
+// var server = http.createServer(function (req, res) {
+//     proxy.web(req, res, { target: 'http://youtube.com/' });
+// });
+
+// server.listen(6969);
 
 try {
     const data = fs.readFileSync('path-stats.json');
@@ -183,6 +193,35 @@ if (!DEBUG) {
     app.use(limiter);
 } else {
     app.use(nocache());
+}
+
+var accumulatingMessages = "";
+var numberOfAccumulatedMessages = 0;
+function sendMessageToWebHook(message) {
+    numberOfAccumulatedMessages++;
+    accumulatingMessages += `${message}\n`;
+    
+    if(numberOfAccumulatedMessages > 10) {
+        numberOfAccumulatedMessages = 0;
+        const params = {
+            // username: "My Webhook Name",
+            // avatar_url: "",
+            content: accumulatingMessages
+        };
+    
+        axios.post("https://discord.com/api/webhooks/1312849186206781551/S8GoX1oEc6_Oh2pSIxZlXHTCyyl4tGHVeLsgpztrbqrsgsAp9rII1qS0l3Zi3hycoETV", params, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log('Message sent successfully:', response.status);
+        })
+        .catch(error => {
+            console.error('Error sending message:', error.message);
+        });
+        accumulatingMessages = "";
+    }
 }
 
 function getCurrentTime() {
@@ -396,6 +435,7 @@ app.ws("/live-chat-ws", function (ws, req) {
     };
 
     const sendToChannel = (channel, message, senderHash) => {
+        sendMessageToWebHook(`${accs_vanities[accs.indexOf(message.sender)]}: ${message.decodedMessage} ${getCurrentTime()}`);
         websockets.forEach((person) => {
             if (person.channel === channel) {
                 person.socket.send(

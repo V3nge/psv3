@@ -455,11 +455,10 @@ pre {
 }
 
 .system-message {
-    padding: 10px;
-    background-color: var(--blue-violet);
     width: max-content;
-    height: 7%;
+    height: min-content;
     border-radius: 10px 10px 10px 10px;
+    margin-left: 30px;
 }
 
 a {
