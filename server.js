@@ -1,3 +1,4 @@
+const DEBUG = true;
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -121,7 +122,6 @@ const NOUNS = [
   "Snowman",
 ];
 
-const DEBUG = true;
 const PING_TIMEOUT = 10000;
 const PORT = 7764;
 
