@@ -272,13 +272,21 @@ app.get("/games/", (req, res) => {
 
 // // Instead of adding stuff for EVERY index html,
 // // just add it from the server side...
-app.get("/games/:game/index.html", (req, res) => {
+
+function handleGamesServing(req, res, concatIndex) {
   res.setHeader("Content-Type", "text/html");
 
   updateCount(`/games/${req.query.game}/`, "starts");
 
   const safeUrl = path.normalize(req.originalUrl);
-  const filePath = path.join(__dirname, "public", safeUrl);
+  
+  var filePath;
+  if(concatIndex) {
+    filePath = path.join(__dirname, "public", safeUrl, "index.html");
+  } else {
+    filePath = path.join(__dirname, "public", safeUrl);  
+  }
+
   const ipAddress = req.ip;
   const now = new Date();
 
@@ -308,7 +316,16 @@ app.get("/games/:game/index.html", (req, res) => {
 
     res.send(`${data}${report}`);
   });
+}
+
+app.get("/games/:game/index.html", (req, res) => {
+  handleGamesServing(req, res, false);
 });
+
+app.get("/games/:game/", (req, res) => {
+  handleGamesServing(req, res, true);
+});
+
 
 function randomElement(list) {
   return list[Math.floor(Math.random() * list.length)];
@@ -581,4 +598,8 @@ app.ws("/live-chat-ws", function (ws, req) {
 
 app.use(express.static("public"));
 
-app.listen(PORT);
+if(!DEBUG) {
+  app.listen(PORT);
+} else {
+  app.listen(PORT, '0.0.0.0');
+}
