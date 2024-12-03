@@ -475,11 +475,22 @@ app.ws("/live-chat-ws", function (ws, req) {
   };
 
   const sendToChannel = (channel, message, senderHash) => {
-    sendMessageToWebHook(
-      `${accs_vanities[accs.indexOf(message.sender)]}: ${
-        message.decodedMessage
-      } ${getCurrentTime()}`
-    );
+    var name = accs_vanities[accs.indexOf(message.sender)];
+    
+    if(!name) {
+      sendMessageToWebHook(
+        `${
+          message.decodedMessage
+        } ${getCurrentTime()}`
+      );
+    } else { 
+      sendMessageToWebHook(
+        `${name}: ${
+          message.decodedMessage
+        } ${getCurrentTime()}`
+      );
+    }
+
     websockets.forEach((person) => {
       if (person.channel === channel) {
         person.socket.send(
@@ -487,7 +498,7 @@ app.ws("/live-chat-ws", function (ws, req) {
             type: "gsend_r",
             msg: encodeURIComponent(message.decodedMessage + getCurrentTime()),
             sender: senderHash,
-            vanity: accs_vanities[accs.indexOf(message.sender)],
+            vanity: name,
           })
         );
       }
