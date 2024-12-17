@@ -279,12 +279,12 @@ function handleGamesServing(req, res, concatIndex) {
   updateCount(`/games/${req.query.game}/`, "starts");
 
   const safeUrl = path.normalize(req.originalUrl);
-  
+
   var filePath;
-  if(concatIndex) {
+  if (concatIndex) {
     filePath = path.join(__dirname, "public", safeUrl, "index.html");
   } else {
-    filePath = path.join(__dirname, "public", safeUrl);  
+    filePath = path.join(__dirname, "public", safeUrl);
   }
 
   const ipAddress = req.ip;
@@ -299,10 +299,10 @@ function handleGamesServing(req, res, concatIndex) {
       if (err.code === "ENOENT") {
         console.log(
           now.toISOString() +
-            ":" +
-            ipAddress +
-            ": Error, file not found: " +
-            filePath
+          ":" +
+          ipAddress +
+          ": Error, file not found: " +
+          filePath
         );
         res.sendStatus(404);
       } else {
@@ -476,17 +476,15 @@ app.ws("/live-chat-ws", function (ws, req) {
 
   const sendToChannel = (channel, message, senderHash) => {
     var name = accs_vanities[accs.indexOf(message.sender)];
-    
-    if(!name) {
+
+    if (!name) {
       sendMessageToWebHook(
-        `${
-          message.decodedMessage
+        `${message.decodedMessage
         } ${getCurrentTime()}`
       );
-    } else { 
+    } else {
       sendMessageToWebHook(
-        `${name}: ${
-          message.decodedMessage
+        `${name}: ${message.decodedMessage
         } ${getCurrentTime()}`
       );
     }
@@ -609,7 +607,7 @@ app.ws("/live-chat-ws", function (ws, req) {
 
 app.use(express.static("public"));
 
-if(!DEBUG) {
+if (!DEBUG) {
   app.listen(PORT);
 } else {
   app.listen(PORT, '0.0.0.0');
