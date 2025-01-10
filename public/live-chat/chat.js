@@ -3,7 +3,7 @@ var ws = new WebSocket(`ws://${window.location.host}/live-chat-ws`);
 var hashes = [];
 var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
-function createTextShadow(c) { 
+function createTextShadow(c) {
     return `${c} -2px -2px, ${c} -2px -1px, ${c} -2px 0px, ${c} -2px 1px, ${c} -2px 2px, ${c} -1px -2px, ${c} -1px -1px, ${c} -1px 0px, ${c} -1px 1px, ${c} -1px 2px, ${c} 0px -2px, ${c} 0px -1px, ${c} 0px 0px, ${c} 0px 1px, ${c} 0px 2px, ${c} 1px -2px, ${c} 1px -1px, ${c} 1px 0px, ${c} 1px 1px, ${c} 1px 2px, ${c} 2px -2px, ${c} 2px -1px, ${c} 2px 0px, ${c} 2px 1px, ${c} 2px 2px`;
 }
 
@@ -17,9 +17,9 @@ function stringToRGB(input) {
     }
     const hash = Math.abs(hashString(input));
     const r = (hash >> 16) & 0xff;
-    const g = (hash >> 8) & 0xff; 
+    const g = (hash >> 8) & 0xff;
     const b = hash & 0xff;
-    return `rgb(${r/2}, ${g/2}, ${b/2})`;
+    return `rgb(${r / 2}, ${g / 2}, ${b / 2})`;
 }
 
 const joinMessages = [
@@ -93,7 +93,7 @@ function generateRandomString(length) {
 }
 
 var uid = localStorage.getItem("chat_uid");
-if(uid == null) { 
+if (uid == null) {
     uid = generateRandomString(20);
     localStorage.setItem("chat_uid", uid);
 }
@@ -124,11 +124,11 @@ function createMessage(name, value, userMessage = true) {
     messagesContainer.appendChild(message);
 }
 
-ws.onclose = function() {
+ws.onclose = function () {
     alert("Uh oh! Your websocket disconnected... 😦");
 }
 
-ws.onerror = function() {
+ws.onerror = function () {
     alert("OH SHOOT! There was an error... 😦😦😦");
 }
 
@@ -146,7 +146,7 @@ ws.onmessage = function (a) {
             "channel": channelToSendTo,
             "vanity": playNameClient
         }));
-        ws.send(JSON.stringify({"type" : "names"}));
+        ws.send(JSON.stringify({ "type": "names" }));
     } else if (response.type == "gsend_r") {
         if (response.sender == null) {
             createMessage("?", `${decodeURIComponent(response.msg)}`);
@@ -171,7 +171,7 @@ ws.onmessage = function (a) {
     } else if (response.type == "nameslist") {
         createMessage("System", `(System) Active users: ${JSON.parse(response.value).join(', ')}`, false);
     } else if (response.type == "ping") {
-        ws.send(JSON.stringify({ "type" : "ping" }));
+        ws.send(JSON.stringify({ "type": "ping" }));
     } else if (response.type == "blocked") {
         document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
     } else {
@@ -188,42 +188,42 @@ function send() {
     var messageText = inputBox.value;
     inputBox.value = "";
     if (messageText.trim() != "" && messageText.length < 2001) {
-    if (messageText == "!np") {
-        createPrivate(encodeURIComponent(prompt("code > ")));
-    } else if(messageText == "!jp") {
-        window.location.href = `/live-chat/?c=${encodeURIComponent(prompt("code > "))}`;
-    } else if(messageText == "!njp") {
-        var encoded = encodeURIComponent(prompt("code > "));
-        createPrivate(encoded);
-        window.location.href = `/live-chat/?c=${encoded}`;
-    } else{
-        console.log(JSON.stringify({
-            "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
-            "channel": channelToSendTo, "vanity": playNameClient
-        }));
-        ws.send(JSON.stringify({
-            "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
-            "channel": channelToSendTo, "vanity": playNameClient
-        }));
+        if (messageText == "!np") {
+            createPrivate(encodeURIComponent(prompt("code > ")));
+        } else if (messageText == "!jp") {
+            window.location.href = `/live-chat/?c=${encodeURIComponent(prompt("code > "))}`;
+        } else if (messageText == "!njp") {
+            var encoded = encodeURIComponent(prompt("code > "));
+            createPrivate(encoded);
+            window.location.href = `/live-chat/?c=${encoded}`;
+        } else {
+            console.log(JSON.stringify({
+                "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
+                "channel": channelToSendTo, "vanity": playNameClient
+            }));
+            ws.send(JSON.stringify({
+                "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
+                "channel": channelToSendTo, "vanity": playNameClient
+            }));
+        }
+    } else {
+        alert("Invalid input >:(");
     }
-} else {
-    alert("Invalid input >:(");
-}
 }
 
-setInterval(function() {
-    ws.send(JSON.stringify({"type" : "names"}));
+setInterval(function () {
+    ws.send(JSON.stringify({ "type": "names" }));
 }, 1000 * 60 * 3);
 
 var codeInput = document.getElementById("code-input");
 
 async function joinCode() {
     var encoded = encodeURIComponent(codeInput.value);
-    if(await (await fetch(`/check_room?id=${encoded}`)).json()) {
+    if (await (await fetch(`/check_room?id=${encoded}`)).json()) {
         window.location.href = `/live-chat/?c=${encoded}`;
     } else {
         createPrivate(codeInput.value);
-        setInterval(function() {
+        setInterval(function () {
             window.location.href = `/live-chat/?c=${encoded}`;
         }, 1000);
     }
