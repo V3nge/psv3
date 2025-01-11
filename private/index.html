@@ -53,43 +53,13 @@
         <div class="embedding">
             <h1 class="centered">Recently Added Gаmеs</h1>
             <div id="recentlyAddedCarousel" class="carousel">
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
+                {recentlyAddedCarousel}
             </div>
         </div><br>
         <div class="embedding">
             <h1 class="centered">Most Played</h1>
             <div id="mostPlayCarousel" class="carousel">
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
-                <div class="carousel-element-preload"></div>
+                {mostPlayCarousel}
             </div>
         </div><br>
         <div class="embedding-overflowable">
@@ -99,14 +69,14 @@
             </div>
             <h3 class="centered">Can't find what you're looking for? Request a gаmе or recommend a fix <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYd3my1TJtwfvvMFoDznrJZndsKvRmkL0enqyKvfDgqJkSxQ/viewform" style="color: rgb(255, 255, 255)">here</a>.</h3>
             <div class="all-games-list flexed" id="allGames">
-                <div class="game-icon"></div>
+                {allGames}
             </div>
         </div>
     </body>
     
     <footer>
         <script src="index.js"></script>
-        <script src="load_games.js"></script>
+        <!-- <script src="load_games.js"></script> -->
         <script src="report.js"></script>
         <!-- <script src="anchor2js.js"></script> -->
         <!-- <script src="follower.js"></script> -->
@@ -129,8 +99,7 @@
                     .catch((error) => console.error("Error loading quotes:", error));
             });
 
-            var input = document.getElementById("search");
-            input.addEventListener("keypress", function(event) {
+            document.getElementById("search").addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
                     searchThings();
                 }
