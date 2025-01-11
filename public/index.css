@@ -25,11 +25,14 @@ body {
     background: linear-gradient(0deg, rgba(4, 1, 18, 1) 0%, rgb(17, 5, 44) 100%);
     transition: 0.5s;
     padding: 10px;
+    overflow-x: hidden;
+    scrollbar-color: var(--midnight-blue);
 }
 
 .icon {
+    position: absolute;
     transition: 0.5s;
-    width: 5%;
+    width: 90px;
     outline-style: auto;
     outline-width: 1%;
     outline: white;
@@ -45,6 +48,7 @@ body {
 
 .topbar {
     width: 100%;
+    height: 100px;
     background-color: var(--black);
     border-radius: 120px;
 }
@@ -79,7 +83,7 @@ text {
     padding: 10px;
     gap: 8px;
     scroll-snap-type: x mandatory;
-    overflow: hidden;
+    scrollbar-color: var(--midnight-blue);
 }
 
 .quote-text {
@@ -105,7 +109,7 @@ text {
     position: relative;
     flex: 0 0 auto;
     height: 80%;
-    width: 12%;
+    width: 210px;
     scroll-snap-align: start;
     border-radius: 10px;
     overflow: hidden;
@@ -184,9 +188,9 @@ text {
 .search {
     position: absolute;
     width: 40%;
-    height: 40%;
+    height: 65%;
     top: 50%;
-    left: 25%;
+    left: 30%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
     box-shadow: #040112;
@@ -194,7 +198,6 @@ text {
     background-color: #120a31;
     color: white;
     font-size: large;
-    min-height: 50%;
 }
 
 .all-games-list {
@@ -660,7 +663,7 @@ li {
 .top-flexed {
     position: absolute;
     white-space: nowrap;
-    right: 0px;
+    left: 75%;
     top: 50%;
     transform: translate(-50%, -50%);
     display: flex;
