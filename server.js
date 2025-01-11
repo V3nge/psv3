@@ -132,6 +132,7 @@ const path = require("path");
 const fs = require("fs");
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
+const bodyParser = require('body-parser');
 const Fuse = require("fuse.js");
 const compression = require("compression");
 const axios = require("axios");
@@ -172,6 +173,28 @@ try {
 }
 
 app.use(compression());
+app.use(bodyParser.json());
+
+const logDirectory = path.join(__dirname, 'error-logs');
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory);
+}
+
+app.post('/error', (req, res) => {
+  console.log("no sigma3")
+  const { message, source, lineno, colno, stack } = req.body;
+  const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const timestamp = new Date().toISOString();
+  const logMessage = `Timestamp: ${timestamp}\nIP Address: ${ipAddress}\nMessage: ${message}\nSource: ${source}\nLine: ${lineno}\nColumn: ${colno}\nStack: ${stack}\n\n`;
+
+  fs.appendFile(path.join(logDirectory, 'errors.log'), logMessage, (err) => {
+    if (err) {
+      console.error('Error writing to log file:', err);
+    }
+  });
+
+  res.status(200).send('Error received and logged');
+});
 
 // should probably use this in the future, but is causing problems now...
 // const helmet = require('helmet');
@@ -698,6 +721,7 @@ app.ws("/live-chat-ws", function (ws, req) {
   });
 });
 
+updateIndex();
 app.use("/", function (req, res, next) {
   if (req.url === "/") {
     console.log("log");
