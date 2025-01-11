@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -132,6 +132,7 @@ const path = require("path");
 const fs = require("fs");
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
+const bodyParser = require('body-parser');
 const Fuse = require("fuse.js");
 const compression = require("compression");
 const axios = require("axios");
@@ -145,6 +146,8 @@ var accs_vanities = [];
 var websockets = [];
 var rooms = [];
 var lastSavedPathStats = +Date.now();
+var lastUpdatedIndex = 0;
+var indexHtml = ""
 var activeUsers = 0;
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 var constructedGamesListJSON = null;
@@ -170,6 +173,28 @@ try {
 }
 
 app.use(compression());
+app.use(bodyParser.json());
+
+const logDirectory = path.join(__dirname, 'error-logs');
+if (!fs.existsSync(logDirectory)) {
+  fs.mkdirSync(logDirectory);
+}
+
+app.post('/error', (req, res) => {
+  console.log("no sigma3")
+  const { message, source, lineno, colno, stack } = req.body;
+  const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  const timestamp = new Date().toISOString();
+  const logMessage = `Timestamp: ${timestamp}\nIP Address: ${ipAddress}\nMessage: ${message}\nSource: ${source}\nLine: ${lineno}\nColumn: ${colno}\nStack: ${stack}\n\n`;
+
+  fs.appendFile(path.join(logDirectory, 'errors.log'), logMessage, (err) => {
+    if (err) {
+      console.error('Error writing to log file:', err);
+    }
+  });
+
+  res.status(200).send('Error received and logged');
+});
 
 // should probably use this in the future, but is causing problems now...
 // const helmet = require('helmet');
@@ -260,15 +285,95 @@ function constructGamesListJSON() {
 
 constructGamesListJSON();
 
-app.get("/games/", (req, res) => {
-  // Updates the games list every 30 minutes (in ms)
-  if (Date.now() - constructedGamesListJSONTimestamp > 1800000) {
-    constructGamesListJSON();
-  }
+function loadAllGames(ToSearch = null) {
+  try {
+    let listing;
 
-  res.setHeader("content-type", "application/json");
-  res.send(constructedGamesListJSON);
-});
+    if (ToSearch == null) {
+      listing = constructedGamesListJSON;
+    } else {
+      const searchQuery = ToSearch.toLowerCase() || "";
+
+      const options = {
+        keys: ["name", "thumbnail", "slug"],
+        threshold: 0.3,
+        includeScore: true,
+      };
+
+      const fuse = new Fuse(constructedGamesListJSON, options);
+      const results = fuse.search(searchQuery);
+
+      const filtered = results.map((result) => result.item);
+
+      listing = filtered;
+    }
+
+    const gameStats = pathStats;
+
+    function calculateAndSortScores(gameData) {
+      const gameEntries = Object.entries(gameData);
+      return gameEntries
+        .map(([game, stats]) => {
+          const score = (stats.recurring / stats.starts || 0) + (stats.recurring * 2);
+          return { game, score, starts: stats.starts, recurring: stats.recurring };
+        })
+        .sort((a, b) => b.score - a.score);
+    }
+
+    const popularGames = calculateAndSortScores(gameStats);
+
+    const buildCarouselHTML = (games) =>
+      games
+        .map(
+          (game) => `
+                  <div class="carousel-element centered">
+                      <a href='/games/${game.slug}/'>
+                          <img src="${game.thumbnail}" class="thumbnail" loading="lazy" />
+                          <text class="centerthing">${game.name}</text>
+                      </a>
+                  </div>`
+        )
+        .join("");
+
+    const recentlyAddedHTML = buildCarouselHTML(listing.reverse());
+    const allGamesHTML = listing
+      .map(
+        (game) => `
+              <div class="game-icon centered">
+                  <a href='/games/${game.slug}/'>
+                      <img src="${game.thumbnail}" class="min-img" />
+                      <text class="centerthing">${game.name}</text>
+                  </a>
+              </div>`
+      )
+      .join("");
+
+    const popularHTML = buildCarouselHTML(
+      listing.filter((game) =>
+        popularGames.some((p) => p.game.includes(`/games/${game.slug}/`))
+      )
+    );
+
+    return {
+      recentlyAdded: recentlyAddedHTML,
+      mostPlayed: popularHTML,
+      allGames: allGamesHTML,
+    };
+  } catch (error) {
+    console.error('Error loading games:', error);
+    return { error: "Failed to load games" };
+  }
+}
+
+// app.get("/games/", (req, res) => {
+//   // Updates the games list every 30 minutes (in ms)
+//   if (Date.now() - constructedGamesListJSONTimestamp > 1800000) {
+//     constructGamesListJSON();
+//   }
+
+//   res.setHeader("content-type", "application/json");
+//   res.send(constructedGamesListJSON);
+// });
 
 // // Instead of adding stuff for EVERY index html,
 // // just add it from the server side...
@@ -279,12 +384,12 @@ function handleGamesServing(req, res, concatIndex) {
   updateCount(`/games/${req.query.game}/`, "starts");
 
   const safeUrl = path.normalize(req.originalUrl);
-  
+
   var filePath;
-  if(concatIndex) {
+  if (concatIndex) {
     filePath = path.join(__dirname, "public", safeUrl, "index.html");
   } else {
-    filePath = path.join(__dirname, "public", safeUrl);  
+    filePath = path.join(__dirname, "public", safeUrl);
   }
 
   const ipAddress = req.ip;
@@ -299,10 +404,10 @@ function handleGamesServing(req, res, concatIndex) {
       if (err.code === "ENOENT") {
         console.log(
           now.toISOString() +
-            ":" +
-            ipAddress +
-            ": Error, file not found: " +
-            filePath
+          ":" +
+          ipAddress +
+          ": Error, file not found: " +
+          filePath
         );
         res.sendStatus(404);
       } else {
@@ -352,6 +457,27 @@ function updateCount(path, key) {
     } catch (err) {
       console.error(err);
     }
+  }
+}
+
+function updateIndex() {
+  if (+Date.now() - lastUpdatedIndex > 60 * 1000) {
+    console.log("UP3 INDEX")
+    lastUpdatedIndex = +Date.now();
+    const filePath = path.join(__dirname, 'private', 'index.html');
+    const replacementInfo = loadAllGames();
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading index.html:', err);
+        return;
+      }
+      indexHtml = data
+        .replace("{recentlyAddedCarousel}", replacementInfo.recentlyAdded)
+        .replace("{mostPlayCarousel}", replacementInfo.mostPlayed)
+        .replace("{allGames}", replacementInfo.allGames);
+      // console.log('index.html updated.');
+    });
   }
 }
 
@@ -476,8 +602,7 @@ app.ws("/live-chat-ws", function (ws, req) {
 
   const sendToChannel = (channel, message, senderHash) => {
     sendMessageToWebHook(
-      `${accs_vanities[accs.indexOf(message.sender)]}: ${
-        message.decodedMessage
+      `${accs_vanities[accs.indexOf(message.sender)]}: ${message.decodedMessage
       } ${getCurrentTime()}`
     );
     websockets.forEach((person) => {
@@ -596,9 +721,20 @@ app.ws("/live-chat-ws", function (ws, req) {
   });
 });
 
+updateIndex();
+app.use("/", function (req, res, next) {
+  if (req.url === "/") {
+    console.log("log");
+    updateIndex();
+    res.send(indexHtml);
+  } else {
+    next();
+  }
+});
+
 app.use(express.static("public"));
 
-if(!DEBUG) {
+if (!DEBUG) {
   app.listen(PORT);
 } else {
   app.listen(PORT, '0.0.0.0');
