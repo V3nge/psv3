@@ -48,6 +48,7 @@
                     <p>The original owners are back. No further explanations.</p>
                     <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
                     <h2 id="hiring">We are hiring. Solve the puzzle:</h2>
+                    <img src="sentinel.png" id="hiring1.5">
                     <p id="hiring2">aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzBWYWtDQlZn</p>
                     <s id="show-more">show more</s>
                 </center>
@@ -115,16 +116,21 @@
             const button = document.getElementById('show-more')
             const content = document.getElementById('hiring')
             const content2 = document.getElementById('hiring2')
+            const content15 = document.getElementById('hiring1.5')
+            content15.style.display = 'none'
             content.style.display = 'none'
             content2.style.display = 'none'
+            content15.style.width = "25%"
             button.addEventListener('click', () => {
                 if (content.style.display === 'none' || content.style.display === '') {
                     content.style.display = 'block'
+                    content15.style.display = 'block'
                     content2.style.display = 'block'
                     button.innerText = 'show less'
                 } else {
                     content.style.display = 'none'
                     content2.style.display = 'none'
+                    content15.style.display = 'none'
                     button.innerText = 'show more'
                 }
             });
