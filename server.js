@@ -136,6 +136,8 @@ const bodyParser = require('body-parser');
 const Fuse = require("fuse.js");
 const compression = require("compression");
 const axios = require("axios");
+const childProcess = require("child_process");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 // const httpProxy = require('http-proxy');
 // const http = require('http');
 
@@ -153,6 +155,43 @@ var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 var constructedGamesListJSON = null;
 var blockedUIDs = [];
 var pathStats = {};
+
+const ultravioletPath = path.join(__dirname, "ultraviolet-app", "src", "index.js");
+
+function startUltraviolet() {
+  const now = new Date();
+  console.log(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
+
+  const ultravioletProcess = childProcess.spawn("node", [ultravioletPath], {
+    stdio: ['inherit', 'pipe', 'pipe'],
+  });
+
+  ultravioletProcess.stdout.on('data', (data) => {
+    const now = new Date();
+    console.log(`${now.toISOString()}: UV: ${data.toString().replaceAll("\n", "")}`);
+  });
+
+  ultravioletProcess.stderr.on('data', (data) => {
+    const now = new Date();
+    console.error(`${now.toISOString()}: UV: ${data.toString().replaceAll("\n", "")}`);
+  });
+
+  ultravioletProcess.on("error", (err) => {
+    console.error(`Failed to start app: ${err.message}`);
+  });
+
+  ultravioletProcess.on("SIGINT", () => {
+    console.log("\nSIGINT received. Shutting down...");
+    ultravioletProcess.kill("SIGINT");
+    process.exit(0);
+  });
+
+  ultravioletProcess.on("SIGTERM", () => {
+    console.log("\nSIGTERM received. Shutting down...");
+    ultravioletProcess.kill("SIGTERM");
+    process.exit(0);
+  });
+}
 
 // var proxy = httpProxy.createProxyServer({});
 
@@ -462,7 +501,7 @@ function updateCount(path, key) {
 
 function updateIndex() {
   if (+Date.now() - lastUpdatedIndex > 60 * 1000) {
-    console.log("UP3 INDEX")
+    console.log(`${(new Date()).toISOString()}: Updating server rendered index.html`)
     lastUpdatedIndex = +Date.now();
     const filePath = path.join(__dirname, 'private', 'index.html');
     const replacementInfo = loadAllGames();
@@ -730,6 +769,49 @@ app.use("/", function (req, res, next) {
   } else {
     next();
   }
+});
+
+startUltraviolet();
+
+const TARGET_SERVER = "http://localhost:8080/";
+const filesToProxy = [
+  '/baremux/index.js',
+  '/uv.png',
+  '/epoxy/index.js',
+  '/register-sw.js',
+  '/search.js',
+  '/uv/uv.bundle.js',
+  '/uv/uv.config.js'
+];
+
+app.use('/uv', createProxyMiddleware({
+  target: TARGET_SERVER,
+  changeOrigin: true,
+  pathRewrite: {
+    '^/uv': '',
+  },
+  logLevel: 'debug',
+}));
+
+app.use('/prox', createProxyMiddleware({
+  target: TARGET_SERVER,
+  changeOrigin: true,
+  pathRewrite: {
+    '^/prox': '/',
+  },
+  logLevel: 'debug',
+}));
+
+app.use((req, res, next) => {
+  if (filesToProxy.includes(req.originalUrl) || filesToProxy.includes(req.originalUrl.slice(1))) {
+    return createProxyMiddleware({
+      target: TARGET_SERVER,
+      changeOrigin: true,
+      logLevel: 'debug',
+    })(req, res, next);
+  }
+
+  next();
 });
 
 app.use(express.static("public"));
