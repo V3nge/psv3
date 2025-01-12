@@ -20,6 +20,8 @@ const error = document.getElementById("uv-error");
  */
 const errorCode = document.getElementById("uv-error-code");
 const connection = new BareMux.BareMuxConnection("/baremux/worker.js")
+var startTimestamp = +Date.now();
+var lastTimestamp = startTimestamp;
 
 form.addEventListener("submit", async (event) => {
 	event.preventDefault();
@@ -42,3 +44,14 @@ form.addEventListener("submit", async (event) => {
 	}
 	frame.src = __uv$config.prefix + __uv$config.encodeUrl(url);
 });
+var backgroundDegrees = 0
+function update() {
+    lastTimestamp = startTimestamp;
+    startTimestamp = +Date.now();
+    backgroundDegrees -= ((startTimestamp - lastTimestamp) / (80 + (Math.random() * 20)));
+    backgroundDegrees %= 360;
+    document.body.style.background = `linear-gradient(${backgroundDegrees}deg, rgba(4,1,18,1) 0%, rgb(17, 5, 44) 100%)`;
+    requestAnimationFrame(update);
+}
+
+requestAnimationFrame(update)
