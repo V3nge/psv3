@@ -43,7 +43,7 @@ s {
     outline-style: auto;
     outline-width: 1%;
     outline: white;
-    top: 100%;
+    top: 50%;
     left: 1%;
     transform: translate(0%, -50%);
 }
