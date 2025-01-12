@@ -1,0 +1,16 @@
+<body>
+</body>
+<script>
+    const currentUrl = window.location.href;
+    const newUrl = new URL(currentUrl);
+    newUrl.port = 8080;
+    const iframe = document.createElement('iframe');
+    iframe.src = newUrl.toString().replace("/prox/", "/");
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.position = "absolute";
+    iframe.style.left = "0px";
+    iframe.style.top = "0px";
+    iframe.style.border = "none";
+    document.body.appendChild(iframe);
+</script>
