@@ -3,7 +3,7 @@
 <script>
     const currentUrl = window.location.href;
     const newUrl = new URL(currentUrl);
-    newUrl.port = 8080;
+    newUrl.port = 7765;
     const iframe = document.createElement('iframe');
     iframe.src = newUrl.toString().replace("/prox/", "/");
     iframe.style.width = "100%";
