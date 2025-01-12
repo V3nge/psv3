@@ -36,8 +36,6 @@ s {
     text-decoration: underline;
 }
 
-
-
 .icon {
     position: absolute;
     transition: 0.5s;
@@ -45,6 +43,9 @@ s {
     outline-style: auto;
     outline-width: 1%;
     outline: white;
+    top: 100%;
+    left: 1%;
+    transform: translate(0%, -50%);
 }
 
 .icon:hover {
