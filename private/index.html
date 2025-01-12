@@ -46,6 +46,8 @@
                     <h2>Who owns this website?</h2>
                     <p>The original owners are back. No further explanations.</p>
                     <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
+                    <img src="sentinel.png" id="hiring">
+                    <s id="show-more">show more</s>
                 </center>
 
             </div>
@@ -102,6 +104,21 @@
             document.getElementById("search").addEventListener("keypress", function(event) {
                 if (event.key === "Enter") {
                     searchThings();
+                }
+            });
+        </script>
+        <script>
+            const button = document.getElementById('show-more')
+            const content = document.getElementById('hiring')
+            content.style.display = 'none'
+            content.style.width = '25%'
+            button.addEventListener('click', () => {
+                if (content.style.display === 'none' || content.style.display === '') {
+                    content.style.display = 'block'
+                    button.innerText = 'show less'
+                } else {
+                    content.style.display = 'none'
+                    button.innerText = 'show more'
                 }
             });
         </script>

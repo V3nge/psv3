@@ -6,6 +6,7 @@
 
 * {
     font-family: "Imprima";
+    scrollbar-color: #1a1048;
 }
 
 :root {
@@ -26,8 +27,16 @@ body {
     transition: 0.5s;
     padding: 10px;
     overflow-x: hidden;
-    scrollbar-color: var(--midnight-blue);
+    scrollbar-color: #181048;
 }
+
+s {
+    color: var(--white);
+    font-size: smaller;
+    text-decoration: underline;
+}
+
+
 
 .icon {
     position: absolute;
@@ -83,7 +92,9 @@ text {
     padding: 10px;
     gap: 8px;
     scroll-snap-type: x mandatory;
-    scrollbar-color: var(--midnight-blue);
+    scrollbar-color: #1a1048;
+    scrollbar-width: thin;
+
 }
 
 .quote-text {
