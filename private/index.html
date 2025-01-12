@@ -42,12 +42,13 @@
 
                     <h2>Why is Sentinel V3 the Peak?</h2>
 
-                    <p>Its super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic live chаt that definitely works</p>
+                    <p>It's super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic live chаt that definitely works</p>
 
                     <h2>Who owns this website?</h2>
                     <p>The original owners are back. No further explanations.</p>
                     <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
-                    <img src="sentinel.png" id="hiring">
+                    <h2 id="hiring">We are hiring. Solve the puzzle:</h2>
+                    <p id="hiring2">aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzBWYWtDQlZn</p>
                     <s id="show-more">show more</s>
                 </center>
 
@@ -56,10 +57,7 @@
         <div class="embedding">
             <h1 class="centered">Recently Added Gаmеs</h1>
             <div id="recentlyAddedCarousel" class="carousel">
-                <div class="arrowContainer" id="arrows">
-                    <img src="images/arrowLeft" class="back" id="back">
-                    <img src="images/arrowRight" class="next" id="next">
-                </div>
+                
                 
                 {recentlyAddedCarousel}
             </div>
@@ -116,15 +114,17 @@
         <script>
             const button = document.getElementById('show-more')
             const content = document.getElementById('hiring')
+            const content2 = document.getElementById('hiring2')
             content.style.display = 'none'
-            content.style.width = '25%'
-            content.style.filter = "brightness(175%)"
+            content2.style.display = 'none'
             button.addEventListener('click', () => {
                 if (content.style.display === 'none' || content.style.display === '') {
                     content.style.display = 'block'
+                    content2.style.display = 'block'
                     button.innerText = 'show less'
                 } else {
                     content.style.display = 'none'
+                    content2.style.display = 'none'
                     button.innerText = 'show more'
                 }
             });
