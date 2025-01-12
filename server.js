@@ -137,7 +137,6 @@ const Fuse = require("fuse.js");
 const compression = require("compression");
 const axios = require("axios");
 const childProcess = require("child_process");
-const { createProxyMiddleware } = require('http-proxy-middleware');
 // const httpProxy = require('http-proxy');
 // const http = require('http');
 
@@ -772,47 +771,6 @@ app.use("/", function (req, res, next) {
 });
 
 startUltraviolet();
-
-const TARGET_SERVER = "http://localhost:8080/";
-const filesToProxy = [
-  '/baremux/index.js',
-  '/uv.png',
-  '/epoxy/index.js',
-  '/register-sw.js',
-  '/search.js',
-  '/uv/uv.bundle.js',
-  '/uv/uv.config.js'
-];
-
-app.use('/uv', createProxyMiddleware({
-  target: TARGET_SERVER,
-  changeOrigin: true,
-  pathRewrite: {
-    '^/uv': '',
-  },
-  logLevel: 'debug',
-}));
-
-app.use('/prox', createProxyMiddleware({
-  target: TARGET_SERVER,
-  changeOrigin: true,
-  pathRewrite: {
-    '^/prox': '/',
-  },
-  logLevel: 'debug',
-}));
-
-app.use((req, res, next) => {
-  if (filesToProxy.includes(req.originalUrl) || filesToProxy.includes(req.originalUrl.slice(1))) {
-    return createProxyMiddleware({
-      target: TARGET_SERVER,
-      changeOrigin: true,
-      logLevel: 'debug',
-    })(req, res, next);
-  }
-
-  next();
-});
 
 app.use(express.static("public"));
 
