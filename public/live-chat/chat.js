@@ -137,7 +137,7 @@ var playNameClient = prompt("> Enter name for chat");
 ws.onmessage = function (a) {
     var response = JSON.parse(a.data);
     if (response.type == "ok_tempacc") {
-        console.log("ok tempacc")
+        //console.log("ok tempacc")
         const randomMsg = Math.floor(Math.random() * joinMessages.length);
         ws.send(JSON.stringify({
             "type": "tempacc_gsend",
@@ -160,7 +160,7 @@ ws.onmessage = function (a) {
         if (senderer == 0) {
             createMessage(response.sender, `You: ${decodeURIComponent(response.msg)}`);
         } else {
-            console.log(response);
+            //console.log(response);
             createMessage(response.sender, `${response.vanity}: ${decodeURIComponent(response.msg)}`);
         }
     } else if (response.type == "pri") {
@@ -175,7 +175,7 @@ ws.onmessage = function (a) {
     } else if (response.type == "blocked") {
         document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
     } else {
-        console.log(response);
+        //console.log(response);
     }
 }
 
@@ -197,10 +197,12 @@ function send() {
             createPrivate(encoded);
             window.location.href = `/live-chat/?c=${encoded}`;
         } else {
+            /*
             console.log(JSON.stringify({
                 "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
                 "channel": channelToSendTo, "vanity": playNameClient
             }));
+            */
             ws.send(JSON.stringify({
                 "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
                 "channel": channelToSendTo, "vanity": playNameClient
