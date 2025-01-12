@@ -1,12 +1,34 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Imprima");
+
+@font-face {
+    font-family: 'Satoshi';
+    src: url('Satoshi-Variable.ttf') format('truetype');
+}
+
+* {
+    font-family: "Imprima";
+    scrollbar-color: #1a1048;
+}
+
+:root {
+  --black: #040112;
+  --white: white;
+  --violet: #df9aff;
+  --blue-violet: #6825f5;
+  --light-steel-blue: #a4abec;
+  --opacity-text: rgba(255, 255, 255, .6);
+  --midnight-blue: #1a1048;
+  --dark-pink-gradient: #181048;
+  --transparent: rgba(255, 255, 255, 0);
+}
 
 body {
-  font-family: "Roboto", Arial, Helvetica, sans-serif;
-  margin: 0;
-  background: #111;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  background: rgb(4, 1, 18);
+  background: linear-gradient(0deg, rgba(4, 1, 18, 1) 0%, rgb(17, 5, 44) 100%);
+  transition: 0.5s;
+  padding: 10px;
+  overflow-x: hidden;
+  scrollbar-color: #181048;
 }
 
 .fa-magnifying-glass {
