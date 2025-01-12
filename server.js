@@ -155,6 +155,11 @@ var constructedGamesListJSON = null;
 var blockedUIDs = [];
 var pathStats = {};
 
+const certoptions = {
+  key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
+};
+
 const ultravioletPath = path.join(__dirname, "ultraviolet-app", "src", "index.js");
 
 function startUltraviolet() {
@@ -775,7 +780,10 @@ startUltraviolet();
 app.use(express.static("public"));
 
 if (!DEBUG) {
-  app.listen(PORT);
+  https.createServer(certoptions, app).listen(PORT, () => {
+    console.log('HTTPS Server running on port 7764');
+  });
+  //app.listen(PORT);
 } else {
   app.listen(PORT, '0.0.0.0');
 }
