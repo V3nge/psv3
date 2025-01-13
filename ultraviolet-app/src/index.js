@@ -169,65 +169,59 @@ import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 
-console.log("dog3d");
-console.log("publicPath", publicPath);
-console.log("uvPath", uvPath);
-console.log("epoxyPath", epoxyPath);
-console.log("baremuxPath", baremuxPath);
-
 // HTTPS options
 const httpsOptions = {
-    key: readFileSync("/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem"),
-    cert: readFileSync("/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem"),
+	key: readFileSync("/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem"),
+	cert: readFileSync("/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem"),
 };
 
 // Create Fastify instance
 const fastify = Fastify({
-    serverFactory: (handler) => {
-        return createServer(httpsOptions)
-            .on("request", (req, res) => {
-                // Set security headers
-                res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-                res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
-                handler(req, res);
-            })
-            .on("upgrade", (req, socket, head) => {
-                // Handle WebSocket upgrades for Wisp
-                if (req.url.endsWith("/wisp/")) {
-                    wisp.routeRequest(req, socket, head);
-                } else {
-                    socket.end();
-                }
-            });
-    },
+	serverFactory: (handler) => {
+		return createServer(httpsOptions)
+			.on("request", (req, res) => {
+				// Set security headers
+				res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+				res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+				handler(req, res);
+			})
+			.on("upgrade", (req, socket, head) => {
+				// Handle WebSocket upgrades for Wisp
+				if (req.url.endsWith("/wisp/")) {
+					wisp.routeRequest(req, socket, head);
+				} else {
+					socket.end();
+				}
+			});
+	},
 });
 
 // Register static file serving
 fastify.register(fastifyStatic, {
-    root: publicPath,
-    decorateReply: true,
+	root: publicPath,
+	decorateReply: true,
 });
 
 fastify.get("/uv/uv.config.js", (req, res) => {
-    return res.sendFile("uv/uv.config.js", publicPath);
+	return res.sendFile("uv/uv.config.js", publicPath);
 });
 
 fastify.register(fastifyStatic, {
-    root: uvPath,
-    prefix: "/uv/",
-    decorateReply: false,
+	root: uvPath,
+	prefix: "/uv/",
+	decorateReply: false,
 });
 
 fastify.register(fastifyStatic, {
-    root: epoxyPath,
-    prefix: "/epoxy/",
-    decorateReply: false,
+	root: epoxyPath,
+	prefix: "/epoxy/",
+	decorateReply: false,
 });
 
 fastify.register(fastifyStatic, {
-    root: baremuxPath,
-    prefix: "/baremux/",
-    decorateReply: false,
+	root: baremuxPath,
+	prefix: "/baremux/",
+	decorateReply: false,
 });
 
 // Port configuration
@@ -236,18 +230,23 @@ if (isNaN(port)) port = 8080;
 
 // Start server
 fastify.listen({
-    port: port,
-    host: "0.0.0.0",
+	port: port,
+	host: "0.0.0.0",
 }).then(() => {
-    const address = fastify.server.address();
-    console.log("Listening on:");
-    console.log(`\thttps://localhost:${address.port}`);
-    console.log(`\thttps://${hostname()}:${address.port}`);
-    console.log(
-        `\thttps://${
-            address.family === "IPv6" ? `[${address.address}]` : address.address
-        }:${address.port}`
-    );
+	const address = fastify.server.address();
+
+	console.log("publicPath", publicPath);
+	console.log("uvPath", uvPath);
+	console.log("epoxyPath", epoxyPath);
+	console.log("baremuxPath", baremuxPath);
+
+	console.log("Listening on:");
+	console.log(`\thttps://localhost:${address.port}`);
+	console.log(`\thttps://${hostname()}:${address.port}`);
+	console.log(
+		`\thttps://${address.family === "IPv6" ? `[${address.address}]` : address.address
+		}:${address.port}`
+	);
 });
 
 // Graceful shutdown
@@ -255,9 +254,9 @@ process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
 
 function shutdown() {
-    console.log("SIGTERM signal received: closing HTTP server");
-    fastify.close(() => {
-        console.log("Server shut down successfully.");
-        process.exit(0);
-    });
+	console.log("SIGTERM signal received: closing HTTP server");
+	fastify.close(() => {
+		console.log("Server shut down successfully.");
+		process.exit(0);
+	});
 }
