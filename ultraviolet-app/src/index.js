@@ -169,6 +169,11 @@ import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 
+console.log(publicPath);
+console.log(uvPath);
+console.log(epoxyPath);
+console.log(baremuxPath);
+
 // HTTPS options
 const httpsOptions = {
     key: readFileSync("/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem"),
