@@ -219,6 +219,21 @@ try {
 app.use(compression());
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  next();
+});
+
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "frame-ancestors 'self' https://www.project-sentinel.xyz:7765;"
+  );
+  next();
+});
+
+
 const logDirectory = path.join(__dirname, 'error-logs');
 if (!fs.existsSync(logDirectory)) {
   fs.mkdirSync(logDirectory);
