@@ -235,10 +235,10 @@ fastify.listen({
 }).then(() => {
 	const address = fastify.server.address();
 
-	console.log("publicPath", publicPath);
-	console.log("uvPath", uvPath);
-	console.log("epoxyPath", epoxyPath);
-	console.log("baremuxPath", baremuxPath);
+	console.log(`publicPath, ${publicPath.toString()}`);
+	console.log(`uvPath, ${uvPath.toString()}`);
+	console.log(`epoxyPath, ${epoxyPath.toString()}`);
+	console.log(`baremuxPath, ${baremuxPath.toString()}`);
 
 	console.log("Listening on:");
 	console.log(`\thttps://localhost:${address.port}`);
