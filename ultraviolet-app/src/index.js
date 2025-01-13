@@ -10,6 +10,10 @@ import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 
 const fastify = Fastify({
+	https: {
+        key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/certificate.pem')
+    },
 	serverFactory: (handler) => {
 		return createServer()
 			.on("request", (req, res) => {
