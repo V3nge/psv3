@@ -13,7 +13,7 @@ import { readFileSync } from 'fs';
 const fastify = Fastify({
 	https: {
         key: readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
-        cert: readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/certificate.pem')
+        cert: readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
     },
 	serverFactory: (handler) => {
 		return createServer()
