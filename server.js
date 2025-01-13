@@ -138,6 +138,7 @@ const Fuse = require("fuse.js");
 const compression = require("compression");
 const axios = require("axios");
 const childProcess = require("child_process");
+const helmet = require('helmet');
 // const httpProxy = require('http-proxy');
 // const http = require('http');
 
@@ -219,20 +220,19 @@ try {
 app.use(compression());
 app.use(bodyParser.json());
 
+app.use(
+  helmet({
+    crossOriginEmbedderPolicy: { policy: 'require-corp' }, // Enforce COEP
+  })
+);
+
+// Allow frames from specific domains
 app.use((req, res, next) => {
-  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
-  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
   next();
 });
-
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "frame-ancestors 'self' https://www.project-sentinel.xyz:7765;"
-  );
-  next();
-});
-
 
 const logDirectory = path.join(__dirname, 'error-logs');
 if (!fs.existsSync(logDirectory)) {
@@ -256,7 +256,6 @@ app.post('/error', (req, res) => {
 });
 
 // should probably use this in the future, but is causing problems now...
-// const helmet = require('helmet');
 // const morgan = require('morgan');
 // app.use(helmet());
 // app.use(morgan('combined'));
