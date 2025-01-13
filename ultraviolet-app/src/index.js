@@ -169,6 +169,7 @@ import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 
+console.log("dog3d");
 console.log("publicPath", publicPath);
 console.log("uvPath", uvPath);
 console.log("epoxyPath", epoxyPath);
