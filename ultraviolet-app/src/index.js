@@ -169,10 +169,10 @@ import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 
-console.log(publicPath);
-console.log(uvPath);
-console.log(epoxyPath);
-console.log(baremuxPath);
+console.log("publicPath", publicPath);
+console.log("uvPath", uvPath);
+console.log("epoxyPath", epoxyPath);
+console.log("baremuxPath", baremuxPath);
 
 // HTTPS options
 const httpsOptions = {
