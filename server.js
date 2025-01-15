@@ -611,7 +611,7 @@ app.get("/live-chat/active", (req, res) => {
   res.send(accs_vanities);
 });
 
-app.wss("/live-chat-ws", function (wss, req) {
+app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};
   thisUser.connected = true;
   thisUser.needsRemovalOnDisconnect = true;
