@@ -611,7 +611,7 @@ app.get("/live-chat/active", (req, res) => {
   res.send(accs_vanities);
 });
 
-app.ws("/live-chat-ws", function (ws, req) {
+app.wss("/live-chat-ws", function (wss, req) {
   let thisUser = {};
   thisUser.connected = true;
   thisUser.needsRemovalOnDisconnect = true;
@@ -625,7 +625,7 @@ app.ws("/live-chat-ws", function (ws, req) {
       }
       return; // Don't set the next timeout since they left (or disconnected unintentionally)
     } else {
-      ws.send(JSON.stringify({ type: "ping" }));
+      wss.send(JSON.stringify({ type: "ping" }));
       if (+Date.now() - thisUser.lastPingReturned > PING_TIMEOUT + 5000) {
         console.log(
           `${thisUser.name}'s last ping was more than 15 seconds ago, disconnecting and closing websocket.`
@@ -634,7 +634,7 @@ app.ws("/live-chat-ws", function (ws, req) {
         thisUser.needsRemovalOnDisconnect = false;
 
         removeUser(thisUser);
-        ws.close();
+        wss.close();
       }
     }
     thisUser.pingTimeout = setTimeout(go, 5000);
@@ -677,13 +677,13 @@ app.ws("/live-chat-ws", function (ws, req) {
     });
   };
 
-  ws.on("close", async function (err) {
+  wss.on("close", async function (err) {
     activeUsers--;
     removeUser(thisUser);
     thisUser.connected = false;
   });
 
-  ws.on("message", async function (msg) {
+  wss.on("message", async function (msg) {
     const message = JSON.parse(msg);
     const ipAddress = req.ip;
     const now = new Date();
@@ -694,7 +694,7 @@ app.ws("/live-chat-ws", function (ws, req) {
 
     switch (message.type) {
       case "names":
-        ws.send(
+        wss.send(
           JSON.stringify({
             type: "nameslist",
             value: JSON.stringify(accs_vanities),
@@ -707,7 +707,7 @@ app.ws("/live-chat-ws", function (ws, req) {
         if (blockedUIDs.includes(message.name) || message.name.length != 20) {
           thisUser.connected = false;
           thisUser.needsRemovalOnDisconnect = false;
-          ws.send(JSON.stringify({ type: "blocked" }));
+          wss.send(JSON.stringify({ type: "blocked" }));
           return;
         }
 
@@ -716,7 +716,7 @@ app.ws("/live-chat-ws", function (ws, req) {
         thisUser.needsRemovalOnDisconnect = true;
         thisUser.lastPingReturned = +Date.now();
 
-        ws.send(JSON.stringify({ type: "ok_tempacc" }));
+        wss.send(JSON.stringify({ type: "ok_tempacc" }));
 
         accs.push(message.name);
         console.log(message);
@@ -732,8 +732,8 @@ app.ws("/live-chat-ws", function (ws, req) {
         }
         accs_vanities.push(message.vanity.trim());
 
-        websockets.push({ socket: ws, channel: message.channel });
-        thisUser.websocket = { socket: ws, channel: message.channel };
+        websockets.push({ socket: wss, channel: message.channel });
+        thisUser.websocket = { socket: wss, channel: message.channel };
         break;
 
       case "tempacc_gsend":
@@ -743,10 +743,10 @@ app.ws("/live-chat-ws", function (ws, req) {
             decodedMessage.trim() === "" ||
             decodedMessage.trim().length > 2001
           ) {
-            ws.send(JSON.stringify({ type: "nuh uh" }));
+            wss.send(JSON.stringify({ type: "nuh uh" }));
             break;
           }
-          ws.send(JSON.stringify({ type: "ok" }));
+          wss.send(JSON.stringify({ type: "ok" }));
 
           message.decodedMessage = decodedMessage;
 
@@ -757,13 +757,13 @@ app.ws("/live-chat-ws", function (ws, req) {
 
           sendToChannel(message.channel, message, senderHash);
         } else {
-          ws.send(JSON.stringify({ type: "nuh uh" }));
+          wss.send(JSON.stringify({ type: "nuh uh" }));
         }
         break;
 
       case "newpri":
         const senderHash = await sha256(message.sender);
-        ws.send(
+        wss.send(
           JSON.stringify({
             type: "pri",
             msg: createPrivateRoom(message.code),
@@ -774,7 +774,7 @@ app.ws("/live-chat-ws", function (ws, req) {
       case "ping":
         break;
       default:
-        ws.send(JSON.stringify({ type: "unknowntype", value: message.type }));
+        wss.send(JSON.stringify({ type: "unknowntype", value: message.type }));
     }
   });
 });
