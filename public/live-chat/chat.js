@@ -1,5 +1,5 @@
 const messagesContainer = document.getElementById("messages");
-var ws = new WebSocket(`ws://${window.location.host}/live-chat-ws`);
+var wss = new WebSocket(`wss://${window.location.host}/live-chat-ws`);
 var hashes = [];
 var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
@@ -101,8 +101,8 @@ if (uid == null) {
 var urlParams = new URLSearchParams(window.location.search);
 var channelToSendTo = urlParams.get('c');
 
-ws.onopen = function () {
-    ws.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo, "vanity": playNameClient }));
+wss.onopen = function () {
+    wss.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo, "vanity": playNameClient }));
 }
 
 function createMessage(name, value, userMessage = true) {
@@ -124,29 +124,29 @@ function createMessage(name, value, userMessage = true) {
     messagesContainer.appendChild(message);
 }
 
-ws.onclose = function () {
+wss.onclose = function () {
     alert("Uh oh! Your websocket disconnected... 😦");
 }
 
-ws.onerror = function () {
+wss.onerror = function () {
     alert("OH SHOOT! There was an error... 😦😦😦");
 }
 
 var playNameClient = prompt("> Enter name for chat");
 
-ws.onmessage = function (a) {
+wss.onmessage = function (a) {
     var response = JSON.parse(a.data);
     if (response.type == "ok_tempacc") {
         //console.log("ok tempacc")
         const randomMsg = Math.floor(Math.random() * joinMessages.length);
-        ws.send(JSON.stringify({
+        wss.send(JSON.stringify({
             "type": "tempacc_gsend",
             "msg": encodeURIComponent(joinMessages[randomMsg]),
             "sender": uid,
             "channel": channelToSendTo,
             "vanity": playNameClient
         }));
-        ws.send(JSON.stringify({ "type": "names" }));
+        wss.send(JSON.stringify({ "type": "names" }));
     } else if (response.type == "gsend_r") {
         if (response.sender == null) {
             createMessage("?", `${decodeURIComponent(response.msg)}`);
@@ -171,7 +171,7 @@ ws.onmessage = function (a) {
     } else if (response.type == "nameslist") {
         createMessage("System", `(System) Active users: ${JSON.parse(response.value).join(', ')}`, false);
     } else if (response.type == "ping") {
-        ws.send(JSON.stringify({ "type": "ping" }));
+        wss.send(JSON.stringify({ "type": "ping" }));
     } else if (response.type == "blocked") {
         document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
     } else {
@@ -180,7 +180,7 @@ ws.onmessage = function (a) {
 }
 
 function createPrivate(name) {
-    ws.send(JSON.stringify({ "type": "newpri", "code": name }));
+    wss.send(JSON.stringify({ "type": "newpri", "code": name }));
 }
 
 function send() {
@@ -203,7 +203,7 @@ function send() {
                 "channel": channelToSendTo, "vanity": playNameClient
             }));
             */
-            ws.send(JSON.stringify({
+            wss.send(JSON.stringify({
                 "type": "tempacc_gsend", "msg": encodeURIComponent(messageText), "sender": uid,
                 "channel": channelToSendTo, "vanity": playNameClient
             }));
@@ -214,7 +214,7 @@ function send() {
 }
 
 setInterval(function () {
-    ws.send(JSON.stringify({ "type": "names" }));
+    wss.send(JSON.stringify({ "type": "names" }));
 }, 1000 * 60 * 3);
 
 var codeInput = document.getElementById("code-input");
