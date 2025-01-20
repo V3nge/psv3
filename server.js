@@ -773,6 +773,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         thisUser = message;
         
         if (uidFromIp) {
+          message.name = req.ip;
           thisUser.name = req.ip;
         }
 
