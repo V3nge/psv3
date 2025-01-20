@@ -684,6 +684,7 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   wss.on("message", async function (msg) {
+    console.log(msg);
     const message = JSON.parse(msg);
     const ipAddress = req.ip;
     const now = new Date();
