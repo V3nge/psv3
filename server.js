@@ -724,6 +724,12 @@ app.ws("/live-chat-ws", function (wss, req) {
   }, 1000);
 
   wss.on("message", async function (msg) {
+    if (uidFromIp) {
+      message.name = req.ip;
+      message.sender = req.ip;
+      thisUser.name = req.ip;
+    }
+    
     let timeOpen = ((+Date.now()) - websocketOpened) / 1000;
     let amountPerSecond = (messagesSent / timeOpen);
 
@@ -773,7 +779,8 @@ app.ws("/live-chat-ws", function (wss, req) {
         thisUser = message;
         
         if (uidFromIp) {
-          message.name  = req.ip;
+          message.name = req.ip;
+          message.sender = req.ip;
           thisUser.name = req.ip;
         }
 
