@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -143,12 +143,35 @@ const helmet = require('helmet');
 // const http = require('http');
 
 const app = express();
-var expressWs = require("express-ws")(app);
 
-app.use(function (req, res, next) {
-  req.id3 = 'sauce';
-  return next();
-});
+var server = null;
+var listenCallback = null; 
+
+if (!DEBUG) {
+  const certoptions = {
+    key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
+  };
+
+  server = https.createServer(certoptions, app);
+  listenCallback = function() {
+    server.listen(PORT, () => {
+      console.log(`HTTPS Server running on port ${PORT}`);
+    });
+  }
+  //app.listen(PORT);
+} else {
+  console.log(`HTTP Server running on port ${PORT}`);
+  listenCallback = function() {
+    app.listen(PORT, '0.0.0.0');
+  }
+}
+
+if(server == null) {
+  require("express-ws")(app);
+} else {
+  require("express-ws")(app, server);
+}
 
 var accs = [];
 var accs_vanities = [];
@@ -440,6 +463,7 @@ function loadAllGames(ToSearch = null) {
 function handleGamesServing(req, res, concatIndex) {
   res.setHeader("Content-Type", "text/html");
 
+  console.log(`START: /games/${req.query.game}/`);
   updateCount(`/games/${req.query.game}/`, "starts");
 
   const safeUrl = path.normalize(req.originalUrl);
@@ -783,7 +807,7 @@ app.ws("/live-chat-ws", function (wss, req) {
 updateIndex();
 app.use("/", function (req, res, next) {
   if (req.url === "/") {
-    console.log("log");
+    console.log("/ sent");
     updateIndex();
     res.send(indexHtml);
   } else {
@@ -795,17 +819,4 @@ startUltraviolet();
 
 app.use(express.static("public"));
 
-if (!DEBUG) {
-  const certoptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
-  };
-  
-  https.createServer(certoptions, app).listen(PORT, () => {
-    console.log(`HTTPS Server running on port ${PORT}`);
-  });
-  //app.listen(PORT);
-} else {
-  console.log(`HTTP Server running on port ${PORT}`);
-  app.listen(PORT, '0.0.0.0');
-}
+listenCallback();

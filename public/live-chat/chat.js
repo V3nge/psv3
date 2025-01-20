@@ -127,13 +127,18 @@ function createMessage(name, value, userMessage = true) {
     messagesContainer.appendChild(message);
 }
 
+function dualLog(a) {
+    console.log(a);
+    createMessage("System", a, false);
+}
+
 wss.onclose = function () {
     // USER FRIENDLY ERROR MESSAGE!!!!
-    alert("Uh oh! You disconnected... 😦");
+    dualLog("Uh oh! You disconnected... 😦");
 }
 
 wss.onerror = function () {
-    alert("OH SHOOT! There was an error... 😦😦😦");
+    dualLog("OH SHOOT! There was an error... 😦😦😦");
 }
 
 var playNameClient = prompt("> Enter name for chat");
