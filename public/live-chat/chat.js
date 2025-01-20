@@ -112,7 +112,7 @@ if (localStorage.getItem("blocked") == "TRG2") {
         setTimeout(function () {
             console.log("Init message");
             wss.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo, "vanity": playNameClient }));
-        }, 100)
+        }, 250);
     }
 
     function createMessage(name, value, userMessage = true) {
