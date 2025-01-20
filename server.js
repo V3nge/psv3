@@ -1,4 +1,3 @@
-// c3
 const DEBUG = false;
 const ADJECTIVES = [
   "Sticky",

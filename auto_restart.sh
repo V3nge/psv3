@@ -21,7 +21,7 @@ start_server
 LAST_COMMIT=$(git ls-remote origin -h refs/heads/$(git rev-parse --abbrev-ref HEAD) | awk '{ print $1 }')
 
 while true; do
-  sleep 5
+  sleep 10
 
   git fetch
 
