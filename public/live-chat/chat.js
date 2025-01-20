@@ -190,7 +190,7 @@ wss.onmessage = function (a) {
     } else if (response.type == "ping") {
         wss.send(JSON.stringify({ "type": "ping" }));
     } else if (response.type == "blocked") {
-        localStorage.getItem("blocked", "TRG2");
+        localStorage.setItem("blocked", "TRG2");
         showBlocked();
     } else {
         //console.log(response);
