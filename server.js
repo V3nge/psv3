@@ -715,9 +715,10 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   wss.on("message", async function (msg) {
-    var amountPerSecond = (messagesSent / ((+Date.now()) - websocketOpened));
+    var timeOpen = ((+Date.now()) - websocketOpened);
+    var amountPerSecond = (messagesSent / timeOpen);
 
-    console.log("MS", messagesSent, "WO", websocketOpened, "APS", amountPerSecond);
+    console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
 
     if(amountPerSecond > 10) {
         wss.close();
