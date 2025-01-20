@@ -773,7 +773,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         thisUser = message;
         
         if (uidFromIp) {
-          message.name = req.ip;
+          message.name  = req.ip;
           thisUser.name = req.ip;
         }
 
@@ -804,6 +804,7 @@ app.ws("/live-chat-ws", function (wss, req) {
       case "tempacc_gsend":
         if (uidFromIp) {
           message.name = req.ip;
+          message.sender = req.ip;
           thisUser.name = req.ip;
         }
 
@@ -827,6 +828,7 @@ app.ws("/live-chat-ws", function (wss, req) {
 
           sendToChannel(message.channel, message, senderHash);
         } else {
+          console.log(message.sender);
           wss.send(JSON.stringify({ type: "nuh uh" }));
         }
         break;
