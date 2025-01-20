@@ -643,6 +643,7 @@ app.ws("/live-chat-ws", function (wss, req) {
 
   thisUser.messagesSent = 0;
   thisUser.websocketOpened = +Date.now();
+
   thisUser.connected = true;
   thisUser.needsRemovalOnDisconnect = true;
   thisUser.lastPingReturned = +Date.now();
@@ -725,7 +726,10 @@ app.ws("/live-chat-ws", function (wss, req) {
     }
 
     const message = JSON.parse(msg);
+    
     const ipAddress = req.ip;
+    console.log(ipAddress);
+
     const now = new Date();
 
     // If they send anything back that means
