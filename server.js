@@ -802,6 +802,11 @@ app.ws("/live-chat-ws", function (wss, req) {
         break;
 
       case "tempacc_gsend":
+        if (uidFromIp) {
+          message.name = req.ip;
+          thisUser.name = req.ip;
+        }
+
         if (accs.includes(message.sender)) {
           const decodedMessage = decodeURIComponent(message.msg);
           if (
