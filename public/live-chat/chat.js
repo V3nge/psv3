@@ -1,3 +1,11 @@
+function showBlocked() {
+    document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
+}
+
+if(localStorage.getItem("blocked") == "TRG2") {
+    showBlocked();
+}
+
 const messagesContainer = document.getElementById("messages");
 var wss = new WebSocket(`wss://${window.location.host}/live-chat-ws`);
 var hashes = [];
@@ -182,7 +190,8 @@ wss.onmessage = function (a) {
     } else if (response.type == "ping") {
         wss.send(JSON.stringify({ "type": "ping" }));
     } else if (response.type == "blocked") {
-        document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
+        localStorage.getItem("blocked", "TRG2");
+        showBlocked();
     } else {
         //console.log(response);
     }
