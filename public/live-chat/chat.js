@@ -1,5 +1,5 @@
 const messagesContainer = document.getElementById("messages");
-var wss = new WebSocket(`ws://${window.location.host}/live-chat-ws`);
+var wss = new WebSocket(`wss://${window.location.host}/live-chat-ws`);
 var hashes = [];
 var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
