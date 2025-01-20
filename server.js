@@ -641,8 +641,8 @@ app.get("/live-chat/active", (req, res) => {
 app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};
 
-  thisUser.messagesSent = 0;
-  thisUser.websocketOpened = +Date.now();
+  let messagesSent = 0;
+  let websocketOpened = +Date.now();
 
   thisUser.connected = true;
   thisUser.needsRemovalOnDisconnect = true;
@@ -715,15 +715,9 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   wss.on("message", async function (msg) {
-    var amountPerSecond = (thisUser.messagesSent / ((+Date.now()) - thisUser.websocketOpened));
-    
-    if(amountPerSecond == NaN) {
-      thisUser.messagesSent = 0;
-      thisUser.websocketOpened = +Date.now();
-      amountPerSecond = 0;
-    }
+    var amountPerSecond = (messagesSent / ((+Date.now()) - websocketOpened));
 
-    console.log("MS", thisUser.messagesSent, "WO", thisUser.websocketOpened, "APS", amountPerSecond);
+    console.log("MS", messagesSent, "WO", websocketOpened, "APS", amountPerSecond);
 
     if(amountPerSecond > 10) {
         wss.close();
@@ -732,7 +726,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         );
         return;
     } else {
-      thisUser.messagesSent++;
+      messagesSent++;
     }
 
     const message = JSON.parse(msg);
@@ -766,9 +760,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         }
 
         thisUser = message;
-        
-        thisUser.messagesSent = 0;
-        thisUser.websocketOpened = +Date.now();      
+          
         thisUser.connected = true;
         thisUser.needsRemovalOnDisconnect = true;
         thisUser.lastPingReturned = +Date.now();
