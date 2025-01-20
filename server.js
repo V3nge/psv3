@@ -733,6 +733,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         console.log(
           `${thisUser.name} sent more than 5 messages a second through the websocket!!`
         );
+        blockedUIDs.push(thisUser.name);
         return;
     } else {
       messagesSent++;
