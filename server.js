@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -161,15 +161,17 @@ if (!DEBUG) {
   }
   //app.listen(PORT);
 } else {
-  console.log(`HTTP Server running on port ${PORT}`);
   listenCallback = function() {
+    console.log(`HTTP Server running on port ${PORT}`);
     app.listen(PORT, '0.0.0.0');
   }
 }
 
 if(server == null) {
+  console.log("No server passed into express-ws init.");
   require("express-ws")(app);
 } else {
+  console.log("Express-ws with server init.");
   require("express-ws")(app, server);
 }
 
@@ -819,4 +821,5 @@ startUltraviolet();
 
 app.use(express.static("public"));
 
+console.log("\nStarting server via listenCallback...");
 listenCallback();
