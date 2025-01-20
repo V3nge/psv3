@@ -658,6 +658,8 @@ app.ws("/live-chat-ws", function (wss, req) {
     } else {
       wss.send(JSON.stringify({ type: "ping" }));
       if (+Date.now() - thisUser.lastPingReturned > PING_TIMEOUT + 5000) {
+        clearInterval(messagesLimitInterval);
+
         console.log(
           `${thisUser.name}'s last ping was more than 15 seconds ago, disconnecting and closing websocket.`
         );
@@ -709,14 +711,20 @@ app.ws("/live-chat-ws", function (wss, req) {
   };
 
   wss.on("close", async function (err) {
+    clearInterval(messagesLimitInterval);
     activeUsers--;
     removeUser(thisUser);
     thisUser.connected = false;
   });
 
+  let messagesLimitInterval = setInterval(function() {
+    websocketOpened = (+Date.now());
+    messagesSent    = 0;
+  }, 1000);
+
   wss.on("message", async function (msg) {
-    var timeOpen = ((+Date.now()) - websocketOpened) / 1000;
-    var amountPerSecond = (messagesSent / timeOpen);
+    let timeOpen = ((+Date.now()) - websocketOpened) / 1000;
+    let amountPerSecond = (messagesSent / timeOpen);
 
     console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
 
