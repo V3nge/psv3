@@ -1,18 +1,18 @@
 #!/bin/bash
 
 start_server() {
-  echo "Starting server..."
+  # echo "Starting server..."
   node ./server.js &
   SERVER_PID=$!
-  echo "Server started with PID $SERVER_PID"
+  # echo "Server started with PID $SERVER_PID"
 }
 
 stop_server() {
   if [ -n "$SERVER_PID" ]; then
-    echo "Stopping server with PID $SERVER_PID..."
+    # echo "Stopping server with PID $SERVER_PID..."
     kill $SERVER_PID
     wait $SERVER_PID 2>/dev/null
-    echo "Server stopped."
+    # echo "Server stopped."
   fi
 }
 
@@ -28,12 +28,12 @@ while true; do
   NEW_COMMIT=$(git ls-remote origin -h refs/heads/$(git rev-parse --abbrev-ref HEAD) | awk '{ print $1 }')
 
   if [ "$NEW_COMMIT" != "$LAST_COMMIT" ]; then
-    echo "Detected changes in the Git repository."
+    # echo "Detected changes in the Git repository."
     stop_server
 
-    echo "Pulling latest changes..."
+    # echo "Pulling latest changes..."
     git pull
-    echo "Changes pulled."
+    # echo "Changes pulled."
 
     LAST_COMMIT=$NEW_COMMIT
 
