@@ -1,3 +1,5 @@
+console.log("Wow!");
+
 const DEBUG = false;
 const ADJECTIVES = [
   "Sticky",
