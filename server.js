@@ -717,16 +717,19 @@ app.ws("/live-chat-ws", function (wss, req) {
   wss.on("message", async function (msg) {
     var amountPerSecond = (thisUser.messagesSent / ((+Date.now()) - thisUser.websocketOpened));
     console.log("MS", thisUser.messagesSent, "WO", thisUser.websocketOpened, "APS", amountPerSecond);
+
     if(amountPerSecond > 10) {
         wss.close();
         console.log(
           `${thisUser.name} sent more than 10 messages a second through the websocket!!`
         );
         return;
+    } else {
+      thisUser.messagesSent++;
     }
 
     const message = JSON.parse(msg);
-    
+
     const ipAddress = req.ip;
     console.log(ipAddress);
 
