@@ -144,6 +144,12 @@ const helmet = require('helmet');
 
 const app = express();
 var expressWs = require("express-ws")(app);
+
+app.use(function (req, res, next) {
+  req.id3 = 'sauce';
+  return next();
+});
+
 var accs = [];
 var accs_vanities = [];
 var websockets = [];
@@ -796,9 +802,10 @@ if (!DEBUG) {
   };
   
   https.createServer(certoptions, app).listen(PORT, () => {
-    console.log('HTTPS Server running on port 7764');
+    console.log(`HTTPS Server running on port ${PORT}`);
   });
   //app.listen(PORT);
 } else {
+  console.log(`HTTP Server running on port ${PORT}`);
   app.listen(PORT, '0.0.0.0');
 }
