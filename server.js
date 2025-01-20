@@ -640,6 +640,13 @@ app.get("/live-chat/active", (req, res) => {
 
 app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};
+
+  thisUser.messagesSent = 0;
+  thisUser.websocketOpened = +Date.now();
+  thisUser.getMessagesPerSecond = function() {
+    return thisUser.messagesSent / ((+Date.now()) - thisUser.websocketOpened);
+  }
+
   thisUser.connected = true;
   thisUser.needsRemovalOnDisconnect = true;
   thisUser.lastPingReturned = +Date.now();
@@ -711,6 +718,10 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   wss.on("message", async function (msg) {
+    if(thisUser.getMessagesPerSecond() > 22) {
+        wss.close();
+    }
+
     const message = JSON.parse(msg);
     const ipAddress = req.ip;
     const now = new Date();
