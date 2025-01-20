@@ -1,0 +1,3 @@
+project-sentinel.xyz:6969 {
+    reverse_proxy localhost:8080
+}
