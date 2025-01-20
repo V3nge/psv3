@@ -638,7 +638,7 @@ app.get("/live-chat/active", (req, res) => {
   res.send(accs_vanities);
 });
 
-var uidFromIp = true;
+var uidFromIp = false;
 app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};
 
