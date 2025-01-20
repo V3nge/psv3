@@ -1,5 +1,5 @@
 const messagesContainer = document.getElementById("messages");
-var wss = new WebSocket(`wss://${window.location.host}/live-chat-ws`);
+var wss = new WebSocket(`ws://${window.location.host}/live-chat-ws`);
 var hashes = [];
 var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
@@ -102,7 +102,10 @@ var urlParams = new URLSearchParams(window.location.search);
 var channelToSendTo = urlParams.get('c');
 
 wss.onopen = function () {
-    wss.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo, "vanity": playNameClient }));
+    setTimeout(function() {
+        console.log("Init message");
+        wss.send(JSON.stringify({ "type": "tempacc", "name": uid, "channel": channelToSendTo, "vanity": playNameClient }));
+    }, 100)
 }
 
 function createMessage(name, value, userMessage = true) {
@@ -125,7 +128,8 @@ function createMessage(name, value, userMessage = true) {
 }
 
 wss.onclose = function () {
-    alert("Uh oh! Your websocket disconnected... 😦");
+    // USER FRIENDLY ERROR MESSAGE!!!!
+    alert("Uh oh! You disconnected... 😦");
 }
 
 wss.onerror = function () {

@@ -157,11 +157,6 @@ var constructedGamesListJSON = null;
 var blockedUIDs = [];
 var pathStats = {};
 
-const certoptions = {
-  key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
-};
-
 const ultravioletPath = path.join(__dirname, "ultraviolet-app", "src", "index.js");
 
 function startUltraviolet() {
@@ -684,7 +679,6 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   wss.on("message", async function (msg) {
-    console.log(msg);
     const message = JSON.parse(msg);
     const ipAddress = req.ip;
     const now = new Date();
@@ -796,6 +790,11 @@ startUltraviolet();
 app.use(express.static("public"));
 
 if (!DEBUG) {
+  const certoptions = {
+    key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
+  };
+  
   https.createServer(certoptions, app).listen(PORT, () => {
     console.log('HTTPS Server running on port 7764');
   });
