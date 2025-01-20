@@ -1,5 +1,3 @@
-console.log("Wowieh!");
-
 const DEBUG = false;
 const ADJECTIVES = [
   "Sticky",
