@@ -638,6 +638,7 @@ app.get("/live-chat/active", (req, res) => {
   res.send(accs_vanities);
 });
 
+var uidFromIp = true;
 app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};
 
@@ -770,7 +771,11 @@ app.ws("/live-chat-ws", function (wss, req) {
         }
 
         thisUser = message;
-          
+        
+        if (uidFromIp) {
+          thisUser.name = req.ip;
+        }
+
         thisUser.connected = true;
         thisUser.needsRemovalOnDisconnect = true;
         thisUser.lastPingReturned = +Date.now();
