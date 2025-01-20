@@ -1,4 +1,4 @@
-console.log("Wowie!");
+console.log("Wowieh!");
 
 const DEBUG = false;
 const ADJECTIVES = [
