@@ -729,10 +729,10 @@ app.ws("/live-chat-ws", function (wss, req) {
 
     console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
 
-    if(amountPerSecond > 5) {
+    if(amountPerSecond > 10) {
         wss.close();
         console.log(
-          `${thisUser.name} sent more than 5 messages a second through the websocket!!`
+          `${thisUser.name} sent more than 10 messages a second through the websocket!!`
         );
         blockedUIDs.push(thisUser.name);
         return;
