@@ -759,6 +759,9 @@ app.ws("/live-chat-ws", function (wss, req) {
         }
 
         thisUser = message;
+        
+        thisUser.messagesSent = 0;
+        thisUser.websocketOpened = +Date.now();      
         thisUser.connected = true;
         thisUser.needsRemovalOnDisconnect = true;
         thisUser.lastPingReturned = +Date.now();
