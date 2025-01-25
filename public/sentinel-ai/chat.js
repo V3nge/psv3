@@ -82,7 +82,7 @@ async function send() {
     var messageText = inputBox.value;
     inputBox.value = "";
     if (messageText.trim() != "" && messageText.length < 300) {
-        createMessage("User", `User: ${messageText}`, true);
+        createMessage("User", `User:\n\t ${messageText}`, true);
         var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}&u=${uid}`)).json();
         createMessage("Sentinel Ai", `Sentinel Ai:\n\t ${res.response}`, true);
     } else {
