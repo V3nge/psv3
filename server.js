@@ -145,10 +145,11 @@ const childProcess = require("child_process");
 const helmet = require('helmet');
 const OpenAI = require('openai');
 
-var key = fs.readFileSync('secret.txt').trim();
+var key = fs.readFileSync('secret.txt', 'utf8').trim();
 console.log(`\n${key}`);
 const openai = new OpenAI({
-  apiKey: key 
+  apiKey: key,
+  baseURL: "https://api.aimlapi.com/v1"
 });
 
 async function createCompletion(prompt) {
