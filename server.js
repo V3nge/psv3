@@ -141,9 +141,8 @@ const helmet = require('helmet');
 
 const PING_TIMEOUT = 10000;
 
-var certoptions;
 if(!DEBUG) {
-  certoptions = {
+  const certoptions = {
     key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
   };
@@ -770,48 +769,29 @@ app.ws("/live-chat-ws", function (wss, req) {
     thisUser.connected = false;
   });
 
-  let messagesLimitInterval = setInterval(function () {
-<<<<<<< Updated upstream
-=======
-    websocketOpened = (+Date.now());
->>>>>>> Stashed changes
+  let messagesLimitInterval = setInterval(function() {
     messagesSent = 0;
   }, 1000);
 
   wss.on("message", async function (msg) {
-<<<<<<< Updated upstream
     // Much better. Goes by the amount per second instead of average per second.
     // Going by average per second means that if you have only been in the chat 0.01 seconds
     // and send a message, that that would be 1 message every 0.01 seconds which is 100 messages a second.
     // Not ideal.
-    if(messagesSent > 5) {
-        console.log(
-          `${thisUser.name} sent more than 30 messages a second through the websocket!!`
-        );
-        blockedUIDs.push(thisUser.name);
-        // Unblock after 10 minutes
-        const timeBlocked = 1000 * 60 * 10;
-        setTimeout(function() {
-          blockedUIDs.splice(blockedUIDs.indexOf(thisUser.name), 1);
-        }, timeBlocked);
-        wss.send(JSON.stringify({"type":"block_time","time":timeBlocked,"start":(+Date.now())}));
-        wss.send(JSON.stringify({"type":"blocked"}));
-        wss.close();
-        return;
-=======
-    let timeOpen = ((+Date.now()) - websocketOpened) / 1000;
-    let amountPerSecond = (messagesSent / timeOpen);
-
-    console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
-
-    if (amountPerSecond > 10) {
-      wss.close();
+    if (messagesSent > 5) {
       console.log(
-        `${thisUser.name} sent more than 10 messages a second through the websocket!!`
+        `${thisUser.name} sent more than 30 messages a second through the websocket!!`
       );
       blockedUIDs.push(thisUser.name);
+      // Unblock after 10 minutes
+      const timeBlocked = 1000 * 60 * 10;
+      setTimeout(function () {
+        blockedUIDs.splice(blockedUIDs.indexOf(thisUser.name), 1);
+      }, timeBlocked);
+      wss.send(JSON.stringify({ "type": "block_time", "time": timeBlocked, "start": (+Date.now()) }));
+      wss.send(JSON.stringify({ "type": "blocked" }));
+      wss.close();
       return;
->>>>>>> Stashed changes
     } else {
       messagesSent++;
     }
@@ -847,6 +827,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         }
 
         thisUser = message;
+
 
         if (uidFromIp) {
           message.name = req.ip;
