@@ -160,7 +160,7 @@ keys.forEach(key => {
 console.log("");
 
 async function createCompletion(prompt) {
-  const completion = await openais[Math.floor(Math.random()*openais.length)].chat.completions.create({
+  const completion = await openais[Math.floor(Math.random() * openais.length)].chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
       { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
@@ -661,7 +661,7 @@ app.get("/stats", (req, res) => {
 
 var aiUsages = {};
 app.get('/ai', async (req, res) => {
-  if((Math.random() * 100) > 70) {
+  if ((Math.random() * 100) > 70) {
     return res.status(500).json({
       success: false,
       error: "Internal Error.",

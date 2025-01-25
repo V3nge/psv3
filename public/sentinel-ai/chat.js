@@ -36,6 +36,24 @@ function stringToRGB(input) {
 }
 
 function createMessage(name, value, userMessage = true) {
+    function breakupString(str) {
+        let result = '';
+        let currentLine = '';
+      
+        for (let i = 0; i < str.length; i++) {
+          currentLine += str[i];
+          
+          if (currentLine.length === 50 && !currentLine.includes('\n')) {
+            result += currentLine + '\n\t';
+            currentLine = '';
+          }
+        }
+      
+        result += currentLine;
+        
+        return result;
+      }
+
     var message = document.createElement("div");
     if (userMessage) {
         message.classList = ["message"];
@@ -44,7 +62,7 @@ function createMessage(name, value, userMessage = true) {
     }
     if (userMessage) {
         var messagePTag = document.createElement("pre");
-        messagePTag.innerText = value;
+        messagePTag.innerText = breakupString(value);
     } else {
         var messagePTag = document.createElement("p");
         messagePTag.innerHTML = value;
@@ -66,7 +84,7 @@ async function send() {
     if (messageText.trim() != "" && messageText.length < 300) {
         createMessage("User", `User: ${messageText}`, true);
         var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}&u=${uid}`)).json();
-        createMessage("Sentinel Ai", `Sentinel Ai: ${res.response}`, true);
+        createMessage("Sentinel Ai", `Sentinel Ai:\n\t ${res.response}`, true);
     } else {
         alert("Invalid input >:(");
     }
