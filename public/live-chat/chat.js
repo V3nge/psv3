@@ -251,4 +251,8 @@ if (localStorage.getItem("blocked") == "TRG2") {
     function back() {
         window.location.href = "/"; // omg so pro
     }
+    
+    function sentinelai() {
+        window.location.href = "/sentinel-ai/";
+    }
 }

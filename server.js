@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -138,12 +138,32 @@ const compression = require("compression");
 const axios = require("axios");
 const childProcess = require("child_process");
 const helmet = require('helmet');
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
+
+const openai = new OpenAI({ 
+  apiKey: fs.readFileSync('secret.txt')
+});
+
+async function createCompletion(prompt) {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "system", content: "You are a helpful for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
+      {
+        role: "user",
+        content: prompt,
+      },
+    ],
+    store: true,
+  });
+
+  return completion.choices[0].message;
+}
 
 const PING_TIMEOUT = 10000;
 
 var certoptions;
-if(!DEBUG) {
+if (!DEBUG) {
   certoptions = {
     key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
@@ -161,38 +181,38 @@ const OTHER_PORTS = [
 const PORT = 7764;
 
 OTHER_PORTS.forEach((port) => {
-  if(port == 8080) {
+  if (port == 8080) {
     console.warn("8080 is for UV and cannot be an OTHER_PORTS element.");
     return;
   }
 
-  var httpsOrHttps = DEBUG ? http: https;
+  var httpsOrHttps = DEBUG ? http : https;
 
   httpsOrHttps
     .createServer(
       certoptions,
       (req, res) => {
-      const options = {
-        hostname: "localhost",
-        port: PORT,
-        path: req.url,
-        method: req.method,
-        headers: req.headers,
-      };
+        const options = {
+          hostname: "localhost",
+          port: PORT,
+          path: req.url,
+          method: req.method,
+          headers: req.headers,
+        };
 
-      const proxy = http.request(options, (proxyRes) => {
-        res.writeHead(proxyRes.statusCode, proxyRes.headers);
-        proxyRes.pipe(res, { end: true });
-      });
+        const proxy = http.request(options, (proxyRes) => {
+          res.writeHead(proxyRes.statusCode, proxyRes.headers);
+          proxyRes.pipe(res, { end: true });
+        });
 
-      proxy.on("error", (err) => {
-        console.error(`Error forwarding request on port ${port}:`, err);
-        res.writeHead(500);
-        res.end("Internal Server Error");
-      });
+        proxy.on("error", (err) => {
+          console.error(`Error forwarding request on port ${port}:`, err);
+          res.writeHead(500);
+          res.end("Internal Server Error");
+        });
 
-      req.pipe(proxy, { end: true });
-    })
+        req.pipe(proxy, { end: true });
+      })
     .listen(port, () => {
       console.log(`Redirecting traffic from port ${port} to port ${PORT}`);
     });
@@ -624,41 +644,38 @@ app.get("/stats", (req, res) => {
   res.send(pathStats);
 });
 
-const configuration = new Configuration({
-    apiKey: fs.readFileSync('secret.txt'),
-});
-
-const openai = new OpenAIApi(configuration);
-
 app.get('/ai', async (req, res) => {
-    const messageText = req.query.t;
+  const messageText = req.query.t; // Get the 't' query parameter
 
-    if (!messageText) {
-        return res.status(400).json({
-            success: false,
-            error: "Missing 't' query parameter."
-        });
+  if (!messageText) {
+    return res.status(400).json({
+      success: false,
+      error: "Missing 't' query parameter."
+    });
+  }
+
+  try {
+    var complete = (await createCompletion(messageText));
+    if(complete.type == "insufficient_quota") {
+      res.json({
+        success: false,
+        input: messageText,
+        response: "Sorry, Sentinel Ai cannot be used at this time."
+      });
     }
-
-    try {
-        const chatResponse = await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: messageText,
-            max_tokens: 150,
-        });
-
-        res.json({
-            success: true,
-            input: messageText,
-            response: chatResponse.data.choices[0].text.trim()
-        });
-    } catch (error) {
-        console.error("Error with ChatGPT API:", error);
-        res.status(500).json({
-            success: false,
-            error: "Failed to process the request."
-        });
-    }
+    res.json({
+      success: true,
+      input: messageText,
+      response: complete.content.trim()
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      input: messageText,
+      response: "Sorry, Sentinel Ai cannot be used at this time."
+    });
+    console.error("Error with ChatGPT API:", error);
+  }
 });
 
 function affixSlash(path) {
@@ -808,7 +825,7 @@ app.ws("/live-chat-ws", function (wss, req) {
     thisUser.connected = false;
   });
 
-  let messagesLimitInterval = setInterval(function() {
+  let messagesLimitInterval = setInterval(function () {
     messagesSent = 0;
   }, 1000);
 

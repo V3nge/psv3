@@ -15,6 +15,7 @@
     "jsonminify": "^0.4.2",
     "morgan": "^1.10.0",
     "nocache": "^4.0.0",
-    "node-json-minify": "^3.0.0"
+    "node-json-minify": "^3.0.0",
+    "openai": "^4.80.1"
   }
 }

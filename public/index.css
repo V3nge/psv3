@@ -692,3 +692,12 @@ li {
 img {
     pointer-events: none;
 }
+
+.live-chat-ai {
+    position: absolute;
+    left: 50%;
+    bottom: 1%;
+    width: 6.5%;
+    height: 5%;
+    right: 4%;
+}

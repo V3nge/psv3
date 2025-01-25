@@ -50,7 +50,7 @@ async function send() {
     inputBox.value = "";
     if (messageText.trim() != "" && messageText.length < 2001) {
         var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}`)).json();
-        createMessage("Sentinel Ai", res.text, true);
+        createMessage("Sentinel Ai", res.response, true);
     } else {
         alert("Invalid input >:(");
     }
