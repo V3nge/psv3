@@ -163,7 +163,7 @@ async function createCompletion(prompt) {
   const completion = await openais[Math.floor(Math.random()*openais.length)].chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. End every line with a newline and a tab but not when in code blocks." },
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
       {
         role: "user",
         content: prompt,
@@ -661,6 +661,14 @@ app.get("/stats", (req, res) => {
 
 var aiUsages = {};
 app.get('/ai', async (req, res) => {
+  if((Math.random() * 100) > 70) {
+    return res.status(500).json({
+      success: false,
+      error: "Internal Error.",
+      response: "Sorry, your input could not be processed. Please try again in a second."
+    });
+  }
+
   const messageText = req.query.t;
 
   if (!messageText) {
