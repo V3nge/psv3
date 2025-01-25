@@ -141,8 +141,9 @@ const helmet = require('helmet');
 
 const PING_TIMEOUT = 10000;
 
+var certoptions;
 if(!DEBUG) {
-  const certoptions = {
+  certoptions = {
     key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
   };
