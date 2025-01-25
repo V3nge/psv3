@@ -74,3 +74,5 @@ async function send() {
 function back() {
     window.location.href = "/"; // omg so pro
 }
+
+createMessage("Sentinel Ai", "Welcome to Sentinel Ai. I am here to assist you with any queries or tasks you may have. Feel free to ask me anything, and I will do my best to help you. How can I assist you today?", true);
