@@ -146,7 +146,7 @@ const helmet = require('helmet');
 const OpenAI = require('openai');
 
 var key = fs.readFileSync('secret.txt');
-
+console.log(`\n${key}\n`);
 const openai = new OpenAI({
   apiKey: key 
 });
