@@ -1,6 +1,8 @@
 // var click = new Audio("sfx/click.mp3");
 // click.volume = 0.1;
 
+alert("It has come to our attention that a few people have been claiming to own this website. Unfortunately, they are liars. Some of you know who the actual owners are, congrats. The only way someone can prove they own the website is by changing the website for everyone. I only tell people I trust that I own this... I wouldn't just send out an email saying I made it... whoever emailed you it was lying. Keep in mind, I have nothing against this person, his intentions were good. Do not think less of them.");
+
 var settingsList = document.getElementById("settingsList");
 var sfxTime = +Date.now();
 var inGame = false;
