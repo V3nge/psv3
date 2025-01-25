@@ -1,3 +1,18 @@
+function generateRandomString(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}
+
+var uid = localStorage.getItem("ai_uid");
+if (uid == null) {
+    uid = generateRandomString(20);
+    localStorage.setItem("ai_uid", uid);
+}
+
 const messagesContainer = document.getElementById("messages");
 var liveChatDialogLink = document.getElementById("live-chat-dialog-link");
 
@@ -49,7 +64,7 @@ async function send() {
     var messageText = inputBox.value;
     inputBox.value = "";
     if (messageText.trim() != "" && messageText.length < 300) {
-        var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}`)).json();
+        var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}&u=${uid}`)).json();
         createMessage("Sentinel Ai", res.response, true);
     } else {
         alert("Invalid input >:(");

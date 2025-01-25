@@ -652,8 +652,9 @@ app.get("/stats", (req, res) => {
   res.send(pathStats);
 });
 
+var aiUsages = {};
 app.get('/ai', async (req, res) => {
-  const messageText = req.query.t; // Get the 't' query parameter
+  const messageText = req.query.t;
 
   if (!messageText) {
     return res.status(400).json({
@@ -662,11 +663,34 @@ app.get('/ai', async (req, res) => {
     });
   }
 
+  const uid = req.query.u;
+
+  if (!uid) {
+    return res.status(400).json({
+      success: false,
+      error: "Missing 'u' query parameter."
+    });
+  }
+
   if (messageText.trim() == "" || messageText.length > 300) {
     return res.status(400).json({
       success: false,
       error: "Invalid input.",
       response: "Sorry, your input could not be processed."
+    });
+  }
+
+  if (aiUsages[uid] == undefined) {
+    aiUsages[uid] = 0
+  }
+  
+  aiUsages[uid]++;
+
+  if (aiUsages[uid] > 5) {
+    res.json({
+      success: true,
+      input: messageText,
+      response: "You've reached your max quota for the day. Sign up for Sentinel Ai premium to get more access and better responses."
     });
   }
 
