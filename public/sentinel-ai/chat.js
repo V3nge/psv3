@@ -64,9 +64,9 @@ async function send() {
     var messageText = inputBox.value;
     inputBox.value = "";
     if (messageText.trim() != "" && messageText.length < 300) {
-        createMessage("User", messageText, true);
+        createMessage("User", `User: ${messageText}`, true);
         var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}&u=${uid}`)).json();
-        createMessage("Sentinel Ai", res.response, true);
+        createMessage("Sentinel Ai", `Sentinel Ai: ${res.response}`, true);
     } else {
         alert("Invalid input >:(");
     }
@@ -76,4 +76,4 @@ function back() {
     window.location.href = "/"; // omg so pro
 }
 
-createMessage("Sentinel Ai", "Welcome to Sentinel Ai. I am here to assist you with any queries or tasks you may have. Feel free to ask me anything, and I will do my best to help you. How can I assist you today?", true);
+createMessage("Sentinel Ai", "Sentinel Ai: Welcome to Sentinel Ai. I am here to assist you with any queries or tasks you may have. Feel free to ask me anything, and I will do my best to help you. How can I assist you today?", true);
