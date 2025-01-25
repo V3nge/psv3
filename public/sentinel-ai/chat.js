@@ -48,7 +48,7 @@ async function send() {
     var inputBox = document.getElementById("input-box");
     var messageText = inputBox.value;
     inputBox.value = "";
-    if (messageText.trim() != "" && messageText.length < 2001) {
+    if (messageText.trim() != "" && messageText.length < 300) {
         var res = await (await fetch(`/ai?t=${encodeURIComponent(messageText)}`)).json();
         createMessage("Sentinel Ai", res.response, true);
     } else {
