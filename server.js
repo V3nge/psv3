@@ -146,7 +146,7 @@ const helmet = require('helmet');
 const OpenAI = require('openai');
 
 const openai = new OpenAI({
-  apiKey: fs.readFileSync('secret.txt')
+  apiKey: fs.readFileSync('secret.txt').replace("\n", "")
 });
 
 async function createCompletion(prompt) {
