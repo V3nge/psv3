@@ -1,5 +1,5 @@
 function showBlocked() {
-    document.body.innerHTML = `<div class="centered"><h1 style="color:white;">You've been blocked.</h1></div>`;
+    document.body.innerHTML = `<div class="centered"><h1 style="color:white;">Some suspicious activity has been detected from your device...</h1></div>`;
 }
 
 if (localStorage.getItem("blocked") == "TRG2") {
