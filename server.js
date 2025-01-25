@@ -683,7 +683,7 @@ app.get('/ai', async (req, res) => {
   if (aiUsages[uid] == undefined) {
     aiUsages[uid] = 0
   }
-  
+
   aiUsages[uid]++;
 
   if (aiUsages[uid] > 5) {
@@ -692,6 +692,7 @@ app.get('/ai', async (req, res) => {
       input: messageText,
       response: "You've reached your max quota for the day. Sign up for Sentinel Ai premium to get more access and better responses."
     });
+    return;
   }
 
   try {
