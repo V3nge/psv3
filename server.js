@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 var DEBUG = false;
 if (fs.existsSync('debug.txt')) {
   DEBUG = true;
@@ -133,7 +135,6 @@ const crypto = require("crypto");
 const nocache = require("nocache");
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const bodyParser = require('body-parser');
