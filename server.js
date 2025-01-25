@@ -697,7 +697,7 @@ app.get('/ai', async (req, res) => {
     res.json({
       success: true,
       input: messageText,
-      response: "You've reached your max quota for the day. Sign up for Sentinel Ai premium to get more access and better responses."
+      response: "You've reached your max quota for the day. Sign up for Sentinel Ai premium to get more access and better responses. [Project Sentinel will likely increase the cap at some point.]"
     });
     return;
   }
