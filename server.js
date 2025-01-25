@@ -696,7 +696,6 @@ app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};
 
   let messagesSent = 0;
-  let websocketOpened = +Date.now();
 
   thisUser.connected = true;
   thisUser.needsRemovalOnDisconnect = true;
@@ -772,17 +771,15 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   let messagesLimitInterval = setInterval(function () {
-    websocketOpened = (+Date.now());
     messagesSent = 0;
   }, 1000);
 
   wss.on("message", async function (msg) {
-    let timeOpen = ((+Date.now()) - websocketOpened) / 1000;
-    let amountPerSecond = (messagesSent / timeOpen);
-
-    console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
-
-    if(amountPerSecond > 30) {
+    // Much better. Goes by the amount per second instead of average per second.
+    // Going by average per second means that if you have only been in the chat 0.01 seconds
+    // and send a message, that that would be 1 message every 0.01 seconds which is 100 messages a second.
+    // Not ideal.
+    if(messagesSent > 5) {
         wss.close();
         console.log(
           `${thisUser.name} sent more than 30 messages a second through the websocket!!`
