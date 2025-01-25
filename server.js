@@ -662,7 +662,8 @@ app.get('/ai', async (req, res) => {
   if (messageText.trim() != "" && messageText.length < 300) {
     return res.status(400).json({
       success: false,
-      error: "Invalid input."
+      error: "Invalid input.",
+      response: "Sorry, your input could not be processed."
     });
   }
 
