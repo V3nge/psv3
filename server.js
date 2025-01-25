@@ -771,10 +771,15 @@ app.ws("/live-chat-ws", function (wss, req) {
   });
 
   let messagesLimitInterval = setInterval(function () {
+<<<<<<< Updated upstream
+=======
+    websocketOpened = (+Date.now());
+>>>>>>> Stashed changes
     messagesSent = 0;
   }, 1000);
 
   wss.on("message", async function (msg) {
+<<<<<<< Updated upstream
     // Much better. Goes by the amount per second instead of average per second.
     // Going by average per second means that if you have only been in the chat 0.01 seconds
     // and send a message, that that would be 1 message every 0.01 seconds which is 100 messages a second.
@@ -793,6 +798,20 @@ app.ws("/live-chat-ws", function (wss, req) {
         wss.send(JSON.stringify({"type":"blocked"}));
         wss.close();
         return;
+=======
+    let timeOpen = ((+Date.now()) - websocketOpened) / 1000;
+    let amountPerSecond = (messagesSent / timeOpen);
+
+    console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
+
+    if (amountPerSecond > 10) {
+      wss.close();
+      console.log(
+        `${thisUser.name} sent more than 10 messages a second through the websocket!!`
+      );
+      blockedUIDs.push(thisUser.name);
+      return;
+>>>>>>> Stashed changes
     } else {
       messagesSent++;
     }
