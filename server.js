@@ -661,14 +661,6 @@ app.get("/stats", (req, res) => {
 
 var aiUsages = {};
 app.get('/ai', async (req, res) => {
-  if ((Math.random() * 100) > 70) {
-    return res.status(500).json({
-      success: false,
-      error: "Internal Error.",
-      response: "Sorry, your input could not be processed. Please try again in a second."
-    });
-  }
-
   const messageText = req.query.t;
 
   if (!messageText) {
@@ -696,7 +688,16 @@ app.get('/ai', async (req, res) => {
   }
 
   if (aiUsages[uid] == undefined) {
-    aiUsages[uid] = 0
+    aiUsages[uid] = 0;
+  } else {
+    if (((Math.random() * 100) > 70) && aiUsages[uid] > 2) {
+      // the first 2 messages are all good and dandy
+      return res.status(500).json({
+        success: false,
+        error: "Internal Error.",
+        response: "Sorry, your input could not be processed. Please try again in a second."
+      });
+    }
   }
 
   aiUsages[uid]++;
