@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/index.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    <body>
+        <p>This is experimental and in development so it might not work correctly</p>
+        <button onclick="back();" class="live-chat-back">Back</button>
+        <div id="messages" class="message-container"></div>
+        <input class="input-box" id="input-box" placeholder=" Type Message Here"></input>
+        <button onclick="send();" class="live-chat-submit"><i class="material-icons">&#xe163;</i></button>
+    </body>
+    <footer>
+        <script src="chat.js"></script>
+        <script>
+            document.getElementById("input-box").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    send();
+                }
+            });
+        </script>
+    </footer>
+</html>
