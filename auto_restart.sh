@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# NOTE: You will need to restart auto_restart.sh when changing auto_restart.sh
+
 start_server() {
   # echo "Starting server..."
   node ./server.js &
