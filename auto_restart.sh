@@ -37,6 +37,9 @@ while true; do
 
     LAST_COMMIT=$NEW_COMMIT
 
+    # wait for UV to stop execution before starting server again
+    sleep 4
+
     start_server
   fi
 done
