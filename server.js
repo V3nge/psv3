@@ -138,6 +138,7 @@ const compression = require("compression");
 const axios = require("axios");
 const childProcess = require("child_process");
 const helmet = require('helmet');
+const { Configuration, OpenAIApi } = require('openai');
 
 const PING_TIMEOUT = 10000;
 
@@ -621,6 +622,43 @@ function updateIndex() {
 
 app.get("/stats", (req, res) => {
   res.send(pathStats);
+});
+
+const configuration = new Configuration({
+    apiKey: fs.readFileSync('secret.txt'),
+});
+
+const openai = new OpenAIApi(configuration);
+
+app.get('/ai', async (req, res) => {
+    const messageText = req.query.t;
+
+    if (!messageText) {
+        return res.status(400).json({
+            success: false,
+            error: "Missing 't' query parameter."
+        });
+    }
+
+    try {
+        const chatResponse = await openai.createCompletion({
+            model: "text-davinci-003",
+            prompt: messageText,
+            max_tokens: 150,
+        });
+
+        res.json({
+            success: true,
+            input: messageText,
+            response: chatResponse.data.choices[0].text.trim()
+        });
+    } catch (error) {
+        console.error("Error with ChatGPT API:", error);
+        res.status(500).json({
+            success: false,
+            error: "Failed to process the request."
+        });
+    }
 });
 
 function affixSlash(path) {
