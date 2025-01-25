@@ -163,7 +163,7 @@ async function createCompletion(prompt) {
   const completion = await openais[Math.floor(Math.random()*openais.length)].chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. End every line with a newline and a tab but not when in code blocks." },
       {
         role: "user",
         content: prompt,
