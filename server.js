@@ -1,4 +1,8 @@
-const DEBUG = false;
+var DEBUG = false;
+if (fs.existsSync('debug.txt')) {
+  DEBUG = true;
+}
+
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -140,7 +144,7 @@ const childProcess = require("child_process");
 const helmet = require('helmet');
 const OpenAI = require('openai');
 
-const openai = new OpenAI({ 
+const openai = new OpenAI({
   apiKey: fs.readFileSync('secret.txt')
 });
 
@@ -663,7 +667,7 @@ app.get('/ai', async (req, res) => {
 
   try {
     var complete = (await createCompletion(messageText));
-    if(complete.type == "insufficient_quota") {
+    if (complete.type == "insufficient_quota") {
       res.json({
         success: false,
         input: messageText,
