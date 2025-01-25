@@ -145,7 +145,7 @@ const childProcess = require("child_process");
 const helmet = require('helmet');
 const OpenAI = require('openai');
 
-var key = fs.readFileSync('secret.txt');
+var key = fs.readFileSync('secret.txt').trim();
 console.log(`\n${key}`);
 const openai = new OpenAI({
   apiKey: key 
