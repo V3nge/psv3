@@ -11,6 +11,10 @@ var backgroundDegrees = 0;
 var startTimestamp = +Date.now();
 var lastTimestamp = startTimestamp;
 
+function sentinelai() {
+    window.location.href = "/sentinel-ai/";
+}
+
 function animeGirl() {
     if ((+Date.now() - sfxTime) > 1000) {
         sfxTime = +Date.now();
