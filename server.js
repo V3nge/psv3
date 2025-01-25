@@ -790,6 +790,7 @@ app.ws("/live-chat-ws", function (wss, req) {
           blockedUIDs.splice(blockedUIDs.indexOf(thisUser.name), 1);
         }, timeBlocked);
         wss.send(JSON.stringify({"type":"block_time","time":timeBlocked,"start":(+Date.now())}));
+        wss.send(JSON.stringify({"type":"blocked"}));
         wss.close();
         return;
     } else {
