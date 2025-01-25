@@ -145,18 +145,25 @@ const childProcess = require("child_process");
 const helmet = require('helmet');
 const OpenAI = require('openai');
 
-var key = fs.readFileSync('secret.txt', 'utf8').trim();
-console.log(`\n${key}`);
-const openai = new OpenAI({
-  apiKey: key,
-  baseURL: "https://api.aimlapi.com/v1"
-});
+var keys = fs.readFileSync('secret.txt', 'utf8').split("\n");
+
+var openais = [];
+
+console.log("Keys: ");
+keys.forEach(key => {
+  openais.push(new OpenAI({
+    apiKey: key.trim(),
+    baseURL: "https://api.aimlapi.com/v1"
+  }));
+  console.log(`${key.trim()}`);
+})
+console.log("");
 
 async function createCompletion(prompt) {
-  const completion = await openai.chat.completions.create({
+  const completion = await openais[Math.floor(Math.random()*openais.length)].chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
-      { role: "system", content: "You are a helpful for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
       {
         role: "user",
         content: prompt,
