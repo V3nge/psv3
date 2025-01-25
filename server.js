@@ -780,11 +780,17 @@ app.ws("/live-chat-ws", function (wss, req) {
     // and send a message, that that would be 1 message every 0.01 seconds which is 100 messages a second.
     // Not ideal.
     if(messagesSent > 5) {
-        wss.close();
         console.log(
           `${thisUser.name} sent more than 30 messages a second through the websocket!!`
         );
         blockedUIDs.push(thisUser.name);
+        // Unblock after 10 minutes
+        const timeBlocked = 1000 * 60 * 10;
+        setTimeout(function() {
+          blockedUIDs.splice(blockedUIDs.indexOf(thisUser.name), 1);
+        }, timeBlocked);
+        wss.send(JSON.stringify({"type":"block_time","time":timeBlocked}));
+        wss.close();
         return;
     } else {
       messagesSent++;
