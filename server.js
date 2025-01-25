@@ -1,4 +1,4 @@
-const DEBUG = false;
+const DEBUG = true;
 const ADJECTIVES = [
   "Sticky",
   "Bouncy",
@@ -122,15 +122,14 @@ const NOUNS = [
   "Snowman",
 ];
 
-const PING_TIMEOUT = 10000;
-const PORT = 7764;
-
+// wow thats a lot of libraries
+const https = require('https');
+const http = require('http');
 const crypto = require("crypto");
 const nocache = require("nocache");
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
-const https = require('https');
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const bodyParser = require('body-parser');
@@ -139,35 +138,88 @@ const compression = require("compression");
 const axios = require("axios");
 const childProcess = require("child_process");
 const helmet = require('helmet');
+
+const PING_TIMEOUT = 10000;
+
+if(!DEBUG) {
+  const certoptions = {
+    key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
+  };
+} else {
+  certoptions = {}
+}
+
+// Yay, now if they ever find out a way to block any port, we're good!
+// Have not tested, so I don't have any idea of if this works with wss.
+const OTHER_PORTS = [
+  666
+];
+
+const PORT = 7764;
+
+OTHER_PORTS.forEach((port) => {
+  if(port == 8080) {
+    console.warn("8080 is for UV and cannot be an OTHER_PORTS element.");
+    return;
+  }
+
+  var httpsOrHttps = DEBUG ? http: https;
+
+  httpsOrHttps
+    .createServer(
+      certoptions,
+      (req, res) => {
+      const options = {
+        hostname: "localhost",
+        port: PORT,
+        path: req.url,
+        method: req.method,
+        headers: req.headers,
+      };
+
+      const proxy = http.request(options, (proxyRes) => {
+        res.writeHead(proxyRes.statusCode, proxyRes.headers);
+        proxyRes.pipe(res, { end: true });
+      });
+
+      proxy.on("error", (err) => {
+        console.error(`Error forwarding request on port ${port}:`, err);
+        res.writeHead(500);
+        res.end("Internal Server Error");
+      });
+
+      req.pipe(proxy, { end: true });
+    })
+    .listen(port, () => {
+      console.log(`Redirecting traffic from port ${port} to port ${PORT}`);
+    });
+});
+
 // const httpProxy = require('http-proxy');
 // const http = require('http');
 
 const app = express();
 
 var server = null;
-var listenCallback = null; 
+var listenCallback = null;
 
 if (!DEBUG) {
-  const certoptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
-  };
-
   server = https.createServer(certoptions, app);
-  listenCallback = function() {
+  listenCallback = function () {
     server.listen(PORT, () => {
       console.log(`HTTPS Server running on port ${PORT}`);
     });
   }
   //app.listen(PORT);
 } else {
-  listenCallback = function() {
+  listenCallback = function () {
     console.log(`HTTP Server running on port ${PORT}`);
     app.listen(PORT, '0.0.0.0');
   }
 }
 
-if(server == null) {
+if (server == null) {
   console.log("No server passed into express-ws init.");
   require("express-ws")(app);
 } else {
@@ -718,9 +770,9 @@ app.ws("/live-chat-ws", function (wss, req) {
     thisUser.connected = false;
   });
 
-  let messagesLimitInterval = setInterval(function() {
+  let messagesLimitInterval = setInterval(function () {
     websocketOpened = (+Date.now());
-    messagesSent    = 0;
+    messagesSent = 0;
   }, 1000);
 
   wss.on("message", async function (msg) {
@@ -732,7 +784,7 @@ app.ws("/live-chat-ws", function (wss, req) {
     if(amountPerSecond > 30) {
         wss.close();
         console.log(
-          `${thisUser.name} sent more than 10 messages a second through the websocket!!`
+          `${thisUser.name} sent more than 30 messages a second through the websocket!!`
         );
         blockedUIDs.push(thisUser.name);
         return;
@@ -771,7 +823,7 @@ app.ws("/live-chat-ws", function (wss, req) {
         }
 
         thisUser = message;
-        
+
         if (uidFromIp) {
           message.name = req.ip;
           message.sender = req.ip;
@@ -857,7 +909,6 @@ app.ws("/live-chat-ws", function (wss, req) {
 updateIndex();
 app.use("/", function (req, res, next) {
   if (req.url === "/") {
-    console.log("/ sent");
     updateIndex();
     res.send(indexHtml);
   } else {
