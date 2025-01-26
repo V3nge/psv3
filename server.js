@@ -396,6 +396,7 @@ app.use(bodyParser.json());
 app.all('*', function (req, res, next) {
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Access-Control-Allow-Origin', 'https://gimkit.com/');
   res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
   next();
 });
