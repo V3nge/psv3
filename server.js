@@ -827,6 +827,15 @@ app.get("/live-chat/active", (req, res) => {
   res.send(accs_vanities);
 });
 
+app.get('/games-a-tags', (req, res) => {
+  res.setHeader("content-type", "text/html");
+  var result = "";
+  constructedGamesListJSON.forEach(element => {
+    result += `<a href="/games/${element.slug}">${element.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;`
+  });
+  res.send(result);
+});
+
 var uidFromIp = false;
 app.ws("/live-chat-ws", function (wss, req) {
   let thisUser = {};

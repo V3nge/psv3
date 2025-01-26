@@ -14,7 +14,7 @@
             <input id="search" placeholder="Search here" class="search"></input>
 
             <div class="top-flexed flexed">
-                <button onclick="document.getElementById('settingsDialog').showModal()">Open Settings</button>
+                <button onclick="loadSettings();document.getElementById('settingsDialog').showModal();">Open Settings</button>
                 <!-- Apparently my feeble brain cannot comprehend why when I call this from index.js it doesn't work... -->
                 <button onclick='function openBlank(){let e=window.open("about:blank","_blank");e.document.write(`<iframe src="${window.location.href}" style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" frameborder="0"></iframe>`),e.document.close(),window.location.href=getRandomSearch(),close()}openBlank();'>about:blank</button>
                 <a href="live-chat"><button>Live Chat</button></a>
@@ -24,11 +24,13 @@
         <dialog id="settingsDialog" class="menu">
             <h1>Settings</h1>
             <div id="settingsList">
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox settingsInput">
                 <label for="vehicle1"> <text>I have a bike</text></label><br>
+                <input type="checkbox" id="a_tags" name="a_tags" value="a_tags" class="inputBox settingsInput">
+                <label for="a_tags"> <text>Show games as a list of <a href="https://www.w3schools.com/tags/tag_a.asp">"a" tags</a> (a list of links).</text></label><br>
             </div>
             <div class="menu-bottom-bar centered">
-                <br><button onclick="document.getElementById('settingsDialog').close();clearSettingsMenu();">Cancel</button>
+                <br><button onclick="document.getElementById('settingsDialog').close();">Cancel</button>
                 <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and Continue</button>
             </div>
         </dialog>
