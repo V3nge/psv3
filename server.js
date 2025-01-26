@@ -144,6 +144,7 @@ const axios = require("axios");
 const childProcess = require("child_process");
 const helmet = require('helmet');
 const OpenAI = require('openai');
+const cors = require("cors");
 
 var keys = fs.readFileSync('secret.txt', 'utf8').split("\n");
 
@@ -335,19 +336,20 @@ try {
 app.use(compression());
 app.use(bodyParser.json());
 
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: { policy: 'require-corp' }, // Enforce COEP
-  })
-);
+// app.use(
+//   helmet({
+//     crossOriginEmbedderPolicy: { policy: 'require-corp' }, // Enforce COEP
+//   })
+// );
 
-// Allow frames from specific domains
-app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
-  next();
-});
+// app.all('*', function(req, res, next) {
+//   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+//   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+//   res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
+//   next();
+// });
+
+app.use(cors({ origin: ["https://gimkit.com/", "https://sacs.instructure.com/"] }));
 
 const logDirectory = path.join(__dirname, 'error-logs');
 if (!fs.existsSync(logDirectory)) {
@@ -554,9 +556,6 @@ function loadAllGames(ToSearch = null) {
 function handleGamesServing(req, res, concatIndex) {
   res.setHeader("Content-Type", "text/html");
 
-  console.log(`START: /games/${req.query.game}/`);
-  updateCount(`/games/${req.query.game}/`, "starts");
-
   const safeUrl = path.normalize(req.originalUrl);
 
   var filePath;
@@ -598,10 +597,12 @@ function handleGamesServing(req, res, concatIndex) {
 }
 
 app.get("/games/:game/index.html", (req, res) => {
+  updateCount(req.path, "starts");
   handleGamesServing(req, res, false);
 });
 
 app.get("/games/:game/", (req, res) => {
+  updateCount(req.path, "starts");
   handleGamesServing(req, res, true);
 });
 
@@ -656,6 +657,7 @@ function updateIndex() {
 }
 
 app.get("/stats", (req, res) => {
+  updateCount("/", "starts"); // because stats is loaded on /, this will be indicative of a full page load
   res.send(pathStats);
 });
 
@@ -771,6 +773,14 @@ app.get("/check_room", (req, res) => {
   res.setHeader("content-type", "application/json");
   res.send(rooms.includes(req.query.id));
 });
+
+var codesFound = [];
+app.get("/api/fndcof", (req, res) => {
+  res.setHeader("content-type", "application/json");
+  codesFound.push(req.query.c);
+  console.log(codesFound);
+  res.send("true");
+})
 
 app.get("/search", (req, res) => {
   res.setHeader("content-type", "application/json");
