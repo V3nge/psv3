@@ -1,3 +1,5 @@
+require('./httpmin'); // start HTTP-min server
+
 const fs = require("fs");
 
 var DEBUG = false;
@@ -362,7 +364,6 @@ app.use(bodyParser.json());
 // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
 // res.setHeader('X-Content-Type-Options', 'nosniff');
 // res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-// res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
 // res.setHeader('Permissions-Policy', 'geolocation=(self), microphone=()');
 // res.setHeader(
 //   'Content-Security-Policy',
@@ -393,11 +394,24 @@ app.use(bodyParser.json());
 // });
 
 // This allows about:blank to work.
+// app.all('*', function (req, res, next) {
+//   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+//   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Content-Security-Policy', "default-src *; frame-ancestors *");
+//   res.setHeader('Referrer-Policy', 'none');
+//   next();
+// });
+
 app.all('*', function (req, res, next) {
-  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  res.setHeader('Access-Control-Allow-Origin', 'https://gimkit.com/');
-  res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.removeHeader('Cross-Origin-Embedder-Policy');
+  res.removeHeader('Cross-Origin-Opener-Policy');
+  res.removeHeader('Content-Security-Policy');
+  res.removeHeader('Referrer-Policy');
   next();
 });
 
