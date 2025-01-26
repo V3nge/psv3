@@ -144,7 +144,6 @@ const axios = require("axios");
 const childProcess = require("child_process");
 const helmet = require('helmet');
 const OpenAI = require('openai');
-const cors = require("cors");
 
 var keys = fs.readFileSync('secret.txt', 'utf8').split("\n");
 
@@ -342,6 +341,63 @@ app.use(bodyParser.json());
 //   })
 // );
 
+// var allowedOrigins = [
+//   "https://gimkit.com",
+//   "https://unpkg.com",
+//   "http://project-sentinel.xyz:7764",
+//   "https://project-sentinel.xyz:7764",
+//   "http://project-sentinel.xyz:7765",
+//   "https://project-sentinel.xyz:7765",
+//   "http://localhost:7764",
+//   "https://localhost:7764",
+//   "http://localhost:7765",
+//   "https://localhost:7765"
+// ];
+
+// var betterAllowedOrigins = [];
+
+// allowedOrigins.forEach(origin => {
+//   betterAllowedOrigins.push(origin);
+//   betterAllowedOrigins.push(origin.replace("://", `:\/\/*.`));
+// });
+
+// allowedOrigins = betterAllowedOrigins;
+
+// app.all('*', function (req, res, next) {
+  // res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  // res.setHeader('X-Content-Type-Options', 'nosniff');
+  // res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  // res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  // res.setHeader('Permissions-Policy', 'geolocation=(self), microphone=()');
+  // res.setHeader(
+  //   'Content-Security-Policy',
+  //   `default-src 'self' ${allowedOrigins.join(" ")}; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/; script-src 'self'; object-src 'none';`
+  // );
+  // res.setHeader(
+  //   'Content-Security-Policy',
+  //   `default-src 'self'; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/;`
+  // );
+
+  // next();
+
+  // const origin = req.headers.origin;
+
+  // if (allowedOrigins.includes(origin)) {
+  //   res.setHeader('Access-Control-Allow-Origin', origin);
+  // }
+
+  // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  // res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  // res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // if (req.method === 'OPTIONS') {
+  //   res.sendStatus(200);
+  // } else {
+  //   next();
+  // }
+// });
+
 // This allows about:blank to work.
 app.all('*', function(req, res, next) {
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
@@ -350,7 +406,7 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-app.use(cors({ origin: ["https://gimkit.com/", "https://sacs.instructure.com/"] }));
+// app.use(cors({ origin: ["https://gimkit.com/", "https://sacs.instructure.com/", "https://unpkg.com/"] }));
 
 const logDirectory = path.join(__dirname, 'error-logs');
 if (!fs.existsSync(logDirectory)) {
@@ -607,7 +663,6 @@ app.get("/games/:game/", (req, res) => {
   handleGamesServing(req, res, true);
 });
 
-
 function randomElement(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
@@ -816,7 +871,7 @@ const getDirectories = source =>
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name)
 
-app.use("/lucky", function(req, res) {
+app.use("/lucky", function (req, res) {
   var directories = getDirectories("public/games");
   var randomDirectory = randomElement(directories);
   res.send(`<script>window.location.href="/games/${randomDirectory}";</script>`)
