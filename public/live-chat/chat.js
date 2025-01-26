@@ -1,3 +1,11 @@
+function assurePreciseDecimal(dec) {
+    if(dec.includes(".")) {
+        return dec;
+    } else {
+        return `${dec}.0`;
+    }
+}
+
 function showBlocked() {
     document.body.innerHTML = `
     <div class="centered">
@@ -22,7 +30,8 @@ function showBlocked() {
                 clearInterval(interval);
                 window.location.reload();
             }
-            allowedToChat.innerText = `You will be allowed to chat again in ${Math.round(timeLeft / 100) / 10} seconds.`
+            var timeLeftInSeconds = (Math.round(timeLeft / 100) / 10).toString();
+            allowedToChat.innerText = `You will be allowed to chat again in ${assurePreciseDecimal(timeLeftInSeconds)} seconds.`
         }, 100);
     }
 }
