@@ -809,6 +809,17 @@ app.get("/search", (req, res) => {
 app.use("/images", express.static("public/images/games/"));
 app.use("/game", express.static("public/games/game/"));
 
+// https://stackoverflow.com/questions/18112204/get-all-directories-within-directory-nodejs
+// this particular solution is sync
+const getDirectories = source =>
+  readdirSync(source, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
+app.use("/lucky", function() {
+  return `<script>window.location.href="/games/${randomElement(getDirectories("public/games"))}";</script>`;
+});
+
 app.get("/live-chat/active", (req, res) => {
   res.setHeader("content-type", "application/json");
   res.send(accs_vanities);

@@ -1,3 +1,7 @@
+function lucky() {
+    window.location.href = "/lucky";
+}
+
 function assurePreciseDecimal(dec) {
     if(dec.includes(".")) {
         return dec;
@@ -13,6 +17,7 @@ function showBlocked() {
     </div>
     <div class="centered">
         <p style="color:white;" id="allowed-to-chat">You will be allowed to chat again in ...</p>
+        <button onclick="lucky();">I'm Feeling Lucky :)</button>
     </div>`;
 
     var allowedToChat = document.getElementById("allowed-to-chat");
