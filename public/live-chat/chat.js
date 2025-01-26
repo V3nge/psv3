@@ -1,5 +1,12 @@
 function showBlocked() {
-    document.body.innerHTML = `<div class="centered"><h1 style="color:white;">Some suspicious activity has been detected from your device...</h1></div><div class="centered"><p style="color:white;">You will be allowed to chat again soon.</p></div>`;
+    document.body.innerHTML = `
+    <div class="centered">
+        <h1 style="color:white;">Some suspicious activity has been detected from your device...</h1>
+    </div>
+    <div class="centered">
+        <p style="color:white;" id="allowed-to-chat">You will be allowed to chat again in ...</p>
+    </div>
+    <script src="blocked.js"></script>`;
 }
 
 if (localStorage.getItem("blocked") == "TRG2") {
@@ -191,6 +198,8 @@ if (localStorage.getItem("blocked") == "TRG2") {
         } else if (response.type == "blocked") {
             localStorage.setItem("blocked", "TRG2");
             showBlocked();
+        } else if (response.type == "block_time") {
+            localStorage.setItem("blocked_time", response);
         } else {
             //console.log(response);
         }
