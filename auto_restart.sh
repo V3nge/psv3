@@ -2,12 +2,9 @@
 
 # NOTE: You will need to restart auto_restart.sh when changing auto_restart.sh
 
-# Make sure bun is up-to-date
-bun upgrade
-
 start_server() {
   # echo "Starting server..."
-  bun run ./server.js &
+  node ./server.js &
   SERVER_PID=$!
   # echo "Server started with PID $SERVER_PID"
 }
