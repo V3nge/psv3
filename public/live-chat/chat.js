@@ -22,7 +22,7 @@ function showBlocked() {
                 clearInterval(interval);
                 window.location.reload();
             }
-            allowedToChat.innerText = `You will be allowed to chat again in ${Math.round(timeLeft / 1000)} seconds.`
+            allowedToChat.innerText = `You will be allowed to chat again in ${Math.round(timeLeft / 100) / 10} seconds.`
         }, 100);
     }
 }
