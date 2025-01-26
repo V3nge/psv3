@@ -159,16 +159,10 @@ keys.forEach(key => {
 })
 console.log("");
 
-async function createCompletion(prompt) {
+async function createCompletion(messagesAi) {
   const completion = await openais[Math.floor(Math.random() * openais.length)].chat.completions.create({
     model: "gpt-3.5-turbo",
-    messages: [
-      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
+    messages: messagesAi,
     store: true,
   });
 
@@ -364,42 +358,42 @@ app.use(bodyParser.json());
 // allowedOrigins = betterAllowedOrigins;
 
 // app.all('*', function (req, res, next) {
-  // res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-  // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  // res.setHeader('X-Content-Type-Options', 'nosniff');
-  // res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-  // res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  // res.setHeader('Permissions-Policy', 'geolocation=(self), microphone=()');
-  // res.setHeader(
-  //   'Content-Security-Policy',
-  //   `default-src 'self' ${allowedOrigins.join(" ")}; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/; script-src 'self'; object-src 'none';`
-  // );
-  // res.setHeader(
-  //   'Content-Security-Policy',
-  //   `default-src 'self'; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/;`
-  // );
+// res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+// res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+// res.setHeader('X-Content-Type-Options', 'nosniff');
+// res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+// res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+// res.setHeader('Permissions-Policy', 'geolocation=(self), microphone=()');
+// res.setHeader(
+//   'Content-Security-Policy',
+//   `default-src 'self' ${allowedOrigins.join(" ")}; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/; script-src 'self'; object-src 'none';`
+// );
+// res.setHeader(
+//   'Content-Security-Policy',
+//   `default-src 'self'; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/;`
+// );
 
-  // next();
+// next();
 
-  // const origin = req.headers.origin;
+// const origin = req.headers.origin;
 
-  // if (allowedOrigins.includes(origin)) {
-  //   res.setHeader('Access-Control-Allow-Origin', origin);
-  // }
+// if (allowedOrigins.includes(origin)) {
+//   res.setHeader('Access-Control-Allow-Origin', origin);
+// }
 
-  // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  // res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  // res.setHeader('Access-Control-Allow-Credentials', 'true');
+// res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+// res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+// res.setHeader('Access-Control-Allow-Credentials', 'true');
 
-  // if (req.method === 'OPTIONS') {
-  //   res.sendStatus(200);
-  // } else {
-  //   next();
-  // }
+// if (req.method === 'OPTIONS') {
+//   res.sendStatus(200);
+// } else {
+//   next();
+// }
 // });
 
 // This allows about:blank to work.
-app.all('*', function(req, res, next) {
+app.all('*', function (req, res, next) {
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
   res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
@@ -718,6 +712,7 @@ app.get("/stats", (req, res) => {
 });
 
 var aiUsages = {};
+var aiMessagesSent = {};
 app.get('/ai', async (req, res) => {
   const messageText = req.query.t;
 
@@ -747,16 +742,20 @@ app.get('/ai', async (req, res) => {
 
   if (aiUsages[uid] == undefined) {
     aiUsages[uid] = 0;
-  } else {
-    if (((Math.random() * 100) > 70) && aiUsages[uid] > 2) {
-      // the first 2 messages are all good and dandy
-      return res.status(500).json({
-        success: false,
-        error: "Internal Error.",
-        response: "Sorry, your input could not be processed. Please try again in a second."
-      });
-    }
+    aiMessagesSent[uid] = [
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
+    ];
   }
+  // else {
+  //   if (((Math.random() * 100) > 70) && aiUsages[uid] > 2) {
+  //     // the first 2 messages are all good and dandy
+  //     return res.status(500).json({
+  //       success: false,
+  //       error: "Internal Error.",
+  //       response: "Sorry, your input could not be processed. Please try again in a second."
+  //     });
+  //   }
+  // }
 
   aiUsages[uid]++;
 
@@ -769,15 +768,28 @@ app.get('/ai', async (req, res) => {
     return;
   }
 
+  aiMessagesSent[uid].push({
+    role: "user",
+    content: messageText,
+  });
+
   try {
-    var complete = (await createCompletion(messageText));
+    var complete = (await createCompletion(aiMessagesSent[uid]));
+
     if (complete.type == "insufficient_quota") {
       res.json({
         success: false,
         input: messageText,
-        response: "Sorry, Sentinel Ai cannot be used at this time."
+        response: "Sorry, Sentinel Ai cannot be used at this time. (E:InsQua)"
       });
     }
+
+    // How the Ai responded
+    aiMessagesSent[uid].push({
+      role: "assistant",
+      content: complete.content.trim(),
+    });
+
     res.json({
       success: true,
       input: messageText,
@@ -787,7 +799,7 @@ app.get('/ai', async (req, res) => {
     res.json({
       success: false,
       input: messageText,
-      response: "Sorry, Sentinel Ai cannot be used at this time."
+      response: "Sorry, Sentinel Ai cannot be used at this time. (E:Err)"
     });
     console.error("Error with ChatGPT API:", error);
   }
