@@ -199,7 +199,7 @@ if (localStorage.getItem("blocked") == "TRG2") {
             localStorage.setItem("blocked", "TRG2");
             showBlocked();
         } else if (response.type == "block_time") {
-            localStorage.setItem("blocked_time", response);
+            localStorage.setItem("blocked_time", JSON.stringify(response));
         } else {
             //console.log(response);
         }
