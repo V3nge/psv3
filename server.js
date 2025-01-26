@@ -342,12 +342,13 @@ app.use(bodyParser.json());
 //   })
 // );
 
-// app.all('*', function(req, res, next) {
-//   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-//   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-//   res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
-//   next();
-// });
+// This allows about:blank to work.
+app.all('*', function(req, res, next) {
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
+  next();
+});
 
 app.use(cors({ origin: ["https://gimkit.com/", "https://sacs.instructure.com/"] }));
 
