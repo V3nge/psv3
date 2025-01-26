@@ -29,23 +29,21 @@ function showBlocked() {
         // Parse quickly at beginning so that the user does not have to wait 100ms
         // and see negative integer for time to wait!!!
         var parsed = JSON.parse(blockedTime);
-        var timeLeft = ((parsed.start + parsed.time) - (+Date.now()));
-        if(0 >= timeLeft) {
+
+        function resumeNormalOperation() {
             localStorage.setItem("blocked", null);
             localStorage.setItem("blocked_time", null);
             clearInterval(interval);
             window.location.reload();
         }
 
+        var timeLeft = ((parsed.start + parsed.time) - (+Date.now()));
+        if(0 >= timeLeft) resumeNormalOperation();
+
         var interval = setInterval(function() {
             var timeLeft = ((parsed.start + parsed.time) - (+Date.now()));
-            if(0 >= timeLeft) {
-                localStorage.setItem("blocked", null);
-                localStorage.setItem("blocked_time", null);
-                clearInterval(interval);
-                window.location.reload();
-            }
             var timeLeftInSeconds = (Math.round(timeLeft / 100) / 10).toString();
+            if(0 >= timeLeft) resumeNormalOperation();
             allowedToChat.innerText = `You will be allowed to chat again in ${assurePreciseDecimal(timeLeftInSeconds)} seconds.`
         }, 100);
     }
