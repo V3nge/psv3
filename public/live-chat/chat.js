@@ -5,8 +5,26 @@ function showBlocked() {
     </div>
     <div class="centered">
         <p style="color:white;" id="allowed-to-chat">You will be allowed to chat again in ...</p>
-    </div>
-    <script src="blocked.js"></script>`;
+    </div>`;
+
+    var allowedToChat = document.getElementById("allowed-to-chat");
+    var blockedTime = localStorage.getItem("blocked_time");
+
+    if (blockedTime == null) {
+        allowedToChat.innerText = `You will be allowed to chat again in an undetermined amount of time.`;
+    } else {
+        var parsed = JSON.parse(blockedTime);
+        var interval = setInterval(function() {
+            var timeLeft = ((parsed.start + parsed.time) - (+Date.now()));
+            if(0 >= timeLeft) {
+                localStorage.setItem("blocked", null);
+                localStorage.setItem("blocked_time", null);
+                clearInterval(interval);
+                window.location.reload();
+            }
+            allowedToChat.innerText = `You will be allowed to chat again in ${Math.round(timeLeft / 1000)} seconds.`
+        }, 100);
+    }
 }
 
 if (localStorage.getItem("blocked") == "TRG2") {
@@ -260,7 +278,7 @@ if (localStorage.getItem("blocked") == "TRG2") {
     function back() {
         window.location.href = "/"; // omg so pro
     }
-    
+
     function sentinelai() {
         window.location.href = "/sentinel-ai/";
     }
