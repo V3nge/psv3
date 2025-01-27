@@ -512,7 +512,7 @@ app.get('/games-a-tags', (req, res) => {
   res.setHeader("content-type", "text/html");
   var result = "";
   constructedGamesListJSON.forEach(element => {
-    result += `<a href="/games/${element.slug}">${element.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;`
+    result += `<a href="/games/${element.slug}/">${element.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;`
   });
   res.send(result);
 });
