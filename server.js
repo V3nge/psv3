@@ -10,25 +10,17 @@ if (fs.existsSync('debug.txt')) {
 // wow thats a lot of libraries
 var { app, express, listenCallback, startUltraviolet } = require('./src/init').init(DEBUG);
 const { createCompletion } = require('./src/ai');
-const crypto = require("crypto");
+const { affixSlash, timedError, timedLog } = require('./src/shared');
 const Fuse = require("fuse.js");
 const axios = require("axios");
 const path = require("path");
-
-const PING_TIMEOUT = 10000;
 
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 var constructedGamesListJSON = null;
 var lastSavedPathStats = +Date.now();
 var lastUpdatedIndex = 0;
-var accs_vanities = [];
-var blockedUIDs = [];
-var activeUsers = 0;
-var websockets = [];
 var pathStats = {};
 var indexHtml = ""
-var rooms = [];
-var accs = [];
 
 // var proxy = httpProxy.createProxyServer({});
 
@@ -41,11 +33,9 @@ var accs = [];
 try {
   const data = fs.readFileSync("path-stats.json");
   pathStats = JSON.parse(data);
-  const now = new Date();
-  console.log(`${now.toISOString()}: Success: Loaded path-stats.json`);
+  timedLog(`Success: Loaded path-stats.json`);
 } catch (err) {
-  const now = new Date();
-  console.error(`${now.toISOString()}: Error, file not found: path-stats.json`);
+  timedError(`Error, file not found: path-stats.json`);
 }
 
 const logDirectory = path.join(__dirname, 'error-logs');
@@ -73,59 +63,6 @@ app.post('/error', (req, res) => {
 // const morgan = require('morgan');
 // app.use(helmet());
 // app.use(morgan('combined'));
-
-var accumulatingMessages = "";
-var numberOfAccumulatedMessages = 0;
-function sendMessageToWebHook(message) {
-  if (!DEBUG) {
-    numberOfAccumulatedMessages++;
-    accumulatingMessages += `${message}\n`;
-
-    if (numberOfAccumulatedMessages > 10) {
-      numberOfAccumulatedMessages = 0;
-      const params = {
-        // username: "My Webhook Name",
-        // avatar_url: "",
-        content: accumulatingMessages,
-      };
-
-      axios
-        .post(
-          atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODEzMTUwODQ5NzU1MTQwMS9NTmMzNlZ4VDBzRFFvQUN0b01UV1RSNm9pZU1HRHZ3ZHY2NkF3ZmVFZW5vSElyR2VkSlNGRXlORFdyUTg4aTJQUnM4MA=="),
-          params,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          console.log("Message sent successfully:", response.status);
-        })
-        .catch((error) => {
-          console.error("Error sending message:", error.message);
-        });
-      accumulatingMessages = "";
-    }
-  } else {
-    console.log("Not sending to discord webhook because DEBUG is set to true.");
-  }
-}
-
-function getCurrentTime() {
-  const now = new Date();
-
-  let hours = now.getHours();
-  const minutes = now.getMinutes();
-  const ampm = hours >= 12 ? "PM" : "AM";
-
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-
-  const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-
-  return ` (${hours}:${formattedMinutes} ${ampm})`;
-}
 
 var constructedGamesListJSONTimestamp;
 function constructGamesListJSON() {
@@ -245,27 +182,16 @@ function handleGamesServing(req, res, concatIndex) {
   }
 
   const ipAddress = req.ip;
-  const now = new Date();
 
-  console.log(
-    now.toISOString() + ":" + ipAddress + ": Serving file: " + filePath
-  );
+  timedLog(`${ipAddress}: Serving file: ${filePath}`);
 
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       if (err.code === "ENOENT") {
-        console.log(
-          now.toISOString() +
-          ":" +
-          ipAddress +
-          ": Error, file not found: " +
-          filePath
-        );
+        timedLog(`${ipAddress}: Error, file not found: ${filePath}`);
         res.sendStatus(404);
       } else {
-        console.log(
-          now.toISOString() + ":" + ipAddress + ": Error reading file: " + err
-        );
+        timedError(`${ipAddress}: Error reading file: ${err}`);
         res.sendStatus(500);
       }
       return;
@@ -296,13 +222,12 @@ function updateCount(path, key) {
 
   pathStats[path][key]++;
 
-  if (+Date.now() - lastSavedPathStats > 60 * 1000) {
-    lastSavedPathStats = +Date.now();
+  if ((+Date.now()) - lastSavedPathStats > 60 * 1000) {
+    lastSavedPathStats = (+Date.now());
 
     try {
       fs.writeFileSync("path-stats.json", JSON.stringify(pathStats));
-      const now = new Date();
-      console.log(`${now.toISOString()}: Success: Saved path-stats.json`);
+      timedLog(`Success: Saved path-stats.json`);
     } catch (err) {
       console.error(err);
     }
@@ -310,15 +235,15 @@ function updateCount(path, key) {
 }
 
 function updateIndex() {
-  if (+Date.now() - lastUpdatedIndex > 60 * 1000) {
-    console.log(`${(new Date()).toISOString()}: Updating server rendered index.html`)
-    lastUpdatedIndex = +Date.now();
+  if ((+Date.now()) - lastUpdatedIndex > 60 * 1000) {
+    timedLog(`Updating server rendered index.html`);
+    lastUpdatedIndex = (+Date.now());
     const filePath = path.join(__dirname, 'private', 'index.html');
     const replacementInfo = loadAllGames();
 
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.error('Error reading index.html:', err);
+        timedError(`Error reading index.html: ${err}`);
         return;
       }
       indexHtml = data
@@ -429,14 +354,6 @@ app.get('/ai', async (req, res) => {
   }
 });
 
-function affixSlash(path) {
-  path = path.trim();
-  if (path.endsWith("/")) {
-    return path;
-  }
-  return `${path}/`;
-}
-
 app.post("/r", (req, res) => {
   const path = affixSlash(req.query.u);
   if (!path) {
@@ -445,11 +362,6 @@ app.post("/r", (req, res) => {
   updateCount(path, "recurring");
   res.send();
 });
-
-function createPrivateRoom(name) {
-  rooms.push(name);
-  return `${encodeURIComponent(name)}`;
-}
 
 app.get("/check_room", (req, res) => {
   res.setHeader("content-type", "application/json");

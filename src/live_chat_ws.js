@@ -1,4 +1,5 @@
 const { getRandomCombination } = require("./chat_name_generator");
+const crypto = require("crypto");
 
 async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);
@@ -11,6 +12,57 @@ async function sha256(message) {
 }
 
 function setup(app) {
+    const PING_TIMEOUT = 10000;
+    var accs_vanities = [];
+    var activeUsers = 0;
+    var blockedUIDs = [];
+    var websockets = [];
+    var rooms = [];
+    var accs = [];
+
+    var accumulatingMessages = "";
+    var numberOfAccumulatedMessages = 0;
+    function sendMessageToWebHook(message) {
+        if (!DEBUG) {
+            numberOfAccumulatedMessages++;
+            accumulatingMessages += `${message}\n`;
+
+            if (numberOfAccumulatedMessages > 10) {
+                numberOfAccumulatedMessages = 0;
+                const params = {
+                    // username: "My Webhook Name",
+                    // avatar_url: "",
+                    content: accumulatingMessages,
+                };
+
+                axios
+                    .post(
+                        atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODEzMTUwODQ5NzU1MTQwMS9NTmMzNlZ4VDBzRFFvQUN0b01UV1RSNm9pZU1HRHZ3ZHY2NkF3ZmVFZW5vSElyR2VkSlNGRXlORFdyUTg4aTJQUnM4MA=="),
+                        params,
+                        {
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        }
+                    )
+                    .then((response) => {
+                        console.log("Message sent successfully:", response.status);
+                    })
+                    .catch((error) => {
+                        console.error("Error sending message:", error.message);
+                    });
+                accumulatingMessages = "";
+            }
+        } else {
+            console.log("Not sending to discord webhook because DEBUG is set to true.");
+        }
+    }
+
+    function createPrivateRoom(name) {
+        rooms.push(name);
+        return `${encodeURIComponent(name)}`;
+    }
+
     var uidFromIp = false;
     app.ws("/live-chat-ws", function (wss, req) {
         let thisUser = {};
