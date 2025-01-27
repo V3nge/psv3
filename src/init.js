@@ -9,6 +9,7 @@ var express = require('express');
 const https = require('https');
 const http = require('http');
 const path = require("path");
+const fs = require("fs");
 
 function init(DEBUG) {
     var certoptions;
