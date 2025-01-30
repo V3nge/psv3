@@ -78,30 +78,7 @@ function update() {
 }
 
 function getRandomSearch() {
-    var searches = [
-        "How to improve study habits",
-        "Tips for better time management as a student",
-        "How to stay motivated in school",
-        "How to get good grades without stress",
-        "How to improve focus while studying",
-        "Best ways to prepare for exams",
-        "How to manage school and extracurricular activities",
-        "How to develop effective note-taking skills",
-        "How to build self-discipline as a student",
-        "How to overcome procrastination in school",
-        "How to create a study schedule that works",
-        "How to improve reading comprehension",
-        "How to handle school stress and anxiety",
-        "How to become a faster learner",
-        "How to set academic goals effectively",
-        "How to deal with academic pressure",
-        "How to make the most of group study sessions",
-        "How to stay organized for school assignments",
-        "How to improve writing skills for essays and papers",
-        "How to ask for help when struggling in school"
-    ];
-    var randomIndex = Math.floor(Math.random() * searches.length);
-    return `https://www.google.com/search?q=${encodeURIComponent(searches[randomIndex])}`;
+    return `https://drive.google.com`;
 }
 
 function openBlank() {
