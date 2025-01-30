@@ -1,18 +1,27 @@
+const { affixSlash, timedError, timedLog } = require('./shared');
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const childProcess = require("child_process");
 const { certoptions } = require("./shared");
 const compression = require("compression");
 const bodyParser = require('body-parser');
+const isElevated = require('is-elevated');
 // const helmet = require('helmet');
 const nocache = require("nocache");
 var express = require('express');
 const https = require('https');
 const http = require('http');
 const path = require("path");
-const fs = require("fs");
 
-function init(DEBUG) {
+async function init(DEBUG) {
+    var elevated = await isElevated.default();
+
+    if(!elevated) {
+        timedLog("This server does not have elevated permissions, which means\n\t" + 
+            "- The server can only use ports greater than 1024.\n\t" +
+            "- The server will automatically redirect any OTHER_PORTS to above 1024 by adding 1024 to it.");
+    }
+
     // Yay, now if they ever find out a way to block any port, we're good!
     // Have not tested, so I don't have any idea of if this works with wss.
     const OTHER_PORTS = [
@@ -22,41 +31,50 @@ function init(DEBUG) {
     const PORT = 7764;
 
     OTHER_PORTS.forEach((port) => {
-        if (port == 8080) {
-            console.warn("8080 is for UV and cannot be an OTHER_PORTS element.");
-            return;
+        try {
+            if (port == 8080) {
+                timedLog("8080 is for UV and cannot be an OTHER_PORTS element.");
+                return;
+            }
+
+            if (port < 1024 && !elevated) {
+                timedLog(`Port ${port} is privileged and usually requires elevated permissions: switching to ${port + 1024}.`);
+                port += 1024;
+            }
+
+            var httpsOrHttps = DEBUG ? http : https;
+
+            httpsOrHttps
+                .createServer(
+                    certoptions,
+                    (req, res) => {
+                        const options = {
+                            hostname: "localhost",
+                            port: PORT,
+                            path: req.url,
+                            method: req.method,
+                            headers: req.headers,
+                        };
+
+                        const proxy = http.request(options, (proxyRes) => {
+                            res.writeHead(proxyRes.statusCode, proxyRes.headers);
+                            proxyRes.pipe(res, { end: true });
+                        });
+
+                        proxy.on("error", (err) => {
+                            console.error(`Error forwarding request on port ${port}:`, err);
+                            res.writeHead(500);
+                            res.end("Internal Server Error");
+                        });
+
+                        req.pipe(proxy, { end: true });
+                    })
+                .listen(port, () => {
+                    timedLog(`Redirecting traffic from port ${port} to port ${PORT}`);
+                });
+        } catch (e) {
+            timedLog(`Cannot map port: ${port}`);
         }
-
-        var httpsOrHttps = DEBUG ? http : https;
-
-        httpsOrHttps
-            .createServer(
-                certoptions,
-                (req, res) => {
-                    const options = {
-                        hostname: "localhost",
-                        port: PORT,
-                        path: req.url,
-                        method: req.method,
-                        headers: req.headers,
-                    };
-
-                    const proxy = http.request(options, (proxyRes) => {
-                        res.writeHead(proxyRes.statusCode, proxyRes.headers);
-                        proxyRes.pipe(res, { end: true });
-                    });
-
-                    proxy.on("error", (err) => {
-                        console.error(`Error forwarding request on port ${port}:`, err);
-                        res.writeHead(500);
-                        res.end("Internal Server Error");
-                    });
-
-                    req.pipe(proxy, { end: true });
-                })
-            .listen(port, () => {
-                console.log(`Redirecting traffic from port ${port} to port ${PORT}`);
-            });
     });
 
     // const httpProxy = require('http-proxy');
@@ -65,21 +83,21 @@ function init(DEBUG) {
     const app = express();
 
     if (!DEBUG) {
-      const limiter = expressRateLimit({
-        windowMs: 60 * 1000,
-        max: 500,
-      });
-    
-      const speedLimiter = expressSlowDown({
-        windowMs: 15 * 1000,
-        delayAfter: 125,
-        delayMs: () => 1500,
-      });
-    
-      app.use(speedLimiter);
-      app.use(limiter);
+        const limiter = expressRateLimit({
+            windowMs: 60 * 1000,
+            max: 500,
+        });
+
+        const speedLimiter = expressSlowDown({
+            windowMs: 15 * 1000,
+            delayAfter: 125,
+            delayMs: () => 1500,
+        });
+
+        app.use(speedLimiter);
+        app.use(limiter);
     } else {
-      app.use(nocache());
+        app.use(nocache());
     }
 
     var server = null;
@@ -89,22 +107,27 @@ function init(DEBUG) {
         server = https.createServer(certoptions, app);
         listenCallback = function () {
             server.listen(PORT, () => {
-                console.log(`HTTPS Server running on port ${PORT}`);
+                timedLog(`HTTPS Server running on port ${PORT}`);
             });
         }
         //app.listen(PORT);
     } else {
         listenCallback = function () {
-            console.log(`HTTP Server running on port ${PORT}`);
-            app.listen(PORT, '0.0.0.0');
+            timedLog(`HTTP Server running on port ${PORT}`);
+            try {
+                app.listen(PORT, '0.0.0.0');
+            } catch (e) {
+                // just in case
+                app.listen(PORT)
+            }
         }
     }
 
     if (server == null) {
-        console.log("No server passed into express-ws init.");
+        timedLog("No server passed into express-ws init.");
         require("express-ws")(app);
     } else {
-        console.log("Express-ws with server init.");
+        timedLog("Express-ws with server init.");
         require("express-ws")(app, server);
     }
 
@@ -112,7 +135,7 @@ function init(DEBUG) {
 
     function startUltraviolet() {
         const now = new Date();
-        console.log(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
+        timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
 
         const ultravioletProcess = childProcess.spawn("node", [ultravioletPath], {
             stdio: ['inherit', 'pipe', 'pipe'],
@@ -120,7 +143,7 @@ function init(DEBUG) {
 
         ultravioletProcess.stdout.on('data', (data) => {
             const now = new Date();
-            console.log(`${now.toISOString()}: UV: ${data.toString()}`.trim());
+            timedLog(`${now.toISOString()}: UV: ${data.toString()}`.trim());
         });
 
         ultravioletProcess.stderr.on('data', (data) => {
@@ -133,13 +156,13 @@ function init(DEBUG) {
         });
 
         ultravioletProcess.on("SIGINT", () => {
-            console.log("\nSIGINT received. Shutting down...");
+            timedLog("\nSIGINT received. Shutting down...");
             ultravioletProcess.kill("SIGINT");
             process.exit(0);
         });
 
         ultravioletProcess.on("SIGTERM", () => {
-            console.log("\nSIGTERM received. Shutting down...");
+            timedLog("\nSIGTERM received. Shutting down...");
             ultravioletProcess.kill("SIGTERM");
             process.exit(0);
         });

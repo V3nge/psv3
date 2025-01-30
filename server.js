@@ -9,7 +9,7 @@ if (fs.existsSync('debug.txt')) {
 }
 
 // wow thats a lot of libraries
-var { app, express, listenCallback, startUltraviolet } = require('./src/init').init(DEBUG);
+var { app, express, listenCallback, startUltraviolet } = await (require('./src/init').init(DEBUG));
 const { createCompletion } = require('./src/ai');
 const { affixSlash, timedError, timedLog } = require('./src/shared');
 const Fuse = require("fuse.js");
@@ -44,7 +44,7 @@ if (!fs.existsSync(logDirectory)) {
 }
 
 app.post('/error', (req, res) => {
-  console.log("no sigma3")
+  timedLog("no sigma3")
   const { message, source, lineno, colno, stack } = req.body;
   const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const timestamp = new Date().toISOString();
@@ -211,6 +211,10 @@ app.get("/games/:game/", (req, res) => {
   handleGamesServing(req, res, true);
 });
 
+app.get("/login", (req, res) => {
+  res.send("Hello, World!");
+});
+
 function randomElement(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
@@ -250,7 +254,7 @@ function updateIndex() {
         .replace("{recentlyAddedCarousel}", replacementInfo.recentlyAdded)
         .replace("{mostPlayCarousel}", replacementInfo.mostPlayed)
         .replace("{allGames}", replacementInfo.allGames);
-      // console.log('index.html updated.');
+      // timedLog('index.html updated.');
     });
   }
 }
@@ -372,7 +376,7 @@ var codesFound = [];
 app.get("/api/fndcof", (req, res) => {
   res.setHeader("content-type", "application/json");
   codesFound.push(req.query.c);
-  console.log(codesFound);
+  timedLog(codesFound);
   res.send("true");
 })
 
@@ -445,6 +449,6 @@ startUltraviolet();
 
 app.use(express.static("public"));
 
-console.log("\nStarting server via listenCallback...");
+timedLog("Starting server via listenCallback...");
 listenCallback();
 

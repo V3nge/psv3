@@ -3,7 +3,7 @@
 const fs = require("fs");
 
 var DEBUG = false;
-if (fs.existsSync('../debug.txt')) {
+if (fs.existsSync('./debug.txt')) {
   DEBUG = true;
 }
 
