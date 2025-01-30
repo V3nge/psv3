@@ -64,8 +64,13 @@
                         method: "POST",
                         body: JSON.stringify({ username: usernameInput.value, hash: hash }),
                     });
+                    if(response.status == 404) {
+                        error("/api/dashboard/login returned 404: not found");
+                    } else {
+                        console.log("yay!");
+                    }
                 } catch(e) {
-                    error(e);
+                    error(JSON.stringify(e));
                 }
             }
         </script>
