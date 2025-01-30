@@ -4,6 +4,10 @@
 # never down and that when the repository is
 # changed that it will update accordingly.
 
+# Initial pull to make sure everything is up-to-date
+git stash
+git pull
+
 # NOTE: You will need to restart auto_restart.sh when changing auto_restart.sh
 
 # Keep up-to-date
