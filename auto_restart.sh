@@ -6,11 +6,16 @@
 
 # NOTE: You will need to restart auto_restart.sh when changing auto_restart.sh
 
-# Make sure bun is up-to-date
-bun upgrade
+# Keep up-to-date
+# The idea is that if nobody were to touch the server ever again
+# then nobody would need to do any upgrading manually
+keep_to_date() {
+  bun upgrade
+}
 
 start_server() {
   # Start the server and capture the PID
+  keep_to_date
   bun run ./server.js &
   SERVER_PID=$!
   echo "Server started with PID $SERVER_PID"
