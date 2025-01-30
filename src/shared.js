@@ -1,5 +1,12 @@
 // ik this looks weird but later there will probably be a bunch of stuff like this
 
+const fs = require("fs");
+
+var DEBUG = false;
+if (fs.existsSync('../debug.txt')) {
+  DEBUG = true;
+}
+
 function affixSlash(path) {
     path = path.trim();
     if (path.endsWith("/")) {
@@ -42,5 +49,6 @@ module.exports = {
     affixSlash: affixSlash,
     getCurrentTime: getCurrentTime,
     timedLog: timedLog,
-    timedError: timedError
+    timedError: timedError,
+    DEBUG: DEBUG
 }

@@ -1,5 +1,5 @@
 const { getRandomCombination } = require("./chat_name_generator");
-const { getCurrentTime } = require("./shared");
+const { getCurrentTime, DEBUG } = require("./shared");
 const crypto = require("crypto");
 
 async function sha256(message) {
