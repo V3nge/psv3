@@ -56,6 +56,7 @@ while true; do
     stop_server
 
     # Pull the latest changes
+    git stash # Make sure git doesn't GIT mad!!!!
     git pull
 
     LAST_COMMIT=$NEW_COMMIT
