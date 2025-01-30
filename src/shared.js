@@ -7,6 +7,16 @@ if (fs.existsSync('../debug.txt')) {
   DEBUG = true;
 }
 
+var certoptions;
+if (!DEBUG) {
+    certoptions = {
+        key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
+        cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
+    };
+} else {
+    certoptions = {}
+}
+
 function affixSlash(path) {
     path = path.trim();
     if (path.endsWith("/")) {
@@ -50,5 +60,6 @@ module.exports = {
     getCurrentTime: getCurrentTime,
     timedLog: timedLog,
     timedError: timedError,
-    DEBUG: DEBUG
+    DEBUG: DEBUG,
+    certoptions
 }

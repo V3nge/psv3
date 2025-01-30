@@ -13,7 +13,6 @@ var { app, express, listenCallback, startUltraviolet } = require('./src/init').i
 const { createCompletion } = require('./src/ai');
 const { affixSlash, timedError, timedLog } = require('./src/shared');
 const Fuse = require("fuse.js");
-const axios = require("axios");
 const path = require("path");
 
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
@@ -448,3 +447,4 @@ app.use(express.static("public"));
 
 console.log("\nStarting server via listenCallback...");
 listenCallback();
+

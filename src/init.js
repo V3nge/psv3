@@ -1,6 +1,7 @@
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const childProcess = require("child_process");
+const { certoptions } = require("./shared");
 const compression = require("compression");
 const bodyParser = require('body-parser');
 // const helmet = require('helmet');
@@ -12,16 +13,6 @@ const path = require("path");
 const fs = require("fs");
 
 function init(DEBUG) {
-    var certoptions;
-    if (!DEBUG) {
-        certoptions = {
-            key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
-            cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
-        };
-    } else {
-        certoptions = {}
-    }
-
     // Yay, now if they ever find out a way to block any port, we're good!
     // Have not tested, so I don't have any idea of if this works with wss.
     const OTHER_PORTS = [
