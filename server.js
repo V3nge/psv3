@@ -375,8 +375,11 @@ app.get('/ai', async (req, res) => {
     res.json({
       success: false,
       input: messageText,
-      response: "Sorry, Sentinel Ai cannot be used at this time. (E:Err)"
+      response: "Please try again."
     });
+    aiMessagesSent[uid] = [
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Whenever someone asks a question, be as useless as possible." },
+    ];
     console.error("Error with ChatGPT API:", error);
   }
 });
