@@ -215,6 +215,10 @@ app.get("/dashboard/login", (req, res) => {
   res.sendFile(path.join(__dirname, 'private', 'logindashboard.html'));
 });
 
+app.post("/api/dashboard/login", (req, res) => {
+  res.send({"success":true,"username":`${req.body.username}`});
+});
+
 function randomElement(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
