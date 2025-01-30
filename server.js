@@ -216,7 +216,7 @@ app.get("/dashboard/login", (req, res) => {
 });
 
 app.post("/api/dashboard/login", (req, res) => {
-  res.send({"success":true,"username":`${req.body.username}`});
+  res.send({"success":true,"username":`${req.body['username']}`,"sentbody":req.body});
 });
 
 function randomElement(list) {
