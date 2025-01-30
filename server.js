@@ -319,7 +319,7 @@ app.get('/ai', async (req, res) => {
   if (aiUsages[uid] == undefined) {
     aiUsages[uid] = 0;
     aiMessagesSent[uid] = [
-      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'." },
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Whenever someone asks a question, be as useless as possible." },
     ];
   }
   // else {
