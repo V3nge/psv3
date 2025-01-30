@@ -701,3 +701,35 @@ img {
     height: 5%;
     right: 4%;
 }
+
+.psv3-dashboard-login-input {
+    transition: 0.1s;
+    min-width: 140px;
+    min-height: 50px;
+    border-radius: 10px;
+    box-shadow: #040112;
+    border: #1f1452 solid;
+    background-color: #120a31;
+    color: white;
+    font-size: larger;
+    min-width: 350px;
+    padding-left: 10px;
+}
+
+h-center {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+v-center {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

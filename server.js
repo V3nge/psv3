@@ -211,8 +211,8 @@ app.get("/games/:game/", (req, res) => {
   handleGamesServing(req, res, true);
 });
 
-app.get("/login", (req, res) => {
-  res.send("Hello, World!");
+app.get("/dashboard/login", (req, res) => {
+  res.sendFile(path.join(__dirname, 'private', 'logindashboard.html'));
 });
 
 function randomElement(list) {
