@@ -48,7 +48,11 @@
             const passwordInput = loginInputs[1];
             
             loginButton.onclick = async function() {
-                console.log(await getCredits(usernameInput.value, passwordInput.value));
+                var hash = await getCredits(usernameInput.value, passwordInput.value);
+                const response = await fetch("/api/dashboard/login", {
+                    method: "POST",
+                    body: JSON.stringify({ username: usernameInput.value, hash: hash }),
+                });
             }
         </script>
     </footer>
