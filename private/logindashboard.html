@@ -19,8 +19,37 @@
             </h-center>
             <br>
             <h-center>
-                <button>Login</button>
+                <button id="login">Login</button>
             </h-center>
         </v-center>
     </body>
+
+    <footer>
+        <script>
+            function getTimeKey() { return ((Math.sqrt(Math.sin(Math.round((+(new Date())) / 100000)) * 10000000000000000) / 69) * 10000000000) }
+            
+            async function sha256(message) {
+                const msgBuffer = new TextEncoder().encode(message);
+                const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+                const hashArray = Array.from(new Uint8Array(hashBuffer));
+                const hashHex = hashArray
+                    .map((b) => b.toString(16).padStart(2, "0"))
+                    .join("");
+                return hashHex;
+            }
+
+            async function getCredits(u, p) {
+                return await sha256(`psv3-${u}${p}-${getTimeKey()}`);
+            }
+            
+            const loginButton = document.getElementById("login");
+            const loginInputs = Array.from(document.getElementsByClassName("psv3-dashboard-login-input"));
+            const usernameInput = loginInputs[0];
+            const passwordInput = loginInputs[1];
+            
+            loginButton.onclick = async function() {
+                console.log(await getCredits(usernameInput.value, passwordInput.value));
+            }
+        </script>
+    </footer>
 </html>
