@@ -1,5 +1,5 @@
 try {
-  const { affixSlash, timedError, timedLog } = require('./src/shared');
+  const { affixSlash, timedError, timedLog } = require('./shared');
   const express = require('express');
   const path = require('path');
   const app = express();

@@ -11,6 +11,10 @@
 # then nobody would need to do any upgrading manually
 keep_to_date() {
   bun upgrade
+
+  # TO BE CLEAR, THIS INSTALLS AND UPDATES ALL REQUIRED PACKAGES
+  # AND DOES NOT INSTALL ANOTHER INSTANCE OF BUN!
+  bun install
 }
 
 start_server() {
