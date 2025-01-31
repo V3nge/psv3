@@ -9,13 +9,31 @@
     <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.js"></script>
     <style>
+        /* Ensure the body fills the entire screen */
+        body, html {
+            margin: 0;
+            height: 100%;
+        }
+
+        /* Connect form takes up 10% of the screen height */
+        #connect-form {
+            height: 10%;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+
+        /* Terminal container takes up 90% of the screen height */
         #terminal-container {
-            height: 80%;
+            height: 90%;
             width: 100%;
             border: 1px solid #ccc;
         }
-        #connect-form {
-            height: 20%;
+
+        /* Basic styling for the inputs and button */
+        #connect-form input, #connect-form button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
