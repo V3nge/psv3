@@ -3,172 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SSH WebSocket Client</title>
-    <link href="https://cdn.jsdelivr.net/npm/xterm@4.17.0/css/xterm.css" rel="stylesheet" />
+    <title>SSH Web Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-color: #000;
-        }
         #terminal-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #terminal {
+            height: 500px;
             width: 100%;
-            height: 100%;
+            border: 1px solid #ccc;
+        }
+        #connect-form {
+            margin: 10px;
         }
     </style>
 </head>
 <body>
-    <div id="terminal-container">
-        <div id="terminal"></div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/xterm@4.17.0/lib/xterm.js"></script>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-    <script>
-        const socket = io('https://your-server-url'); // Replace with your server URL
-        const term = new Terminal({
-            cursorBlink: true,
-            fontSize: 14,
-            theme: {
-                background: '#000',
-                foreground: '#0f0',
-                cursor: '#0f0',
-            }
-        });
-        term.open(document.getElementById('terminal'));
 
-        let lineBuffer = [];
-        let history = [];
-        let shellListener = null;
-        let offset = 0;
-        let ip = '';
-        let port = 22;
-        let username = '';
-        let password = '';
-        let isSSHConnection = false;
+<h1>SSH Web Terminal</h1>
+<div id="connect-form">
+    <input type="text" id="ip" placeholder="IP Address" />
+    <input type="text" id="port" placeholder="Port (default: 22)" />
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="connect-btn">Connect</button>
+</div>
 
-        // Handle input for initial SSH connection
-        async function simpleShell(data) {
-            // string splitting is needed to also handle multichar input (eg. from copy)
-            for (let i = 0; i < data.length; ++i) {
-                const c = data[i];
-                if (c === '\r') {  // <Enter> was pressed case
-                    offset = 0;
-                    term.write('\r\n');
-                    if (lineBuffer.length) {
-                        // we have something in line buffer, normally a shell does its REPL logic here
-                        const command = lineBuffer.join('');
-                        lineBuffer.length = 0;
-                        history.push(command);
-                        try {
-                            // Logic for gathering SSH credentials
-                            if (!ip) {
-                                ip = command;
-                                term.write('Port (default 22): ');
-                            } else if (port === 22 && !isNaN(Number(command.trim()))) {
-                                port = Number(command.trim()) || 22;
-                                term.write('Username: ');
-                            } else if (!username) {
-                                username = command;
-                                term.write('Password: ');
-                            } else if (!password) {
-                                password = command;
-                                term.write('\nConnecting to SSH...\n');
-                                // Now that we have all details, connect to SSH
-                                socket.emit('ssh/connect', { ip, port, username, password });
-                                // Switch to SSH interaction
-                                isSSHConnection = true;
-                                shellListener.dispose();
-                            }
+<div id="terminal-container"></div>
 
-                        } catch (e) {
-                            term.write(`\x1b[31mError: ${e.message || e}\x1b[m\n`);
-                        }
-                    }
-                    term.write('> ');
-                } else if (c === '\x7F') {  // <Backspace> was pressed case
-                    if (lineBuffer.length) {
-                        if (offset === 0) {
-                            lineBuffer.pop();
-                            term.write('\b \b');
-                        }
-                        else if (offset < 0 && Math.abs(offset) !== lineBuffer.length) {
-                            let insert = "";
-                            for (let ci = lineBuffer.length + offset; ci < lineBuffer.length; ci++) {
-                                insert += lineBuffer[ci];
-                            }
-                            lineBuffer.splice(lineBuffer.length + offset - 1, 1);
-                            let lefts = "";
-                            for (let ci = 0; ci < insert.length; ci++) {
-                                lefts += '\x1b[1D';
-                            }
-                            let termInsert = '\b \b' + insert + ' ' + '\b \b' + lefts;
-                            term.write(termInsert);
-                        }
-                    }
-                } else if (['\x1b[A', '\x1b[B', '\x1b[C', '\x1b[D'].includes(data.slice(i, i + 3))) {  // <arrow> keys pressed
-                    // handle arrow keys for navigation within input buffer (if required)
-                } else {  // push everything else into the line buffer and echo back to user
-                    let insert = c;
-                    for (let ci = lineBuffer.length + offset; ci < lineBuffer.length; ci++) {
-                        insert += lineBuffer[ci];
-                    }
-                    let shift = "";
-                    if (offset < 0) {
-                        for (let ci = lineBuffer.length + offset; ci < lineBuffer.length; ci++) {
-                            shift += "\x1b[1D";
-                        }
-                    }
-                    if (offset === 0) {
-                        lineBuffer.push(c);
-                    } else if (offset < 0) {
-                        lineBuffer.splice(lineBuffer.length + offset, 0, c);
-                    }
-                    let termInsert = insert;
-                    if (offset < 0) {
-                        termInsert += shift;
-                    }
-                    term.write(termInsert);
-                }
-            }
+<script>
+    const socket = io('https://project-sentinel.xyz:7764/');
+    const term = new Terminal();
+    const container = document.getElementById('terminal-container');
+    term.open(container);
+
+    document.getElementById('connect-btn').addEventListener('click', () => {
+        const ip = document.getElementById('ip').value;
+        const port = document.getElementById('port').value || 22;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (!ip || !username || !password) {
+            alert('Please provide the IP, username, and password.');
+            return;
         }
 
-        // Handle SSH terminal interaction after connection
-        function startSSH() {
-            socket.on('output', (data) => {
-                term.write(data); // Display the SSH output in the terminal
-            });
-
-            term.onData((data) => {
-                socket.emit('input', data); // Send the input to the WebSocket server for SSH
-            });
-        }
-
-        // When the terminal is ready, ask for the SSH connection details
-        term.write('Please enter SSH connection details:\n');
-        term.write('IP Address: ');
-
-        // Start listening for user input
-        shellListener = term.onData(simpleShell);
-
-        // Handle SSH connection error
-        socket.on('error', (msg) => {
-            term.write(`\x1b[31mError: ${msg}\x1b[m\n`);
+        // Send connection request to the server via WebSocket
+        socket.emit('ssh/connect', {
+            ip,
+            port,
+            username,
+            password,
         });
+    });
 
-        // Switch to SSH interaction once connected
-        socket.on('connected', () => {
-            term.write('Connected to SSH server.\n');
-            startSSH();
-        });
-    </script>
+    socket.on('output', (data) => {
+        term.write(data);
+    });
+
+    socket.on('error', (message) => {
+        alert(`Error: ${message}`);
+    });
+
+    term.onData(data => {
+        socket.emit('input', data);
+    });
+
+    socket.on('connect', () => {
+        console.log('Connected to the WebSocket server');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Disconnected from WebSocket server');
+    });
+</script>
+
 </body>
 </html>
