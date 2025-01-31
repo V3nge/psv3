@@ -34,8 +34,7 @@ module.exports.init = (app, server) => {
             
             // Use the shell
             const shell = await ssh.requestShell();
-            console.log("Shell connected...");
-            io.emit('output', 'Shell connected...\n');
+            io.emit('output', 'Welcome to the psv3 shell!\n');
             
             // Listen for incoming data from SSH session
             shell.on('data', (data) => {
