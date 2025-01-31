@@ -1,12 +1,14 @@
-const { Client } = require('ssh2');
+const { NodeSSH } = require('node-ssh');
 const socketIo = require('socket.io');
 const express = require('express');
 
 module.exports.init = (app, server) => {
-    const io = socketIo(server);
+    const io = socketIo(server, {
+        secure: true,  // Ensure it's using wss:// for WebSocket connections
+    });
     app.use(express.json());
 
-    app.post('/ssh/connect', (req, res) => {
+    app.post('/ssh/connect', async (req, res) => {
         if (!req.body) {
             return res.status(400).json({ error: 'Request body is missing' });
         }
@@ -17,56 +19,43 @@ module.exports.init = (app, server) => {
             return res.status(400).json({ error: 'Missing required fields: ip, port, username, or password' });
         }
 
-        const conn = new Client();
+        const ssh = new NodeSSH();
         
-        conn.on('ready', () => {
+        try {
+            // Establish SSH connection
+            await ssh.connect({
+                host: ip,
+                username: username,
+                password: password,
+                port: port || 22,
+            });
             console.log('SSH Connection established');
             res.json({ status: 'connected' });
-        }).on('error', (err) => {
+            
+            // Use the shell
+            const shell = await ssh.requestShell();
+            console.log("Shell connected...");
+            io.emit('output', 'Shell connected...\n');
+            
+            // Listen for incoming data from SSH session
+            shell.on('data', (data) => {
+                io.emit('output', data.toString());
+            });
+
+            // Handling client input (to send to the SSH shell)
+            io.on('input', (data) => {
+                console.log(`Client input: ${data}`);
+                shell.write(data);
+            });
+
+            // When the shell exits, close the connection
+            shell.on('exit', () => {
+                console.log('Shell exited');
+                ssh.dispose();
+            });
+        } catch (err) {
             console.error('SSH connection error:', err);
             res.status(500).send('Failed to connect');
-        }).connect({
-            host: ip,
-            port: port || 22,
-            username: username,
-            password: password,
-        });
-
-        conn.on('session', (accept, reject) => {
-            const session = accept();
-        
-            console.log("Session...");
-
-            session.on('pty', (accept, reject, info) => {
-                accept();
-                console.log("Received pty...");
-                io.emit('output', 'Received pty...\n');
-            });
-        
-            session.on('shell', (accept, reject) => {
-                const shell = accept();
-        
-                console.log("Shell connected...");
-                io.emit('output', 'Shell connected...\n');
-        
-                // Listen for incoming data from SSH session
-                shell.on('data', (data) => {
-                    // Emit the terminal output to all connected clients
-                    io.emit('output', data.toString());
-                });
-        
-                // Handling client input (to send to the SSH shell)
-                io.on('input', (data) => {
-                    console.log(`Client input: ${data}`);
-                    shell.write(data);
-                });
-        
-                // When the shell exits, close the connection
-                shell.on('exit', () => {
-                    console.log('Shell exited');
-                    conn.end();
-                });
-            });
-        });
+        }
     });
 };
