@@ -45,48 +45,129 @@
         });
         term.open(document.getElementById('terminal'));
 
-        // Initial prompt for SSH credentials
-        term.write('Please enter SSH connection details:\n');
-        term.write('IP Address: ');
-        
+        let lineBuffer = [];
+        let history = [];
+        let shellListener = null;
+        let offset = 0;
         let ip = '';
-        let port = 22; // default port
+        let port = 22;
         let username = '';
         let password = '';
+        let isSSHConnection = false;
 
-        // Handle user input for IP Address
-        term.onData((data) => {
-            if (ip === '') {
-                ip = data.trim();
-                term.write('\nPort (default 22): ');
-            } else if (port === 22 && !isNaN(Number(data.trim()))) {
-                port = Number(data.trim()) || 22;
-                term.write(`\nUsername: `);
-            } else if (username === '') {
-                username = data.trim();
-                term.write('\nPassword: ');
-            } else if (password === '') {
-                password = data.trim();
-                term.write('\nConnecting to SSH...');
-                
-                // Now that we have all details, connect to SSH
-                socket.emit('ssh/connect', { ip, port, username, password });
+        // Handle input for initial SSH connection
+        async function simpleShell(data) {
+            // string splitting is needed to also handle multichar input (eg. from copy)
+            for (let i = 0; i < data.length; ++i) {
+                const c = data[i];
+                if (c === '\r') {  // <Enter> was pressed case
+                    offset = 0;
+                    term.write('\r\n');
+                    if (lineBuffer.length) {
+                        // we have something in line buffer, normally a shell does its REPL logic here
+                        const command = lineBuffer.join('');
+                        lineBuffer.length = 0;
+                        history.push(command);
+                        try {
+                            // Logic for gathering SSH credentials
+                            if (!ip) {
+                                ip = command;
+                                term.write('Port (default 22): ');
+                            } else if (port === 22 && !isNaN(Number(command.trim()))) {
+                                port = Number(command.trim()) || 22;
+                                term.write('Username: ');
+                            } else if (!username) {
+                                username = command;
+                                term.write('Password: ');
+                            } else if (!password) {
+                                password = command;
+                                term.write('\nConnecting to SSH...\n');
+                                // Now that we have all details, connect to SSH
+                                socket.emit('ssh/connect', { ip, port, username, password });
+                                // Switch to SSH interaction
+                                isSSHConnection = true;
+                                shellListener.dispose();
+                            }
 
-                // Handle connection error
-                socket.on('error', (msg) => {
-                    term.write(`\x1b[31mError: ${msg}\x1b[39m\n`);
-                });
-                
-                // Handle the terminal data (SSH output)
-                socket.on('output', (data) => {
-                    term.write(data); // Display the SSH output in the terminal
-                });
-
-                // Handle input from terminal
-                term.onData((inputData) => {
-                    socket.emit('input', inputData);
-                });
+                        } catch (e) {
+                            term.write(`\x1b[31mError: ${e.message || e}\x1b[m\n`);
+                        }
+                    }
+                    term.write('> ');
+                } else if (c === '\x7F') {  // <Backspace> was pressed case
+                    if (lineBuffer.length) {
+                        if (offset === 0) {
+                            lineBuffer.pop();
+                            term.write('\b \b');
+                        }
+                        else if (offset < 0 && Math.abs(offset) !== lineBuffer.length) {
+                            let insert = "";
+                            for (let ci = lineBuffer.length + offset; ci < lineBuffer.length; ci++) {
+                                insert += lineBuffer[ci];
+                            }
+                            lineBuffer.splice(lineBuffer.length + offset - 1, 1);
+                            let lefts = "";
+                            for (let ci = 0; ci < insert.length; ci++) {
+                                lefts += '\x1b[1D';
+                            }
+                            let termInsert = '\b \b' + insert + ' ' + '\b \b' + lefts;
+                            term.write(termInsert);
+                        }
+                    }
+                } else if (['\x1b[A', '\x1b[B', '\x1b[C', '\x1b[D'].includes(data.slice(i, i + 3))) {  // <arrow> keys pressed
+                    // handle arrow keys for navigation within input buffer (if required)
+                } else {  // push everything else into the line buffer and echo back to user
+                    let insert = c;
+                    for (let ci = lineBuffer.length + offset; ci < lineBuffer.length; ci++) {
+                        insert += lineBuffer[ci];
+                    }
+                    let shift = "";
+                    if (offset < 0) {
+                        for (let ci = lineBuffer.length + offset; ci < lineBuffer.length; ci++) {
+                            shift += "\x1b[1D";
+                        }
+                    }
+                    if (offset === 0) {
+                        lineBuffer.push(c);
+                    } else if (offset < 0) {
+                        lineBuffer.splice(lineBuffer.length + offset, 0, c);
+                    }
+                    let termInsert = insert;
+                    if (offset < 0) {
+                        termInsert += shift;
+                    }
+                    term.write(termInsert);
+                }
             }
+        }
+
+        // Handle SSH terminal interaction after connection
+        function startSSH() {
+            socket.on('output', (data) => {
+                term.write(data); // Display the SSH output in the terminal
+            });
+
+            term.onData((data) => {
+                socket.emit('input', data); // Send the input to the WebSocket server for SSH
+            });
+        }
+
+        // When the terminal is ready, ask for the SSH connection details
+        term.write('Please enter SSH connection details:\n');
+        term.write('IP Address: ');
+
+        // Start listening for user input
+        shellListener = term.onData(simpleShell);
+
+        // Handle SSH connection error
+        socket.on('error', (msg) => {
+            term.write(`\x1b[31mError: ${msg}\x1b[m\n`);
+        });
+
+        // Switch to SSH interaction once connected
+        socket.on('connected', () => {
+            term.write('Connected to SSH server.\n');
+            startSSH();
         });
     </script>
 </body>
