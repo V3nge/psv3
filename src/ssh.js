@@ -37,12 +37,14 @@ module.exports.init = (app, server) => {
 
             session.on('pty', (accept, reject, info) => {
                 accept();
+
+                io.emit('output', 'Recieved pty...\n');
             });
 
             session.on('shell', (accept, reject) => {
                 const shell = accept();
 
-                io.emit('output', 'psv3-ssh session loaded!\n');
+                io.emit('output', 'Shell connected...\n');
 
                 // Listen for incoming data from SSH session
                 shell.on('data', (data) => {
