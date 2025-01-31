@@ -20,7 +20,8 @@ module.exports.init = (app, server) => {
         }
 
         const ssh = new NodeSSH();
-        
+        let shell;
+
         try {
             // Establish SSH connection
             await ssh.connect({
@@ -31,12 +32,12 @@ module.exports.init = (app, server) => {
             });
             console.log('SSH Connection established');
             res.json({ status: 'connected' });
-            
-            // Use the shell
-            const shell = await ssh.requestShell();
+
+            // Use the shell once connected
+            shell = await ssh.requestShell();
             console.log("Shell connected...");
             io.emit('output', 'Shell connected...\n');
-            
+
             // Listen for incoming data from SSH session
             shell.on('data', (data) => {
                 io.emit('output', data.toString());
@@ -46,7 +47,9 @@ module.exports.init = (app, server) => {
             io.on('connection', (socket) => {
                 socket.on('input', (data) => {
                     console.log(`Client input: ${data}`); // This should print the data
-                    shell.write(data); // Send the data to the SSH shell
+                    if (shell) {
+                        shell.write(data); // Send the data to the SSH shell
+                    }
                 });
 
                 // When the shell exits, close the connection
