@@ -32,45 +32,52 @@
 <div id="terminal-container"></div>
 
 <script>
+    // Connect to the WebSocket server
     const socket = io('https://project-sentinel.xyz:7764/');
     const term = new Terminal();
     const container = document.getElementById('terminal-container');
     term.open(container);
 
+    // Function that gets called when the "Connect" button is clicked
     function connectToSSH() {
         const ip = document.getElementById('ip').value;
-        const port = document.getElementById('port').value || 22;
+        const port = document.getElementById('port').value || 22; // Default port 22
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
+        // Validate input fields
         if (!ip || !username || !password) {
             alert('Please provide the IP, username, and password.');
             return;
         }
 
-        // Send connection request to the server via WebSocket
+        // Emit the SSH connection request to the server via WebSocket
         socket.emit('ssh/connect', {
             ip,
             port,
             username,
-            password,
+            password
         });
     }
 
+    // Listen for 'output' from the server and display it in the terminal
     socket.on('output', (data) => {
         term.write(data);
     });
 
+    // Listen for 'error' from the server and display it as an alert
     socket.on('error', (message) => {
         alert(`Error: ${message}`);
     });
 
+    // Send user input from the terminal to the server
     term.onData(data => {
         socket.emit('input', data);
     });
 
+    // Handle WebSocket connection status
     socket.on('connect', () => {
-        console.log('Connected to the WebSocket server');
+        console.log('Connected to WebSocket server');
     });
 
     socket.on('disconnect', () => {
