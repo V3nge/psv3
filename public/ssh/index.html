@@ -65,6 +65,9 @@
     <button id="connect-btn" onclick="connectToSSH()">Connect</button>
 </div>
 
+<input type="text" id="rows" placeholder="rows" />
+<input type="password" id="cols" placeholder="cols" />
+<button onclick="configureSize()"></button>
 <button id="fullscreen-btn" onclick="toggleFullscreen()">Toggle Fullscreen</button>
 
 <div id="terminal-container"></div>
@@ -72,7 +75,7 @@
 <script>
     // Connect to the WebSocket server
     const socket = io('https://www.project-sentinel.xyz:7764/');
-    const term = new Terminal({
+    var term = new Terminal({
         cursorBlink: true,
         theme: {
             background: '#000000', // Black background
