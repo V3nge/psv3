@@ -4,6 +4,8 @@ const socketIo = require('socket.io');
 module.exports.init = (app, server) => {
     const io = socketIo(server);
 
+    app.use(express.json());
+
     app.post('/ssh/connect', (req, res) => {
         if (!req.body) {
             return res.status(400).json({ error: 'Request body is missing' });
