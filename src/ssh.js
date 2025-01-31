@@ -34,23 +34,26 @@ module.exports.init = (app, server) => {
             
             // Use the shell
             const shell = await ssh.requestShell();
-            io.emit('output', 'Welcome to the psv3 shell!\n');
+            console.log("Shell connected...");
+            io.emit('output', 'Shell connected...\n');
             
             // Listen for incoming data from SSH session
             shell.on('data', (data) => {
                 io.emit('output', data.toString());
             });
 
-            // Handling client input (to send to the SSH shell)
-            io.on('input', (data) => {
-                console.log(`Client input: ${data}`);
-                shell.write(data);
-            });
+            // Handle input from the client
+            io.on('connection', (socket) => {
+                socket.on('input', (data) => {
+                    console.log(`Client input: ${data}`); // This should print the data
+                    shell.write(data); // Send the data to the SSH shell
+                });
 
-            // When the shell exits, close the connection
-            shell.on('exit', () => {
-                console.log('Shell exited');
-                ssh.dispose();
+                // When the shell exits, close the connection
+                shell.on('exit', () => {
+                    console.log('Shell exited');
+                    ssh.dispose();
+                });
             });
         } catch (err) {
             console.error('SSH connection error:', err);
