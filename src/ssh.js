@@ -4,7 +4,6 @@ const express = require('express');
 
 module.exports.init = (app, server) => {
     const io = socketIo(server);
-
     app.use(express.json());
 
     app.post('/ssh/connect', (req, res) => {
@@ -12,16 +11,14 @@ module.exports.init = (app, server) => {
             return res.status(400).json({ error: 'Request body is missing' });
         }
 
-        const ip = req.body.ip;
-        const port = req.body.port;
-        const username = req.body.username;
-        const password = req.body.password;
+        const { ip, port, username, password } = req.body;
 
         if (!ip || !port || !username || !password) {
             return res.status(400).json({ error: 'Missing required fields: ip, port, username, or password' });
         }
 
         const conn = new Client();
+        
         conn.on('ready', () => {
             console.log('SSH Connection established');
             res.json({ status: 'connected' });
@@ -37,20 +34,26 @@ module.exports.init = (app, server) => {
 
         conn.on('session', (accept, reject) => {
             const session = accept();
+
             session.on('pty', (accept, reject, info) => {
                 accept();
             });
 
             session.on('shell', (accept, reject) => {
                 const shell = accept();
+
+                // Listen for incoming data from SSH session
                 shell.on('data', (data) => {
+                    // Emit the terminal output to all connected clients
                     io.emit('output', data.toString());
                 });
 
+                // Handling client input (to send to the SSH shell)
                 io.on('input', (data) => {
                     shell.write(data);
                 });
 
+                // When the shell exits, close the connection
                 shell.on('exit', () => {
                     conn.end();
                 });
