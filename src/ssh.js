@@ -8,6 +8,26 @@ module.exports.init = (app, server) => {
     });
     app.use(express.json());
 
+    // Handle incoming WebSocket connections
+    io.on('connection', (socket) => {
+        console.log('Client connected via WebSocket');
+
+        socket.on('input', (data) => {
+            console.log(`Received input from client: ${data}`);
+            if (shell) {
+                console.log('Sending input to SSH shell');
+                shell.write(data); // Send the input to the SSH shell
+            } else {
+                console.log('Shell not ready yet');
+            }
+        });
+
+        // When the client disconnects
+        socket.on('disconnect', () => {
+            console.log('Client disconnected');
+        });
+    });
+
     app.post('/ssh/connect', async (req, res) => {
         if (!req.body) {
             return res.status(400).json({ error: 'Request body is missing' });
@@ -33,7 +53,7 @@ module.exports.init = (app, server) => {
             console.log('SSH Connection established');
             res.json({ status: 'connected' });
 
-            // Use the shell once connected
+            // Create a shell session
             shell = await ssh.requestShell();
             console.log("Shell connected...");
             io.emit('output', 'Shell connected...\n');
@@ -43,21 +63,12 @@ module.exports.init = (app, server) => {
                 io.emit('output', data.toString());
             });
 
-            // Handle input from the client
-            io.on('connection', (socket) => {
-                socket.on('input', (data) => {
-                    console.log(`Client input: ${data}`); // This should print the data
-                    if (shell) {
-                        shell.write(data); // Send the data to the SSH shell
-                    }
-                });
-
-                // When the shell exits, close the connection
-                shell.on('exit', () => {
-                    console.log('Shell exited');
-                    ssh.dispose();
-                });
+            // When the shell exits, close the connection
+            shell.on('exit', () => {
+                console.log('Shell exited');
+                ssh.dispose();
             });
+
         } catch (err) {
             console.error('SSH connection error:', err);
             res.status(500).send('Failed to connect');
