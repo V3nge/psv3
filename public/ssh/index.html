@@ -80,8 +80,13 @@
         // Connect to the WebSocket server
         const socket = io('https://www.project-sentinel.xyz:7764/');
 
+        var term = 3;
         function createTerminal(r, c) {
-            return new Terminal({
+            if(term != 3) {
+                document.getElementById("terminal-container").innerHTML = '';
+            }
+            
+            var nt =  new Terminal({
                 cursorBlink: true,
                 theme: {
                     background: '#000000', // Black background
@@ -92,6 +97,10 @@
                 rows: parseInt(r), // Set the terminal height to a specific number of rows
                 cols: parseInt(c), // Set the terminal width to a specific number of columns
             });
+            
+            nt.open(container);
+
+            return nt;
         }
 
         var term = createTerminal(30, 120);
