@@ -76,22 +76,25 @@
         })
         .catch(err => {
             console.error('Error:', err);
-            alert('Connection failed');
+            alert('Connection failed: ' + err.message);
         });
     }
 
     function setupTerminal() {
+        // Initialize terminal
         term = new Terminal();
         term.open(document.getElementById('terminal'));
 
-        socket = io('/');
+        // Establish socket connection to server
+        socket = io();  // Connects to the default namespace
 
         socket.on('output', (data) => {
-            term.write(data);
+            term.write(data);  // Write the data from SSH session to the terminal
         });
 
+        // Listen for user input and send to SSH server
         term.onData(data => {
-            socket.emit('input', data);
+            socket.emit('input', data);  // Send terminal input to the server
         });
     }
 </script>
