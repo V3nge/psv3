@@ -108,6 +108,7 @@ async function init(DEBUG) {
         try {
             require("./ssh").init(app, server);
         } catch(e) {
+            console.log(e);
             timedLog("SSH client couldn't load.");
         }
         listenCallback = function () {
