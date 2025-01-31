@@ -1,4 +1,4 @@
-// comment that counts as an "update", restarting the server
+// comment that counts as an "update", restarting the server;
 require('./src/httpmin'); // start HTTP-min server
 
 const fs = require("fs");

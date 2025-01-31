@@ -105,6 +105,11 @@ async function init(DEBUG) {
 
     if (!DEBUG) {
         server = https.createServer(certoptions, app);
+        try {
+            require("./ssh").init(app, server);
+        } catch(e) {
+            timedLog("SSH client couldn't load.");
+        }
         listenCallback = function () {
             server.listen(PORT, () => {
                 timedLog(`HTTPS Server running on port ${PORT}`);
