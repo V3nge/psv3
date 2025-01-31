@@ -60,7 +60,7 @@
             return;
         }
 
-        fetch('http://localhost:3000/connect', {
+        fetch('/ssh/connect', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +84,7 @@
         term = new Terminal();
         term.open(document.getElementById('terminal'));
 
-        socket = io('http://localhost:3000');
+        socket = io('/');
 
         socket.on('output', (data) => {
             term.write(data);
