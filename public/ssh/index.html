@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.js"></script>
     <style>
         /* Ensure the body and HTML take up full height */
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -25,7 +27,8 @@
         }
 
         /* Inputs and button inside the form are styled */
-        #connect-form input, #connect-form button {
+        #connect-form input,
+        #connect-form button {
             margin: 5px;
             padding: 10px;
             font-size: 14px;
@@ -55,102 +58,113 @@
         }
     </style>
 </head>
+
 <body>
 
-<div id="connect-form">
-    <input type="text" id="ip" placeholder="IP Address" />
-    <input type="text" id="port" placeholder="Port (default: 22)" />
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="connect-btn" onclick="connectToSSH()">Connect</button>
-</div>
+    <div id="connect-form">
+        <input type="text" id="ip" placeholder="IP Address" />
+        <input type="text" id="port" placeholder="Port (default: 22)" />
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button id="connect-btn" onclick="connectToSSH()">Connect</button>
+    </div>
 
-<input type="text" id="rows" placeholder="rows" />
-<input type="text" id="cols" placeholder="cols" />
-<button onclick="configureSize()">Set Terminal Config</button>
-<button id="fullscreen-btn" onclick="toggleFullscreen()">Toggle Fullscreen</button>
+    <input type="text" id="rows" placeholder="rows" />
+    <input type="text" id="cols" placeholder="cols" />
+    <button onclick="configureSize()">Set Terminal Config</button>
+    <button id="fullscreen-btn" onclick="toggleFullscreen()">Toggle Fullscreen</button>
 
-<div id="terminal-container"></div>
+    <div id="terminal-container"></div>
 
-<script>
-    // Connect to the WebSocket server
-    const socket = io('https://www.project-sentinel.xyz:7764/');
-    var term = new Terminal({
-        cursorBlink: true,
-        theme: {
-            background: '#000000', // Black background
-            foreground: '#ffffff', // White text
-            cursor: '#ffffff', // White cursor
-            selectionBackground: '#555555', // Selection color
-        },
-        rows: 30, // Set the terminal height to a specific number of rows
-        cols: 120, // Set the terminal width to a specific number of columns
-    });
+    <script>
+        // Connect to the WebSocket server
+        const socket = io('https://www.project-sentinel.xyz:7764/');
 
-    const container = document.getElementById('terminal-container');
-    term.open(container);
-
-    // Function that gets called when the "Connect" button is clicked
-    function connectToSSH() {
-        const ip = document.getElementById('ip').value;
-        const port = document.getElementById('port').value || 22; // Default port 22
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        // Validate input fields
-        if (!ip || !username || !password) {
-            alert('Please provide the IP, username, and password.');
-            return;
+        function createTerminal(r, c) {
+            return new Terminal({
+                cursorBlink: true,
+                theme: {
+                    background: '#000000', // Black background
+                    foreground: '#ffffff', // White text
+                    cursor: '#ffffff', // White cursor
+                    selectionBackground: '#555555', // Selection color
+                },
+                rows: parseInt(r), // Set the terminal height to a specific number of rows
+                cols: parseInt(c), // Set the terminal width to a specific number of columns
+            });
         }
 
-        // Emit the SSH connection request to the server via WebSocket
-        socket.emit('ssh/connect', {
-            ip,
-            port,
-            username,
-            password
+        var term = createTerminal(30, 120);
+
+        const container = document.getElementById('terminal-container');
+        term.open(container);
+
+        // Function that gets called when the "Connect" button is clicked
+        function connectToSSH() {
+            const ip = document.getElementById('ip').value;
+            const port = document.getElementById('port').value || 22; // Default port 22
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Validate input fields
+            if (!ip || !username || !password) {
+                alert('Please provide the IP, username, and password.');
+                return;
+            }
+
+            // Emit the SSH connection request to the server via WebSocket
+            socket.emit('ssh/connect', {
+                ip,
+                port,
+                username,
+                password
+            });
+
+            document.getElementById("connect-form").remove();
+            document.getElementById("terminal-container").style.height = "100%";
+        }
+
+        function configureSize() {
+            term = createTerminal(document.getElementById("rows").value, document.getElementById("cols").value);
+        }
+
+        // Listen for 'output' from the server and display it in the terminal
+        socket.on('output', (data) => {
+            term.write(data);
         });
 
-        document.getElementById("connect-form").remove();
-        document.getElementById("terminal-container").style.height = "100%";
-    }
+        // Listen for 'error' from the server and display it as an alert
+        socket.on('error', (message) => {
+            alert(`Error: ${message}`);
+        });
 
-    // Listen for 'output' from the server and display it in the terminal
-    socket.on('output', (data) => {
-        term.write(data);
-    });
+        // Send user input from the terminal to the server
+        term.onData(data => {
+            socket.emit('input', data);
+        });
 
-    // Listen for 'error' from the server and display it as an alert
-    socket.on('error', (message) => {
-        alert(`Error: ${message}`);
-    });
+        // Handle WebSocket connection status
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
 
-    // Send user input from the terminal to the server
-    term.onData(data => {
-        socket.emit('input', data);
-    });
+        socket.on('disconnect', () => {
+            console.log('Disconnected from WebSocket server');
+        });
 
-    // Handle WebSocket connection status
-    socket.on('connect', () => {
-        console.log('Connected to WebSocket server');
-    });
-
-    socket.on('disconnect', () => {
-        console.log('Disconnected from WebSocket server');
-    });
-
-    // Toggle fullscreen mode for the terminal
-    function toggleFullscreen() {
-        const terminalContainer = document.getElementById('terminal-container');
-        if (!document.fullscreenElement) {
-            terminalContainer.requestFullscreen().catch((err) => {
-                alert(`Error attempting to enable fullscreen mode: ${err.message}`);
-            });
-        } else {
-            document.exitFullscreen();
+        // Toggle fullscreen mode for the terminal
+        function toggleFullscreen() {
+            const terminalContainer = document.getElementById('terminal-container');
+            if (!document.fullscreenElement) {
+                terminalContainer.requestFullscreen().catch((err) => {
+                    alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
