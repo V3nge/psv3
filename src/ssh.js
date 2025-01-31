@@ -10,24 +10,24 @@ module.exports.init = (app, server) => {
 
     // Handle incoming WebSocket connections
     io.on('connection', (socket) => {
-        console.log('Client connected via WebSocket');
+        // console.log('Client connected via WebSocket');
 
         let ssh = null;     // SSH session specific to this socket (client)
         let shell = null;   // Shell specific to this socket (client)
 
         socket.on('input', (data) => {
-            console.log(`Received input from client: ${data}`);
+            // console.log(`Received input from client: ${data}`);
             if (shell) {
-                console.log('Sending input to SSH shell');
+                // console.log('Sending input to SSH shell');
                 shell.write(data); // Send the input to this client's SSH shell
             } else {
-                console.log('Shell not ready yet');
+                // console.log('Shell not ready yet');
             }
         });
 
         // When the client disconnects
         socket.on('disconnect', () => {
-            console.log('Client disconnected');
+            // console.log('Client disconnected');
             // Cleanup SSH session when the client disconnects
             if (shell) {
                 shell.exit();
@@ -55,11 +55,11 @@ module.exports.init = (app, server) => {
                     password: password,
                     port: port || 22,
                 });
-                console.log(`SSH Connection established for client`);
+                // console.log(`SSH Connection established for client`);
 
                 // Create a new shell session for this client
                 shell = await ssh.requestShell();
-                console.log("Shell connected for client...");
+                // console.log("Shell connected for client...");
                 socket.emit('output', 'Shell connected...\n');
 
                 // Listen for incoming data from SSH session and send to this client only
@@ -69,7 +69,7 @@ module.exports.init = (app, server) => {
 
                 // When the shell exits, clean up the session
                 shell.on('exit', () => {
-                    console.log('Shell exited for client');
+                    // console.log('Shell exited for client');
                     ssh.dispose();
                     ssh = null;
                     shell = null;
