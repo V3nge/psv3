@@ -26,7 +26,7 @@
     <input type="text" id="port" placeholder="Port (default: 22)" />
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
-    <button id="connect-btn">Connect</button>
+    <button id="connect-btn" onclick="connectToSSH()">Connect</button>
 </div>
 
 <div id="terminal-container"></div>
@@ -37,7 +37,7 @@
     const container = document.getElementById('terminal-container');
     term.open(container);
 
-    document.getElementById('connect-btn').addEventListener('click', () => {
+    function connectToSSH() {
         const ip = document.getElementById('ip').value;
         const port = document.getElementById('port').value || 22;
         const username = document.getElementById('username').value;
@@ -55,7 +55,7 @@
             username,
             password,
         });
-    });
+    }
 
     socket.on('output', (data) => {
         term.write(data);
