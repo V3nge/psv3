@@ -78,6 +78,11 @@
     // Handle WebSocket connection status
     socket.on('connect', () => {
         console.log('Connected to WebSocket server');
+        container.style.position = "absolute";
+        container.style.top = "0px";
+        container.style.left = "0px";
+        container.style.width = "100%";
+        container.style.height = "100%";
     });
 
     socket.on('disconnect', () => {
