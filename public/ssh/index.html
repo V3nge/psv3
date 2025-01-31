@@ -102,6 +102,7 @@
                 return;
             }
 
+            // Send SSH connection details to the server
             fetch('/ssh/connect', {
                 method: 'POST',
                 headers: {
@@ -133,8 +134,8 @@
             term.open(document.getElementById('terminal'));
             document.getElementById('terminal').style.display = 'block';  // Show terminal
 
-            // Establish socket connection to server
-            socket = io();  // Connects to the default namespace
+            // Establish socket connection to the server
+            socket = io();  // Connect to the default namespace
 
             socket.on('output', (data) => {
                 term.write(data);  // Write the data from SSH session to the terminal
