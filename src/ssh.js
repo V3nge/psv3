@@ -35,6 +35,8 @@ module.exports.init = (app, server) => {
         conn.on('session', (accept, reject) => {
             const session = accept();
         
+            console.log("Session...");
+
             session.on('pty', (accept, reject, info) => {
                 accept();
                 console.log("Received pty...");
