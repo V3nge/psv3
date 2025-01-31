@@ -1,5 +1,6 @@
 const { Client } = require('ssh2');
 const socketIo = require('socket.io');
+const express = require('express');
 
 module.exports.init = (app, server) => {
     const io = socketIo(server);
