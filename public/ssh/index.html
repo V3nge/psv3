@@ -82,11 +82,11 @@
 
         var term = 3;
         function createTerminal(r, c) {
-            if(term != 3) {
+            if (term != 3) {
                 document.getElementById("terminal-container").innerHTML = '';
             }
 
-            var nt =  new Terminal({
+            var nt = new Terminal({
                 cursorBlink: true,
                 theme: {
                     background: '#000000', // Black background
@@ -97,8 +97,12 @@
                 rows: parseInt(r), // Set the terminal height to a specific number of rows
                 cols: parseInt(c), // Set the terminal width to a specific number of columns
             });
-            
+
             nt.open(document.getElementById('terminal-container'));
+
+            term.onData(data => {
+                socket.emit('input', data);
+            });
 
             return nt;
         }
