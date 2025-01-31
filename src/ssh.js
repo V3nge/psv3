@@ -45,6 +45,7 @@ module.exports.init = (app, server) => {
                 // Listen for incoming data from SSH session
                 shell.on('data', (data) => {
                     // Emit the terminal output to all connected clients
+                    console.log(`3:${data}`);
                     io.emit('output', data.toString());
                 });
 
