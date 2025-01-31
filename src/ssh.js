@@ -34,33 +34,32 @@ module.exports.init = (app, server) => {
 
         conn.on('session', (accept, reject) => {
             const session = accept();
-
+        
             session.on('pty', (accept, reject, info) => {
                 accept();
-
-                io.emit('output', 'Recieved pty...\n');
+                io.emit('output', 'Received pty...\n');
             });
-
+        
             session.on('shell', (accept, reject) => {
                 const shell = accept();
-
+        
                 io.emit('output', 'Shell connected...\n');
-
+        
                 // Listen for incoming data from SSH session
                 shell.on('data', (data) => {
                     // Emit the terminal output to all connected clients
-                    console.log(`3:${data}`);
                     io.emit('output', data.toString());
                 });
-
+        
                 // Handling client input (to send to the SSH shell)
                 io.on('input', (data) => {
-                    console.log(`4:${data}`);
+                    console.log(`Client input: ${data}`);
                     shell.write(data);
                 });
-
+        
                 // When the shell exits, close the connection
                 shell.on('exit', () => {
+                    console.log('Shell exited');
                     conn.end();
                 });
             });
