@@ -37,12 +37,14 @@ module.exports.init = (app, server) => {
         
             session.on('pty', (accept, reject, info) => {
                 accept();
+                console.log("Received pty...");
                 io.emit('output', 'Received pty...\n');
             });
         
             session.on('shell', (accept, reject) => {
                 const shell = accept();
         
+                console.log("Shell connected...");
                 io.emit('output', 'Shell connected...\n');
         
                 // Listen for incoming data from SSH session
