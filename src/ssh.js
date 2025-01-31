@@ -51,6 +51,7 @@ module.exports.init = (app, server) => {
 
                 // Handling client input (to send to the SSH shell)
                 io.on('input', (data) => {
+                    console.log(`4:${data}`);
                     shell.write(data);
                 });
 
