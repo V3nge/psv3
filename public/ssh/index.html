@@ -78,7 +78,7 @@
 
     <script>
         // Connect to the WebSocket server
-        const socket = io('https://www.project-sentinel.xyz:7764/');
+        var socket = io('https://www.project-sentinel.xyz:7764/');
 
         var term = 3;
         function createTerminal(r, c) {
@@ -100,7 +100,7 @@
 
             nt.open(document.getElementById('terminal-container'));
 
-            term.onData(data => {
+            nt.onData(data => {
                 socket.emit('input', data);
             });
 
@@ -146,11 +146,6 @@
         // Listen for 'error' from the server and display it as an alert
         socket.on('error', (message) => {
             alert(`Error: ${message}`);
-        });
-
-        // Send user input from the terminal to the server
-        term.onData(data => {
-            socket.emit('input', data);
         });
 
         // Handle WebSocket connection status
