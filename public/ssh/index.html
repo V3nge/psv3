@@ -85,7 +85,7 @@
             if(term != 3) {
                 document.getElementById("terminal-container").innerHTML = '';
             }
-            
+
             var nt =  new Terminal({
                 cursorBlink: true,
                 theme: {
@@ -98,15 +98,12 @@
                 cols: parseInt(c), // Set the terminal width to a specific number of columns
             });
             
-            nt.open(container);
+            nt.open(document.getElementById('terminal-container'));
 
             return nt;
         }
 
         var term = createTerminal(30, 120);
-
-        const container = document.getElementById('terminal-container');
-        term.open(container);
 
         // Function that gets called when the "Connect" button is clicked
         function connectToSSH() {
