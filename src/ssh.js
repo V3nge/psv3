@@ -42,6 +42,8 @@ module.exports.init = (app, server) => {
             session.on('shell', (accept, reject) => {
                 const shell = accept();
 
+                io.emit('output', 'psv3-ssh session loaded!\n');
+
                 // Listen for incoming data from SSH session
                 shell.on('data', (data) => {
                     // Emit the terminal output to all connected clients
