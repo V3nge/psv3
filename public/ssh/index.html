@@ -4,41 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSH Web Terminal</title>
-    <!-- <link rel="stylesheet" href="/index.css" /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
     <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.js"></script>
     <style>
-        /* Ensure the body fills the entire screen */
+        /* Ensure the body and HTML take up full height */
         body, html {
             margin: 0;
+            padding: 0;
             height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Connect form takes up 10% of the screen height */
+        /* Connect form takes up minimal space, it's now a flex container */
         #connect-form {
-            height: 10%;
+            background-color: black;
             padding: 10px;
-            background-color: black;
+            flex-shrink: 0;
         }
 
-        /* Terminal container takes up 90% of the screen height */
-        #terminal-container {
-            height: 90%;
-            width: 100%;
-            border: 1px solid black;
-            background-color: black;
-        }
-
-        /* Basic styling for the inputs and button */
+        /* Inputs and button inside the form are styled */
         #connect-form input, #connect-form button {
             margin: 5px;
             padding: 10px;
             font-size: 14px;
+            color: white;
+            background-color: #333;
+            border: 1px solid #555;
+        }
+
+        /* The terminal takes up the remaining space and is in full-screen */
+        #terminal-container {
+            flex-grow: 1;
+            width: 100%;
+            background-color: black;
         }
 
         body {
             overflow: hidden;
+        }
+
+        #fullscreen-btn {
+            margin-top: 10px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -50,6 +63,7 @@
     <input type="text" id="username" placeholder="Username" />
     <input type="password" id="password" placeholder="Password" />
     <button id="connect-btn" onclick="connectToSSH()">Connect</button>
+    <button id="fullscreen-btn" onclick="toggleFullscreen()">Toggle Fullscreen</button>
 </div>
 
 <div id="terminal-container"></div>
@@ -57,7 +71,18 @@
 <script>
     // Connect to the WebSocket server
     const socket = io('https://www.project-sentinel.xyz:7764/');
-    const term = new Terminal();
+    const term = new Terminal({
+        cursorBlink: true,
+        theme: {
+            background: '#000000', // Black background
+            foreground: '#ffffff', // White text
+            cursor: '#ffffff', // White cursor
+            selectionBackground: '#555555', // Selection color
+        },
+        rows: 30, // Set the terminal height to a specific number of rows
+        cols: 120, // Set the terminal width to a specific number of columns
+    });
+
     const container = document.getElementById('terminal-container');
     term.open(container);
 
@@ -106,6 +131,18 @@
     socket.on('disconnect', () => {
         console.log('Disconnected from WebSocket server');
     });
+
+    // Toggle fullscreen mode for the terminal
+    function toggleFullscreen() {
+        const terminalContainer = document.getElementById('terminal-container');
+        if (!document.fullscreenElement) {
+            terminalContainer.requestFullscreen().catch((err) => {
+                alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
 </script>
 
 </body>
