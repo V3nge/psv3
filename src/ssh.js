@@ -8,6 +8,9 @@ module.exports.init = (app, server) => {
     });
     app.use(express.json());
 
+    let shell = null;  // Global variable to hold the shared shell session
+    let ssh = null;    // Global variable to hold the shared SSH session
+
     // Handle incoming WebSocket connections
     io.on('connection', (socket) => {
         console.log('Client connected via WebSocket');
@@ -39,11 +42,14 @@ module.exports.init = (app, server) => {
             return res.status(400).json({ error: 'Missing required fields: ip, port, username, or password' });
         }
 
-        const ssh = new NodeSSH();
         let shell;
+        if (ssh) {
+            return res.status(400).json({ error: 'SSH session already established' });
+        }
 
         try {
             // Establish SSH connection
+            ssh = new NodeSSH();
             await ssh.connect({
                 host: ip,
                 username: username,
@@ -53,20 +59,22 @@ module.exports.init = (app, server) => {
             console.log('SSH Connection established');
             res.json({ status: 'connected' });
 
-            // Create a shell session
+            // Create a shared shell session
             shell = await ssh.requestShell();
             console.log("Shell connected...");
             io.emit('output', 'Shell connected...\n');
 
-            // Listen for incoming data from SSH session
+            // Listen for incoming data from SSH session and broadcast to all clients
             shell.on('data', (data) => {
                 io.emit('output', data.toString());
             });
 
-            // When the shell exits, close the connection
+            // When the shell exits, dispose the SSH connection
             shell.on('exit', () => {
                 console.log('Shell exited');
                 ssh.dispose();
+                ssh = null;
+                shell = null;
             });
 
         } catch (err) {
