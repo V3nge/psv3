@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSH Web Terminal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io/client-dist/socket.io.js"></script>
+    <style>
+        /* Ensure the body and HTML take up full height */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Connect form takes up minimal space, it's now a flex container */
+        #connect-form {
+            background-color: black;
+            padding: 10px;
+            flex-shrink: 0;
+        }
+
+        /* Inputs and button inside the form are styled */
+        #connect-form input,
+        #connect-form button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 14px;
+            color: white;
+            background-color: #333;
+            border: 1px solid #555;
+        }
+
+        /* The terminal takes up the remaining space and is in full-screen */
+        #terminal-container {
+            flex-grow: 1;
+            width: 100%;
+            background-color: black;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        #fullscreen-btn {
+            margin-top: 10px;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="connect-form">
+        <input type="text" id="ip" placeholder="IP Address" />
+        <input type="text" id="port" placeholder="Port (default: 22)" />
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button id="connect-btn" onclick="connectToSSH()">Connect</button>
+    </div>
+
+    <input type="text" id="rows" placeholder="rows" />
+    <input type="text" id="cols" placeholder="cols" />
+    <button onclick="configureSize()">Set Terminal Config</button>
+    <button id="fullscreen-btn" onclick="toggleFullscreen()">Toggle Fullscreen</button>
+
+    <div id="terminal-container"></div>
+
+    <script>
+        // Connect to the WebSocket server
+        var socket = io('https://www.project-sentinel.xyz:7764/');
+
+        var term = 3;
+        function createTerminal(r, c) {
+            if (term != 3) {
+                document.getElementById("terminal-container").innerHTML = '';
+            }
+
+            var nt = new Terminal({
+                cursorBlink: true,
+                theme: {
+                    background: '#000000', // Black background
+                    foreground: '#ffffff', // White text
+                    cursor: '#ffffff', // White cursor
+                    selectionBackground: '#555555', // Selection color
+                },
+                rows: parseInt(r), // Set the terminal height to a specific number of rows
+                cols: parseInt(c), // Set the terminal width to a specific number of columns
+            });
+
+            nt.open(document.getElementById('terminal-container'));
+
+            nt.onData(data => {
+                socket.emit('input', data);
+            });
+
+            return nt;
+        }
+
+        var term = createTerminal(30, 120);
+
+        // Function that gets called when the "Connect" button is clicked
+        function connectToSSH() {
+            const ip = document.getElementById('ip').value;
+            const port = document.getElementById('port').value || 22; // Default port 22
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Validate input fields
+            if (!ip || !username || !password) {
+                alert('Please provide the IP, username, and password.');
+                return;
+            }
+
+            // Emit the SSH connection request to the server via WebSocket
+            socket.emit('ssh/connect', {
+                ip,
+                port,
+                username,
+                password
+            });
+
+            document.getElementById("connect-form").remove();
+            document.getElementById("terminal-container").style.height = "100%";
+        }
+
+        function configureSize() {
+            term = createTerminal(document.getElementById("rows").value, document.getElementById("cols").value);
+        }
+
+        // Listen for 'output' from the server and display it in the terminal
+        socket.on('output', (data) => {
+            term.write(data);
+        });
+
+        // Listen for 'error' from the server and display it as an alert
+        socket.on('error', (message) => {
+            alert(`Error: ${message}`);
+        });
+
+        // Handle WebSocket connection status
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from WebSocket server');
+        });
+
+        // Toggle fullscreen mode for the terminal
+        function toggleFullscreen() {
+            const terminalContainer = document.getElementById('terminal-container');
+            if (!document.fullscreenElement) {
+                terminalContainer.requestFullscreen().catch((err) => {
+                    alert(`Error attempting to enable fullscreen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+    </script>
+
+</body>
+
+</html>

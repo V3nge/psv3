@@ -1,7 +1,14 @@
 // var click = new Audio("sfx/click.mp3");
 // click.volume = 0.1;
 
-alert("It has come to our attention that a few people have been claiming to own this website. Unfortunately, they are liars. Some of you know who the actual owners are, congrats. The only way someone can prove they own the website is by changing the website for everyone. I only tell people I trust that I own this... I wouldn't just send out an email saying I made it... whoever emailed you it was lying. Keep in mind, I have nothing against this person, his intentions were good. Do not think less of them.");
+function showNotice() {
+    alert("It has come to our attention that a few people have been claiming to own this website. Unfortunately, they are liars. Some of you know who the actual owners are, congrats. The only way someone can prove they own the website is by changing the website for everyone. I only tell people I trust that I own this... I wouldn't just send out an email saying I made it... whoever emailed you it was lying. Keep in mind, I have nothing against this person, his intentions were good. Do not think less of them.");
+}
+
+if (localStorage.getItem("shownNotice") != "yep") {
+    showNotice();
+    localStorage.setItem("shownNotice", "yep");
+}
 
 var settingsList = document.getElementById("settingsList");
 var sfxTime = +Date.now();
@@ -10,6 +17,10 @@ var gameIframe = null;
 var backgroundDegrees = 0;
 var startTimestamp = +Date.now();
 var lastTimestamp = startTimestamp;
+
+function sentinelai() {
+    window.location.href = "/sentinel-ai/";
+}
 
 function animeGirl() {
     if ((+Date.now() - sfxTime) > 1000) {
@@ -29,7 +40,30 @@ function saveSettings(save) {
             console.log(settingElement.name, settingElement.checked);
             localStorage.setItem(`psv3_settings_${settingElement.name}`, settingElement.checked);
         } else {
-            console.log(`Unknown type: ${settingElement.type}, not saving this data.`);
+            console.log(`Unknown type: ${settingElement.type}, not saving this data. (${settingElement.name})`);
+        }
+    });
+}
+
+function loadSettings() {
+    var settingsElements = Array.prototype.slice.call(document.getElementsByClassName("settingsInput"));
+    const keys = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+        var name = localStorage.key(i);
+        if (name.startsWith("psv3_settings_")) {
+            keys.push(name);
+        }
+    }
+
+    settingsElements.forEach(settingElement => {
+        var settingName = `psv3_settings_${settingElement.name}`;
+        if (settingElement.type == "checkbox") {
+            if(keys.includes(settingName)) {
+                settingElement.checked = JSON.parse(localStorage.getItem(settingName));
+            }
+        } else {
+            console.log(`Unknown type: ${settingElement.type}, not loading this data. (${settingElement.name})`);
         }
     });
 }
@@ -44,30 +78,7 @@ function update() {
 }
 
 function getRandomSearch() {
-    var searches = [
-        "How to improve study habits",
-        "Tips for better time management as a student",
-        "How to stay motivated in school",
-        "How to get good grades without stress",
-        "How to improve focus while studying",
-        "Best ways to prepare for exams",
-        "How to manage school and extracurricular activities",
-        "How to develop effective note-taking skills",
-        "How to build self-discipline as a student",
-        "How to overcome procrastination in school",
-        "How to create a study schedule that works",
-        "How to improve reading comprehension",
-        "How to handle school stress and anxiety",
-        "How to become a faster learner",
-        "How to set academic goals effectively",
-        "How to deal with academic pressure",
-        "How to make the most of group study sessions",
-        "How to stay organized for school assignments",
-        "How to improve writing skills for essays and papers",
-        "How to ask for help when struggling in school"
-    ];
-    var randomIndex = Math.floor(Math.random() * searches.length);
-    return `https://www.google.com/search?q=${encodeURIComponent(searches[randomIndex])}`;
+    return `https://drive.google.com`;
 }
 
 function openBlank() {

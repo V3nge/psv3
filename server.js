@@ -1,229 +1,26 @@
-const DEBUG = false;
-const ADJECTIVES = [
-  "Sticky",
-  "Bouncy",
-  "Slimy",
-  "Fizzy",
-  "Fluffy",
-  "Wobbly",
-  "Puffy",
-  "Zesty",
-  "Oozy",
-  "Frothy",
-  "Spiky",
-  "Greasy",
-  "Chewy",
-  "Shiny",
-  "Lumpy",
-  "Mushy",
-  "Gritty",
-  "Fuzzy",
-  "Rusty",
-  "Quirky",
-  "Tacky",
-  "Drippy",
-  "Frosty",
-  "Slick",
-  "Grimy",
-  "Blobby",
-  "Waxy",
-  "Slippery",
-  "Musty",
-  "Swirly",
-  "Wonky",
-  "Frizzy",
-  "Chunky",
-  "Cute",
-  "Hungry",
-  "Wet",
-  "Tiny",
-  "Big",
-  "Bright",
-  "Soft",
-  "Smooth",
-  "Warm",
-  "Cool",
-  "Colorful",
-  "Light",
-  "Heavy",
-  "Gentle",
-  "Happy",
-  "Quick",
-  "Quiet",
-];
+// comment that counts as an "update", restarting the server;
+require('./src/httpmin'); // start HTTP-min server
 
-const NOUNS = [
-  "Tissue",
-  "Toaster",
-  "Banana",
-  "Shoe",
-  "Cactus",
-  "Biscuit",
-  "Penguin",
-  "Balloon",
-  "Pillow",
-  "Toothbrush",
-  "Sock",
-  "Lamp",
-  "Pencil",
-  "Towel",
-  "Chair",
-  "Bottle",
-  "Cupcake",
-  "Turtle",
-  "Sandwich",
-  "Lollipop",
-  "Potato",
-  "Slipper",
-  "Hat",
-  "Book",
-  "Teapot",
-  "Key",
-  "Umbrella",
-  "Soap",
-  "Butterfly",
-  "Pumpkin",
-  "Donut",
-  "Crayon",
-  "Clock",
-  "Cloud",
-  "Dragon",
-  "Shovel",
-  "Robot",
-  "Bubble",
-  "Spider",
-  "Taco",
-  "Fish",
-  "Pizza",
-  "Bag",
-  "Panda",
-  "Cushion",
-  "Cat",
-  "Carrot",
-  "Owl",
-  "Rock",
-  "Flower",
-  "Tree",
-  "Bird",
-  "House",
-  "Garden",
-  "Star",
-  "River",
-  "Mountain",
-  "Boat",
-  "Dog",
-  "Beach",
-  "Shell",
-  "Fruit",
-  "Leaf",
-  "Window",
-  "Bridge",
-  "Train",
-  "Snowman",
-];
-
-const PING_TIMEOUT = 10000;
-const PORT = 7764;
-
-const crypto = require("crypto");
-const nocache = require("nocache");
-const express = require("express");
-const path = require("path");
 const fs = require("fs");
-const https = require('https');
-const expressRateLimit = require("express-rate-limit");
-const expressSlowDown = require("express-slow-down");
-const bodyParser = require('body-parser');
+
+var DEBUG = false;
+if (fs.existsSync('debug.txt')) {
+  DEBUG = true;
+}
+
+// wow thats a lot of libraries
+var { app, express, listenCallback, startUltraviolet } = await (require('./src/init').init(DEBUG));
+const { createCompletion } = require('./src/ai');
+const { affixSlash, timedError, timedLog } = require('./src/shared');
 const Fuse = require("fuse.js");
-const compression = require("compression");
-const axios = require("axios");
-const childProcess = require("child_process");
-const helmet = require('helmet');
-// const httpProxy = require('http-proxy');
-// const http = require('http');
+const path = require("path");
 
-const app = express();
-
-var server = null;
-var listenCallback = null; 
-
-if (!DEBUG) {
-  const certoptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem')
-  };
-
-  server = https.createServer(certoptions, app);
-  listenCallback = function() {
-    server.listen(PORT, () => {
-      console.log(`HTTPS Server running on port ${PORT}`);
-    });
-  }
-  //app.listen(PORT);
-} else {
-  listenCallback = function() {
-    console.log(`HTTP Server running on port ${PORT}`);
-    app.listen(PORT, '0.0.0.0');
-  }
-}
-
-if(server == null) {
-  console.log("No server passed into express-ws init.");
-  require("express-ws")(app);
-} else {
-  console.log("Express-ws with server init.");
-  require("express-ws")(app, server);
-}
-
-var accs = [];
-var accs_vanities = [];
-var websockets = [];
-var rooms = [];
-var lastSavedPathStats = +Date.now();
-var lastUpdatedIndex = 0;
-var indexHtml = ""
-var activeUsers = 0;
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 var constructedGamesListJSON = null;
-var blockedUIDs = [];
+var lastSavedPathStats = +Date.now();
+var lastUpdatedIndex = 0;
 var pathStats = {};
-
-const ultravioletPath = path.join(__dirname, "ultraviolet-app", "src", "index.js");
-
-function startUltraviolet() {
-  const now = new Date();
-  console.log(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
-
-  const ultravioletProcess = childProcess.spawn("node", [ultravioletPath], {
-    stdio: ['inherit', 'pipe', 'pipe'],
-  });
-
-  ultravioletProcess.stdout.on('data', (data) => {
-    const now = new Date();
-    console.log(`${now.toISOString()}: UV: ${data.toString().replaceAll("\n", "")}`);
-  });
-
-  ultravioletProcess.stderr.on('data', (data) => {
-    const now = new Date();
-    console.error(`${now.toISOString()}: UV: ${data.toString().replaceAll("\n", "")}`);
-  });
-
-  ultravioletProcess.on("error", (err) => {
-    console.error(`Failed to start app: ${err.message}`);
-  });
-
-  ultravioletProcess.on("SIGINT", () => {
-    console.log("\nSIGINT received. Shutting down...");
-    ultravioletProcess.kill("SIGINT");
-    process.exit(0);
-  });
-
-  ultravioletProcess.on("SIGTERM", () => {
-    console.log("\nSIGTERM received. Shutting down...");
-    ultravioletProcess.kill("SIGTERM");
-    process.exit(0);
-  });
-}
+var indexHtml = ""
 
 // var proxy = httpProxy.createProxyServer({});
 
@@ -236,29 +33,10 @@ function startUltraviolet() {
 try {
   const data = fs.readFileSync("path-stats.json");
   pathStats = JSON.parse(data);
-  const now = new Date();
-  console.log(`${now.toISOString()}: Success: Loaded path-stats.json`);
+  timedLog(`Success: Loaded path-stats.json`);
 } catch (err) {
-  const now = new Date();
-  console.error(`${now.toISOString()}: Error, file not found: path-stats.json`);
+  timedError(`Error, file not found: path-stats.json`);
 }
-
-app.use(compression());
-app.use(bodyParser.json());
-
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: { policy: 'require-corp' }, // Enforce COEP
-  })
-);
-
-// Allow frames from specific domains
-app.use((req, res, next) => {
-  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  res.setHeader('Content-Security-Policy', "frame-ancestors 'self' https://www.project-sentinel.xyz:7765/");
-  next();
-});
 
 const logDirectory = path.join(__dirname, 'error-logs');
 if (!fs.existsSync(logDirectory)) {
@@ -266,7 +44,7 @@ if (!fs.existsSync(logDirectory)) {
 }
 
 app.post('/error', (req, res) => {
-  console.log("no sigma3")
+  timedLog("no sigma3")
   const { message, source, lineno, colno, stack } = req.body;
   const ipAddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const timestamp = new Date().toISOString();
@@ -285,77 +63,6 @@ app.post('/error', (req, res) => {
 // const morgan = require('morgan');
 // app.use(helmet());
 // app.use(morgan('combined'));
-
-if (!DEBUG) {
-  const limiter = expressRateLimit({
-    windowMs: 60 * 1000,
-    max: 500,
-  });
-
-  const speedLimiter = expressSlowDown({
-    windowMs: 15 * 1000,
-    delayAfter: 125,
-    delayMs: () => 1500,
-  });
-
-  app.use(speedLimiter);
-  app.use(limiter);
-} else {
-  app.use(nocache());
-}
-
-var accumulatingMessages = "";
-var numberOfAccumulatedMessages = 0;
-function sendMessageToWebHook(message) {
-  if (!DEBUG) {
-    numberOfAccumulatedMessages++;
-    accumulatingMessages += `${message}\n`;
-
-    if (numberOfAccumulatedMessages > 10) {
-      numberOfAccumulatedMessages = 0;
-      const params = {
-        // username: "My Webhook Name",
-        // avatar_url: "",
-        content: accumulatingMessages,
-      };
-
-      axios
-        .post(
-          atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTMyODEzMTUwODQ5NzU1MTQwMS9NTmMzNlZ4VDBzRFFvQUN0b01UV1RSNm9pZU1HRHZ3ZHY2NkF3ZmVFZW5vSElyR2VkSlNGRXlORFdyUTg4aTJQUnM4MA=="),
-          params,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          console.log("Message sent successfully:", response.status);
-        })
-        .catch((error) => {
-          console.error("Error sending message:", error.message);
-        });
-      accumulatingMessages = "";
-    }
-  } else {
-    console.log("Not sending to discord webhook because DEBUG is set to true.");
-  }
-}
-
-function getCurrentTime() {
-  const now = new Date();
-
-  let hours = now.getHours();
-  const minutes = now.getMinutes();
-  const ampm = hours >= 12 ? "PM" : "AM";
-
-  hours = hours % 12;
-  hours = hours ? hours : 12;
-
-  const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-
-  return ` (${hours}:${formattedMinutes} ${ampm})`;
-}
 
 var constructedGamesListJSONTimestamp;
 function constructGamesListJSON() {
@@ -465,9 +172,6 @@ function loadAllGames(ToSearch = null) {
 function handleGamesServing(req, res, concatIndex) {
   res.setHeader("Content-Type", "text/html");
 
-  console.log(`START: /games/${req.query.game}/`);
-  updateCount(`/games/${req.query.game}/`, "starts");
-
   const safeUrl = path.normalize(req.originalUrl);
 
   var filePath;
@@ -478,27 +182,16 @@ function handleGamesServing(req, res, concatIndex) {
   }
 
   const ipAddress = req.ip;
-  const now = new Date();
 
-  console.log(
-    now.toISOString() + ":" + ipAddress + ": Serving file: " + filePath
-  );
+  timedLog(`${ipAddress}: Serving file: ${filePath}`);
 
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       if (err.code === "ENOENT") {
-        console.log(
-          now.toISOString() +
-          ":" +
-          ipAddress +
-          ": Error, file not found: " +
-          filePath
-        );
+        timedLog(`${ipAddress}: Error, file not found: ${filePath}`);
         res.sendStatus(404);
       } else {
-        console.log(
-          now.toISOString() + ":" + ipAddress + ": Error reading file: " + err
-        );
+        timedError(`${ipAddress}: Error reading file: ${err}`);
         res.sendStatus(500);
       }
       return;
@@ -509,20 +202,44 @@ function handleGamesServing(req, res, concatIndex) {
 }
 
 app.get("/games/:game/index.html", (req, res) => {
+  updateCount(req.path, "starts");
   handleGamesServing(req, res, false);
 });
 
 app.get("/games/:game/", (req, res) => {
+  updateCount(req.path, "starts");
   handleGamesServing(req, res, true);
 });
 
+function getCircularReplacer() {
+  const ancestors = [];
+  return function (key, value) {
+    if (typeof value !== "object" || value === null) {
+      return value;
+    }
+    // `this` is the object that value is contained in,
+    // i.e., its direct parent.
+    while (ancestors.length > 0 && ancestors.at(-1) !== this) {
+      ancestors.pop();
+    }
+    if (ancestors.includes(value)) {
+      return "[Circular]";
+    }
+    ancestors.push(value);
+    return value;
+  };
+}
+
+app.get("/dashboard/login", (req, res) => {
+  res.sendFile(path.join(__dirname, 'private', 'logindashboard.html'));
+});
+
+app.post("/api/dashboard/login", (req, res) => {
+  res.send(JSON.stringify({"success":true,"username":`${req.body['username']}`,"sentbody":req}, getCircularReplacer()));
+});
 
 function randomElement(list) {
   return list[Math.floor(Math.random() * list.length)];
-}
-
-function getRandomCombination() {
-  return `${randomElement(ADJECTIVES)}${randomElement(NOUNS)}`;
 }
 
 function updateCount(path, key) {
@@ -532,13 +249,12 @@ function updateCount(path, key) {
 
   pathStats[path][key]++;
 
-  if (+Date.now() - lastSavedPathStats > 60 * 1000) {
-    lastSavedPathStats = +Date.now();
+  if ((+Date.now()) - lastSavedPathStats > 60 * 1000) {
+    lastSavedPathStats = (+Date.now());
 
     try {
       fs.writeFileSync("path-stats.json", JSON.stringify(pathStats));
-      const now = new Date();
-      console.log(`${now.toISOString()}: Success: Saved path-stats.json`);
+      timedLog(`Success: Saved path-stats.json`);
     } catch (err) {
       console.error(err);
     }
@@ -546,37 +262,127 @@ function updateCount(path, key) {
 }
 
 function updateIndex() {
-  if (+Date.now() - lastUpdatedIndex > 60 * 1000) {
-    console.log(`${(new Date()).toISOString()}: Updating server rendered index.html`)
-    lastUpdatedIndex = +Date.now();
+  if ((+Date.now()) - lastUpdatedIndex > 60 * 1000) {
+    timedLog(`Updating server rendered index.html`);
+    lastUpdatedIndex = (+Date.now());
     const filePath = path.join(__dirname, 'private', 'index.html');
     const replacementInfo = loadAllGames();
 
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.error('Error reading index.html:', err);
+        timedError(`Error reading index.html: ${err}`);
         return;
       }
       indexHtml = data
         .replace("{recentlyAddedCarousel}", replacementInfo.recentlyAdded)
         .replace("{mostPlayCarousel}", replacementInfo.mostPlayed)
         .replace("{allGames}", replacementInfo.allGames);
-      // console.log('index.html updated.');
+      // timedLog('index.html updated.');
     });
   }
 }
 
 app.get("/stats", (req, res) => {
+  updateCount("/", "starts"); // because stats is loaded on /, this will be indicative of a full page load
   res.send(pathStats);
 });
 
-function affixSlash(path) {
-  path = path.trim();
-  if (path.endsWith("/")) {
-    return path;
+var aiUsages = {};
+var aiMessagesSent = {};
+app.get('/ai', async (req, res) => {
+  const messageText = req.query.t;
+
+  if (!messageText) {
+    return res.status(400).json({
+      success: false,
+      error: "Missing 't' query parameter."
+    });
   }
-  return `${path}/`;
-}
+
+  const uid = req.query.u;
+
+  if (!uid) {
+    return res.status(400).json({
+      success: false,
+      error: "Missing 'u' query parameter."
+    });
+  }
+
+  if (messageText.trim() == "" || messageText.length > 300) {
+    return res.status(400).json({
+      success: false,
+      error: "Invalid input.",
+      response: "Sorry, your input could not be processed."
+    });
+  }
+
+  if (aiUsages[uid] == undefined) {
+    aiUsages[uid] = 0;
+    aiMessagesSent[uid] = [
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Whenever someone asks a question, be as useless as possible." },
+    ];
+  }
+  // else {
+  //   if (((Math.random() * 100) > 70) && aiUsages[uid] > 2) {
+  //     // the first 2 messages are all good and dandy
+  //     return res.status(500).json({
+  //       success: false,
+  //       error: "Internal Error.",
+  //       response: "Sorry, your input could not be processed. Please try again in a second."
+  //     });
+  //   }
+  // }
+
+  aiUsages[uid]++;
+
+  if (aiUsages[uid] > 5) {
+    res.json({
+      success: true,
+      input: messageText,
+      response: "You've reached your max quota for the day. Sign up for Sentinel Ai premium to get more access and better responses. [Project Sentinel will likely increase the cap at some point.]"
+    });
+    return;
+  }
+
+  aiMessagesSent[uid].push({
+    role: "user",
+    content: messageText,
+  });
+
+  try {
+    var complete = (await createCompletion(aiMessagesSent[uid]));
+
+    if (complete.type == "insufficient_quota") {
+      res.json({
+        success: false,
+        input: messageText,
+        response: "Sorry, Sentinel Ai cannot be used at this time. (E:InsQua)"
+      });
+    }
+
+    // How the Ai responded
+    aiMessagesSent[uid].push({
+      role: "assistant",
+      content: complete.content.trim(),
+    });
+
+    res.json({
+      success: true,
+      input: messageText,
+      response: complete.content.trim()
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      input: messageText,
+      response: "Please try again."
+    });
+    aiMessagesSent[uid] = [
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Whenever someone asks a question, be as useless as possible." },
+    ];
+    console.error("Error with ChatGPT API:", error);
+  }
+});
 
 app.post("/r", (req, res) => {
   const path = affixSlash(req.query.u);
@@ -587,25 +393,18 @@ app.post("/r", (req, res) => {
   res.send();
 });
 
-async function sha256(message) {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return hashHex;
-}
-
-function createPrivateRoom(name) {
-  rooms.push(name);
-  return `${encodeURIComponent(name)}`;
-}
-
 app.get("/check_room", (req, res) => {
   res.setHeader("content-type", "application/json");
   res.send(rooms.includes(req.query.id));
 });
+
+var codesFound = [];
+app.get("/api/fndcof", (req, res) => {
+  res.setHeader("content-type", "application/json");
+  codesFound.push(req.query.c);
+  timedLog(codesFound);
+  res.send("true");
+})
 
 app.get("/search", (req, res) => {
   res.setHeader("content-type", "application/json");
@@ -633,231 +432,38 @@ app.get("/search", (req, res) => {
 app.use("/images", express.static("public/images/games/"));
 app.use("/game", express.static("public/games/game/"));
 
+// https://stackoverflow.com/questions/18112204/get-all-directories-within-directory-nodejs
+// this particular solution is sync
+const getDirectories = source =>
+  fs.readdirSync(source, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
+app.use("/lucky", function (req, res) {
+  var directories = getDirectories("public/games");
+  var randomDirectory = randomElement(directories);
+  res.send(`<script>window.location.href="/games/${randomDirectory}";</script>`)
+});
+
 app.get("/live-chat/active", (req, res) => {
   res.setHeader("content-type", "application/json");
   res.send(accs_vanities);
 });
 
-var uidFromIp = false;
-app.ws("/live-chat-ws", function (wss, req) {
-  let thisUser = {};
-
-  let messagesSent = 0;
-  let websocketOpened = +Date.now();
-
-  thisUser.connected = true;
-  thisUser.needsRemovalOnDisconnect = true;
-  thisUser.lastPingReturned = +Date.now();
-
-  thisUser.pingTimeout = setTimeout(function go() {
-    // Basically a set interval
-    if (!thisUser.connected) {
-      if (thisUser.needsRemovalOnDisconnect) {
-        removeUser(thisUser);
-      }
-      return; // Don't set the next timeout since they left (or disconnected unintentionally)
-    } else {
-      wss.send(JSON.stringify({ type: "ping" }));
-      if (+Date.now() - thisUser.lastPingReturned > PING_TIMEOUT + 5000) {
-        clearInterval(messagesLimitInterval);
-
-        console.log(
-          `${thisUser.name}'s last ping was more than 15 seconds ago, disconnecting and closing websocket.`
-        );
-        thisUser.connected = false;
-        thisUser.needsRemovalOnDisconnect = false;
-
-        removeUser(thisUser);
-        wss.close();
-      }
-    }
-    thisUser.pingTimeout = setTimeout(go, 5000);
-  }, 5000);
-
-  activeUsers++;
-
-  const removeUser = (user) => {
-    const index = accs.indexOf(user.name);
-    if (index !== -1) {
-      accs.splice(index, 1);
-      accs_vanities.splice(index, 1);
-      websockets.splice(index, 1);
-      console.log(`User removed: ${user.name}`);
-      var message = {
-        decodedMessage: `${user.vanity} has left the chat!`,
-      };
-      sendToChannel(user.channel, message, null);
-    } else {
-      console.log("User not found in users list!");
-    }
-  };
-
-  const sendToChannel = (channel, message, senderHash) => {
-    sendMessageToWebHook(
-      `${accs_vanities[accs.indexOf(message.sender)]}: ${message.decodedMessage
-      } ${getCurrentTime()}`
-    );
-    websockets.forEach((person) => {
-      if (person.channel === channel) {
-        person.socket.send(
-          JSON.stringify({
-            type: "gsend_r",
-            msg: encodeURIComponent(message.decodedMessage + getCurrentTime()),
-            sender: senderHash,
-            vanity: accs_vanities[accs.indexOf(message.sender)],
-          })
-        );
-      }
-    });
-  };
-
-  wss.on("close", async function (err) {
-    clearInterval(messagesLimitInterval);
-    activeUsers--;
-    removeUser(thisUser);
-    thisUser.connected = false;
+app.get('/games-a-tags', (req, res) => {
+  res.setHeader("content-type", "text/html");
+  var result = "";
+  constructedGamesListJSON.forEach(element => {
+    result += `<a href="/games/${element.slug}/">${element.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;`
   });
-
-  let messagesLimitInterval = setInterval(function() {
-    websocketOpened = (+Date.now());
-    messagesSent    = 0;
-  }, 1000);
-
-  wss.on("message", async function (msg) {
-    let timeOpen = ((+Date.now()) - websocketOpened) / 1000;
-    let amountPerSecond = (messagesSent / timeOpen);
-
-    console.log("MS", messagesSent, "TO", timeOpen, "APS", amountPerSecond);
-
-    if(amountPerSecond > 30) {
-        wss.close();
-        console.log(
-          `${thisUser.name} sent more than 10 messages a second through the websocket!!`
-        );
-        blockedUIDs.push(thisUser.name);
-        return;
-    } else {
-      messagesSent++;
-    }
-
-    const message = JSON.parse(msg);
-
-    const ipAddress = req.ip;
-    console.log(ipAddress);
-
-    const now = new Date();
-
-    // If they send anything back that means
-    // they are still connected...
-    thisUser.lastPingReturned = +Date.now();
-
-    switch (message.type) {
-      case "names":
-        wss.send(
-          JSON.stringify({
-            type: "nameslist",
-            value: JSON.stringify(accs_vanities),
-          })
-        );
-        break;
-
-      case "tempacc":
-        // I would do it by ip normally but everyone has the same ip...
-        if (blockedUIDs.includes(message.name) || message.name.length != 20) {
-          thisUser.connected = false;
-          thisUser.needsRemovalOnDisconnect = false;
-          wss.send(JSON.stringify({ type: "blocked" }));
-          return;
-        }
-
-        thisUser = message;
-        
-        if (uidFromIp) {
-          message.name = req.ip;
-          message.sender = req.ip;
-          thisUser.name = req.ip;
-        }
-
-        console.log("TEMPACC", thisUser.name);
-
-        thisUser.connected = true;
-        thisUser.needsRemovalOnDisconnect = true;
-        thisUser.lastPingReturned = +Date.now();
-
-        wss.send(JSON.stringify({ type: "ok_tempacc" }));
-
-        accs.push(message.name);
-        console.log(message);
-        console.log(message.vanity);
-        if (
-          message.vanity == null ||
-          message.vanity.trim() == "" ||
-          message.vanity.trim().length > 30
-        ) {
-          var randomCombinationThing = getRandomCombination();
-          console.log(randomCombinationThing);
-          message.vanity = randomCombinationThing;
-        }
-        accs_vanities.push(message.vanity.trim());
-
-        websockets.push({ socket: wss, channel: message.channel });
-        thisUser.websocket = { socket: wss, channel: message.channel };
-        break;
-
-      case "tempacc_gsend":
-        if (uidFromIp) {
-          message.name = req.ip;
-          message.sender = req.ip;
-          thisUser.name = req.ip;
-        }
-
-        if (accs.includes(message.sender)) {
-          const decodedMessage = decodeURIComponent(message.msg);
-          if (
-            decodedMessage.trim() === "" ||
-            decodedMessage.trim().length > 2001
-          ) {
-            wss.send(JSON.stringify({ type: "nuh uh" }));
-            break;
-          }
-          wss.send(JSON.stringify({ type: "ok" }));
-
-          message.decodedMessage = decodedMessage;
-
-          const senderHash = await sha256(message.sender);
-
-          console.log(message);
-          console.log(decodedMessage);
-
-          sendToChannel(message.channel, message, senderHash);
-        } else {
-          console.log(message.sender);
-          wss.send(JSON.stringify({ type: "nuh uh" }));
-        }
-        break;
-
-      case "newpri":
-        const senderHash = await sha256(message.sender);
-        wss.send(
-          JSON.stringify({
-            type: "pri",
-            msg: createPrivateRoom(message.code),
-            sender: senderHash,
-          })
-        );
-        break;
-      case "ping":
-        break;
-      default:
-        wss.send(JSON.stringify({ type: "unknowntype", value: message.type }));
-    }
-  });
+  res.send(result);
 });
+
+require("./src/live_chat_ws").setup(app);
 
 updateIndex();
 app.use("/", function (req, res, next) {
   if (req.url === "/") {
-    console.log("/ sent");
     updateIndex();
     res.send(indexHtml);
   } else {
@@ -869,5 +475,6 @@ startUltraviolet();
 
 app.use(express.static("public"));
 
-console.log("\nStarting server via listenCallback...");
+timedLog("Starting server via listenCallback...");
 listenCallback();
+

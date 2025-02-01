@@ -5,6 +5,7 @@
     "@titaniumnetwork-dev/ultraviolet": "^1.0.11",
     "axios": "^1.7.8",
     "compression": "^1.7.5",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "express-rate-limit": "^7.5.0",
     "express-slow-down": "^2.0.3",
@@ -12,9 +13,11 @@
     "fuse": "^0.12.1",
     "fuse.js": "^7.0.0",
     "helmet": "^8.0.0",
+    "is-elevated": "^4.0.0",
     "jsonminify": "^0.4.2",
     "morgan": "^1.10.0",
     "nocache": "^4.0.0",
-    "node-json-minify": "^3.0.0"
+    "node-json-minify": "^3.0.0",
+    "openai": "^4.80.1"
   }
 }

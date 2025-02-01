@@ -1,5 +1,52 @@
+function lucky() {
+    window.location.href = "/lucky";
+}
+
+function assurePreciseDecimal(dec) {
+    if(dec.includes(".")) {
+        return dec;
+    } else {
+        return `${dec}.0`;
+    }
+}
+
 function showBlocked() {
-    document.body.innerHTML = `<div class="centered"><h1 style="color:white;">Some suspicious activity has been detected from your device...</h1></div>`;
+    document.body.innerHTML = `
+    <div class="centered">
+        <h1 style="color:white;">Some suspicious activity has been detected from your device...</h1>
+    </div>
+    <div class="centered">
+        <p style="color:white;" id="allowed-to-chat">You will be allowed to chat again in ...</p>
+        <button onclick="lucky();">I'm Feeling Lucky :)</button>
+    </div>`;
+
+    var allowedToChat = document.getElementById("allowed-to-chat");
+    var blockedTime = localStorage.getItem("blocked_time");
+
+    if (blockedTime == null) {
+        allowedToChat.innerText = `You will be allowed to chat again in an undetermined amount of time.`;
+    } else {
+        // Parse quickly at beginning so that the user does not have to wait 100ms
+        // and see negative integer for time to wait!!!
+        var parsed = JSON.parse(blockedTime);
+
+        function resumeNormalOperation() {
+            localStorage.setItem("blocked", null);
+            localStorage.setItem("blocked_time", null);
+            clearInterval(interval);
+            window.location.reload();
+        }
+
+        var timeLeft = ((parsed.start + parsed.time) - (+Date.now()));
+        if(0 >= timeLeft) resumeNormalOperation();
+
+        var interval = setInterval(function() {
+            var timeLeft = ((parsed.start + parsed.time) - (+Date.now()));
+            var timeLeftInSeconds = (Math.round(timeLeft / 100) / 10).toString();
+            if(0 >= timeLeft) resumeNormalOperation();
+            allowedToChat.innerText = `You will be allowed to chat again in ${assurePreciseDecimal(timeLeftInSeconds)} seconds.`
+        }, 100);
+    }
 }
 
 if (localStorage.getItem("blocked") == "TRG2") {
@@ -191,6 +238,8 @@ if (localStorage.getItem("blocked") == "TRG2") {
         } else if (response.type == "blocked") {
             localStorage.setItem("blocked", "TRG2");
             showBlocked();
+        } else if (response.type == "block_time") {
+            localStorage.setItem("blocked_time", JSON.stringify(response));
         } else {
             //console.log(response);
         }
@@ -250,5 +299,9 @@ if (localStorage.getItem("blocked") == "TRG2") {
 
     function back() {
         window.location.href = "/"; // omg so pro
+    }
+
+    function sentinelai() {
+        window.location.href = "/sentinel-ai/";
     }
 }

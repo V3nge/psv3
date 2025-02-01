@@ -4,21 +4,11 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <!-- <p>This is experimental and in development so it might not work correctly</p> -->
-        <dialog class="live-chat-dialog centered" id="live-chat-dialog">
-            <button onclick="document.getElementById('live-chat-dialog').close();">Close</button><br><br><br><br>
-            <input id="code-input"><p>Enter your code here<p></input>
-            <br>
-            <button onclick="joinCode();">Join</button>
-            <br><br><br>
-            <a id="live-chat-dialog-link"></a>
-        </dialog>
-        <!-- <button onclick="sentinelai();" class="live-chat-ai">Sentinel Ai</button> -->
+        <p>This is experimental and in development so it might not work correctly</p>
         <button onclick="back();" class="live-chat-back">Back</button>
         <div id="messages" class="message-container"></div>
         <input class="input-box" id="input-box" placeholder=" Type Message Here"></input>
         <button onclick="send();" class="live-chat-submit"><i class="material-icons">&#xe163;</i></button>
-        <button onclick="document.getElementById('live-chat-dialog').showModal();" class="live-chat-private">Private Chat</button>
     </body>
     <footer>
         <script src="chat.js"></script>
