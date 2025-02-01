@@ -240,7 +240,7 @@
     },
     {
         "name": "Bitlife",
-        "thumbnail": "/games/bitlife/thumbnail.png",
+        "thumbnail": "/games/bitlife/logo.png",
         "slug": "bitlife"
     },
     {
@@ -249,9 +249,34 @@
         "slug": "bloxorz"
     },
     {
+        "name": "BTD",
+        "thumbnail": "/games/btd/logo.webp",
+        "slug": "btd"
+    },
+    {
+        "name": "BTD 2",
+        "thumbnail": "/games/btd2/logo.webp",
+        "slug": "btd2"
+    },
+    {
+        "name": "BTD 3",
+        "thumbnail": "/games/btd3/icon.png",
+        "slug": "btd3"
+    },
+    {
+        "name": "BTD 4",
+        "thumbnail": "/games/btd4/logo.png",
+        "slug": "btd4"
+    },
+    {
         "name": "BTD 5",
         "thumbnail": "/games/btd5/thumbnail.jpg",
         "slug": "btd5"
+    },
+    {
+        "name": "BTD 6",
+        "thumbnail": "/games/btd6/uwu.png",
+        "slug": "btd6"
     },
     {
         "name": "FNaF 4",
@@ -626,7 +651,7 @@
     },
     {
         "name": "OvO",
-        "thumbnail": "/games/ovo/ovologo.png",
+        "thumbnail": "/games/ovo/ovo.png",
         "slug": "ovo"
     },
     {
@@ -758,5 +783,11 @@
         "name": "60 Second Burger Run",
         "thumbnail": "/games/60secondburgerrun/thumbnail.jpeg",
         "slug": "60secondburgerrun"
+    },
+    {
+        "name": "Little Alchemy",
+        "thumbnail": "/games/littlealchemy/images/76-opaque.png",
+        "slug": "littlealchemy"
     }
+    
 ]
