@@ -788,6 +788,12 @@
         "name": "Little Alchemy",
         "thumbnail": "/games/littlealchemy/images/76-opaque.png",
         "slug": "littlealchemy"
+    },
+    {
+        "name": "Infinite Craft",
+        "thumbnail": "/games/infcraft/logo.png",
+        "slug": "infcraft"
     }
+
     
 ]

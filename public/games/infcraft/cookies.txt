@@ -1,0 +1,4 @@
+# HTTrack Website Copier Cookie File
+# This file format is compatible with Netscape cookies
+wordleplay.com	TRUE	/	FALSE	1999999999	PHPSESSID	15a30cc6581d0e50e2bad0efb5be7dc7
+
