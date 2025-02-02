@@ -94,4 +94,19 @@ function openBlank() {
     close();
 }
 
+function searchThings() {
+    var search = document.getElementById("search").value;
+        if ("URLSearchParams" in window) {
+            var searchParams = new URLSearchParams(window.location.search);
+            searchParams.set("search", search);
+            window.location.search = searchParams.toString();
+        }
+}
+
+async function search(query) {
+    return await (
+        await fetch(`/search?search=${encodeURIComponent(query)}`)
+    ).json();
+}
+
 requestAnimationFrame(update);

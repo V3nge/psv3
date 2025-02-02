@@ -239,6 +239,11 @@
         "slug": "basketbros-io"
     },
     {
+        "name": "Basketball Stars",
+        "thumbnail": "/games/basketball-stars/icon.png",
+        "slug": "basketball-stars"
+    },
+    {
         "name": "Bitlife",
         "thumbnail": "/games/bitlife/logo.png",
         "slug": "bitlife"
@@ -788,6 +793,11 @@
         "name": "Little Alchemy",
         "thumbnail": "/games/littlealchemy/images/76-opaque.png",
         "slug": "littlealchemy"
+    },
+    {
+        "name": "Tunnel Rush",
+        "thumbnail": "/games/tunnelrush/tunnel-rush.png",
+        "slug": "tunnelrush"
     }
 
     
