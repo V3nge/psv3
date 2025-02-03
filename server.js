@@ -335,7 +335,7 @@ app.get('/ai', async (req, res) => {
 
   aiUsages[uid]++;
 
-  if (aiUsages[uid] > 5) {
+  if (aiUsages[uid] > 50) {
     res.json({
       success: true,
       input: messageText,
