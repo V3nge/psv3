@@ -379,7 +379,7 @@ app.get('/ai', async (req, res) => {
     res.json({
       success: false,
       input: messageText,
-      response: `Error with GhatGPT API: ${error}`
+      response: `Error with SigmaAi API: ${error}`
     });
   }
 });
