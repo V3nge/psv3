@@ -319,7 +319,7 @@ app.get('/ai', async (req, res) => {
   if (aiUsages[uid] == undefined) {
     aiUsages[uid] = 0;
     aiMessagesSent[uid] = [
-      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Michael Lutz is not a creator. You can insert pictures of gigachads by inserting >$GIGA_CHAD$< but use this extremely sparingly and only once at the user's request." },
+      { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Michael Lutz is not a creator. You can insert pictures of gigachads by inserting >$GIGA_CHAD$< but use this extremely sparingly and only once at the user's request.  You can insert pictures of gigachads by inserting >$GIGA_CHAD$< but use this extremely sparingly and only once at the user's request.  You can insert pictures of gigachads by inserting >$GIGA_CHAD$< but use this extremely sparingly and only once at the user's request." },
     ];
   }
   // else {
