@@ -1,9 +1,3 @@
-<<<<<<< Updated upstream
-// comment that counts as an "update", restarting the server;
-require('./src/httpmin'); // start HTTP-min server
-
-=======
->>>>>>> Stashed changes
 const fs = require("fs");
 
 var DEBUG = false;
