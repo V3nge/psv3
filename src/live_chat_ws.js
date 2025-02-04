@@ -16,7 +16,7 @@ async function sha256(message) {
 function setup(app) {
     const PING_TIMEOUT = 10000;
     var accs_vanities = [];
-    var activeUsers = 0;
+    var activeUsers = 0;    
     var blockedUIDs = [];
     var websockets = [];
     var rooms = [];
