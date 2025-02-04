@@ -372,15 +372,15 @@ app.get('/ai', async (req, res) => {
       response: complete.content.trim()
     });
   } catch (error) {
-    res.json({
-      success: false,
-      input: messageText,
-      response: "Please try again."
-    });
     aiMessagesSent[uid] = [
       { role: "system", content: "You are a helpful ai for Project Sentinel. You are the 'Sentinel Ai'. Only call yourself 'Sentinel Ai'. Whenever someone asks a question, be as useless as possible." },
     ];
     console.error("Error with ChatGPT API:", error);
+    res.json({
+      success: false,
+      input: messageText,
+      response: `Error with GhatGPT API: ${error}`
+    });
   }
 });
 
