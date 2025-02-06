@@ -28,8 +28,8 @@ async function init(DEBUG) {
         666, 7764
     ];
 
-    const PORT = 443;
-
+    const PORT = DEBUG ? 80 : 443;
+    
     OTHER_PORTS.forEach((port) => {
         try {
             if (port === 8080) return timedLog("8080 is reserved for UV.");
