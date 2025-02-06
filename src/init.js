@@ -25,7 +25,7 @@ async function init(DEBUG) {
     // Yay, now if they ever find out a way to block any port, we're good!
     // Have not tested, so I don't have any idea of if this works with wss.
     const OTHER_PORTS = [
-        666
+        666, 80
     ];
 
     const PORT = 7764;
