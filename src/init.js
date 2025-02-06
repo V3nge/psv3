@@ -6,6 +6,7 @@ const { certoptions } = require("./shared");
 const compression = require("compression");
 const bodyParser = require('body-parser');
 const isElevated = require('is-elevated');
+const httpProxy = require('http-proxy');
 // const helmet = require('helmet');
 const nocache = require("nocache");
 var express = require('express');
@@ -24,42 +25,31 @@ async function init(DEBUG) {
 
     // Yay, now if they ever find out a way to block any port, we're good!
     // Have not tested, so I don't have any idea of if this works with wss.
-    const OTHER_PORTS = [
-        666, 7764
-    ];
-
+    const OTHER_PORTS = [666, 7764];
     const PORT = DEBUG ? 80 : 443;
-    
-    OTHER_PORTS.forEach((port) => {
-        try {
-            if (port === 8080) return timedLog("8080 is reserved for UV.");
+    const proxy = httpProxy.createProxyServer({ target: `http${DEBUG ? '' : 's'}://localhost:${PORT}`, ws: true });
 
-            if (port < 1024 && !elevated) {
-                timedLog(`Port ${port} requires elevated permissions. Using ${port + 1024} instead.`);
-                port += 1024;
-            }
-
-            const server = (DEBUG ? http : https).createServer(certoptions, (req, res) => {
-                const proxy = (DEBUG ? http : https).request({
-                    hostname: "localhost",
-                    port: PORT,
-                    path: req.url,
-                    method: req.method,
-                    headers: req.headers,
-                }, (proxyRes) => {
-                    res.writeHead(proxyRes.statusCode, proxyRes.headers);
-                    proxyRes.pipe(res);
-                });
-
-                proxy.on("error", () => res.writeHead(500).end("Internal Server Error"));
-                req.pipe(proxy);
-            });
-
-            server.listen(port, () => timedLog(`Redirecting traffic from port ${port} to ${PORT}`));
-        } catch (e) {
-            console.log(e);
+    OTHER_PORTS.forEach(port => {
+        if (port === 8080) return console.log("8080 is reserved for UV.");
+        if (port < 1024 && !elevated) {
+            console.log(`Port ${port} requires elevated permissions. Using ${port + 1024} instead.`);
+            port += 1024;
         }
+
+        const server = (DEBUG ? http.createServer : https.createServer)(certoptions, (req, res) => {
+            proxy.web(req, res, {}, err => {
+                console.error(`Proxy error: ${err.message}`);
+                res.writeHead(500).end("Internal Server Error");
+            });
+        });
+
+        server.on('upgrade', (req, socket, head) => {
+            proxy.ws(req, socket, head);
+        });
+
+        server.listen(port, () => console.log(`Redirecting traffic from port ${port} to ${PORT}`));
     });
+
 
 
     // const httpProxy = require('http-proxy');
