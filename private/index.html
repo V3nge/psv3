@@ -1,149 +1,163 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-        <title>Sentinel V3</title>
-        <link rel="icon" href="milkers.ico">
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5900953824983292"
-     crossorigin="anonymous"></script>
-    </head>
 
-    <body>
-        <script src="c2c.js"></script>
-        <div class="topbar glowing-border">
-            
-            <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
-            <input id="search" placeholder="Search here" class="search"></input>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+    <title>Sentinel V3</title>
+    <link rel="icon" href="milkers.ico">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5900953824983292" crossorigin="anonymous"></script>
 
-            <div class="top-flexed flexed">
-                <button onclick="loadSettings();document.getElementById('settingsDialog').showModal();">Open Settings</button>
-                <!-- Apparently my feeble brain cannot comprehend why when I call this from index.js it doesn't work... -->
-                <button onclick='function openBlank(){let e=window.open("about:blank","_blank");e.document.write(`<iframe src="${window.location.href}" style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" frameborder="0"></iframe>`),e.document.close(),window.location.href=getRandomSearch(),close()}openBlank();'>about:blank</button>
-                <a href="live-chat"><button>Live Chat</button></a>
-                <a href="prox"><button>Prօxy</button></a>
-            </div>
+<body>
+    <script src="c2c.js"></script>
+    <div class="topbar glowing-border">
+
+        <img src="milkers.png" class="icon" onclick="animeGirl();"></img>
+        <input id="search" placeholder="Search here" class="search"></input>
+
+        <div class="top-flexed flexed">
+            <button onclick="loadSettings();document.getElementById('settingsDialog').showModal();">Open
+                Settings</button>
+            <!-- Apparently my feeble brain cannot comprehend why when I call this from index.js it doesn't work... -->
+            <button
+                onclick='function openBlank(){let e=window.open("about:blank","_blank");e.document.write(`<iframe src="${window.location.href}" style="position: absolute; top: 0px; left: 0px; border: none; width: 100vw; height: 100vh;" frameborder="0"></iframe>`),e.document.close(),window.location.href=getRandomSearch(),close()}openBlank();'>about:blank</button>
+            <a href="live-chat"><button>Live Chat</button></a>
+            <a href="prox"><button>Prօxy</button></a>
         </div>
-        <dialog id="settingsDialog" class="menu">
-            <h1>Settings</h1>
-            <div id="settingsList">
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox settingsInput">
-                <label for="vehicle1"> <text>I have a bike</text></label><br>
-                <input type="checkbox" id="a_tags" name="a_tags" value="a_tags" class="inputBox settingsInput">
-                <label for="a_tags"> <text>Show games as a list of <a href="https://www.w3schools.com/tags/tag_a.asp">"a" tags</a> (a list of links).</text></label><br>
-            </div>
-            <div class="menu-bottom-bar centered">
-                <br><button onclick="document.getElementById('settingsDialog').close();">Cancel</button>
-                <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and Continue</button>
-            </div>
-        </dialog>
-        <br>
-        <div class="embedding-overflowable">
-            <h1 class="centered">Announcements</h1>
-            <div class="container">
-                <center>
-                    <h2>Attention minions:</h2>
-                    <p>I know half of this stuff doesnt work. <span class="highlight-text">Project Sentinel V3</span> is still the best. Dont complain.</p>
-
-                    <h2>Why is Sentinel V3 the Peak?</h2>
-
-                    <p>It's super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic live chаt that definitely works</p>
-                    <button onclick="sentinelai();">Try the new Sentinel Ai!</button>
-                    <button onclick="window.location.href='/lucky';">I'm Feeling Lucky :)</button>
-
-                    <h2>Who owns this website?</h2>
-                    <p>It has come to our attention that a few people have been claiming to own this website. Unfortunately, they are liars. Some of you know who the actual owners are, congrats. The only way someone can prove they own the website is by changing the website for everyone. I only tell people I trust that I own this... I wouldn't just send out an email saying I made it... whoever emailed you it was lying. Keep in mind, I have nothing against this person, his intentions were good. Do not think less of them.</p>
-                    
-                    <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
-                    <h2 id="hiring" style="display: none;">We are hiring. Solve the puzzle:</h2>
-                    <img src="sentinel.png" id="hiring1.5" style="display: none;">
-                    <p id="hiring2" style="display: none;">aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzBWYWtDQlZn</p>
-                    <s id="show-more">show more</s>
-                </center>
-
-            </div>
-        </div><br>
-        <div class="embedding">
-            <h1 class="centered">Recently Added Gаmеs</h1>
-            <div id="recentlyAddedCarousel" class="carousel">
-                
-                
-                {recentlyAddedCarousel}
-            </div>
-        </div><br>
-        <div class="embedding">
-            <h1 class="centered">Most Played</h1>
-            <div id="mostPlayCarousel" class="carousel">
-                {mostPlayCarousel}
-            </div>
-        </div><br>
-        <div class="embedding-overflowable">
-            <h1 class="centered">All Gаmеs</h1>
-            <div class="centered">
-                <p id="quote"></p>
-            </div>
-            <h3 class="centered">Can't find what you're looking for? Request a gаmе or recommend a fix <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYd3my1TJtwfvvMFoDznrJZndsKvRmkL0enqyKvfDgqJkSxQ/viewform" style="color: rgb(255, 255, 255)">here</a>.</h3>
-            <div class="all-games-list flexed" id="allGames">
-                {allGames}
-            </div>
-            <script src="preface.js"></script>
+    </div>
+    <dialog id="settingsDialog" class="menu">
+        <h1>Settings</h1>
+        <div id="settingsList">
+            <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox settingsInput">
+            <label for="vehicle1"> <text>I have a bike</text></label><br>
+            <input type="checkbox" id="a_tags" name="a_tags" value="a_tags" class="inputBox settingsInput">
+            <label for="a_tags"> <text>Show games as a list of <a href="https://www.w3schools.com/tags/tag_a.asp">"a"
+                        tags</a> (a list of links).</text></label><br>
         </div>
-    </body>
-    
-    <footer>
-        <script src="index.js"></script>
-        <!-- <script src="load_games.js"></script> -->
-        <script src="report.js"></script>
-        <!-- <script src="anchor2js.js"></script> -->
-        <!-- <script src="follower.js"></script> -->
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                fetch("quotes.json")
-                    .then((response) => response.json())
-                    .then((data) => {
-                        const randomQuote = data[Math.floor(Math.random() * data.length)];
+        <div class="menu-bottom-bar centered">
+            <br><button onclick="document.getElementById('settingsDialog').close();">Cancel</button>
+            <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and
+                Continue</button>
+        </div>
+    </dialog>
+    <br>
+    <div class="embedding-overflowable">
+        <h1 class="centered">Announcements</h1>
+        <div class="container">
+            <center>
+                <h2>Attention minions:</h2>
+                <p>I know half of this stuff doesnt work. <span class="highlight-text">Project Sentinel V3</span> is
+                    still the best. Dont complain.</p>
 
-                        if (randomQuote.includes("OGNUM1") && randomQuote.includes("SQRTNUM1")) {
-                            const ognum = Math.floor(Math.random() * 3000);
-                            randomQuote = `the square root of ${ognum} is ${Math.sqrt(ognum)}`;
-                        } else if (randomQuote.includes("CURRENTURL")) {
-                            randomQuote = window.location.hostname;
-                        }
+                <h2>Why is Sentinel V3 the Peak?</h2>
 
-                        document.getElementById("quote").innerHTML = randomQuote;
-                    })
-                    .catch((error) => console.error("Error loading quotes:", error));
-            });
+                <p>It's super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic
+                    live chаt that definitely works</p>
+                <button onclick="sentinelai();">Try the new Sentinel Ai!</button>
+                <button onclick="window.location.href='/lucky';">I'm Feeling Lucky :)</button>
 
-            document.getElementById("search").addEventListener("keypress", function(event) {
-                if (event.key === "Enter") {
-                    searchThings();
-                }
-            });
-        </script>
-        <script>
-            const button = document.getElementById('show-more')
-            const content = document.getElementById('hiring')
-            const content2 = document.getElementById('hiring2')
-            const content15 = document.getElementById('hiring1.5')
-            content15.style.display = 'none'
-            content.style.display = 'none'
-            content2.style.display = 'none'
-            content15.style.width = "25%"
-            button.addEventListener('click', () => {
-                if (content.style.display === 'none' || content.style.display === '') {
-                    content.style.display = 'block'
-                    content15.style.display = 'block'
-                    content2.style.display = 'block'
-                    button.innerText = 'show less'
-                } else {
-                    content.style.display = 'none'
-                    content2.style.display = 'none'
-                    content15.style.display = 'none'
-                    button.innerText = 'show more'
-                }
-            });
-        </script>
-        
-    </footer>
+                <h2>Who owns this website?</h2>
+                <p>It has come to our attention that a few people have been claiming to own this website. Unfortunately,
+                    they are liars. Some of you know who the actual owners are, congrats. The only way someone can prove
+                    they own the website is by changing the website for everyone. I only tell people I trust that I own
+                    this... I wouldn't just send out an email saying I made it... whoever emailed you it was lying. Keep
+                    in mind, I have nothing against this person, his intentions were good. Do not think less of them.
+                </p>
+
+                <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
+                <h2 id="hiring" style="display: none;">We are hiring. Solve the puzzle:</h2>
+                <img src="sentinel.png" id="hiring1.5" style="display: none;">
+                <p id="hiring2" style="display: none;">aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzBWYWtDQlZn</p>
+                <s id="show-more">show more</s>
+            </center>
+
+        </div>
+    </div><br>
+    <div class="embedding">
+        <h1 class="centered">Recently Added Gаmеs</h1>
+        <div id="recentlyAddedCarousel" class="carousel">
+
+
+            {recentlyAddedCarousel}
+        </div>
+    </div><br>
+    <div class="embedding">
+        <h1 class="centered">Most Played</h1>
+        <div id="mostPlayCarousel" class="carousel">
+            {mostPlayCarousel}
+        </div>
+    </div><br>
+    <div class="embedding-overflowable">
+        <h1 class="centered">All Gаmеs</h1>
+        <div class="centered">
+            <p id="quote"></p>
+        </div>
+        <h3 class="centered">Can't find what you're looking for? Request a gаmе or recommend a fix <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeYd3my1TJtwfvvMFoDznrJZndsKvRmkL0enqyKvfDgqJkSxQ/viewform"
+                style="color: rgb(255, 255, 255)">here</a>.</h3>
+        <div class="all-games-list flexed" id="allGames">
+            {allGames}
+        </div>
+        <script src="preface.js"></script>
+    </div>
+</body>
+
+<footer>
+    <script src="index.js"></script>
+    <!-- <script src="load_games.js"></script> -->
+    <script src="report.js"></script>
+    <!-- <script src="anchor2js.js"></script> -->
+    <!-- <script src="follower.js"></script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch("quotes.json")
+                .then((response) => response.json())
+                .then((data) => {
+                    const randomQuote = data[Math.floor(Math.random() * data.length)];
+
+                    if (randomQuote.includes("OGNUM1") && randomQuote.includes("SQRTNUM1")) {
+                        const ognum = Math.floor(Math.random() * 3000);
+                        randomQuote = `the square root of ${ognum} is ${Math.sqrt(ognum)}`;
+                    } else if (randomQuote.includes("CURRENTURL")) {
+                        randomQuote = window.location.hostname;
+                    }
+
+                    document.getElementById("quote").innerHTML = randomQuote;
+                })
+                .catch((error) => console.error("Error loading quotes:", error));
+        });
+
+        document.getElementById("search").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                searchThings();
+            }
+        });
+    </script>
+    <script>
+        const button = document.getElementById('show-more')
+        const content = document.getElementById('hiring')
+        const content2 = document.getElementById('hiring2')
+        const content15 = document.getElementById('hiring1.5')
+        content15.style.display = 'none'
+        content.style.display = 'none'
+        content2.style.display = 'none'
+        content15.style.width = "25%"
+        button.addEventListener('click', () => {
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block'
+                content15.style.display = 'block'
+                content2.style.display = 'block'
+                button.innerText = 'show less'
+            } else {
+                content.style.display = 'none'
+                content2.style.display = 'none'
+                content15.style.display = 'none'
+                button.innerText = 'show more'
+            }
+        });
+    </script>
+
+</footer>
+
 </html>
