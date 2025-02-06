@@ -28,7 +28,7 @@ async function init(DEBUG) {
         666, 7764
     ];
 
-    const PORT = 80;
+    const PORT = 443;
 
     OTHER_PORTS.forEach((port) => {
         try {
