@@ -16,8 +16,8 @@ const path = require("path");
 async function init(DEBUG) {
     var elevated = await isElevated.default();
 
-    if(!elevated) {
-        timedLog("This server does not have elevated permissions, which means\n\t" + 
+    if (!elevated) {
+        timedLog("This server does not have elevated permissions, which means\n\t" +
             "- The server can only use ports greater than 1024.\n\t" +
             "- The server will automatically redirect any OTHER_PORTS to above 1024 by adding 1024 to it.");
     }
@@ -32,50 +32,35 @@ async function init(DEBUG) {
 
     OTHER_PORTS.forEach((port) => {
         try {
-            if (port == 8080) {
-                timedLog("8080 is for UV and cannot be an OTHER_PORTS element.");
-                return;
-            }
+            if (port === 8080) return timedLog("8080 is reserved for UV.");
 
             if (port < 1024 && !elevated) {
-                timedLog(`Port ${port} is privileged and usually requires elevated permissions: switching to ${port + 1024}.`);
+                timedLog(`Port ${port} requires elevated permissions. Using ${port + 1024} instead.`);
                 port += 1024;
             }
 
-            var httpsOrHttps = DEBUG ? http : https;
-
-            httpsOrHttps
-                .createServer(
-                    certoptions,
-                    (req, res) => {
-                        const options = {
-                            hostname: "localhost",
-                            port: PORT,
-                            path: req.url,
-                            method: req.method,
-                            headers: req.headers,
-                        };
-
-                        const proxy = http.request(options, (proxyRes) => {
-                            res.writeHead(proxyRes.statusCode, proxyRes.headers);
-                            proxyRes.pipe(res, { end: true });
-                        });
-
-                        proxy.on("error", (err) => {
-                            console.error(`Error forwarding request on port ${port}:`, err);
-                            res.writeHead(500);
-                            res.end("Internal Server Error");
-                        });
-
-                        req.pipe(proxy, { end: true });
-                    })
-                .listen(port, () => {
-                    timedLog(`Redirecting traffic from port ${port} to port ${PORT}`);
+            const server = (DEBUG ? http : https).createServer(certoptions, (req, res) => {
+                const proxy = http.request({
+                    hostname: "localhost",
+                    port: PORT,
+                    path: req.url,
+                    method: req.method,
+                    headers: req.headers,
+                }, (proxyRes) => {
+                    res.writeHead(proxyRes.statusCode, proxyRes.headers);
+                    proxyRes.pipe(res);
                 });
+
+                proxy.on("error", () => res.writeHead(500).end("Internal Server Error"));
+                req.pipe(proxy);
+            });
+
+            server.listen(port, () => timedLog(`Redirecting traffic from port ${port} to ${PORT}`));
         } catch (e) {
-            timedLog(`Cannot map port: ${port}`);
+            console.log(e);
         }
     });
+
 
     // const httpProxy = require('http-proxy');
     // const http = require('http');
@@ -107,7 +92,7 @@ async function init(DEBUG) {
         server = https.createServer(certoptions, app);
         try {
             require("./ssh").init(app, server);
-        } catch(e) {
+        } catch (e) {
             console.log(e);
             timedLog("SSH client couldn't load.");
         }
