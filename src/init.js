@@ -25,32 +25,7 @@ async function init(DEBUG) {
 
     // Yay, now if they ever find out a way to block any port, we're good!
     // Have not tested, so I don't have any idea of if this works with wss.
-    const OTHER_PORTS = [666, 7764];
-    const PORT = DEBUG ? 80 : 443;
-    const proxy = httpProxy.createProxyServer({ target: `http${DEBUG ? '' : 's'}://127.0.0.1:${PORT}`, ws: true });
-
-    OTHER_PORTS.forEach(port => {
-        if (port === 8080) return console.log("8080 is reserved for UV.");
-        if (port < 1024 && !elevated) {
-            console.log(`Port ${port} requires elevated permissions. Using ${port + 1024} instead.`);
-            port += 1024;
-        }
-
-        const server = (DEBUG ? http.createServer : https.createServer)(certoptions, (req, res) => {
-            proxy.web(req, res, {}, err => {
-                console.error(`Proxy error: ${err.message}`);
-                res.writeHead(500).end("Internal Server Error");
-            });
-        });
-
-        server.on('upgrade', (req, socket, head) => {
-            proxy.ws(req, socket, head);
-        });
-
-        server.listen(port, () => console.log(`Redirecting traffic from port ${port} to ${PORT}`));
-    });
-
-
+    const PORTS = [666, 7764, DEBUG ? 80 : 443];
 
     // const httpProxy = require('http-proxy');
     // const http = require('http');
@@ -87,20 +62,24 @@ async function init(DEBUG) {
             timedLog("SSH client couldn't load.");
         }
         listenCallback = function () {
-            server.listen(PORT, () => {
-                timedLog(`HTTPS Server running on port ${PORT}`);
-            });
+            PORTS.forEach(PORT => {
+                server.listen(PORT, () => {
+                    timedLog(`HTTPS Server running on port ${PORT}`);
+                });
+            })
         }
         //app.listen(PORT);
     } else {
         listenCallback = function () {
-            timedLog(`HTTP Server running on port ${PORT}`);
-            try {
-                app.listen(PORT, '0.0.0.0');
-            } catch (e) {
-                // just in case
-                app.listen(PORT)
-            }
+            PORTS.forEach(PORT => {
+                timedLog(`HTTP Server running on port ${PORT}`);
+                try {
+                    app.listen(PORT, '0.0.0.0');
+                } catch (e) {
+                    // just in case
+                    app.listen(PORT)
+                }
+            });
         }
     }
 
