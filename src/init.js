@@ -27,7 +27,7 @@ async function init(DEBUG) {
     // Have not tested, so I don't have any idea of if this works with wss.
     const OTHER_PORTS = [666, 7764];
     const PORT = DEBUG ? 80 : 443;
-    const proxy = httpProxy.createProxyServer({ target: `http${DEBUG ? '' : 's'}://localhost:${PORT}`, ws: true });
+    const proxy = httpProxy.createProxyServer({ target: `http${DEBUG ? '' : 's'}://www.project-sentinel.xyz:${PORT}`, ws: true });
 
     OTHER_PORTS.forEach(port => {
         if (port === 8080) return console.log("8080 is reserved for UV.");
