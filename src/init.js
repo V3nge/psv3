@@ -40,7 +40,7 @@ async function init(DEBUG) {
             }
 
             const server = (DEBUG ? http : https).createServer(certoptions, (req, res) => {
-                const proxy = http.request({
+                const proxy = (DEBUG ? http : https).request({
                     hostname: "localhost",
                     port: PORT,
                     path: req.url,
