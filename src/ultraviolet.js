@@ -62,7 +62,7 @@ function init() {
         Object.keys(proxyRes.headers).forEach((key) => {
             res.setHeader(key, proxyRes.headers[key]);
         });
-        console.log(`Response Headers from ${TARGET_PORT}:`, proxyRes.headers);
+        // console.log(`Response Headers from ${TARGET_PORT}:`, proxyRes.headers);
     });
 
     app.use((req, res) => {
@@ -72,7 +72,7 @@ function init() {
     const server = https.createServer(certoptions, app);
     
     server.on("upgrade", (req, socket, head) => {
-        console.log("WebSocket upgrade headers:", req.headers);
+        // console.log("WebSocket upgrade headers:", req.headers);
         proxy.ws(req, socket, head);
     });
 
