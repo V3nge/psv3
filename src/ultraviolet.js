@@ -1,17 +1,18 @@
-const { affixSlash, timedError, timedLog, certOptions  } = require('./shared');
-
+const { affixSlash, timedError, timedLog, certOptions } = require("./shared");
 const path = require("path");
 const express = require("express");
 const https = require("https");
+const httpProxy = require("http-proxy");
+const childProcess = require("child_process");
 
 const ultravioletPath = path.join(__dirname, "../ultraviolet-app", "src", "index.js");
-const { createProxyMiddleware } = require("http-proxy-middleware");
-const childProcess = require("child_process");
 const TARGET_PORT = 8080;
 const PORT = 7765;
 
 function init() {
     const app = express();
+    const proxy = httpProxy.createProxyServer({ target: `http://localhost:${TARGET_PORT}`, ws: true });
+    
     function startUltraviolet() {
         const now = new Date();
         timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
@@ -47,13 +48,15 @@ function init() {
         });
     }
     
-    app.use("/", createProxyMiddleware({
-        target: `http://localhost:${TARGET_PORT}`,
-        // changeOrigin: true,
-        ws: true,
-    }));
+    app.use((req, res) => {
+        proxy.web(req, res);
+    });
 
     const server = https.createServer(certOptions, app);
+    
+    server.on("upgrade", (req, socket, head) => {
+        proxy.ws(req, socket, head);
+    });
 
     server.listen(PORT, () => {
         startUltraviolet();
@@ -63,4 +66,4 @@ function init() {
 
 module.exports = {
     init: init
-}
+};
