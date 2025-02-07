@@ -1,7 +1,8 @@
-const { affixSlash, timedError, timedLog } = require('./shared');
+const { affixSlash, timedError, timedLog, certOptions  } = require('./shared');
 
 const path = require("path");
 const express = require("express");
+const https = require("https");
 
 const ultravioletPath = path.join(__dirname, "../ultraviolet-app", "src", "index.js");
 const { createProxyMiddleware } = require("http-proxy-middleware");
@@ -51,9 +52,11 @@ function init() {
         changeOrigin: true,
         ws: true,
     }));
-    
-    app.listen(PORT, () => {
-        console.log(`Reverse proxy on UV: running on http://localhost:${PORT}, forwarding to ${TARGET_PORT}`);
+
+    const server = https.createServer(certOptions, app);
+
+    server.listen(PORT, () => {
+        console.log(`HTTPS Reverse proxy on UV: running on https://localhost:${PORT}, forwarding to ${TARGET_PORT}`);
         startUltraviolet();
     });
 }
