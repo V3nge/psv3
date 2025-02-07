@@ -56,8 +56,8 @@ function init() {
     const server = https.createServer(certOptions, app);
 
     server.listen(PORT, () => {
-        console.log(`HTTPS Reverse proxy on UV: running on https://localhost:${PORT}, forwarding to ${TARGET_PORT}`);
         startUltraviolet();
+        timedLog(`HTTPS Reverse proxy on UV: running on https://localhost:${PORT}, forwarding to ${TARGET_PORT}`);
     });
 }
 
