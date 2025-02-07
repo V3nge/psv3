@@ -1,8 +1,8 @@
-const { timedError, timedLog, certoptions } = require("./shared");
+const { affixSlash, timedError, timedLog, certoptions } = require("./shared");
 const path = require("path");
 const express = require("express");
 const https = require("https");
-const reverseProxy = require('reverse-proxy');
+const httpProxy = require("http-proxy");
 const childProcess = require("child_process");
 
 const ultravioletPath = path.join(__dirname, "../ultraviolet-app", "src", "index.js");
@@ -11,7 +11,8 @@ const PORT = 7765;
 
 function init() {
     const app = express();
-
+    const proxy = httpProxy.createProxyServer({ target: `http://localhost:${TARGET_PORT}`, ws: true });
+    
     function startUltraviolet() {
         const now = new Date();
         timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
@@ -47,32 +48,42 @@ function init() {
         });
     }
     
-    // Set up the reverse proxy server
-    reverseProxy.createServer({
-        port: 8000, // the port to listen for incoming proxy requests
-        map: function (config) {
-            // Specific path mapping for a request to localhost
-            if (config.path === '/kissy/k/1.4.0/seed-min.js') {
-                config.path = '/t.js'; // remap the path
-                config.host = 'localhost'; // use localhost as the target host
-                console.log('Refetch from: ' + config.host + config.path);
-            }
-            return config; // return the modified config object
-        }
-    });
-
     app.use((req, res, next) => {
+        // Log request headers to verify everything is being sent
+        console.log("Incoming Request Headers:", req.headers);
+        
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
         if (req.method === "OPTIONS") {
             return res.sendStatus(200);
         }
         next();
     });
+    
+    proxy.on("proxyRes", (proxyRes, req, res) => {
+        // Log response headers to verify everything is being forwarded
+        console.log("Response Headers from Proxy Target:", proxyRes.headers);
+        
+        // Pass all the headers to the actual response
+        Object.keys(proxyRes.headers).forEach((key) => {
+            res.setHeader(key, proxyRes.headers[key]);
+        });
+    });
+
+    app.use((req, res) => {
+        proxy.web(req, res);
+    });
 
     const server = https.createServer(certoptions, app);
     
+    server.on("upgrade", (req, socket, head) => {
+        // Log the upgrade headers (if any) for WebSocket connections
+        console.log("WebSocket Upgrade Headers:", req.headers);
+        proxy.ws(req, socket, head);
+    });
+
     server.listen(PORT, () => {
         startUltraviolet();
         timedLog(`HTTPS Reverse proxy on UV: running on https://localhost:${PORT}, forwarding to ${TARGET_PORT}`);
