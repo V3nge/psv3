@@ -49,7 +49,7 @@ function init() {
     
     app.use("/", createProxyMiddleware({
         target: `http://localhost:${TARGET_PORT}`,
-        changeOrigin: true,
+        // changeOrigin: true,
         ws: true,
     }));
 
