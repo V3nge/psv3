@@ -32,6 +32,9 @@ async function init(DEBUG) {
 
     const app = express();
 
+    app.use(express.urlencoded({ extended: true }));
+    app.use(express.json()); 
+    
     if (!DEBUG) {
         const limiter = expressRateLimit({
             windowMs: 60 * 1000,
