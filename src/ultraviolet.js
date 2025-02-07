@@ -49,9 +49,13 @@ function init() {
     }
     
     app.use((req, res, next) => {
+        // Log request headers to verify everything is being sent
+        console.log("Incoming Request Headers:", req.headers);
+        
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
         if (req.method === "OPTIONS") {
             return res.sendStatus(200);
         }
@@ -59,10 +63,13 @@ function init() {
     });
     
     proxy.on("proxyRes", (proxyRes, req, res) => {
+        // Log response headers to verify everything is being forwarded
+        console.log("Response Headers from Proxy Target:", proxyRes.headers);
+        
+        // Pass all the headers to the actual response
         Object.keys(proxyRes.headers).forEach((key) => {
             res.setHeader(key, proxyRes.headers[key]);
         });
-        // console.log(`Response Headers from ${TARGET_PORT}:`, proxyRes.headers);
     });
 
     app.use((req, res) => {
@@ -72,7 +79,8 @@ function init() {
     const server = https.createServer(certoptions, app);
     
     server.on("upgrade", (req, socket, head) => {
-        // console.log("WebSocket upgrade headers:", req.headers);
+        // Log the upgrade headers (if any) for WebSocket connections
+        console.log("WebSocket Upgrade Headers:", req.headers);
         proxy.ws(req, socket, head);
     });
 
