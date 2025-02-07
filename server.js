@@ -258,7 +258,7 @@ app.get("/dashboard/login", (req, res) => {
 });
 
 app.post("/api/dashboard/login", (req, res) => {
-  res.send(JSON.stringify({"success":true,"username":`${req.body['username']}`,"sentbody":req}, getCircularReplacer()));
+  res.send(JSON.stringify({"success":true,"username":`${req.body['username']}`,"sentbody":req.body}, getCircularReplacer()));
 });
 
 function randomElement(list) {
