@@ -257,7 +257,7 @@ app.get("/dashboard/login", (req, res) => {
   res.sendFile(path.join(__dirname, 'private', 'logindashboard.html'));
 });
 
-app.get("/api/dashboard/login", (req, res) => {
+app.post("/api/dashboard/login", (req, res) => {
   res.send(JSON.stringify({"success":true,"username":`${req.body['username']}`,"sentbody":req}, getCircularReplacer()));
 });
 
