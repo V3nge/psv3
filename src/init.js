@@ -1,8 +1,8 @@
-const { affixSlash, timedError, timedLog } = require('./shared');
+const { affixSlash, timedError, timedLog, certoptions } = require('./shared');
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const childProcess = require("child_process");
-const { certoptions } = require("./shared");
+const ultraviolet = require('./ultraviolet.js');
 const compression = require("compression");
 const bodyParser = require('body-parser');
 const isElevated = require('is-elevated');
@@ -89,43 +89,6 @@ async function init(DEBUG) {
     } else {
         timedLog("Express-ws with server init.");
         require("express-ws")(app, server);
-    }
-
-    const ultravioletPath = path.join(__dirname, "../ultraviolet-app", "src", "index.js");
-
-    function startUltraviolet() {
-        const now = new Date();
-        timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
-
-        const ultravioletProcess = childProcess.spawn("node", [ultravioletPath], {
-            stdio: ['inherit', 'pipe', 'pipe'],
-        });
-
-        ultravioletProcess.stdout.on('data', (data) => {
-            const now = new Date();
-            timedLog(`${now.toISOString()}: UV: ${data.toString()}`.trim());
-        });
-
-        ultravioletProcess.stderr.on('data', (data) => {
-            const now = new Date();
-            console.error(`${now.toISOString()}: UV: ${data.toString()}`.trim());
-        });
-
-        ultravioletProcess.on("error", (err) => {
-            console.error(`Failed to start app: ${err.message}`);
-        });
-
-        ultravioletProcess.on("SIGINT", () => {
-            timedLog("\nSIGINT received. Shutting down...");
-            ultravioletProcess.kill("SIGINT");
-            process.exit(0);
-        });
-
-        ultravioletProcess.on("SIGTERM", () => {
-            timedLog("\nSIGTERM received. Shutting down...");
-            ultravioletProcess.kill("SIGTERM");
-            process.exit(0);
-        });
     }
 
     // // app.use(
@@ -246,7 +209,7 @@ async function init(DEBUG) {
         app: app,
         express: express,
         listenCallback: listenCallback,
-        startUltraviolet: startUltraviolet
+        startUltraviolet: ultraviolet.init
     };
 }
 
