@@ -1,4 +1,4 @@
-const { affixSlash, timedError, timedLog, certOptions } = require("./shared");
+const { affixSlash, timedError, timedLog, certoptions } = require("./shared");
 const path = require("path");
 const express = require("express");
 const https = require("https");
@@ -52,7 +52,7 @@ function init() {
         proxy.web(req, res);
     });
 
-    const server = https.createServer(certOptions, app);
+    const server = https.createServer(certoptions, app);
     
     server.on("upgrade", (req, socket, head) => {
         proxy.ws(req, socket, head);
