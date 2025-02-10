@@ -104,6 +104,13 @@
                 socket.emit('input', data);
             });
 
+            setTimeout(function() {
+                var value = Array.from(document.getElementsByClassName("xterm-viewport"))[0]
+                if(value != undefined) {
+                    value.style.overflow = "hidden";
+                }
+            }, 100);
+
             return nt;
         }
 
