@@ -60,7 +60,7 @@ module.exports.init = (app, server) => {
                 // Create a new shell session for this client
                 shell = await ssh.requestShell();
                 // console.log("Shell connected for client...");
-                socket.emit('output', 'Shell connected...\n');
+                // socket.emit('output', 'Shell connected...\n');
 
                 // Listen for incoming data from SSH session and send to this client only
                 shell.on('data', (data) => {
