@@ -25,6 +25,7 @@
             <a href="live-chat"><button>Live Chat</button></a>
             <a href="prox"><button>Prօxy</button></a>
         </div>
+<<<<<<< Updated upstream
     </div>
     <dialog id="settingsDialog" class="menu">
         <h1>Settings</h1>
@@ -34,6 +35,71 @@
             <input type="checkbox" id="a_tags" name="a_tags" value="a_tags" class="inputBox settingsInput">
             <label for="a_tags"> <text>Show games as a list of <a href="https://www.w3schools.com/tags/tag_a.asp">"a"
                         tags</a> (a list of links).</text></label><br>
+=======
+        <dialog id="settingsDialog" class="menu">
+            <h1>Settings</h1>
+            <div id="settingsList">
+                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="inputBox settingsInput">
+                <label for="vehicle1"> <text>I have a bike</text></label><br>
+                <input type="checkbox" id="a_tags" name="a_tags" value="a_tags" class="inputBox settingsInput">
+                <label for="a_tags"> <text>Show games as a list of <a href="https://www.w3schools.com/tags/tag_a.asp">"a" tags</a> (a list of links).</text></label><br>
+            </div>
+            <div class="menu-bottom-bar centered">
+                <br><button onclick="document.getElementById('settingsDialog').close();">Cancel</button>
+                <button onclick="document.getElementById('settingsDialog').close();saveSettings(true);">Save and Continue</button>
+            </div>
+        </dialog>
+        <br>
+        <div class="embedding-overflowable">
+            <h1 class="centered">Announcements</h1>
+            <div class="container">
+                <center>
+                    <h2>Attention minions:</h2>
+                    <p>I know half of this stuff doesnt work. <span class="highlight-text">Project Sentinel V3</span> is still the best!</p>
+
+                    <h2>Why is Sentinel V3 the Peak?</h2>
+
+                    <p>It's super sigma and skkibidi. <span class="highlight-text">Sentinel V3</span> also has a super epic live chаt that definitely works</p>
+                    <button onclick="sentinelai();">Try the new Sentinel Ai!</button>
+                    <button onclick="window.location.href='/lucky';">I'm Feeling Lucky :)</button>
+
+                    <h2>Who owns this website?</h2>
+                    <p>We do! Who are we, I dont know!</p>
+                    
+                    <p>Join the Discord please: <a href="https://dsc.gg/contentkeeper">dsc.gg/contentkeeper</a></p>
+                    <h2 id="hiring" style="display: none;">Solve puzzle and join our dev team:</h2>
+                    <img src="sentinel.png" id="hiring1.5" style="display: none;">
+                    <p id="hiring2" style="display: none;">aHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3LzBWYWtDQlZn</p>
+                    <s id="show-more">show more</s>
+                </center>
+
+            </div>
+        </div><br>
+        <div class="embedding">
+            <h1 class="centered">Recently Added Gаmеs</h1>
+            <div id="recentlyAddedCarousel" class="carousel">
+                
+                
+                {recentlyAddedCarousel}
+            </div>
+        </div><br>
+        <div class="embedding">
+            <h1 class="centered">Most Played</h1>
+            <div id="mostPlayCarousel" class="carousel">
+                {mostPlayCarousel}
+            </div>
+        </div><br>
+        <div class="embedding-overflowable">
+            <h1 class="centered">All Gаmеs</h1>
+            <div class="centered">
+                <p id="quote"></p>
+            </div>
+            <h3 class="centered">Can't find what you're looking for? Request a gаmе or recommend a fix <a href="https://docs.google.com/forms/d/e/1FAIpQLSeYd3my1TJtwfvvMFoDznrJZndsKvRmkL0enqyKvfDgqJkSxQ/viewform" style="color: rgb(255, 255, 255)">here</a>.</h3>
+            <div class="all-games-list flexed" id="allGames">
+                {allGames}
+            </div>
+            <script src="preface.js"></script>
+>>>>>>> Stashed changes
         </div>
         <div class="menu-bottom-bar centered">
             <br><button onclick="document.getElementById('settingsDialog').close();">Cancel</button>
