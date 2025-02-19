@@ -24,7 +24,7 @@ keep_to_date() {
 start_server() {
   # Start the server and capture the PID
   keep_to_date
-  bun run ./server.js &
+  "$(which bun)" run ./server.js &
   SERVER_PID=$!
   echo "Server started with PID $SERVER_PID"
 }
