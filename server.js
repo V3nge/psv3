@@ -9,7 +9,7 @@ if (fs.existsSync('debug.txt')) {
 }
 
 // wow thats a lot of libraries
-var { app, express, listenCallback, startUltraviolet } = await (require('./src/init').init(DEBUG));
+var { app, express, listenCallback, startProxy } = await (require('./src/init').init(DEBUG));
 const { createCompletion } = require('./src/ai');
 const { affixSlash, timedError, timedLog } = require('./src/shared');
 const Fuse = require("fuse.js");
@@ -471,7 +471,7 @@ app.use("/", function (req, res, next) {
   }
 });
 
-startUltraviolet();
+startProxy();
 
 app.use(express.static("public"));
 

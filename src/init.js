@@ -165,38 +165,43 @@ async function init(DEBUG) {
         });
     }
 
-    function startUltraviolet() {
+    function startProxy() {
+        timedLog(`Using proxy configuration: '${config.proxy}'`);
         if(config.proxy == "native") {
             timedLog("Using native psv3 proxy instead of uv.");
             require('./src/httpmin');
             return;
+        } else if(config.proxy == "uv") {
+            const now = new Date();
+            timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
+    
+            const ultravioletProcess = childProcess.spawn("node", [ultravioletPath], {
+                stdio: ['inherit', 'pipe', 'pipe'],
+            });
+    
+            ultravioletProcess.stdout.on('data', (data) => {
+                const now = new Date();
+                timedLog(`${now.toISOString()}: UV: ${data.toString()}`.trim());
+            });
+    
+            ultravioletProcess.stderr.on('data', (data) => {
+                const now = new Date();
+                console.error(`${now.toISOString()}: UV: ${data.toString()}`.trim());
+            });
+    
+            ultravioletProcess.on("error", (err) => {
+                console.error(`Failed to start UV: ${err.message}`);
+            });
+    
+            console.log("Starting caddy in 3 seconds...");
+            setTimeout(function() {
+                startCaddy();
+            }, 3000);
+        } else {
+            timedLog("Proxy configuration invalid! Defaulting to native proxy...");
+            config.proxy = "native";
+            startProxy();
         }
-        
-        const now = new Date();
-        timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
-
-        const ultravioletProcess = childProcess.spawn("node", [ultravioletPath], {
-            stdio: ['inherit', 'pipe', 'pipe'],
-        });
-
-        ultravioletProcess.stdout.on('data', (data) => {
-            const now = new Date();
-            timedLog(`${now.toISOString()}: UV: ${data.toString()}`.trim());
-        });
-
-        ultravioletProcess.stderr.on('data', (data) => {
-            const now = new Date();
-            console.error(`${now.toISOString()}: UV: ${data.toString()}`.trim());
-        });
-
-        ultravioletProcess.on("error", (err) => {
-            console.error(`Failed to start UV: ${err.message}`);
-        });
-
-        console.log("Starting caddy in 3 seconds...");
-        setTimeout(function() {
-            startCaddy();
-        }, 3000);
     }
 
     app.all('*', function (req, res, next) {
@@ -228,7 +233,7 @@ async function init(DEBUG) {
         app: app,
         express: express,
         listenCallback: listenCallback,
-        startUltraviolet: startUltraviolet
+        startProxy: startProxy
     };
 }
 
