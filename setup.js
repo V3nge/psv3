@@ -25,21 +25,23 @@ const askLimitedQuestion = (question, options) => {
     });
 };
 
-config.environment = await askLimitedQuestion('Enter environment', ['dev', 'prod']);
-config.ports = await askQuestion('Enter ports to run the server on (comma separated, default=7764): ');
-config.proxy = await askLimitedQuestion('Configure the proxy', ['uv', 'native']);
+const setup = async () => {
+    config.environment = await askLimitedQuestion('Enter environment', ['dev', 'prod']);
+    config.ports = await askQuestion('Enter ports to run the server on (comma separated, default=7764): ');
+    config.proxy = await askLimitedQuestion('Configure the proxy', ['uv', 'native']);
 
-if (config.ports == "") { config.ports = "7764"; }
+    if (config.ports == "") { config.ports = "7764"; }
 
-rl.close();
+    rl.close();
 
-fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
+    fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
 
-console.log('\nconfig.json contains:');
-console.log(`\tEnvironment: ${config.environment}`);
-console.log(`\tPorts: ${config.ports}`);
-console.log(`\tProxy: ${config.proxy}`);
-
-module.exports = {
-    configuration
+    console.log('\nconfig.json contains:');
+    console.log(`\tEnvironment: ${config.environment}`);
+    console.log(`\tPorts: ${config.ports}`);
+    console.log(`\tProxy: ${config.proxy}`);
 };
+
+await setup();
+
+module.exports = { config };
