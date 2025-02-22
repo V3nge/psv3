@@ -1,0 +1,3 @@
+[submodule "Dynamic-repo"]
+	path = Dynamic-repo
+	url = https://github.com/NebulaServices/Dynamic
