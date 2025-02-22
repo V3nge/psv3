@@ -2,7 +2,7 @@ const fs = require("fs");
 
 var configuration;
 if (!fs.existsSync("config.json")) {
-    configuration = require("setup");
+    configuration = require("./setup");
 } else {
     configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
 }
