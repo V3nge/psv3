@@ -1,4 +1,5 @@
 https://localhost:7765 {
-    tls /etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem /etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem
+    cert  /etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem
+    key   /etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem
     reverse_proxy localhost:8080
 }
