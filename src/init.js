@@ -169,8 +169,7 @@ async function init(DEBUG) {
         timedLog(`Using proxy configuration: '${config.proxy}'`);
         if(config.proxy == "native") {
             timedLog("Using native psv3 proxy instead of uv.");
-            require('./src/httpmin');
-            return;
+            require('./src/proxy');
         } else if(config.proxy == "uv") {
             const now = new Date();
             timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
@@ -200,7 +199,7 @@ async function init(DEBUG) {
         } else {
             timedLog("Proxy configuration invalid! Defaulting to native proxy...");
             config.proxy = "native";
-            startProxy();
+            require('./src/proxy');
         }
     }
 
