@@ -40,8 +40,8 @@ const setup = async () => {
     console.log(`\tEnvironment: ${config.environment}`);
     console.log(`\tPorts: ${config.ports}`);
     console.log(`\tProxy: ${config.proxy}`);
+
+    return config;
 };
 
-await setup();
-
-module.exports = { config };
+module.exports = { setup };
