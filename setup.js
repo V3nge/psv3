@@ -29,7 +29,7 @@ const setup = async () => {
     config.environment = await askLimitedQuestion('Enter environment', ['dev', 'prod']);
     config.ports = await askQuestion('Enter ports to run the server on (comma separated, default=7764): ');
     config.proxy = await askLimitedQuestion('Configure the proxy', ['uv', 'native']);
-
+    config.httpmin = await askLimitedQuestion('Include http-min', ["y", "n"]) == "y";
     if (config.ports == "") { config.ports = "7764"; }
 
     rl.close();

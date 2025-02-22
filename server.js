@@ -1,19 +1,17 @@
 // comment that counts as an "update", restarting the server;
-require('./src/httpmin'); // start HTTP-min server
 
 const fs = require("fs");
 
-var DEBUG = false;
-if (fs.existsSync('debug.txt')) {
-  DEBUG = true;
-}
-
 // wow thats a lot of libraries
-var { app, express, listenCallback, startProxy } = await (require('./src/init').init(DEBUG));
+var { app, express, listenCallback, startProxy } = await(require('./src/init').init(DEBUG));
 const { createCompletion } = require('./src/ai');
-const { affixSlash, timedError, timedLog } = require('./src/shared');
+const { affixSlash, timedError, timedLog, DEBUG, config } = require('./src/shared');
 const Fuse = require("fuse.js");
 const path = require("path");
+
+if (config.httpmin) {
+  require('./src/httpmin'); // start HTTP-min server
+}
 
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
 var constructedGamesListJSON = null;
@@ -235,7 +233,7 @@ app.get("/dashboard/login", (req, res) => {
 });
 
 app.post("/api/dashboard/login", (req, res) => {
-  res.send(JSON.stringify({"success":true,"username":`${req.body['username']}`,"sentbody":req}, getCircularReplacer()));
+  res.send(JSON.stringify({ "success": true, "username": `${req.body['username']}`, "sentbody": req }, getCircularReplacer()));
 });
 
 function randomElement(list) {
