@@ -1,7 +1,6 @@
 // ik this looks weird but later there will probably be a bunch of stuff like this
 
 const fs = require("fs");
-const { config } = require("process");
 
 if(!fs.existsSync("config.json")) {
     await require("setup"); // set up config
