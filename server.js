@@ -1,5 +1,3 @@
-// comment that counts as an "update", restarting the server;
-
 const fs = require("fs");
 
 // wow thats a lot of libraries
