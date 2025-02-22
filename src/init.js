@@ -13,7 +13,7 @@ const https = require('https');
 const http = require('http');
 const path = require("path");
 
-const caddyConfigPath = path.resolve("./Caddyfile");
+const caddyConfigPath = path.resolve("./src/Caddyfile");
 
 async function init(DEBUG) {
     var elevated = await isElevated.default();
