@@ -16,8 +16,8 @@ const path = require("path");
 async function init(DEBUG) {
     var elevated = await isElevated.default();
 
-    if(!elevated) {
-        timedLog("This server does not have elevated permissions, which means\n\t" + 
+    if (!elevated) {
+        timedLog("This server does not have elevated permissions, which means\n\t" +
             "- The server can only use ports greater than 1024.\n\t" +
             "- The server will automatically redirect any OTHER_PORTS to above 1024 by adding 1024 to it.");
     }
@@ -107,7 +107,7 @@ async function init(DEBUG) {
         server = https.createServer(certoptions, app);
         try {
             require("./ssh").init(app, server);
-        } catch(e) {
+        } catch (e) {
             console.log(e);
             timedLog("SSH client couldn't load.");
         }
@@ -139,6 +139,29 @@ async function init(DEBUG) {
 
     const ultravioletPath = path.join(__dirname, "../ultraviolet-app", "src", "index.js");
 
+    function startCaddy() {
+        const now = new Date();
+        timedLog(`${now.toISOString()}: Starting Caddy reverse proxy on port 7765.`);
+
+        const caddyProcess = childProcess.spawn("caddy", ["run", "--config", caddyConfigPath], {
+            stdio: ['inherit', 'pipe', 'pipe'],
+        });
+
+        caddyProcess.stdout.on('data', (data) => {
+            const now = new Date();
+            timedLog(`${now.toISOString()}: Caddy: ${data.toString()}`.trim());
+        });
+
+        caddyProcess.stderr.on('data', (data) => {
+            const now = new Date();
+            console.error(`${now.toISOString()}: Caddy: ${data.toString()}`.trim());
+        });
+
+        caddyProcess.on("error", (err) => {
+            console.error(`Failed to start Caddy: ${err.message}`);
+        });
+    }
+
     function startUltraviolet() {
         const now = new Date();
         timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
@@ -158,110 +181,14 @@ async function init(DEBUG) {
         });
 
         ultravioletProcess.on("error", (err) => {
-            console.error(`Failed to start app: ${err.message}`);
+            console.error(`Failed to start UV: ${err.message}`);
         });
 
-        ultravioletProcess.on("SIGINT", () => {
-            timedLog("\nSIGINT received. Shutting down...");
-            ultravioletProcess.kill("SIGINT");
-            process.exit(0);
-        });
-
-        ultravioletProcess.on("SIGTERM", () => {
-            timedLog("\nSIGTERM received. Shutting down...");
-            ultravioletProcess.kill("SIGTERM");
-            process.exit(0);
-        });
+        console.log("Starting caddy in 3 seconds...");
+        setTimeout(function() {
+            startCaddy();
+        }, 3000);
     }
-
-    // // app.use(
-    // //   helmet({
-    // //     crossOriginEmbedderPolicy: { policy: 'require-corp' }, // Enforce COEP
-    // //   })
-    // // );
-
-    // // var allowedOrigins = [
-    // //   "https://gimkit.com",
-    // //   "https://unpkg.com",
-    // //   "http://project-sentinel.xyz:7764",
-    // //   "https://project-sentinel.xyz:7764",
-    // //   "http://project-sentinel.xyz:7765",
-    // //   "https://project-sentinel.xyz:7765",
-    // //   "http://localhost:7764",
-    // //   "https://localhost:7764",
-    // //   "http://localhost:7765",
-    // //   "https://localhost:7765"
-    // // ];
-
-    // // var betterAllowedOrigins = [];
-
-    // // allowedOrigins.forEach(origin => {
-    // //   betterAllowedOrigins.push(origin);
-    // //   betterAllowedOrigins.push(origin.replace("://", `:\/\/*.`));
-    // // });
-
-    // // allowedOrigins = betterAllowedOrigins;
-
-    // // app.all('*', function (req, res, next) {
-    // // res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    // // res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    // // res.setHeader('X-Content-Type-Options', 'nosniff');
-    // // res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-    // // res.setHeader('Permissions-Policy', 'geolocation=(self), microphone=()');
-    // // res.setHeader(
-    // //   'Content-Security-Policy',
-    // //   `default-src 'self' ${allowedOrigins.join(" ")}; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/; script-src 'self'; object-src 'none';`
-    // // );
-    // // res.setHeader(
-    // //   'Content-Security-Policy',
-    // //   `default-src 'self'; frame-ancestors 'self' https://www.project-sentinel.xyz:7765/;`
-    // // );
-
-    // // next();
-
-    // // const origin = req.headers.origin;
-
-    // // if (allowedOrigins.includes(origin)) {
-    // //   res.setHeader('Access-Control-Allow-Origin', origin);
-    // // }
-
-    // // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    // // res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    // // res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-    // // if (req.method === 'OPTIONS') {
-    // //   res.sendStatus(200);
-    // // } else {
-    // //   next();
-    // // }
-    // // });
-
-    // // This allows about:blank to work.
-    // // app.all('*', function (req, res, next) {
-    // //   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
-    // //   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    // //   res.setHeader('Access-Control-Allow-Origin', '*');
-    // //   res.setHeader('Content-Security-Policy', "default-src *; frame-ancestors *");
-    // //   res.setHeader('Referrer-Policy', 'none');
-    // //   next();
-    // // });
-
-    // app.all('*', function (req, res, next) {
-    //     // res.setHeader('Access-Control-Allow-Origin', '*');
-    //     // res.setHeader('Access-Control-Allow-Methods', '*');
-    //     // res.setHeader('Access-Control-Allow-Headers', '*');
-    //     // res.setHeader('Access-Control-Allow-Credentials', 'true');
-    //     // res.removeHeader('Cross-Origin-Embedder-Policy');
-    //     // res.removeHeader('Cross-Origin-Opener-Policy');
-    //     // res.removeHeader('Content-Security-Policy');
-    //     // res.removeHeader('Referrer-Policy');
-
-
-    //     next();
-    //   });
-
-    //   // app.use(cors({ origin: ["https://gimkit.com/", "https://sacs.instructure.com/", "https://unpkg.com/"] }));
-
 
     app.all('*', function (req, res, next) {
         res.setHeader('Access-Control-Allow-Origin', '*');
