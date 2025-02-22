@@ -44,4 +44,4 @@ const setup = async () => {
     return config;
 };
 
-module.exports = { setup };
+module.exports = { config: await setup() };
