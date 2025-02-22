@@ -3,9 +3,10 @@
 const fs = require("fs");
 
 // wow thats a lot of libraries
+const { affixSlash, timedError, timedLog, DEBUG, config } = require('./src/shared');
 var { app, express, listenCallback, startProxy } = await(require('./src/init').init(DEBUG));
 const { createCompletion } = require('./src/ai');
-const { affixSlash, timedError, timedLog, DEBUG, config } = await import('./src/shared');
+
 const Fuse = require("fuse.js");
 const path = require("path");
 
