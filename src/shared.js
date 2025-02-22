@@ -1,11 +1,14 @@
 // ik this looks weird but later there will probably be a bunch of stuff like this
 
 const fs = require("fs");
+const { config } = require("process");
 
-var DEBUG = false;
-if (fs.existsSync('./debug.txt')) {
-  DEBUG = true;
+if(!fs.existsSync("config.json")) {
+    await require("setup"); // set up config
 }
+
+const configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
+var DEBUG = configuration.enviornment == "dev";
 
 var certoptions;
 if (!DEBUG) {
@@ -61,5 +64,6 @@ module.exports = {
     timedLog: timedLog,
     timedError: timedError,
     DEBUG: DEBUG,
-    certoptions
+    config: configuration,
+    certoptions: certoptions
 }

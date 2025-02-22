@@ -1,4 +1,4 @@
-const { affixSlash, timedError, timedLog } = require('./shared');
+const { affixSlash, timedError, timedLog, config } = require('./shared');
 const expressRateLimit = require("express-rate-limit");
 const expressSlowDown = require("express-slow-down");
 const childProcess = require("child_process");
@@ -12,6 +12,7 @@ var express = require('express');
 const https = require('https');
 const http = require('http');
 const path = require("path");
+const { timeLog } = require('console');
 
 const caddyConfigPath = path.resolve("./src/Caddyfile");
 
@@ -165,6 +166,12 @@ async function init(DEBUG) {
     }
 
     function startUltraviolet() {
+        if(config.proxy == "native") {
+            timedLog("Using native psv3 proxy instead of uv.");
+            require('./src/httpmin');
+            return;
+        }
+        
         const now = new Date();
         timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
 
