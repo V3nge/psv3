@@ -1,0 +1,7 @@
+http://localhost:8080 {
+    reverse_proxy https://localhost:7765 {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+}
