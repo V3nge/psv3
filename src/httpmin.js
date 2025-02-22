@@ -14,4 +14,5 @@ try {
 } catch (e) {
   console.warn("HTTP-min error:");
   console.warn(e);
+  console.warn("HTTP-min error end!");
 }
