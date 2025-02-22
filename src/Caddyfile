@@ -2,5 +2,7 @@ http.auto_https on
 
 https://www.project-sentinel.xyz:7765 {
     tls /etc/letsencrypt/live/www.project-sentinel.xyz/fullchain.pem /etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem
-    reverse_proxy http://www.project-sentinel.xyz:8080
+    reverse_proxy http://www.project-sentinel.xyz:8080 {
+	    header_up Host 7765
+    }
 }
