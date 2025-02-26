@@ -169,7 +169,13 @@ async function init(DEBUG) {
         timedLog(`Using proxy configuration: '${config.proxy}'`);
         if(config.proxy == "native") {
             timedLog("Using native psv3 proxy instead of uv.");
-            require('./proxy');
+            try {
+                require('./proxy');
+            } catch(e) {
+                timedLog("Proxy error!");
+                timedLog(e);
+                timedLog("Proxy error end.");
+            }
         } else if(config.proxy == "uv") {
             const now = new Date();
             timedLog(`${now.toISOString()}: Spawn UV: ${ultravioletPath}.`);
