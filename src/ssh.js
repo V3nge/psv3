@@ -1,6 +1,6 @@
-const { NodeSSH } = await import('node-ssh');
-const socketIo = await import('socket.io');
-const express = await import('express');
+const { NodeSSH } = require('node-ssh');
+const socketIo = require('socket.io');
+const express = require('express');
 
 module.exports.init = (app, server) => {
     const io = socketIo(server, {
@@ -42,7 +42,7 @@ module.exports.init = (app, server) => {
             const { ip, port, username, password } = data;
 
             if (!ip || !port || !username || !password) {
-                socket.emit('error', 'Missing await importd fields: ip, port, username, or password');
+                socket.emit('error', 'Missing required fields: ip, port, username, or password');
                 return;
             }
 

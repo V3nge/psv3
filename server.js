@@ -1,15 +1,15 @@
-const fs = await import("fs");
+const fs = require("fs");
 
 // wow thats a lot of libraries
 const { affixSlash, timedError, timedLog, DEBUG, config } = await import('./src/shared');
-var { app, express, listenCallback, startProxy } = await(await import('./src/init').init(DEBUG));
-const { createCompletion } = await import('./src/ai');
+var { app, express, listenCallback, startProxy } = await(require('./src/init').init(DEBUG));
+const { createCompletion } = require('./src/ai');
 
-const Fuse = await import("fuse.js");
-const path = await import("path");
+const Fuse = require("fuse.js");
+const path = require("path");
 
 if (config.httpmin) {
-  await import('./src/httpmin'); // start HTTP-min server
+  require('./src/httpmin'); // start HTTP-min server
 }
 
 var report = fs.readFileSync(path.join(__dirname, `private/report.html`));
@@ -57,7 +57,7 @@ app.post('/error', (req, res) => {
 });
 
 // should probably use this in the future, but is causing problems now...
-// const morgan = await import('morgan');
+// const morgan = require('morgan');
 // app.use(helmet());
 // app.use(morgan('combined'));
 
@@ -384,7 +384,7 @@ app.get('/ai', async (req, res) => {
 app.post("/r", (req, res) => {
   const path = affixSlash(req.query.u);
   if (!path) {
-    return res.status(400).send({ error: "Path is await importd" });
+    return res.status(400).send({ error: "Path is required" });
   }
   updateCount(path, "recurring");
   res.send();
@@ -456,7 +456,7 @@ app.get('/games-a-tags', (req, res) => {
   res.send(result);
 });
 
-await import("./src/live_chat_ws").setup(app);
+require("./src/live_chat_ws").setup(app);
 
 updateIndex();
 app.use("/", function (req, res, next) {

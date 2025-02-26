@@ -1,18 +1,18 @@
-const express = await import('express'); 
-const { createProxyMiddleware } = await import('http-proxy-middleware'); 
-const http = await import('http'); 
-const https = await import('https'); 
-const fs = await import('fs'); 
-const path = await import('path'); 
-const axios = await import('axios'); 
-const WebSocket = await import('ws'); 
-const net = await import('net'); 
-const dgram = await import('dgram'); 
-const { Resolver } = await import('dns2'); 
-const SMTPServer = await import('smtp-server').SMTPServer; 
-const FtpSrv = await import('ftp-srv'); 
-const url = await import('url'); 
-const { affixSlash, timedError, timedLog, certoptions } = await import('./shared'); 
+const express = require('express'); 
+const { createProxyMiddleware } = require('http-proxy-middleware'); 
+const http = require('http'); 
+const https = require('https'); 
+const fs = require('fs'); 
+const path = require('path'); 
+const axios = require('axios'); 
+const WebSocket = require('ws'); 
+const net = require('net'); 
+const dgram = require('dgram'); 
+const { Resolver } = require('dns2'); 
+const SMTPServer = require('smtp-server').SMTPServer; 
+const FtpSrv = require('ftp-srv'); 
+const url = require('url'); 
+const { affixSlash, timedError, timedLog, certoptions } = require('./shared'); 
 
 const app = express(); 
 
