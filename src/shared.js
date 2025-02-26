@@ -10,7 +10,7 @@ if (!fs.existsSync("config.json")) {
 
 const DEBUG = configuration.environment === "dev"; // Fixed typo: 'enviornment' -> 'environment'
 
-const certoptions = {};
+let certoptions = {};
 if (!DEBUG) {
     certoptions = {
         key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
