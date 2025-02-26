@@ -13,21 +13,23 @@ const askQuestion = (question) => {
 };
 
 const askLimitedQuestion = (question, options) => {
-    let answer = '';
-    while (!options.includes(answer)) {
-        answer = rl.question(`${question} (${options.join(', ')}): `);
-        if (!options.includes(answer)) {
-            console.log(`Invalid input. Please choose one of the following: ${options.join(', ')}`);
+    return new Promise(async (resolve) => {
+        let answer = '';
+        while (!options.includes(answer)) {
+            answer = await askQuestion(${question} (${options.join(', ')}): );
+            if (!options.includes(answer)) {
+                console.log(Invalid input. Please choose one of the following: ${options.join(', ')});
+            }
         }
-    }
-    return answer;
+        resolve(answer);
+    });
 };
 
-const setup = () => {
-    config.environment = askLimitedQuestion('Enter environment', ['dev', 'prod']);
-    config.ports = rl.question('Enter ports to run the server on (comma separated, default=7764): ');
-    config.proxy = askLimitedQuestion('Configure the proxy', ['uv', 'native']);
-    config.httpmin = askLimitedQuestion('Include http-min', ["y", "n"]) == "y";
+const setup = async () => {
+    config.environment = await askLimitedQuestion('Enter environment', ['dev', 'prod']);
+    config.ports = await askQuestion('Enter ports to run the server on (comma separated, default=7764): ');
+    config.proxy = await askLimitedQuestion('Configure the proxy', ['uv', 'native']);
+    config.httpmin = await askLimitedQuestion('Include http-min', ["y", "n"]) == "y";
     if (config.ports == "") { config.ports = "7764"; }
 
     rl.close();
@@ -35,11 +37,11 @@ const setup = () => {
     fs.writeFileSync('config.json', JSON.stringify(config, null, 2));
 
     console.log('\nconfig.json contains:');
-    console.log(`\tEnvironment: ${config.environment}`);
-    console.log(`\tPorts: ${config.ports}`);
-    console.log(`\tProxy: ${config.proxy}`);
+    console.log(\tEnvironment: ${config.environment});
+    console.log(\tPorts: ${config.ports});
+    console.log(\tProxy: ${config.proxy});
 
     return config;
 };
 
-module.exports = { config: setup() };
+setup();

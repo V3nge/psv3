@@ -2,8 +2,8 @@ const fs = require("fs");
 
 var configuration;
 if (!fs.existsSync("config.json")) {
-    console.log("It looks like your first time running psv3! So,");
-    configuration = await require("../setup").setup();
+    console.log("It looks like your first time running psv3! Please run the setup first.");
+    process.exit(0);
 } else {
     configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
 }
