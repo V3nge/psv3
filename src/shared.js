@@ -4,9 +4,11 @@ let configuration;
 if (!fs.existsSync("config.json")) {
     console.log("It looks like your first time running psv3! So,");
     configuration = require("../setup").setup();
-} else {
-    configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
 }
+
+let file = fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' });
+console.log(file);
+configuration = JSON.parse(file);
 
 const DEBUG = configuration.environment == "dev";
 
