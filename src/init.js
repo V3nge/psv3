@@ -172,7 +172,7 @@ async function init(DEBUG) {
             try {
                 require('./proxy');
             } catch(e) {
-                timedLog("Proxy error!");
+                timedLog("Proxy error:");
                 timedLog(e);
                 timedLog("Proxy error end.");
             }
