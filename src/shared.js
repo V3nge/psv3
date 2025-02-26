@@ -8,7 +8,7 @@ if (!fs.existsSync("config.json")) {
     configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
 }
 
-const DEBUG = configuration.environment === "dev"; // Fixed typo: 'enviornment' -> 'environment'
+const DEBUG = configuration.environment == "dev";
 
 let certoptions = {};
 if (!DEBUG) {
