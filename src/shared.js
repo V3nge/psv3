@@ -1,18 +1,16 @@
 const fs = require("fs");
 
-let configuration;
+var configuration;
 if (!fs.existsSync("config.json")) {
     console.log("It looks like your first time running psv3! So,");
-    configuration = require("../setup").setup();
+    configuration = await require("../setup").setup();
+} else {
+    configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
 }
 
-let file = fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' });
-console.log(file);
-configuration = JSON.parse(file);
+var DEBUG = configuration.enviornment === "dev";
 
-const DEBUG = configuration.environment == "dev";
-
-let certoptions = {};
+var certoptions = {};
 if (!DEBUG) {
     certoptions = {
         key: fs.readFileSync('/etc/letsencrypt/live/www.project-sentinel.xyz/privkey.pem'),
