@@ -1,7 +1,7 @@
 try {
-  const { affixSlash, timedError, timedLog } = require('./shared');
-  const express = require('express');
-  const path = require('path');
+  const { affixSlash, timedError, timedLog } = await import('./shared');
+  const express = await import('express');
+  const path = await import('path');
   const app = express();
   const port = 6282;
 

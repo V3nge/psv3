@@ -1,7 +1,7 @@
-const { getRandomCombination } = require("./chat_name_generator");
-const { getCurrentTime, DEBUG } = require("./shared");
-const crypto = require("crypto");
-const axios = require("axios");
+const { getRandomCombination } = await import("./chat_name_generator");
+const { getCurrentTime, DEBUG } = await import("./shared");
+const crypto = await import("crypto");
+const axios = await import("axios");
 
 async function sha256(message) {
     const msgBuffer = new TextEncoder().encode(message);

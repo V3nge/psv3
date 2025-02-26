@@ -1,18 +1,18 @@
-const { affixSlash, timedError, timedLog, config } = require('./shared');
-const expressRateLimit = require("express-rate-limit");
-const expressSlowDown = require("express-slow-down");
-const childProcess = require("child_process");
-const { certoptions } = require("./shared");
-const compression = require("compression");
-const bodyParser = require('body-parser');
-const isElevated = require('is-elevated');
-// const helmet = require('helmet');
-const nocache = require("nocache");
-var express = require('express');
-const https = require('https');
-const http = require('http');
-const path = require("path");
-const { timeLog } = require('console');
+const { affixSlash, timedError, timedLog, config } = await import('./shared');
+const expressRateLimit = await import("express-rate-limit");
+const expressSlowDown = await import("express-slow-down");
+const childProcess = await import("child_process");
+const { certoptions } = await import("./shared");
+const compression = await import("compression");
+const bodyParser = await import('body-parser');
+const isElevated = await import('is-elevated');
+// const helmet = await import('helmet');
+const nocache = await import("nocache");
+var express = await import('express');
+const https = await import('https');
+const http = await import('http');
+const path = await import("path");
+const { timeLog } = await import('console');
 
 const caddyConfigPath = path.resolve("./src/Caddyfile");
 
@@ -80,8 +80,8 @@ async function init(DEBUG) {
         }
     });
 
-    // const httpProxy = require('http-proxy');
-    // const http = require('http');
+    // const httpProxy = await import('http-proxy');
+    // const http = await import('http');
 
     const app = express();
 
@@ -109,7 +109,7 @@ async function init(DEBUG) {
     if (!DEBUG) {
         server = https.createServer(certoptions, app);
         try {
-            require("./ssh").init(app, server);
+            await import("./ssh").init(app, server);
         } catch (e) {
             console.log(e);
             timedLog("SSH client couldn't load.");
@@ -134,10 +134,10 @@ async function init(DEBUG) {
 
     if (server == null) {
         timedLog("No server passed into express-ws init.");
-        require("express-ws")(app);
+        await import("express-ws")(app);
     } else {
         timedLog("Express-ws with server init.");
-        require("express-ws")(app, server);
+        await import("express-ws")(app, server);
     }
 
     const ultravioletPath = path.join(__dirname, "../ultraviolet-app", "src", "index.js");
