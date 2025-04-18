@@ -8,7 +8,11 @@ if (!fs.existsSync("config.json")) {
     configuration = JSON.parse(fs.readFileSync("config.json", { encoding: 'utf8', flag: 'r' }));
 }
 
-var DEBUG = configuration.enviornment === "dev";
+if(configuration == undefined) {
+    console.error("Configuration is undefined!");
+}
+
+var DEBUG = configuration.environment === "dev";
 
 var certoptions = {};
 if (!DEBUG) {
